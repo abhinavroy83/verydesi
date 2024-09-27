@@ -43,34 +43,29 @@ export default function SignIn() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Card className="w-full max-w-md shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-3xl font-extrabold text-center text-gray-800">
-              Welcome Back
-            </CardTitle>
-            <CardDescription className="text-center text-gray-600">
-              Sign in to your account
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Button
-              variant="outline"
-              className="w-full flex items-center justify-center space-x-2"
-              onClick={() => {
-                /* Handle Google sign-in */
-              }}
-            >
-              <svg
-                className="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              />
+      <form onSubmit={handleSubmit}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="w-full max-w-md shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-3xl font-extrabold text-center text-gray-800">
+                Welcome Back
+              </CardTitle>
+              <CardDescription className="text-center text-gray-600">
+                Sign in to your account
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Button
+                variant="outline"
+                className="w-full flex items-center justify-center space-x-2"
+                onClick={() => {
+                  /* Handle Google sign-in */
+                }}
+              >
                 <svg
                   className="w-5 h-5"
                   viewBox="0 0 24 24"

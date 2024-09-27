@@ -95,7 +95,7 @@ const Page = () => {
           <FeaturedRoomcard key={index} {...room} />
         ))}
       </div>
-      <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
+      <h1 className="text-2xl  font-bold my-4">More Room on portland</h1>
       <NonFeatureCard />
       <div className=" py-5">
         <Design2 />
