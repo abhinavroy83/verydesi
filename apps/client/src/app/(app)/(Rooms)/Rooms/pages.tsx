@@ -1,24 +1,6 @@
-"use client";
-import { HomeLayout } from "@/components/layout/Home";
-import LeafletMap from "@/components/map/LeafletMap";
-import Design2 from "@/components/Room/Design2";
-import Desing3 from "@/components/Room/Desing3";
-import Desing4 from "@/components/Room/Desing4";
-import FeaturedRoomcard from "@/components/Room/FeaturedRoomcard";
-import NonFeatureCard from "@/components/Room/NonFeatureCard";
-import { useSession } from "next-auth/react";
 import React from "react";
 
-const Page = () => {
-  const { data: session } = useSession();
-
-  if (session) {
-    // Access the JWT token
-    const accessToken = session.accessToken;
-    // console.log("JWT Token: ", accessToken);
-  }
-
-  // Sample data for room cards
+const pages = () => {
   const roomCardsData = [
     {
       id: 1,
@@ -87,27 +69,7 @@ const Page = () => {
       daysAgo: 2,
     },
   ];
-
-  return (
-    <HomeLayout>
-      <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
-        {roomCardsData.map((room, index) => (
-          <FeaturedRoomcard key={index} {...room} />
-        ))}
-      </div>
-      <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
-      <NonFeatureCard />
-      <div className=" py-5">
-        <Design2 />
-      </div>
-      <div className=" py-5">
-        <Desing3 />
-      </div>
-      <div className=" py-5">
-        <Desing4 />
-      </div>
-    </HomeLayout>
-  );
+  return <div>pages</div>;
 };
 
-export default Page;
+export default pages;
