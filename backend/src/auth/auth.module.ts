@@ -4,7 +4,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { JwtModule } from '@nestjs/jwt';
 import { authProviders } from './Provider/auth.provider';
 import { AuthController } from './controller';
-import { AuthEmailVerify, ForgotPasswordService } from './service';
+import { AuthEmailVerify, ForgotPasswordService, UniqueEmailVerify } from './service';
 import { JwtStrategy } from './strategy/jwt.strategy';
 
 @Module({
@@ -15,6 +15,7 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     ...authProviders,
     AuthEmailVerify,
     ForgotPasswordService,
+    UniqueEmailVerify,
     JwtStrategy,
   ],
 })

@@ -6,7 +6,11 @@ import {
   AuthValidEmail,
   AuthValidPassword,
 } from '../dto';
-import { AuthEmailVerify, ForgotPasswordService } from '../service';
+import {
+  AuthEmailVerify,
+  ForgotPasswordService,
+  UniqueEmailVerify,
+} from '../service';
 
 @Controller('auth')
 export class AuthController {
@@ -14,6 +18,7 @@ export class AuthController {
     private authService: AuthService,
     private authEmailVerify: AuthEmailVerify,
     private forgotPasswordService: ForgotPasswordService,
+    private uniqueEmailVerify: UniqueEmailVerify,
   ) {}
 
   @Post('signup')
@@ -42,5 +47,10 @@ export class AuthController {
     @Body() password: AuthValidPassword,
   ) {
     return this.forgotPasswordService.resetpassword(token, password);
+  }
+
+  @Get('check-unique-email/:email')
+  uniqueEmail(@Param('email') email: AuthEmailVerify) {
+    return this.uniqueEmailVerify.uniqueEmail(email);
   }
 }
