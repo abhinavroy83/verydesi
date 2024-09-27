@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,12 +15,131 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
+import { signUpSchema, emailSchema } from "@/schemas";
+import { z } from "zod";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircle, EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
+import { countryCodes } from "@/utils";
+import { useDebounceCallback } from "usehooks-ts";
 
-export default function RefinedSignUp() {
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import axios from "axios";
+type SignUpFormValues = z.infer<typeof signUpSchema>;
+
+export default function SignUp() {
+  const [useremail, setUseremail] = useState("");
+  const [useremailMessage, setUseremailMessage] = useState("");
+  const [isCheckingemail, setIsCheckingemail] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const debounced = useDebounceCallback(setUseremail, 50);
+
+  const { toast } = useToast();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<SignUpFormValues>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      countryCode: "+1",
+    },
+  });
+
+  useEffect(() => {
+    const checkusernameunique = async () => {
+      const emailValidation = emailSchema.safeParse(useremail);
+
+      if (!emailValidation.success) {
+        setUseremailMessage(emailValidation.error.issues[0].message);
+        return;
+      }
+      if (useremail) {
+        setIsCheckingemail(true);
+        setUseremailMessage("");
+      }
+
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/auth/check-unique-email/${useremail}`
+        );
+        setUseremailMessage(response.data.message);
+      } catch (error) {
+        setUseremailMessage("Error while checking email");
+      } finally {
+        setIsCheckingemail(false);
+      }
+    };
+    checkusernameunique();
+  }, [useremail]);
+
+  const onSubmit = async (data: SignUpFormValues) => {
+    try {
+      const { cnf_password, terms, ...submitData } = data;
+      const fullPhoneNumber = `${data.countryCode}${data.phoneNumber}`;
+      const res = await fetch("http://localhost:8000/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...submitData, phoneNumber: fullPhoneNumber }),
+      });
+
+      const responseData = await res.json();
+
+      if (res.ok) {
+        // If signup is successful, sign in the user
+        await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false, // Prevent automatic redirect after sign-in
+        });
+        toast({
+          title: "Success",
+          description: "Account created successfully!",
+          duration: 5000,
+        });
+        router.push("/dashboard"); // Redirect to dashboard after signup
+      } else {
+        // Handle error
+        const errorMessage =
+          responseData.message || "Something went wrong. Please try again.";
+        setError(errorMessage);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: errorMessage,
+          duration: 5000,
+        });
+      }
+    } catch (error) {
+      const errorMessage = "An unexpected error occurred. Please try again.";
+      setError(errorMessage);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: errorMessage,
+        duration: 5000,
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
@@ -79,113 +200,234 @@ export default function RefinedSignUp() {
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label
-                  htmlFor="firstName"
-                  className="text-sm font-semibold text-gray-700"
-                >
-                  First name
-                </Label>
-                <Input
-                  id="firstName"
-                  placeholder="John"
-                  required
-                  className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
-                />
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="firstName"
+                    className="text-sm font-semibold text-gray-700"
+                  >
+                    First name
+                  </Label>
+                  <Input
+                    id="firstName"
+                    {...register("firstName")}
+                    placeholder="John"
+                    className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
+                  />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.firstName.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="lastName"
+                    className="text-sm font-semibold text-gray-700"
+                  >
+                    Last name
+                  </Label>
+                  <Input
+                    id="lastName"
+                    {...register("lastName")}
+                    placeholder="Doe"
+                    className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
+                  />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.lastName.message}
+                    </p>
+                  )}
+                </div>
               </div>
               <div className="space-y-2">
                 <Label
-                  htmlFor="lastName"
+                  htmlFor="email"
                   className="text-sm font-semibold text-gray-700"
                 >
-                  Last name
+                  Email
                 </Label>
                 <Input
-                  id="lastName"
-                  placeholder="Doe"
-                  required
+                  id="email"
+                  type="email"
+                  {...register("email")}
+                  onChange={(e) => {
+                    debounced(e.target.value);
+                  }}
+                  placeholder="john.doe@example.com"
                   className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
                 />
+                {isCheckingemail && <Loader2 className="animate-spin" />}
+                {useremail && (
+                  <p
+                    className={`text-sm ${
+                      useremailMessage === "Email available"
+                        ? " text-green-500"
+                        : " text-red-500"
+                    }`}
+                  >
+                    {useremailMessage}
+                  </p>
+                )}
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="email"
-                className="text-sm font-semibold text-gray-700"
-              >
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="john.doe@example.com"
-                required
-                className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="phoneNumber"
-                className="text-sm font-semibold text-gray-700"
-              >
-                Phone number
-              </Label>
-              <Input
-                id="phoneNumber"
-                type="tel"
-                placeholder="+1 (555) 000-0000"
-                required
-                className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="password"
-                className="text-sm font-semibold text-gray-700"
-              >
-                Password
-              </Label>
-              <Input
-                id="password"
-                type="password"
-                required
-                className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="confirmPassword"
-                className="text-sm font-semibold text-gray-700"
-              >
-                Confirm password
-              </Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                required
-                className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
-              />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms" />
-                <Label htmlFor="terms">Accept terms and conditions</Label>
+              <div className="space-y-2">
+                <Label
+                  htmlFor="phoneNumber"
+                  className="text-sm font-semibold text-gray-700"
+                >
+                  Phone number
+                </Label>
+                <div className="flex space-x-2">
+                  <Controller
+                    name="countryCode"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-[100px]">
+                          <SelectValue placeholder="Code" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {countryCodes.map((country) => (
+                            <SelectItem key={country.code} value={country.code}>
+                              <span className="mr-2">{country.flag}</span>
+                              {country.code}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  <Input
+                    id="phoneNumber"
+                    type="tel"
+                    {...register("phoneNumber")}
+                    placeholder="123456789"
+                    className="flex-1 rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200"
+                  />
+                </div>
+                {errors.phoneNumber && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.phoneNumber.message}
+                  </p>
+                )}
               </div>
-            </div>
+              <div className="space-y-2">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-semibold text-gray-700"
+                >
+                  Password
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    {...register("password")}
+                    className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                  >
+                    {showPassword ? (
+                      <EyeOffIcon className="h-5 w-5" />
+                    ) : (
+                      <EyeIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label
+                  htmlFor="confirmPassword"
+                  className="text-sm font-semibold text-gray-700"
+                >
+                  Confirm password
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    {...register("cnf_password", {
+                      required: true,
+                      validate: (val) => {
+                        const pass = watch("password");
+                        if (pass !== val) {
+                          return "Password must be the same";
+                        }
+                      },
+                    })}
+                    className="rounded-md border-2 border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 transition-all duration-200 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOffIcon className="h-5 w-5" />
+                    ) : (
+                      <EyeIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+                {errors.cnf_password && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.cnf_password.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <input type="checkbox" id="terms" {...register("terms")} />
+                  <Label htmlFor="terms">Accept terms and conditions</Label>
+                </div>
+                {errors.terms && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.terms.message}
+                  </p>
+                )}
+              </div>
+              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onHoverStart={() => setIsHovering(true)}
+                onHoverEnd={() => setIsHovering(false)}
+                className="w-full"
+              >
+                <Button
+                  type="submit"
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out"
+                >
+                  Create Account
+                </Button>
+              </motion.div>
+            </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onHoverStart={() => setIsHovering(true)}
-              onHoverEnd={() => setIsHovering(false)}
-              className="w-full"
-            >
-              <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out">
-                Create Account
-              </Button>
-            </motion.div>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: isHovering ? 1 : 0 }}
