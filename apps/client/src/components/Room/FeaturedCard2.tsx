@@ -14,7 +14,6 @@ import {
 export default function Component() {
   return (
     <Card className="w-[36rem] h-[220px] perspective-1000 group">
-
       <CardContent className="p-0 flex h-full">
         <div className="flex flex-col justify-between flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
           <div>

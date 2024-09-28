@@ -95,7 +95,7 @@ const Page = () => {
         <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
         <button
           type="button"
-          className="whitespace-nowrap flex rounded-md bg-green-800 px-3 py-2 text-[19px] text-white shadow-sm hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out"
         >
           Add Room
         </button>
