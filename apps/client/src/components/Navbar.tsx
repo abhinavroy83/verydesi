@@ -173,13 +173,12 @@ export default function Navbar() {
                 <Button
                   variant="ghost"
                   className="text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                  onClick={() => setIsLoggedIn(true)}
+                  onClick={() => router.push("/sign-in")}
                 >
                   Hello, Sign in Or Sign up
                 </Button>
               )}
             </div>
-
             <div className="md:hidden">
               <Button
                 variant="ghost"
