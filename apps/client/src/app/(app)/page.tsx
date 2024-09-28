@@ -91,13 +91,23 @@ const Page = () => {
 
   return (
     <HomeLayout>
+      <div className="w-full justify-between flex items-center">
+        <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
+        <button
+          type="button"
+          className="whitespace-nowrap flex rounded-md bg-green-800 px-3 py-2 text-[19px] text-white shadow-sm hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+        >
+          Add Room
+        </button>
+      </div>
       <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
         {roomCardsData.map((room, index) => (
           <FeaturedRoomcard key={index} {...room} />
         ))}
+
         <FeaturedCard2 />
       </div>
-      <h1 className="text-2xl  font-bold my-4">More Room on portland</h1>
+      <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
       <NonFeatureCard />
       <div className=" py-5">
         <Design2 />

@@ -15,7 +15,7 @@ import {
 
 export default function Component() {
   return (
-    <Card className="w-full max-w-7xl bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+    <Card className="w-full max-w-7xl bg-white to-pink-500 text-black">
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-4">
           <div>
@@ -27,7 +27,7 @@ export default function Component() {
               <span>Austin, TX</span>
               <Badge
                 variant="secondary"
-                className="ml-2 text-xs text-purple-800"
+                className="ml-2 text-xs text-blue-700 bg-gray-200"
               >
                 <Clock className="w-3 h-3 mr-1" />5 days ago
               </Badge>
@@ -38,8 +38,12 @@ export default function Component() {
             </div>
           </div>
           <div className="text-right">
-            <p className="text-4xl font-bold mb-2">$1800/mo</p>
-            <Button variant="secondary" size="sm" className="rounded-full">
+            <p className="text-4xl font-bold mb-2 text-blue-700">$1800/mo</p>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="rounded-full bg-gray-200"
+            >
               <Heart className="h-4 w-4 mr-2" />
               Wishlist
             </Button>
@@ -59,13 +63,13 @@ export default function Component() {
             <Dumbbell className="w-4 h-4 mr-1" /> Gym Access
           </Badge>
         </div>
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
           <BedDouble className="h-10 w-10" />
           <p className="text-sm">
             Immerse yourself in Austin's vibrant culture in this stylish and
             comfortable apartment.
           </p>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );
