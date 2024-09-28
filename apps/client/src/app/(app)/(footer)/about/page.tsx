@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,11 +19,11 @@ import {
 function page() {
   return (
     <div className="mt-[7rem]">
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-30 bg-red-600">
-        <div className="container px-4 md:px-6">
+      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-30 bg-[#232f3f]">
+        <div className="container px-4 md:px-6  mx-auto">
           <div className="flex flex-col items-center space-y-7 text-center">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
+            <div className="space-y-7">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-4xl/none text-white">
                 About VeryDesi.com
               </h1>
               <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl dark:text-gray-400">
@@ -38,9 +40,9 @@ function page() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-        <div className="container px-4 md:px-6">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800 mx-auto">
+        <div className="container px-4 md:px-6 mx-auto">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-4xl text-center mb-8">
             Our Mission
           </h2>
           <p className="max-w-[900px] text-gray-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-300 mx-auto text-center">
@@ -50,46 +52,48 @@ function page() {
             cultural events, and offers a wide range of services to meet the
             unique needs of our diverse diaspora.
           </p>
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Users className="w-6 h-6 mr-2 text-primary" />
-                  Connect
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                Unite with the global South Asian community
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Building className="w-6 h-6 mr-2 text-primary" />
-                  Promote
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                Support and grow South Asian-owned businesses
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Calendar className="w-6 h-6 mr-2 text-primary" />
-                  Celebrate
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                Experience rich cultural events and traditions
-              </CardContent>
-            </Card>
+          <div>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 justify-center ">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Users className="w-6 h-6 mr-2 text-primary" />
+                    Connect
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  Unite with the global South Asian community
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Building className="w-6 h-6 mr-2 text-primary" />
+                    Promote
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  Support and grow South Asian-owned businesses
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Calendar className="w-6 h-6 mr-2 text-primary" />
+                    Celebrate
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  Experience rich cultural events and traditions
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
+        <div className="container px-4 md:px-6 mx-auto">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-4xl text-center mb-8">
             What We Offer
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
@@ -153,8 +157,8 @@ function page() {
         </div>
       </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-        <div className="container px-4 md:px-6">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-4xl text-center mb-8">
             Why Choose VeryDesi.com
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
@@ -199,11 +203,11 @@ function page() {
           </div>
         </div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-red-600 text-white">
-        <div className="container px-4 md:px-6">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-[#232f3f] text-white">
+        <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-7">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
                 Join the VeryDesi.com Community!
               </h2>
               <p className="max-w-[900px] text-gray-200 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
