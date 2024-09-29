@@ -9,9 +9,11 @@ import FeaturedRoomcard from "@/components/Room/FeaturedRoomcard";
 import NonFeatureCard from "@/components/Room/NonFeatureCard";
 import { useSession } from "next-auth/react";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   if (session) {
     // Access the JWT token
