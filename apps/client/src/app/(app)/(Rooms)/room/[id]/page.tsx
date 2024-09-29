@@ -5,14 +5,14 @@ import React from "react";
 const page = () => {
   const { id } = useParams();
   return (
-    <div className="mt-[9rem]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="mt-[8rem]">
+      <div className="container mx-auto px-4 sm:px-6">
         <h1 className="text-3xl font-bold leading-tight text-gray-900">
           Rooms
         </h1>
       </div>
       <main>
-        <div className="container mx-auto sm:px-6 lg:px-8">
+        <div className="container mx-auto sm:px-6">
           <div className="px-4 py-4 sm:px-0">
             <div className="flex flex-col md:flex-row gap-8">
               <div className="md:w-2/3">

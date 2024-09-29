@@ -5,8 +5,7 @@ import { ChevronDownIcon } from "lucide-react";
 function page() {
   const [expandedSection, setExpandedSection] = useState<number | null>(null);
 
-  const toggleSection = (index: number) => {
-    setExpandedSection(expandedSection === index ? null : index);
+  const toggleSection = (index: number) => { setExpandedSection(expandedSection === index ? null : index);
   };
   const sections = [
     {

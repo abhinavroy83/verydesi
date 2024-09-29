@@ -15,6 +15,23 @@ export default function Component() {
   return (
     <Card className="w-[36rem] h-[220px] perspective-1000 group">
       <CardContent className="p-0 flex h-full">
+        <div className="w-1/3 relative group">
+          <img
+            src="https://res.cloudinary.com/druohnmyv/image/upload/v1725526210/krvwwzdxgznzxkintdm8.jpg"
+            alt="Luxury Highrise Studio"
+            className="absolute inset-0 w-full h-full object-cover rounded-lg group-hover:scale-100 transition-transform duration-500 ease-in duration-70"
+          />
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <Button
+              variant="secondary"
+              size="sm"
+              className="w-full bg-white text-blue-500 hover:bg-blue-100 group-hover:translate-y-1 transition-transform duration-300"
+            >
+              <Heart className="h-4 w-4 mr-2" />
+              Add to Wishlist
+            </Button>
+          </div>
+        </div>
         <div className="flex flex-col justify-between flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
           <div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
@@ -56,23 +73,6 @@ export default function Component() {
             <p className="text-3xl font-bold text-blue-600 group-hover:scale-105 transition-transform duration-300">
               $2800/mo
             </p>
-          </div>
-        </div>
-        <div className="w-1/3 relative group">
-          <img
-            src="https://placeholder.pics/svg/240x192"
-            alt="Luxury Highrise Studio"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="w-full bg-white text-blue-500 hover:bg-blue-100 group-hover:translate-y-1 transition-transform duration-300"
-            >
-              <Heart className="h-4 w-4 mr-2" />
-              Add to Wishlist
-            </Button>
           </div>
         </div>
       </CardContent>
