@@ -50,7 +50,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <Button variant="outline" size="icon" className="rounded-full">
               <UserPlus className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="icon" className="rounded-full">
+            <Button
+              onClick={() => {
+                router.push("/dashboard/Share");
+              }}
+              variant="outline"
+              size="icon"
+              className="rounded-full"
+            >
               <Share2 className="h-4 w-4" />
             </Button>
           </div>

@@ -98,6 +98,9 @@ const Page = () => {
         <button
           type="button"
           className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out"
+          onClick={() => {
+            router.push("/post-room");
+          }}
         >
           Add Room
         </button>

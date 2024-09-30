@@ -40,7 +40,7 @@ export default function Component() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 mt-[6rem] lg:mt-[2rem]">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 mt-[6rem] lg:mt-[2rem]">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center flex items-center justify-center">

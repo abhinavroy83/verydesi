@@ -1,9 +1,12 @@
 "use client";
 import { useParams } from "next/navigation";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { id } = useParams();
+  const router = useRouter(); // Ensure you're using this hook
+
   return (
     <div className="mt-[8rem]">
       <div className="container mx-auto px-4 sm:px-6">
@@ -27,7 +30,12 @@ const page = () => {
                           NEXT
                         </button>
                       </div>
-                      <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md flex items-center">
+                      <button
+                        onClick={() => {
+                          router.push("/dashboard/Share");
+                        }}
+                        className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md flex items-center"
+                      >
                         <svg
                           className="h-5 w-5 mr-2"
                           fill="none"
@@ -67,7 +75,12 @@ const page = () => {
                         Single Family Home
                       </span>
                     </div>
-                    <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md">
+                    <button
+                      onClick={() => {
+                        router.push("/Contact");
+                      }}
+                      className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md"
+                    >
                       Get in touch
                     </button>
                     <div className="mt-4">

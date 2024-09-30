@@ -29,7 +29,7 @@ export default function Component() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-8 max-w-7xl mx-auto p-6 bg-white shadow-xl mt-[9rem] border rounded-lg"
+      className="space-y-8 max-w-7xl mx-auto p-6 bg-white shadow-xl mt-[9rem] rounded-lg"
     >
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">Post Room in Portland</h2>

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -55,7 +54,7 @@ export default function Component() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <button
         onClick={toggleMenu}
         className="px-6 py-3 bg-white text-purple-600 rounded-full hover:bg-purple-100 transition-colors duration-300 flex items-center space-x-2 shadow-lg"
@@ -87,7 +86,7 @@ export default function Component() {
                 className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 transition-colors duration-300"
                 aria-label="Close menu"
               >
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6 hover:rotate-[360deg] transition-transform duration-300" />
               </button>
               <h2 className="text-2xl font-bold mb-6 text-center relative z-10">
                 Share via
