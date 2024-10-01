@@ -35,13 +35,13 @@ export default function Component() {
     useState(notifications);
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-      <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-4 flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-white flex items-center">
+    <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden mt-[20rem]">
+      <div className="bg-gray-200 text-black p-4 flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-black flex items-center">
           <Bell className="mr-2" />
           Notifications
         </h2>
-        <span className="bg-white text-purple-500 rounded-full px-2 py-1 text-sm font-semibold">
+        <span className="bg-white text-black rounded-full px-2 py-1 text-sm font-semibold">
           {visibleNotifications.length}
         </span>
       </div>
