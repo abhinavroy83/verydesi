@@ -98,10 +98,10 @@ function page() {
         </h1>
         <div className="px-4 py-6 sm:px-0">
           <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-            <p className="text-gray-600 py-3 text-center">
+            <h2 className="text-lg leading-6 font-bold text-gray-900 mb-4 px-4 mt-7">
               Effective Date: [Insert Date]
-            </p>
-            <p className="text-gray-700 mb-8">
+            </h2>
+            <p className="text-gray-700 mb-8 px-4 ">
               Welcome to VeryDesi.com. By accessing or using our website, you
               agree to comply with and be bound by the following Terms of Use.
               These terms govern your use of our social networking, business
@@ -121,12 +121,6 @@ function page() {
                   <p className="mt-1 text-sm text-gray-600">
                     {section.content}
                   </p>
-
-                  {section.content && (
-                    <p className="mt-4 text-sm text-gray-600 whitespace-pre-line">
-                      {section.content}
-                    </p>
-                  )}
                 </div>
               ))}
             </div>

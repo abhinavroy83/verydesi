@@ -72,10 +72,10 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href="/privacy"
+                href="/copyright"
                 className="hover:text-white transition-colors duration-200 ease-in-out"
               >
-                Privacy Notice
+                Copyright Policy{" "}
               </Link>
             </li>
             <li>
