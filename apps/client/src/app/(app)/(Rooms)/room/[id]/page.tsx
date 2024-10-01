@@ -1,9 +1,49 @@
 "use client";
+import axios from "axios";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Image from "next/image";
+
+interface ImageData {
+  src: string;
+}
+interface RoomData {
+  id: string;
+  Imgurl: [];
+}
 
 const page = () => {
   const { id } = useParams();
+  const [Data, setData] = useState<RoomData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchRoom = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://api.verydesi.com/api/getspecificroom/66efdf977c15710096f8c5b8`
+      );
+      console.log(response.data.rooms);
+      setData(response.data.rooms);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchRoom();
+  }, []);
+
+ 
+
   return (
     <div className="mt-[9rem]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,11 +82,26 @@ const page = () => {
                         Share
                       </button>
                     </div>
-                    <img
-                      className="w-full h-[25rem] object-cover rounded-lg"
-                      src="https://res.cloudinary.com/druohnmyv/image/upload/v1725526210/krvwwzdxgznzxkintdm8.jpg"
-                      alt="Room image"
-                    />
+                    <Carousel className="w-full max-w-2xl mx-auto">
+                      <CarouselContent>
+                        {Data?.Imgurl.map((image, index) => (
+                          <CarouselItem key={index}>
+                            <div className="p-1">
+                              <Image
+                                src={image}
+                                alt="not foundt"
+                                width={600}
+                                height={400}
+                                className="w-full h-[25rem] object-cover rounded-lg"
+                              />
+                            </div>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious />
+                      <CarouselNext />
+                    </Carousel>
+
                     <h2 className="text-2xl font-bold mt-4">
                       2BR 2Bath Apartment In Normal $700/Month
                     </h2>

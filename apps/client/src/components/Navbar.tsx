@@ -23,6 +23,7 @@ import { WeatherData } from "@myrepo/types";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Area from "./Area/Area";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -78,14 +79,7 @@ export default function Navbar() {
                 />
               </Link>
 
-              <div className="hidden md:block ml-4">
-                <Button
-                  variant="ghost"
-                  className="text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                >
-                  Portland <ChevronDown className="ml-1 h-4 w-4" />
-                </Button>
-              </div>
+              <Area />
             </div>
 
             <div className="hidden sm:flex items-center space-x-6">
