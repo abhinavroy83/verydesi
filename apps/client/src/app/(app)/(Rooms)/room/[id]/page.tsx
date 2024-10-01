@@ -137,32 +137,6 @@ export default function RoomDetails() {
         </div>
 
         <div className="space-y-6">
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Contact Host</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Your name" />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Your email" />
-                </div>
-                <div>
-                  <Label htmlFor="message">Message</Label>
-                  <textarea
-                    id="message"
-                    placeholder="Your message"
-                    className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
-                  />
-                </div>
-                <Button className="w-full">Send Message</Button>
-              </form>
-            </CardContent>
-          </Card>
           <Card>
             <CardHeader>
               <CardTitle>Location</CardTitle>
@@ -187,12 +161,6 @@ export default function RoomDetails() {
               <CardTitle>Amenities Included</CardTitle>
             </CardHeader>
             <CardContent>
-              <Input
-                placeholder="Filter amenities..."
-                value={amenityFilter}
-                onChange={(e) => setAmenityFilter(e.target.value)}
-                className="mb-4"
-              />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {filteredAmenities.map((amenity, index) => {
                   if (isValidIcon(amenity.icon)) {
@@ -251,6 +219,32 @@ export default function RoomDetails() {
                   </div>
                 ))}
               </div>
+            </CardContent>
+          </Card>
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle>Contact Host</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form className="space-y-4">
+                <div>
+                  <Label htmlFor="name">Name</Label>
+                  <Input id="name" placeholder="Your name" />
+                </div>
+                <div>
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" type="email" placeholder="Your email" />
+                </div>
+                <div>
+                  <Label htmlFor="message">Message</Label>
+                  <textarea
+                    id="message"
+                    placeholder="Your message"
+                    className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
+                  />
+                </div>
+                <Button className="w-full">Send Message</Button>
+              </form>
             </CardContent>
           </Card>
         </div>
