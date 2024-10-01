@@ -1,12 +1,46 @@
 "use client";
 import axios from "axios";
-import { useParams } from "next/navigation";
-import React from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Image from "next/image";
+
+interface ImageData {
+  src: string;
+}
+interface RoomData {
+  id: string;
+  Imgurl: [];
+}
 
 const page = () => {
   const { id } = useParams();
-  const router = useRouter(); // Ensure you're using this hook
+  const [Data, setData] = useState<RoomData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
+  const fetchRoom = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://api.verydesi.com/api/getspecificroom/66efdf977c15710096f8c5b8`
+      );
+      console.log(response.data.rooms);
+      setData(response.data.rooms);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchRoom();
+  }, []);
 
   return (
     <div className="mt-[8rem]">
