@@ -1,7 +1,7 @@
 "use client";
-import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+
+import { useState } from "react";
+import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -9,276 +9,226 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Icons } from "@/components/Room/Icons";
 import ShareButton from "@/components/Popups/ShareButton";
-import ContactForm from "@/components/Room/contactus";
 
-interface ImageData {
-  src: string;
-}
-interface RoomData {
-  id: string;
-  Imgurl: [];
-}
-
-const page = () => {
-  const { id } = useParams();
-  const [Data, setData] = useState<RoomData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const router = useRouter();
-  const fetchRoom = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `https://api.verydesi.com/api/getspecificroom/66efdf977c15710096f8c5b8`
-      );
-      console.log(response.data.rooms);
-      setData(response.data.rooms);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchRoom();
-  }, []);
-
-  return (
-    <div className="mt-[8rem]">
-      <div className="container mx-auto px-4 sm:px-6">
-        <h1 className="text-3xl font-bold leading-tight text-gray-900">
-          Rooms
-        </h1>
-      </div>
-      <main>
-        <div className="container mx-auto sm:px-6">
-          <div className="px-4 py-4 sm:px-0">
-            <div className="flex flex-col md:flex-row gap-8">
-              <div className="md:w-2/3">
-                <div className="bg-white overflow-hidden shadow-xl rounded-lg border">
-                  <div className="px-4 py-5 sm:p-6">
-                    <div className="flex justify-between items-center mb-4">
-                      <div className="flex space-x-2">
-                        <button className="bg-red-600 text-white px-4 py-2 rounded-md">
-                          PREV
-                        </button>
-                        <button className="bg-blue-600 text-white px-4 py-2 rounded-md">
-                          NEXT
-                        </button>
-                      </div>
-
-                      <ShareButton />
-                    </div>
-                    <Carousel className="w-full max-w-2xl mx-auto">
-                      <CarouselContent>
-                        {Data?.Imgurl.map((image, index) => (
-                          <CarouselItem key={index}>
-                            <div className="p-1">
-                              <Image
-                                src={image}
-                                alt="not foundt"
-                                width={600}
-                                height={400}
-                                className="w-full h-[25rem] object-cover rounded-lg"
-                              />
-                            </div>
-                          </CarouselItem>
-                        ))}
-                      </CarouselContent>
-                      <CarouselPrevious />
-                      <CarouselNext />
-                    </Carousel>
-
-                    <h2 className="text-2xl font-bold mt-4">
-                      2BR 2Bath Apartment In Normal $700/Month
-                    </h2>
-                    <p className="text-gray-600">Portland, OR</p>
-                    <p className="text-green-600 font-bold text-xl mt-2">
-                      $ 700
-                    </p>
-                    <p className="text-gray-700 mt-2">By Raees Rohit Sohil</p>
-                    <div className="flex items-center mt-2">
-                      <svg
-                        className="h-5 w-5 text-yellow-500"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                      </svg>
-                      <span className="ml-1 text-gray-700">
-                        Single Family Home
-                      </span>
-                    </div>
-
-                    <ContactForm />
-                    <div className="mt-4">
-                      <h3 className="text-lg font-semibold">Description</h3>
-                      <p className="text-gray-700 mt-2">
-                        I Have A Master Bedroom Available For Rent In Parkview
-                        Apartments About 5.5 Miles From Rivian Normal Plant And
-                        I Am Looking For A Roommate. Availability August 20th.
-                        Rent Will Be $700 A Month (Includes Water, Trash And
-                        Internet). Electricity And Gas Will Be Separate.
-                        Apartment Has Inhouse Washer And Dryer Access And
-                        Kitchen Includes Stainless Steel Microwave, Dishwasher
-                        And Refrigerator. The Apartment Is 2 Bed 2 Bath.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="md:w-1/3">
-                <div className="bg-white overflow-hidden shadow-xl rounded-lg mb-6 border">
-                  <div className="px-4 py-5 sm:p-6">
-                    <h3 className="text-lg font-semibold mb-4">
-                      More Info About Room
-                    </h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Property Type
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">
-                          Single Family Home
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          City
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">Portland</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Availability From
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">08/20/2024</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Available To
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">Immediate</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Attached Bath
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">Yes</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Preferred Gender
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">Any</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Deposit
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">$ 350</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Is Room Furnished
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">
-                          Unfurnished
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white overflow-hidden shadow-xl rounded-lg mb-6 border">
-                  <div className="px-4 py-5 sm:p-6">
-                    <h3 className="text-lg font-semibold mb-4">
-                      Amenities Included
-                    </h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="flex items-center">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span className="text-sm text-gray-700">Car Park</span>
-                      </div>
-                      <div className="flex items-center">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span className="text-sm text-gray-700">
-                          Visitors Parking
-                        </span>
-                      </div>
-                      <div className="flex items-center">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span className="text-sm text-gray-700">
-                          Private Lawn
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white overflow-hidden shadow-xl rounded-lg border">
-                  <div className="px-4 py-5 sm:p-6">
-                    <h3 className="text-lg font-semibold mb-4">
-                      Additional Information
-                    </h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Dietary Preference
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">Both</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Smoking Policy
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">No Smoking</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Pet Friendly
-                        </p>
-                        <p className="mt-1 text-sm text-gray-900">No Pets</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+const roomData = {
+  id: "1",
+  title: "2BR 2Bath Apartment In Normal",
+  description:
+    "I Have A Master Bedroom Available For Rent In Parkview Apartments About 5.5 Miles From Rivian Normal Plant And I Am Looking For A Roommate. Availability August 20th. Rent Will Be $700 A Month (Includes Water, Trash And Internet). Electricity And Gas Will Be Separate. Apartment Has Inhouse Washer And Dryer Access And Kitchen Includes Stainless Steel Microwave, Dishwasher And Refrigerator. The Apartment Is 2 Bed 2 Bath.",
+  price: 700,
+  location: "Portland, OR",
+  owner: "Raees Rohit Sohil",
+  images: [
+    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+    "https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+    "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+  ],
+  amenities: [
+    { name: "Car Park", icon: "Car" },
+    { name: "Visitors Parking", icon: "Users" },
+    { name: "Private Lawn", icon: "Tree" },
+    { name: "High-Speed Internet", icon: "Wifi" },
+    { name: "Laundry Facilities", icon: "Shirt" },
+    { name: "Air Conditioning", icon: "Wind" },
+  ],
+  utilities: [
+    { name: "Internet", icon: "Wifi" },
+    { name: "Electricity", icon: "Zap" },
+    { name: "Water", icon: "Droplet" },
+  ],
+  details: {
+    "Property Type": "Single Family Home",
+    City: "Portland",
+    "Availability From": "08/20/2024",
+    "Available To": "Immediate",
+    "Attached Bath": "Yes",
+    "Preferred Gender": "Any",
+    Deposit: "$ 350",
+    "Is Room Furnished": "Unfurnished",
+  },
+  additionalInfo: {
+    "Dietary Preference": "Both",
+    "Smoking Policy": "No Smoking",
+    "Pet Friendly": "No Pets",
+  },
 };
 
-export default page;
+const isValidIcon = (icon: string): icon is keyof typeof Icons => {
+  return icon in Icons;
+};
+
+export default function RoomDetails() {
+  const [amenityFilter, setAmenityFilter] = useState("");
+
+  const filteredAmenities = roomData.amenities.filter((amenity) =>
+    amenity.name.toLowerCase().includes(amenityFilter.toLowerCase())
+  );
+
+  return (
+    <div className="container mx-auto px-4 py-8 mt-32">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          <Card>
+            <CardContent className="p-0">
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {roomData.images.map((image, index) => (
+                    <CarouselItem key={index}>
+                      <div className="relative aspect-video">
+                        <Image
+                          src={image}
+                          alt={`Room image ${index + 1}`}
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    {roomData.title}
+                  </h1>
+                  <p className="text-gray-600">{roomData.location}</p>
+                </div>
+                <ShareButton />
+              </div>
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-2xl font-bold text-green-600">
+                  ${roomData.price}/month
+                </p>
+                <p className="text-gray-700">By {roomData.owner}</p>
+              </div>
+              <p className="text-gray-700 mb-6">{roomData.description}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>More Info About Room</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-4">
+                {Object.entries(roomData.details).map(([key, value]) => (
+                  <div key={key}>
+                    <p className="text-sm font-medium text-gray-500">{key}</p>
+                    <p className="mt-1 text-sm text-gray-900">{value}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Location</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="aspect-w-16 aspect-h-9">
+                <iframe
+                  src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(roomData.location)}`}
+                  width="100%"
+                  height="200"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Amenities Included</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                placeholder="Filter amenities..."
+                value={amenityFilter}
+                onChange={(e) => setAmenityFilter(e.target.value)}
+                className="mb-4"
+              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {filteredAmenities.map((amenity, index) => {
+                  if (isValidIcon(amenity.icon)) {
+                    const IconComponent = Icons[amenity.icon];
+                    return (
+                      <div key={index} className="flex items-center">
+                        <IconComponent className="h-5 w-5 text-green-500 mr-2" />
+                        <span className="text-sm text-gray-700">
+                          {amenity.name}
+                        </span>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Utilities</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-4">
+                {roomData.utilities.map((utility, index) => {
+                  if (isValidIcon(utility.icon)) {
+                    const IconComponent = Icons[utility.icon];
+                    return (
+                      <div key={index} className="flex items-center">
+                        <IconComponent className="h-5 w-5 text-green-500 mr-2" />
+                        <span className="text-sm text-gray-700">
+                          {utility.name}
+                        </span>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Additional Information</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {Object.entries(roomData.additionalInfo).map(([key, value]) => (
+                  <div key={key} className="flex items-center">
+                    <span className="text-sm font-medium text-gray-500 mr-2">
+                      {key}:
+                    </span>
+                    <span className="text-sm text-gray-700">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}

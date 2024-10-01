@@ -5,3 +5,4 @@ export * from "./Desing3";
 export * from "./Desing4";
 export * from "./FeaturedCard2";
 export * from "./contactus";
+export * from "./Icons";

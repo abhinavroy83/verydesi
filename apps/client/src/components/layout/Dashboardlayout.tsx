@@ -29,7 +29,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     { name: "Dashboard", icon: Home, url: "/dashboard" },
     { name: "Setting", icon: Settings, url: "/dashboard/user" },
     { name: "Favorites", icon: Heart, url: "/dashboard/fav" },
-    { name: "Help", icon: HelpCircle, url: "/dashboard" },
+    { name: "Help", icon: HelpCircle, url: "/dashboard/help" },
   ];
 
   return (

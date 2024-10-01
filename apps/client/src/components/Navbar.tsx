@@ -25,6 +25,8 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Area from "./Area/Area";
 import Notification from "@/components/Notification/Notification";
+import ModernLogoutPopup from "./Popups/Logoutpop";
+import LogoutComponent from "./Popups/Logoutpop";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -155,7 +157,8 @@ export default function Navbar() {
                           >
                             <HelpCircle className="mr-2 h-4 w-4" /> Help
                           </Link>
-                          <a
+                          <LogoutComponent />
+                          {/* <a
                             href="#"
                             className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
@@ -166,7 +169,7 @@ export default function Navbar() {
                             }
                           >
                             <LogOut className="mr-2 h-4 w-4" /> Log out
-                          </a>
+                          </a> */}
                         </div>
                       </div>
                     )}
