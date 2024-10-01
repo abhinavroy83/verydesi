@@ -5,7 +5,8 @@ import { ChevronDownIcon } from "lucide-react";
 function page() {
   const [expandedSection, setExpandedSection] = useState<number | null>(null);
 
-  const toggleSection = (index: number) => { setExpandedSection(expandedSection === index ? null : index);
+  const toggleSection = (index: number) => {
+    setExpandedSection(expandedSection === index ? null : index);
   };
   const sections = [
     {
@@ -90,49 +91,45 @@ function page() {
     },
   ];
   return (
-    <div className="mt-[7rem]">
-      <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-center text-gray-900">
-            Terms of Use
-          </h1>
-          <p className="text-gray-600 py-3 text-center">
-            Effective Date: [Insert Date]
-          </p>
-          <p className="text-gray-700 mb-8">
-            Welcome to VeryDesi.com. By accessing or using our website, you
-            agree to comply with and be bound by the following Terms of Use.
-            These terms govern your use of our social networking, business
-            listings, and classifieds services. Please read them carefully. If
-            you do not agree to these terms, please refrain from using the
-            website.
-          </p>
-          <div className="space-y-4">
-            {sections.map((section, index) => (
-              <div
-                key={index}
-                className="bg-white shadow overflow-hidden sm:rounded-lg"
-              >
-                <button
-                  onClick={() => toggleSection(index)}
-                  className="w-full px-4 py-5 sm:px-6 text-left focus:outline-none"
+    <div className="mt-[7rem] bg-gray-100">
+      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <h1 className="text-2xl font-bold sm:text-4xl md:text-5xl lg:text-3xl text-center text-black">
+          Terms of Use
+        </h1>
+        <div className="px-4 py-6 sm:px-0">
+          <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+            <p className="text-gray-600 py-3 text-center">
+              Effective Date: [Insert Date]
+            </p>
+            <p className="text-gray-700 mb-8">
+              Welcome to VeryDesi.com. By accessing or using our website, you
+              agree to comply with and be bound by the following Terms of Use.
+              These terms govern your use of our social networking, business
+              listings, and classifieds services. Please read them carefully. If
+              you do not agree to these terms, please refrain from using the
+              website.
+            </p>
+            <div className="space-y-4">
+              {sections.map((section, index) => (
+                <div
+                  key={index}
+                  className="border-t border-gray-200 px-4 py-5 sm:p-6"
                 >
-                  <h3 className="text-lg leading-6 font-medium text-gray-900 flex justify-between items-center">
+                  <h2 className="text-lg leading-6 font-medium text-gray-900 mb-4">
                     {section.title}
-                    <ChevronDownIcon
-                      className={`h-5 w-5 text-gray-500 transform transition-transform ${
-                        expandedSection === index ? "rotate-180" : ""
-                      }`}
-                    />
-                  </h3>
-                </button>
-                {expandedSection === index && (
-                  <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
-                    <p className="text-gray-700">{section.content}</p>
-                  </div>
-                )}
-              </div>
-            ))}
+                  </h2>
+                  <p className="mt-1 text-sm text-gray-600">
+                    {section.content}
+                  </p>
+
+                  {section.content && (
+                    <p className="mt-4 text-sm text-gray-600 whitespace-pre-line">
+                      {section.content}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

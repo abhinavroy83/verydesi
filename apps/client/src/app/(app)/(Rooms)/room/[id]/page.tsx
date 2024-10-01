@@ -75,6 +75,15 @@ export default function RoomDetails() {
     <div className="container mx-auto px-4 py-8 mt-32">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                {roomData.title}
+              </h1>
+              <p className="text-gray-600">{roomData.location}</p>
+            </div>
+            <ShareButton />
+          </div>
           <Card>
             <CardContent className="p-0">
               <Carousel className="w-full">
@@ -100,15 +109,6 @@ export default function RoomDetails() {
 
           <Card>
             <CardContent className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                    {roomData.title}
-                  </h1>
-                  <p className="text-gray-600">{roomData.location}</p>
-                </div>
-                <ShareButton />
-              </div>
               <div className="flex items-center justify-between mb-4">
                 <p className="text-2xl font-bold text-green-600">
                   ${roomData.price}/month
