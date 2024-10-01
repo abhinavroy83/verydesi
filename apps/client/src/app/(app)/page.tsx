@@ -9,9 +9,11 @@ import FeaturedRoomcard from "@/components/Room/FeaturedRoomcard";
 import NonFeatureCard from "@/components/Room/NonFeatureCard";
 import { useSession } from "next-auth/react";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   if (session) {
     // Access the JWT token
@@ -96,6 +98,9 @@ const Page = () => {
         <button
           type="button"
           className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out"
+          onClick={() => {
+            router.push("/post-room");
+          }}
         >
           Add Room
         </button>

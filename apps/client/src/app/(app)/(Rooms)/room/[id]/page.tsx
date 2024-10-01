@@ -1,58 +1,22 @@
 "use client";
 import axios from "axios";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Image from "next/image";
-
-interface ImageData {
-  src: string;
-}
-interface RoomData {
-  id: string;
-  Imgurl: [];
-}
+import React from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { id } = useParams();
-  const [Data, setData] = useState<RoomData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const fetchRoom = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `https://api.verydesi.com/api/getspecificroom/66efdf977c15710096f8c5b8`
-      );
-      console.log(response.data.rooms);
-      setData(response.data.rooms);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchRoom();
-  }, []);
-
- 
+  const router = useRouter(); // Ensure you're using this hook
 
   return (
-    <div className="mt-[9rem]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="mt-[8rem]">
+      <div className="container mx-auto px-4 sm:px-6">
         <h1 className="text-3xl font-bold leading-tight text-gray-900">
           Rooms
         </h1>
       </div>
       <main>
-        <div className="container mx-auto sm:px-6 lg:px-8">
+        <div className="container mx-auto sm:px-6">
           <div className="px-4 py-4 sm:px-0">
             <div className="flex flex-col md:flex-row gap-8">
               <div className="md:w-2/3">
@@ -67,7 +31,12 @@ const page = () => {
                           NEXT
                         </button>
                       </div>
-                      <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md flex items-center">
+                      <button
+                        onClick={() => {
+                          router.push("/dashboard/Share");
+                        }}
+                        className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md flex items-center"
+                      >
                         <svg
                           className="h-5 w-5 mr-2"
                           fill="none"
@@ -122,7 +91,12 @@ const page = () => {
                         Single Family Home
                       </span>
                     </div>
-                    <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md">
+                    <button
+                      onClick={() => {
+                        router.push("/Contact");
+                      }}
+                      className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md"
+                    >
                       Get in touch
                     </button>
                     <div className="mt-4">
