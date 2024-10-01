@@ -81,8 +81,8 @@ const favorites: Favorite[] = [
 export default function FavoritesPage() {
   return (
     <DashboardLayout>
-      <div className="container mx-auto p-6">
-        <div className="bg-gray-900 text-white p-4 rounded-t-lg flex items-center space-x-2 mb-4">
+      <div className="container mx-auto border bg-gray-100 text-black rounded-lg">
+        <div className="bg-gray-200 text-black p-4 rounded-t-lg flex items-center space-x-2 mb-4">
           <Heart className="w-6 h-6 text-red-500" />
           <h1 className="text-2xl font-bold">Favorites</h1>
         </div>

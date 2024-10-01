@@ -33,7 +33,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="flex h-screen bg-background max-w-[1370px] lg:max-w-[1600px] mx-auto mt-32">
+    <div className="flex h-screen bg-background max-w-[1370px] lg:max-w-[1600px] mx-auto mt-32 border shadow-black shadow-sm rounded-2xl">
       {/* Sidebar */}
       <aside className="w-64 border-r bg-muted/30 flex flex-col">
         <div className="p-6 flex flex-col items-center">

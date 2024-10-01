@@ -26,7 +26,7 @@ export default function Component({
 }: RoomCardProps) {
   return (
     <Link href={`room/${id}`}>
-      <Card className="w-[36rem] h-[220px] perspective-1000 group">
+      <Card className="w-[36rem] h-[190px] perspective-1000 group w-full">
         <CardContent className="p-0 flex h-full">
           <div className="w-1/3 relative group">
             <img
@@ -34,18 +34,18 @@ export default function Component({
               alt="Luxury Highrise Studio"
               className="absolute inset-0 w-full h-full object-cover rounded-lg group-hover:scale-100 transition-transform duration-500 ease-in duration-70"
             />
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent ">
               <Button
                 variant="secondary"
                 size="sm"
-                className="w-full bg-white text-blue-500 hover:bg-blue-100 group-hover:translate-y-1 transition-transform duration-300"
+                className="w-full bg-white text-blue-500 hover:bg-red-600 hover:text-white group-hover:translate-y-1 transition-transform duration-300"
               >
                 <Heart className="h-4 w-4 mr-2" />
                 Add to Wishlist
               </Button>
             </div>
           </div>
-          <div className="flex flex-col justify-between flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+          <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
               <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
                 {title}
@@ -83,7 +83,7 @@ export default function Component({
               </div>
             </div>
             <div className="flex justify-between items-center">
-              <p className="text-3xl font-bold text-blue-600 group-hover:scale-105 transition-transform duration-300">
+              <p className="text-2xl font-bold text-blue-600 group-hover:scale-105 transition-transform duration-300">
                 {price}/mo
               </p>
             </div>

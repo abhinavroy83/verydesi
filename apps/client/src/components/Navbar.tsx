@@ -90,7 +90,7 @@ export default function Navbar() {
               {session ? (
                 <>
                   <div
-                    className=" relative"
+                    className=" relative text-black"
                     onMouseEnter={() => setIsNotificationOpen(true)}
                     onMouseLeave={() => setIsNotificationOpen(false)}
                   >
@@ -122,7 +122,7 @@ export default function Navbar() {
                       </Avatar>
                     </Button>
                     {isDropdownOpen && (
-                      <div className="absolute right-0  w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                      <div className="absolute right-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                         <div
                           className="py-1"
                           role="menu"

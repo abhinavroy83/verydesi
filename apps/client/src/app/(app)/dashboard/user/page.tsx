@@ -63,27 +63,29 @@ export default function DashboardUserSettings() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col h-full overflow-hidden">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Settings</h2>
-          <Button
-            onClick={() => setIsEditing(!isEditing)}
-            variant="outline"
-            size="sm"
-          >
-            {isEditing ? (
-              "Cancel"
-            ) : (
-              <>
-                <Pencil className="w-4 h-4 mr-2" />
-                Edit Profile
-              </>
-            )}
-          </Button>
+      <div className="flex flex-col h-full overflow-hidden border rounded-lg">
+        <div className="flex justify-between items-center">
+          <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2 mb-4 flex justify-between w-full">
+            <h2 className="text-2xl font-bold ">Settings</h2>
+            <Button
+              onClick={() => setIsEditing(!isEditing)}
+              variant="outline"
+              size="sm"
+            >
+              {isEditing ? (
+                "Cancel"
+              ) : (
+                <>
+                  <Pencil className="w-4 h-4 mr-2" />
+                  Edit Profile
+                </>
+              )}
+            </Button>
+          </div>
         </div>
         <div className="overflow-y-auto flex-grow pr-4 -mr-4">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 px-4">
               <div className="col-span-full">
                 <Label htmlFor="accountBelongTo">Your Account belong to</Label>
                 <Controller
@@ -311,7 +313,7 @@ export default function DashboardUserSettings() {
               </div>
             )}
           </form>
-          <div className="mt-8 space-y-6">
+          <div className="mt-8 space-y-6 px-4">
             <div>
               <h3 className="text-lg font-medium leading-6 text-gray-900">
                 Change Password
