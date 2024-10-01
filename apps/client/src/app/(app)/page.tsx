@@ -34,61 +34,61 @@ const Page = () => {
       postedBy: "Alice",
       daysAgo: 2,
     },
-    // {
-    //   id: 2,
-    //   imageUrl: "https://placeholder.pics/svg/300x350",
-    //   title: "Modern Room 2",
-    //   price: 1500,
-    //   location: "Los Angeles, CA",
-    //   gender: "female",
-    //   roomType: "Shared Room",
-    //   postedBy: "Bob",
-    //   daysAgo: 5,
-    // },
-    // {
-    //   id: 3,
-    //   imageUrl: "https://placeholder.pics/svg/300x350",
-    //   title: "Charming Room 3",
-    //   price: 1400,
-    //   location: "San Francisco, CA",
-    //   gender: "other",
-    //   roomType: "Entire Place",
-    //   postedBy: "Charlie",
-    //   daysAgo: 1,
-    // },
-    // {
-    //   id: 5,
-    //   imageUrl: "https://placeholder.pics/svg/300x350",
-    //   title: "Spacious Room 4",
-    //   price: 1300,
-    //   location: "Miami, FL",
-    //   gender: "male",
-    //   roomType: "Single Room",
-    //   postedBy: "Daisy",
-    //   daysAgo: 3,
-    // },
-    // {
-    //   id: 4,
-    //   imageUrl: "https://placeholder.pics/svg/300x350",
-    //   title: "Lovely Room 5",
-    //   price: 1600,
-    //   location: "Seattle, WA",
-    //   gender: "female",
-    //   roomType: "Shared Room",
-    //   postedBy: "Edward",
-    //   daysAgo: 4,
-    // },
-    // {
-    //   id: 6,
-    //   imageUrl: "https://placeholder.pics/svg/300x350",
-    //   title: "Elegant Room 6",
-    //   price: 1700,
-    //   location: "Chicago, IL",
-    //   gender: "other",
-    //   roomType: "Entire Place",
-    //   postedBy: "Fiona",
-    //   daysAgo: 2,
-    // },
+    {
+      id: 2,
+      imageUrl: "https://placeholder.pics/svg/300x350",
+      title: "Modern Room 2",
+      price: 1500,
+      location: "Los Angeles, CA",
+      gender: "female",
+      roomType: "Shared Room",
+      postedBy: "Bob",
+      daysAgo: 5,
+    },
+    {
+      id: 3,
+      imageUrl: "https://placeholder.pics/svg/300x350",
+      title: "Charming Room 3",
+      price: 1400,
+      location: "San Francisco, CA",
+      gender: "other",
+      roomType: "Entire Place",
+      postedBy: "Charlie",
+      daysAgo: 1,
+    },
+    {
+      id: 5,
+      imageUrl: "https://placeholder.pics/svg/300x350",
+      title: "Spacious Room 4",
+      price: 1300,
+      location: "Miami, FL",
+      gender: "male",
+      roomType: "Single Room",
+      postedBy: "Daisy",
+      daysAgo: 3,
+    },
+    {
+      id: 4,
+      imageUrl: "https://placeholder.pics/svg/300x350",
+      title: "Lovely Room 5",
+      price: 1600,
+      location: "Seattle, WA",
+      gender: "female",
+      roomType: "Shared Room",
+      postedBy: "Edward",
+      daysAgo: 4,
+    },
+    {
+      id: 6,
+      imageUrl: "https://placeholder.pics/svg/300x350",
+      title: "Elegant Room 6",
+      price: 1700,
+      location: "Chicago, IL",
+      gender: "other",
+      roomType: "Entire Place",
+      postedBy: "Fiona",
+      daysAgo: 2,
+    },
   ];
 
   return (
@@ -107,14 +107,18 @@ const Page = () => {
       </div>
       <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
         {roomCardsData.map((room, index) => (
-          <FeaturedRoomcard key={index} {...room} />
+          <FeaturedCard2 key={index} {...room} />
         ))}
-
-        <FeaturedCard2 />
       </div>
       <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
-      <NonFeatureCard />
-      <div className=" py-5">
+
+      <div className=" flex flex-col gap-2">
+        {roomCardsData.map((room, index) => (
+          <NonFeatureCard key={index} {...room} />
+        ))}
+      </div>
+
+      {/* <div className=" py-5">
         <Design2 />
       </div>
       <div className=" py-5">
@@ -122,7 +126,7 @@ const Page = () => {
       </div>
       <div className=" py-5">
         <Desing4 />
-      </div>
+      </div> */}
     </HomeLayout>
   );
 };

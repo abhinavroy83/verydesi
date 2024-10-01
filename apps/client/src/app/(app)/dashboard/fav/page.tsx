@@ -1,325 +1,137 @@
 "use client";
-
-import React from "react";
+import {
+  Heart,
+  Home,
+  Building2,
+  DollarSign,
+  ExternalLink,
+  Trash2,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { DashboardLayout } from "@/components/layout";
 
-function page() {
+type Favorite = {
+  id: string;
+  image: string;
+  name: string;
+  location: string;
+  rent: number;
+};
+
+const favorites: Favorite[] = [
+  {
+    id: "1",
+    image: "/placeholder.svg?height=40&width=40",
+    name: "New Home : 1Bed Private Bath Available In Sunfield Community",
+    location: "Buda, TX",
+    rent: 800,
+  },
+  {
+    id: "2",
+    image: "/placeholder.svg?height=40&width=40",
+    name: "2BR 2Bath Apartment In Normal $700/month",
+    location: "Portland, OR",
+    rent: 700,
+  },
+  {
+    id: "3",
+    image: "/placeholder.svg?height=40&width=40",
+    name: "Have Room To Rent",
+    location: "Manor, TX",
+    rent: 700,
+  },
+  {
+    id: "4",
+    image: "/placeholder.svg?height=40&width=40",
+    name: "Single Room Available In A New Single 4B/3B Home",
+    location: "Round Rock, TX",
+    rent: 680,
+  },
+  {
+    id: "5",
+    image: "/placeholder.svg?height=40&width=40",
+    name: "Fully Furnished Bedroom With Attached Bath In A Family Home Nearer To Nike, Intel, Shops, Bus Stop Including Utilities",
+    location: "Portland, OR",
+    rent: 1200,
+  },
+  {
+    id: "6",
+    image: "/placeholder.svg?height=40&width=40",
+    name: "Furnished Single Room Available For Male",
+    location: "Portland, OR",
+    rent: 550,
+  },
+  {
+    id: "7",
+    image: "/placeholder.svg?height=40&width=40",
+    name: "Townhouse For Rent",
+    location: "Portland, OR",
+    rent: 2000,
+  },
+];
+
+export default function FavoritesPage() {
   return (
     <DashboardLayout>
-      <div>
-        <body className="bg-gradient-to-br from-purple-100 to-blue-100 min-h-screen">
-          <div className="container mx-auto px-4 py-8">
-            <header className="bg-white shadow-md rounded-lg p-6 mb-8">
-              <h1 className="text-3xl font-bold text-gray-800 flex items-center">
-                <svg
-                  className="w-8 h-8 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                Favorites
-              </h1>
-            </header>
-
-            <main className="bg-white rounded-lg shadow-lg p-6">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                      <th className="py-3 px-6 text-left">Room</th>
-                      <th className="py-3 px-6 text-left">City, State</th>
-                      <th className="py-3 px-6 text-center">Rent</th>
-                      <th className="py-3 px-6 text-center">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-600 text-sm font-light">
-                    <tr className="border-b border-gray-200 hover:bg-gray-50">
-                      <td className="py-3 px-6 text-left whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="mr-2">
-                            <svg
-                              className="w-6 h-6 text-yellow-500"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                              ></path>
-                            </svg>
-                          </div>
-                          <span className="font-medium">
-                            Fully Furnished Bedroom With Attached Bath In A
-                            Family Home Nearer To Nike, Intel, Shops, Bus Stop
-                            Including Utilities
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-3 px-6 text-left">
-                        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs">
-                          Portland, OR
-                        </span>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                          $1200
-                        </span>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <div className="flex item-center justify-center">
-                          <button
-                            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                          >
-                            Visit Page
-                          </button>
-                          <button
-                            className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-200 hover:bg-gray-50">
-                      <td className="py-3 px-6 text-left whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="mr-2">
-                            <svg
-                              className="w-6 h-6 text-yellow-500"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                              ></path>
-                            </svg>
-                          </div>
-                          <span className="font-medium">
-                            Furnished Single Room Available For Male
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-3 px-6 text-left">
-                        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs">
-                          Portland, OR
-                        </span>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                          $550
-                        </span>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <div className="flex item-center justify-center">
-                          <button
-                            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                          >
-                            Visit Page
-                          </button>
-                          <button
-                            className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-200 hover:bg-gray-50">
-                      <td className="py-3 px-6 text-left whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="mr-2">
-                            <svg
-                              className="w-6 h-6 text-yellow-500"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                              ></path>
-                            </svg>
-                          </div>
-                          <span className="font-medium">
-                            Townhouse For Rent
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-3 px-6 text-left">
-                        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs">
-                          Portland, OR
-                        </span>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                          $2000
-                        </span>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <div className="flex item-center justify-center">
-                          <button
-                            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                          >
-                            Visit Page
-                          </button>
-                          <button
-                            className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-200 hover:bg-gray-50">
-                      <td className="py-3 px-6 text-left whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="mr-2">
-                            <svg
-                              className="w-6 h-6 text-yellow-500"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                              ></path>
-                            </svg>
-                          </div>
-                          <span className="font-medium">
-                            Room For Rent Available In Bethany Close To Nike
-                            Campus And Intel, Portland - 97229. All Utilities
-                            Included
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-3 px-6 text-left">
-                        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs">
-                          Portland, OR
-                        </span>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                          $945
-                        </span>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <div className="flex item-center justify-center">
-                          <button
-                            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                          >
-                            Visit Page
-                          </button>
-                          <button
-                            className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="flex justify-center mt-6">
-                <nav
-                  className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-                  aria-label="Pagination"
-                >
-                  <a
-                    href="#"
-                    className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                  >
-                    <span className="sr-only">Previous</span>
-                    <svg
-                      className="h-5 w-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </a>
-                  <a
-                    href="#"
-                    aria-current="page"
-                    className="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                  >
-                    1
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                  >
-                    2
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium"
-                  >
-                    3
-                  </a>
-                  <a
-                    href="#"
-                    className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                  >
-                    <span className="sr-only">Next</span>
-                    <svg
-                      className="h-5 w-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </a>
-                </nav>
-              </div>
-            </main>
-          </div>
-        </body>
-        page
+      <div className="container mx-auto p-6">
+        <div className="bg-gray-900 text-white p-4 rounded-t-lg flex items-center space-x-2 mb-4">
+          <Heart className="w-6 h-6 text-red-500" />
+          <h1 className="text-2xl font-bold">Favorites</h1>
+        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[300px]">Room</TableHead>
+              <TableHead>City, State</TableHead>
+              <TableHead>Rent</TableHead>
+              <TableHead>Visit Page</TableHead>
+              <TableHead>Remove</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {favorites.map((favorite) => (
+              <TableRow key={favorite.id}>
+                <TableCell className="font-medium">
+                  <div className="flex items-center space-x-3">
+                    <img
+                      src={favorite.image}
+                      alt={favorite.name}
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <span className="truncate max-w-[230px]">
+                      {favorite.name}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell>{favorite.location}</TableCell>
+                <TableCell>${favorite.rent}</TableCell>
+                <TableCell>
+                  <Button variant="outline" size="sm">
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Click here
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button variant="ghost" size="sm">
+                    <Trash2 className="w-4 h-4 text-red-500" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <div className="mt-4 flex justify-center">
+          <Button variant="outline">1</Button>
+        </div>
       </div>
     </DashboardLayout>
   );
 }
-
-export default page;

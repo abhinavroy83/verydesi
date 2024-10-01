@@ -30,7 +30,7 @@ const notifications = [
   },
 ];
 
-export default function Component() {
+export default function Notification() {
   const [visibleNotifications, setVisibleNotifications] =
     useState(notifications);
 

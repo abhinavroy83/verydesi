@@ -24,6 +24,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Area from "./Area/Area";
+import Notification from "@/components/Notification/Notification";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -33,6 +34,7 @@ export default function Navbar() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [IsNotificationOpen, setIsNotificationOpen] = useState(false);
   const router = useRouter();
   useEffect(() => {
     axios
@@ -85,7 +87,14 @@ export default function Navbar() {
             <div className="hidden sm:flex items-center space-x-6">
               {session ? (
                 <>
-                  <Bell className="h-6 w-6 text-gray-600 hover:text-gray-900 cursor-pointer" />
+                  <div
+                    className=" relative"
+                    onMouseEnter={() => setIsNotificationOpen(true)}
+                    onMouseLeave={() => setIsNotificationOpen(false)}
+                  >
+                    <Bell className="h-6 w-6  text-gray-600 hover:text-gray-900 cursor-pointer" />
+                    {IsNotificationOpen && <Notification />}
+                  </div>
                   <div className="relative">
                     <Heart className="h-6 w-6 text-gray-600 hover:text-gray-900 cursor-pointer" />
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
