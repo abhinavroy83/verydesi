@@ -43,13 +43,13 @@ export default function Component() {
   return (
     <DashboardLayout>
       <main className="flex-1 overflow-y-auto">
-        <header className="bg-gray-800 text-white p-4">
+        <header className="bg-gray-100 text-black p-4">
           <h1 className="text-2xl font-semibold flex items-center">
             <HelpCircle className="mr-2" /> Help
           </h1>
         </header>
-        <div className="container mx-auto p-6">
-          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="container mx-auto p-4">
+          <form className="bg-white shadow-md rounded-xl px-8 pt-6 pb-8 mb-4 border">
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"

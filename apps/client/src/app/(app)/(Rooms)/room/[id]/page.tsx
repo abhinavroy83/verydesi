@@ -26,7 +26,12 @@ import {
 } from "@/constants";
 import { FaRegBuilding } from "react-icons/fa";
 import { LucideMapPin } from "lucide-react";
-
+import { FiClock } from "react-icons/fi";
+import { GiBathtub } from "react-icons/gi";
+import { IoTransgender } from "react-icons/io5";
+import { FaHandHoldingDollar } from "react-icons/fa6";
+import { IoBed } from "react-icons/io5";
+import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 const roomDatas = {
   id: "1",
   title: "2BR 2Bath Apartment In Normal",
@@ -109,6 +114,24 @@ export default function RoomDetails() {
     <div className="container mx-auto px-4 py-8 mt-32">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
+          <div className="flex space-x-2">
+            <button
+              // onClick={onPrev}
+              className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
+              aria-label="Previous listing"
+            >
+              <ChevronLeft className="w-5 h-5 inline-block mr-1" />
+              PREV
+            </button>
+            <button
+              // onClick={onNext}
+              className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors"
+              aria-label="Next listing"
+            >
+              NEXT
+              <ChevronRight className="w-5 h-5 inline-block ml-1" />
+            </button>
+          </div>
           <div className="flex justify-between items-start mb-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -143,13 +166,13 @@ export default function RoomDetails() {
 
           <Card>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-2">
                 <p className="text-2xl font-bold text-green-600">
                   ${roomData?.Expected_Rooms}/month
                 </p>
                 <p className="text-gray-700">By {roomData?.user_name}</p>
               </div>
-              <p className="text-gray-700 mb-6">{roomData?.Description}</p>
+              <p className="text-gray-700 mb-4">{roomData?.Description}</p>
             </CardContent>
           </Card>
 
@@ -160,7 +183,7 @@ export default function RoomDetails() {
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center">
-                  <FaRegBuilding className="h-6 w-6 text-green-500 mr-2" />
+                  <FaRegBuilding className="h-6 w-6 text-green-500 mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500 flex gap-2">
                       Property Type
@@ -171,7 +194,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <LucideMapPin className="h-6 w-6 text-green-500 mr-2" />
+                  <LucideMapPin className="h-6 w-6 text-green-500 mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">City</p>
                     <p className="mt-1 text-sm text-gray-900">
@@ -179,51 +202,70 @@ export default function RoomDetails() {
                     </p>
                   </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Available From
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Avaliblity_from}
-                  </p>
+                <div className="flex items-center">
+                  <FiClock className="h-6 w-6 text-green-500 mr-4" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Available From
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Avaliblity_from}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Available To
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Available_to}
-                  </p>
+                <div className="flex items-center">
+                  <FiClock className="h-6 w-6 text-green-500 mr-4" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Available To
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Available_to}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Attached Bath
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Attchd_Bath}
-                  </p>
+                <div className="flex items-center">
+                  <GiBathtub className="h-6 w-6 text-green-500 mr-4" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Attached Bath
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Attchd_Bath}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Preferred Gender
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Preferred_gender}
-                  </p>
+                <div className="flex items-center">
+                  <IoTransgender className="h-6 w-6 text-blue-500 mr-4" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Preferred Gender
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Preferred_gender}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Deposit</p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Desposite}
-                  </p>
+                <div className="flex items-center">
+                  <FaHandHoldingDollar className="h-6 w-6 text-green-500 mr-4" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">Deposit</p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Desposite}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Is Room Furnished
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.is_room_furnished}
-                  </p>
+                <div className="flex items-center">
+                  <IoBed className="h-6 w-6 text-green-500 mr-4" />
+                  <div>
+                    {" "}
+                    <p className="text-sm font-medium text-gray-500">
+                      Is Room Furnished
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.is_room_furnished}
+                    </p>
+                  </div>
                 </div>
               </div>
             </CardContent>

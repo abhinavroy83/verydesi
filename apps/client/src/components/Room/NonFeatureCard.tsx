@@ -30,7 +30,7 @@ export default function Component({
 }: RoomCardProps) {
   return (
     <Link href={`room/${id}`}>
-      <Card className="w-full max-w-7xl">
+      <Card className="w-full max-w-7xl shadow-sm hover:shadow-md">
         <CardContent className="p-4">
           <div className="flex items-center space-x-6">
             <div className="flex-shrink-0">
