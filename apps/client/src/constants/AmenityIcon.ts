@@ -1,6 +1,6 @@
 import {
   Dumbbell,
-  Pool,
+  Waves,
   Car,
   ParkingCircle,
   Zap,
@@ -9,14 +9,14 @@ import {
   Droplet,
   Shield,
   Shirt,
-  Elevator,
   Building2,
-  LucideIcon,
 } from "lucide-react";
+import { PiElevator } from "react-icons/pi";
+import { MdOutlinePool } from "react-icons/md";
 
 export const AmenityIcon = {
   "Gym/Fitness Center": Dumbbell,
-  "Swimming Pool": Pool,
+  "Swimming Pool": MdOutlinePool,
   "Car Park": Car,
   "Visitors Parking": ParkingCircle,
   "Power Backup": Zap,
@@ -25,7 +25,7 @@ export const AmenityIcon = {
   "Water Heater Plant": Droplet,
   "Security System": Shield,
   "Laundry Service": Shirt,
-  Elevator: Elevator,
+  Elevator: PiElevator,
   "Club House": Building2,
   // Add any other icons you need here
 };

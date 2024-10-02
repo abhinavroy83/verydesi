@@ -24,6 +24,8 @@ import {
   utilityIcons,
   UtilityType,
 } from "@/constants";
+import { FaRegBuilding } from "react-icons/fa";
+import { LucideMapPin } from "lucide-react";
 
 const roomDatas = {
   id: "1",
@@ -157,17 +159,25 @@ export default function RoomDetails() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Property Type
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Propertytype}
-                  </p>
+                <div className="flex items-center">
+                  <FaRegBuilding className="h-6 w-6 text-green-500 mr-2" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 flex gap-2">
+                      Property Type
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Propertytype}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">City</p>
-                  <p className="mt-1 text-sm text-gray-900">{roomData?.city}</p>
+                <div className="flex items-center">
+                  <LucideMapPin className="h-6 w-6 text-green-500 mr-2" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">City</p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.city}
+                    </p>
+                  </div>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-500">
@@ -258,7 +268,7 @@ export default function RoomDetails() {
                       </div>
                     );
                   }
-                  return null; 
+                  return null;
                 })}
               </div>
             </CardContent>
@@ -280,7 +290,7 @@ export default function RoomDetails() {
                         )}
                         <span className="text-sm text-gray-700">{utility}</span>
                       </div>
-                    ); 
+                    );
                   }
                   return null;
                 })}
