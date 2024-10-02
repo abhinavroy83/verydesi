@@ -67,7 +67,7 @@ export default function Component({
               <Button
                 variant="outline"
                 size="sm"
-                className="rounded-full hover:bg-red-600 hover:text-white"
+                className="rounded-lg hover:bg-red-600 hover:text-white"
               >
                 <Heart className="h-4 w-4 mr-2" />
                 Add to Wishlist
