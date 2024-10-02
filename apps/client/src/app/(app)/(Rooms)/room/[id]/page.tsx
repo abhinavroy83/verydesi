@@ -9,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -98,233 +99,257 @@ export default function RoomDetails() {
     <div className="container mx-auto px-4 py-8 mt-32">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="flex justify-between items-start mb-4">
+          <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start mb-4">
+              <div className="">
+                <div className="flex w-full">
+                  <div className="text-center flex gap-3 justify-between w-full">
+                    <div className="flex space-x-2">
+                      <button
+                        // onClick={onPrev}
+                        className="px-3 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
+                        aria-label="Previous listing"
+                      >
+                        <ChevronLeft className="w-5 h-5 inline-block mr-1" />
+                        PREV
+                      </button>
+                      <button
+                        // onClick={onNext}
+                        className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors"
+                        aria-label="Next listing"
+                      >
+                        NEXT
+                        <ChevronRight className="w-5 h-5 inline-block ml-1" />
+                      </button>
+                    </div>
+                  </div>
+                  <ShareButton />
+                </div>
+              </div>
+            </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
                 {roomData?.Title}
               </h1>
               <p className="text-gray-600">{roomData?.postingincity}</p>
             </div>
-            <ShareButton />
           </div>
-          <Card>
-            <CardContent className="p-0">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {roomData?.Imgurl?.map((image, index) => (
-                    <CarouselItem key={index}>
-                      <div className="relative aspect-video">
-                        <Image
-                          src={image}
-                          alt={`Room image ${index + 1}`}
-                          layout="fill"
-                          objectFit="cover"
-                        />
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-              </Carousel>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <p className="text-2xl font-bold text-green-600">
-                  ${roomData?.Expected_Rooms}/month
-                </p>
-                <p className="text-gray-700">By {roomData?.user_name}</p>
-              </div>
-              <p className="text-gray-700 mb-6">{roomData?.Description}</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>More Info About Room</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Property Type
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Propertytype}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">City</p>
-                  <p className="mt-1 text-sm text-gray-900">{roomData?.city}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Available From
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Avaliblity_from}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Available To
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Available_to}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Attached Bath
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Attchd_Bath}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Preferred Gender
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Preferred_gender}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">Deposit</p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Desposite}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Is Room Furnished
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.is_room_furnished}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Location</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="aspect-w-16 aspect-h-9">
-                <iframe
-                  // src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(roomData?.location)}`}
-                  width="100%"
-                  height="200"
-                  style={{ border: 0 }}
-                  allowFullScreen={true}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Amenities Included</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {filteredAmenities.map((amenity, index) => {
-                  if (isValidIcon(amenity.icon)) {
-                    const IconComponent = Icons[amenity.icon];
-                    return (
-                      <div key={index} className="flex items-center">
-                        <IconComponent className="h-5 w-5 text-green-500 mr-2" />
-                        <span className="text-sm text-gray-700">
-                          {amenity.name}
-                        </span>
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Utilities</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                {roomDatas.utilities.map((utility, index) => {
-                  if (isValidIcon(utility.icon)) {
-                    const IconComponent = Icons[utility.icon];
-                    return (
-                      <div key={index} className="flex items-center">
-                        <IconComponent className="h-5 w-5 text-green-500 mr-2" />
-                        <span className="text-sm text-gray-700">
-                          {utility.name}
-                        </span>
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Additional Information</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {Object.entries(roomDatas.additionalInfo).map(
-                  ([key, value]) => (
-                    <div key={key} className="flex items-center">
-                      <span className="text-sm font-medium text-gray-500 mr-2">
-                        {key}:
-                      </span>
-                      <span className="text-sm text-gray-700">{value}</span>
+        <Card>
+          <CardContent className="p-0">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {roomData?.Imgurl?.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative aspect-video">
+                      <Image
+                        src={image}
+                        alt={`Room image ${index + 1}`}
+                        layout="fill"
+                        objectFit="cover"
+                      />
                     </div>
-                  )
-                )}
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-2xl font-bold text-green-600">
+                ${roomData?.Expected_Rooms}/month
+              </p>
+              <p className="text-gray-700">By {roomData?.user_name}</p>
+            </div>
+            <p className="text-gray-700 mb-2">{roomData?.Description}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>More Info About Room</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Property Type
+                </p>
+                <p className="mt-1 text-sm text-gray-900">
+                  {roomData?.Propertytype}
+                </p>
               </div>
-            </CardContent>
-          </Card>
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Contact Host</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Your name" />
+              <div>
+                <p className="text-sm font-medium text-gray-500">City</p>
+                <p className="mt-1 text-sm text-gray-900">{roomData?.city}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Available From
+                </p>
+                <p className="mt-1 text-sm text-gray-900">
+                  {roomData?.Avaliblity_from}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Available To
+                </p>
+                <p className="mt-1 text-sm text-gray-900">
+                  {roomData?.Available_to}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Attached Bath
+                </p>
+                <p className="mt-1 text-sm text-gray-900">
+                  {roomData?.Attchd_Bath}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Preferred Gender
+                </p>
+                <p className="mt-1 text-sm text-gray-900">
+                  {roomData?.Preferred_gender}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">Deposit</p>
+                <p className="mt-1 text-sm text-gray-900">
+                  {roomData?.Desposite}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Is Room Furnished
+                </p>
+                <p className="mt-1 text-sm text-gray-900">
+                  {roomData?.is_room_furnished}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Location</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="aspect-w-16 aspect-h-9">
+              <iframe
+                // src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(roomData?.location)}`}
+                width="100%"
+                height="200"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Amenities Included</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {filteredAmenities.map((amenity, index) => {
+                if (isValidIcon(amenity.icon)) {
+                  const IconComponent = Icons[amenity.icon];
+                  return (
+                    <div key={index} className="flex items-center">
+                      <IconComponent className="h-5 w-5 text-green-500 mr-2" />
+                      <span className="text-sm text-gray-700">
+                        {amenity.name}
+                      </span>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Utilities</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
+              {roomDatas.utilities.map((utility, index) => {
+                if (isValidIcon(utility.icon)) {
+                  const IconComponent = Icons[utility.icon];
+                  return (
+                    <div key={index} className="flex items-center">
+                      <IconComponent className="h-5 w-5 text-green-500 mr-2" />
+                      <span className="text-sm text-gray-700">
+                        {utility.name}
+                      </span>
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Additional Information</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {Object.entries(roomDatas.additionalInfo).map(([key, value]) => (
+                <div key={key} className="flex items-center">
+                  <span className="text-sm font-medium text-gray-500 mr-2">
+                    {key}:
+                  </span>
+                  <span className="text-sm text-gray-700">{value}</span>
                 </div>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Your email" />
-                </div>
-                <div>
-                  <Label htmlFor="message">Message</Label>
-                  <textarea
-                    id="message"
-                    placeholder="Your message"
-                    className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
-                  />
-                </div>
-                <Button className="w-full">Send Message</Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Contact Host</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4">
+              <div>
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" placeholder="Your name" />
+              </div>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="email" placeholder="Your email" />
+              </div>
+              <div>
+                <Label htmlFor="message">Message</Label>
+                <textarea
+                  id="message"
+                  placeholder="Your message"
+                  className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
+                />
+              </div>
+              <Button className="w-full">Send Message</Button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
