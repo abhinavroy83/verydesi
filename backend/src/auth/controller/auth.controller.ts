@@ -53,4 +53,5 @@ export class AuthController {
   uniqueEmail(@Param('email') email: AuthEmailVerify) {
     return this.uniqueEmailVerify.uniqueEmail(email);
   }
+  
 }

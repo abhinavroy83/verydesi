@@ -8,6 +8,7 @@ import {
 import { Model } from 'mongoose';
 import { User } from 'src/auth/schemas';
 import { Cache } from 'cache-manager';
+import { UpdateUserdto } from 'src/auth/dto';
 
 @Injectable()
 export class UserService {
@@ -39,6 +40,23 @@ export class UserService {
       throw new UnauthorizedException(
         'Something wrong while getting user details',
       );
+    }
+  }
+
+  async updateUser(userId: string, updateUserDto: UpdateUserdto) {
+    try {
+      const updatedUser = await this.userModel.findByIdAndUpdate(
+        { _id: userId },
+        { $set: updateUserDto },
+        { new: true },
+      );
+      if (!updatedUser) {
+        throw new NotFoundException(`User with ID ${userId} not found`);
+      }
+
+      return { status: true, msg: 'user updated', updatedUser };
+    } catch (error) {
+      throw new Error(`Failed to update user: ${error.message}`);
     }
   }
 }

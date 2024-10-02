@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,51 +21,102 @@ import { CalendarIcon, Pencil } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DashboardLayout } from "@/components/layout";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-type FormData = {
-  accountBelongTo: string;
+interface FormData {
+  belongcity: string;
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: string;
+  phone_number: string;
   gender: string;
-  dateOfBirth: Date | undefined;
+  dob: Date | undefined;
   address: string;
   city: string;
   state: string;
   country: string;
-  zipCode: string;
-};
+  pin: string;
+}
 
 export default function DashboardUserSettings() {
   const [isEditing, setIsEditing] = useState(false);
-  const { control, handleSubmit } = useForm<FormData>({
+  const { data: session, status } = useSession();
+  const [userData, setuserData] = useState<FormData | null>(null);
+  const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
-      accountBelongTo: "Portland",
-      firstName: "Abhinav",
-      lastName: "user",
-      email: "user@gmail.com",
-      phoneNumber: "12345",
-      gender: "Male",
-      dateOfBirth: new Date(2000, 0, 1),
-      address: "123",
-      city: "Portland",
-      state: "Missouri (MO)",
-      country: "USA",
-      zipCode: "133",
+      belongcity: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone_number: "",
+      gender: "",
+      dob: undefined,
+      address: "",
+      city: "",
+      state: "",
+      country: "",
+      pin: "",
     },
   });
+  // console.log(session?.accessToken);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    setIsEditing(false);
+  const onSubmit = async (data: FormData) => {
+    try {
+      const token = session?.accessToken;
+      if (!token) {
+        throw new Error("token not found");
+      }
+      const toastId = toast.loading("Updating data...");
+      console.log(data);
+      const response = await axios.patch(
+        "http://localhost:8000/user/updateUser",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      toast.success("Data updated successfully!", { id: toastId });
+
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
   };
+  const token = session?.accessToken;
+
+  const fetchuser = async () => {
+    try {
+      if (!token) {
+        throw new Error("token not found");
+      }
+      const res = await axios.get(`http://localhost:8000/user/userprofile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res) {
+        setuserData(res?.data);
+        reset(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchuser();
+  }, [token]);
 
   return (
     <DashboardLayout>
       <div className="flex flex-col h-full overflow-hidden border rounded-lg">
         <div className="flex justify-between items-center">
-          <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2 mb-4 flex justify-between w-full">
+          <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2 mb- flex justify-between w-full">
             <h2 className="text-2xl font-bold ">Settings</h2>
             <Button
               onClick={() => setIsEditing(!isEditing)}
@@ -87,9 +138,9 @@ export default function DashboardUserSettings() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 px-4">
               <div className="col-span-full">
-                <Label htmlFor="accountBelongTo">Your Account belong to</Label>
+                <Label htmlFor="belongcity">Your Account belong to</Label>
                 <Controller
-                  name="accountBelongTo"
+                  name="belongcity"
                   control={control}
                   render={({ field }) => (
                     <Select
@@ -146,9 +197,9 @@ export default function DashboardUserSettings() {
                 )}
               </div>
               <div>
-                <Label htmlFor="phoneNumber">Phone Number</Label>
+                <Label htmlFor="phone_number">Phone Number</Label>
                 <Controller
-                  name="phoneNumber"
+                  name="phone_number"
                   control={control}
                   render={({ field }) => (
                     <Input {...field} disabled={!isEditing} type="tel" />
@@ -179,9 +230,9 @@ export default function DashboardUserSettings() {
                 />
               </div>
               <div>
-                <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                <Label htmlFor="dob">Date of Birth</Label>
                 <Controller
-                  name="dateOfBirth"
+                  name="dob"
                   control={control}
                   render={({ field }) => (
                     <Popover>
@@ -292,9 +343,9 @@ export default function DashboardUserSettings() {
                 />
               </div>
               <div>
-                <Label htmlFor="zipCode">Zip Code</Label>
+                <Label htmlFor="pin">Zip Code</Label>
                 <Controller
-                  name="zipCode"
+                  name="pin"
                   control={control}
                   render={({ field }) => (
                     <Input {...field} disabled={!isEditing} />
@@ -325,7 +376,7 @@ export default function DashboardUserSettings() {
                 Change Password
               </Button>
             </div>
-            <div className="bg-red-50 border-l-4 border-red-400 p-4">
+            <div className="bg-red-50 border-l-4 border-red-400 p-3">
               <div className="flex">
                 <div className="flex-shrink-0">
                   <svg

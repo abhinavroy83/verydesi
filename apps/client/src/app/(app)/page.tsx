@@ -10,6 +10,7 @@ import NonFeatureCard from "@/components/Room/NonFeatureCard";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 const Page = () => {
   const { data: session } = useSession();
@@ -93,6 +94,7 @@ const Page = () => {
 
   return (
     <HomeLayout>
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full justify-between flex items-center">
         <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
         <button

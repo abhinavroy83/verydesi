@@ -33,8 +33,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="flex h-screen bg-background max-w-[1370px] lg:max-w-[1600px] mx-auto mt-32 border shadow-black shadow-sm rounded-2xl">
-      {/* Sidebar */}
+    <div className="flex h-screen bg-background max-w-[1370px] lg:max-w-[1600px] overflow-x-hidden overflow-y-hidden mx-auto mt-32 border shadow-black shadow-sm rounded-2xl my-5">
       <aside className="w-64 border-r bg-muted/30 flex flex-col">
         <div className="p-6 flex flex-col items-center">
           <Avatar className="w-24 h-24 mb-4 border-4 border-primary">
@@ -114,8 +113,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main content */}
-      <main className="flex-grow overflow-hidden flex flex-col">
-        <div className="flex-grow p-6">{children}</div>
+      <main className="flex-grow overflow-scroll overflow-x-hidden overflow-y-hidden h-auto flex flex-col">
+        <div className="flex-grow p-">{children}</div>
       </main>
     </div>
   );

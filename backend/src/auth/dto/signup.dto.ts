@@ -4,9 +4,16 @@ export class Authsignupdto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
+
   @IsNotEmpty()
   password: string;
-  firstName?: string;
-  lastName?: string;
-  phoneNumber?: string;
+
+  @IsNotEmpty()
+  firstName: string;
+
+  @IsNotEmpty()
+  lastName: string;
+
+  @IsNotEmpty()
+  phone_number: string;
 }
