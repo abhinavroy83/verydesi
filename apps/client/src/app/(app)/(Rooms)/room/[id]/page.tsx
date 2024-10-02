@@ -280,7 +280,7 @@ export default function RoomDetails() {
                         )}
                         <span className="text-sm text-gray-700">{utility}</span>
                       </div>
-                    );
+                    ); 
                   }
                   return null;
                 })}
