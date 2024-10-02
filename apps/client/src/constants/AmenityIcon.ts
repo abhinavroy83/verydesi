@@ -29,3 +29,4 @@ export const AmenityIcon = {
   "Club House": Building2,
   // Add any other icons you need here
 };
+export type AmenityType = keyof typeof AmenityIcon;

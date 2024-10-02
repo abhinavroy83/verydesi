@@ -18,6 +18,12 @@ import { Icons } from "@/components/Room/Icons";
 import ShareButton from "@/components/Popups/ShareButton";
 import { RoomInterface } from "@myrepo/types";
 import axios from "axios";
+import {
+  AmenityIcon,
+  AmenityType,
+  utilityIcons,
+  UtilityType,
+} from "@/constants";
 
 const roomDatas = {
   id: "1",
@@ -62,8 +68,11 @@ const roomDatas = {
   },
 };
 
-const isValidIcon = (icon: string): icon is keyof typeof Icons => {
-  return icon in Icons;
+const isValidAmenityIcon = (iconName: string): iconName is AmenityType => {
+  return iconName in AmenityIcon;
+};
+const isValidIcon = (iconName: string): iconName is UtilityType => {
+  return iconName in utilityIcons;
 };
 
 export default function RoomDetails() {
@@ -237,19 +246,19 @@ export default function RoomDetails() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {filteredAmenities.map((amenity, index) => {
-                  if (isValidIcon(amenity.icon)) {
-                    const IconComponent = Icons[amenity.icon];
+                {roomData?.Amenities_include?.map((amenity) => {
+                  if (isValidAmenityIcon(amenity)) {
+                    const IconComponent = AmenityIcon[amenity];
                     return (
-                      <div key={index} className="flex items-center">
-                        <IconComponent className="h-5 w-5 text-green-500 mr-2" />
-                        <span className="text-sm text-gray-700">
-                          {amenity.name}
-                        </span>
+                      <div key={amenity} className="flex items-center">
+                        {IconComponent && (
+                          <IconComponent className="h-5 w-5 text-green-500 mr-2" />
+                        )}
+                        <span className="text-sm text-gray-700">{amenity}</span>
                       </div>
                     );
                   }
-                  return null;
+                  return null; 
                 })}
               </div>
             </CardContent>
@@ -261,15 +270,15 @@ export default function RoomDetails() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
-                {roomDatas.utilities.map((utility, index) => {
-                  if (isValidIcon(utility.icon)) {
-                    const IconComponent = Icons[utility.icon];
+                {roomData?.Utility_include?.map((utility) => {
+                  if (isValidIcon(utility)) {
+                    const IconComponent = utilityIcons[utility];
                     return (
-                      <div key={index} className="flex items-center">
-                        <IconComponent className="h-5 w-5 text-green-500 mr-2" />
-                        <span className="text-sm text-gray-700">
-                          {utility.name}
-                        </span>
+                      <div key={utility} className="flex  items-center">
+                        {IconComponent && (
+                          <IconComponent className="h-5 w-5 text-green-500 mr-2" />
+                        )}
+                        <span className="text-sm text-gray-700">{utility}</span>
                       </div>
                     );
                   }
