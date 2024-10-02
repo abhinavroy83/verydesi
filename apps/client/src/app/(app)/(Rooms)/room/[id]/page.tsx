@@ -19,6 +19,12 @@ import { Icons } from "@/components/Room/Icons";
 import ShareButton from "@/components/Popups/ShareButton";
 import { RoomInterface } from "@myrepo/types";
 import axios from "axios";
+import {
+  AmenityIcon,
+  AmenityType,
+  utilityIcons,
+  UtilityType,
+} from "@/constants";
 
 const roomDatas = {
   id: "1",
@@ -63,8 +69,11 @@ const roomDatas = {
   },
 };
 
-const isValidIcon = (icon: string): icon is keyof typeof Icons => {
-  return icon in Icons;
+const isValidAmenityIcon = (iconName: string): iconName is AmenityType => {
+  return iconName in AmenityIcon;
+};
+const isValidIcon = (iconName: string): iconName is UtilityType => {
+  return iconName in utilityIcons;
 };
 
 export default function RoomDetails() {
