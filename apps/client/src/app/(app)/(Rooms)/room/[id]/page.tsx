@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Carousel,
@@ -16,8 +16,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Icons } from "@/components/Room/Icons";
 import ShareButton from "@/components/Popups/ShareButton";
+import { RoomInterface } from "@myrepo/types";
+import axios from "axios";
 
-const roomData = {
+const roomDatas = {
   id: "1",
   title: "2BR 2Bath Apartment In Normal",
   description:
@@ -66,8 +68,29 @@ const isValidIcon = (icon: string): icon is keyof typeof Icons => {
 
 export default function RoomDetails() {
   const [amenityFilter, setAmenityFilter] = useState("");
+  const [roomData, setroomData] = useState<RoomInterface | null>(null);
 
-  const filteredAmenities = roomData.amenities.filter((amenity) =>
+  const fetchRoom = async () => {
+    try {
+      const res = await axios.get(
+        `https://api.verydesi.com/api/getspecificroom/66efe1d47c15710096f8c5d9`
+      );
+      console.log(res.data.rooms);
+      if (res) {
+        setroomData(res.data.rooms);
+      }
+    } catch (error) {
+      console.error("Error fetching room data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchRoom();
+  }, []);
+
+  // const filteredAmenities = roomData?.Amenities_include.filter((amenity) =>
+  //   amenitytoLowerCase().includes(amenityFilter.toLowerCase())
+  // );
+  const filteredAmenities = roomDatas.amenities.filter((amenity) =>
     amenity.name.toLowerCase().includes(amenityFilter.toLowerCase())
   );
 
@@ -78,9 +101,9 @@ export default function RoomDetails() {
           <div className="flex justify-between items-start mb-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                {roomData.title}
+                {roomData?.Title}
               </h1>
-              <p className="text-gray-600">{roomData.location}</p>
+              <p className="text-gray-600">{roomData?.postingincity}</p>
             </div>
             <ShareButton />
           </div>
@@ -88,7 +111,7 @@ export default function RoomDetails() {
             <CardContent className="p-0">
               <Carousel className="w-full">
                 <CarouselContent>
-                  {roomData.images.map((image, index) => (
+                  {roomData?.Imgurl?.map((image, index) => (
                     <CarouselItem key={index}>
                       <div className="relative aspect-video">
                         <Image
@@ -111,11 +134,11 @@ export default function RoomDetails() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-2xl font-bold text-green-600">
-                  ${roomData.price}/month
+                  ${roomData?.Expected_Rooms}/month
                 </p>
-                <p className="text-gray-700">By {roomData.owner}</p>
+                <p className="text-gray-700">By {roomData?.user_name}</p>
               </div>
-              <p className="text-gray-700 mb-6">{roomData.description}</p>
+              <p className="text-gray-700 mb-6">{roomData?.Description}</p>
             </CardContent>
           </Card>
 
@@ -125,12 +148,64 @@ export default function RoomDetails() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
-                {Object.entries(roomData.details).map(([key, value]) => (
-                  <div key={key}>
-                    <p className="text-sm font-medium text-gray-500">{key}</p>
-                    <p className="mt-1 text-sm text-gray-900">{value}</p>
-                  </div>
-                ))}
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Property Type
+                  </p>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {roomData?.Propertytype}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">City</p>
+                  <p className="mt-1 text-sm text-gray-900">{roomData?.city}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Available From
+                  </p>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {roomData?.Avaliblity_from}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Available To
+                  </p>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {roomData?.Available_to}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Attached Bath
+                  </p>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {roomData?.Attchd_Bath}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Preferred Gender
+                  </p>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {roomData?.Preferred_gender}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">Deposit</p>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {roomData?.Desposite}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Is Room Furnished
+                  </p>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {roomData?.is_room_furnished}
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -144,7 +219,7 @@ export default function RoomDetails() {
             <CardContent>
               <div className="aspect-w-16 aspect-h-9">
                 <iframe
-                  src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(roomData.location)}`}
+                  // src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(roomData?.location)}`}
                   width="100%"
                   height="200"
                   style={{ border: 0 }}
@@ -186,7 +261,7 @@ export default function RoomDetails() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
-                {roomData.utilities.map((utility, index) => {
+                {roomDatas.utilities.map((utility, index) => {
                   if (isValidIcon(utility.icon)) {
                     const IconComponent = Icons[utility.icon];
                     return (
@@ -210,14 +285,16 @@ export default function RoomDetails() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {Object.entries(roomData.additionalInfo).map(([key, value]) => (
-                  <div key={key} className="flex items-center">
-                    <span className="text-sm font-medium text-gray-500 mr-2">
-                      {key}:
-                    </span>
-                    <span className="text-sm text-gray-700">{value}</span>
-                  </div>
-                ))}
+                {Object.entries(roomDatas.additionalInfo).map(
+                  ([key, value]) => (
+                    <div key={key} className="flex items-center">
+                      <span className="text-sm font-medium text-gray-500 mr-2">
+                        {key}:
+                      </span>
+                      <span className="text-sm text-gray-700">{value}</span>
+                    </div>
+                  )
+                )}
               </div>
             </CardContent>
           </Card>

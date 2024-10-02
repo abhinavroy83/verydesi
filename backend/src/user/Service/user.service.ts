@@ -18,11 +18,11 @@ export class UserService {
   ) {}
   async getUserProfile(userId: string) {
     const cacheKey = `user:${userId}`;
-    console.log(cacheKey);
+    // console.log(cacheKey);
     try {
       const cachedUser = await this.cacheManager.get<User>(cacheKey);
       if (cachedUser) {
-        console.log('User fetched from cache:', cachedUser);
+        // console.log('User fetched from cache:', cachedUser);
         return cachedUser;
       }
       const user = await this.userModel
@@ -33,7 +33,7 @@ export class UserService {
       }
       const ttl = 600;
       await this.cacheManager.set(cacheKey, user);
-      console.log('User set in cache with key:', cacheKey);
+      // console.log('User set in cache with key:', cacheKey);
 
       return user;
     } catch (error) {

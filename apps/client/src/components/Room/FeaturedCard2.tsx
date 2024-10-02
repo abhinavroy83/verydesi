@@ -26,7 +26,7 @@ export default function Component({
 }: RoomCardProps) {
   return (
     <Link href={`room/${id}`}>
-      <Card className="w-[36rem] h-[190px] perspective-1000 group w-full">
+      <Card className="w-[36rem] h-[190px] perspective-1000 group ">
         <CardContent className="p-0 flex h-full">
           <div className="w-1/3 relative group">
             <img
