@@ -36,6 +36,7 @@ export default function Navbar() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [islocationOpen, setIslocationOpen] = useState(false);
   const [IsNotificationOpen, setIsNotificationOpen] = useState(false);
   const router = useRouter();
   useEffect(() => {
@@ -82,8 +83,13 @@ export default function Navbar() {
                   className="w-[120px] lg:w-[190px]"
                 />
               </Link>
-
-              <Area />
+              <div
+                className=" relative text-black"
+                onMouseEnter={() => setIslocationOpen(true)}
+                onMouseLeave={() => setIslocationOpen(false)}
+              >
+                <Area />
+              </div>
             </div>
 
             <div className="hidden sm:flex items-center space-x-6">

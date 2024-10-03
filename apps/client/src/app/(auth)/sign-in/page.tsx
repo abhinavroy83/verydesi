@@ -17,6 +17,7 @@ import Link from "next/link";
 import { Separator } from "@radix-ui/react-separator";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/useAuthStore";
 
 export default function SignIn() {
   const [isHovering, setIsHovering] = useState(false);
@@ -24,6 +25,8 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const login = useAuthStore((state) => state.login);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -32,7 +35,8 @@ export default function SignIn() {
       email,
       password,
     });
-
+    const city = "Portland";
+    login(city);
     if (result?.error) {
       setError(result.error);
     } else {
