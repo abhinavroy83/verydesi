@@ -7,6 +7,7 @@ import {
   DropdownMenuContent,
 } from "@radix-ui/react-dropdown-menu";
 import { Button } from "../ui/button";
+import useAuthStore from "@/store/useAuthStore";
 
 interface CityResponse {
   city: { area: string }[];
@@ -16,6 +17,7 @@ function Avalableloc() {
   const [cty, setCty] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("Portland");
   const [isOpen, setIsOpen] = useState(false);
+  const { status, currentCity } = useAuthStore();
 
   // Fetch city data on component mount
   useEffect(() => {
@@ -35,6 +37,8 @@ function Avalableloc() {
     };
     fetchData();
   }, []);
+  console.log(status);
+  console.log(currentCity);
 
   const handleLocation = (city: string) => {
     setSelectedCity(city);
