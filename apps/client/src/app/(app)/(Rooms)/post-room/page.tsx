@@ -241,7 +241,7 @@ export default function Component() {
 
       <div className="flex gap-9 items-center">
         <Label>Utilities Include</Label>
-        <div className="grid grid-cols-4 gap-7 ">
+        <div className="gap-7 grid grid-cols-1 lg:grid-cols-4 lg:w-[980px]">
           {[
             "Water",
             "Wi-Fi",
@@ -270,7 +270,7 @@ export default function Component() {
 
       <div className="flex gap-9 items-center">
         <Label>Amenities include</Label>
-        <div className="grid grid-cols-4 gap-7 ">
+        <div className="gap-7 grid grid-cols-1 lg:grid-cols-4 lg:w-[980px]">
           {[
             "Gym/Fitness Center",
             "Swimming Pool",

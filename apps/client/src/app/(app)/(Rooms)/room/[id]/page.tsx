@@ -129,23 +129,26 @@ export default function RoomDetails() {
     <div className="container mx-auto px-4 py-8 mt-32">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="flex space-x-2">
-            <button
-              // onClick={onPrev}
-              className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
-              aria-label="Previous listing"
-            >
-              <ChevronLeft className="w-5 h-5 inline-block mr-1" />
-              PREV
-            </button>
-            <button
-              // onClick={onNext}
-              className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors"
-              aria-label="Next listing"
-            >
-              NEXT
-              <ChevronRight className="w-5 h-5 inline-block ml-1" />
-            </button>
+          <div className="flex space-x-2 w-full justify-between">
+            <div className="flex gap-2">
+              <button
+                // onClick={onPrev}
+                className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
+                aria-label="Previous listing"
+              >
+                <ChevronLeft className="w-5 h-5 inline-block mr-1" />
+                PREV
+              </button>
+              <button
+                // onClick={onNext}
+                className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors"
+                aria-label="Next listing"
+              >
+                NEXT
+                <ChevronRight className="w-5 h-5 inline-block ml-1" />
+              </button>
+            </div>
+            <ShareButton />
           </div>
           <div className="flex justify-between items-start mb-4">
             <div>
@@ -154,7 +157,6 @@ export default function RoomDetails() {
               </h1>
               <p className="text-gray-600">{roomData?.postingincity}</p>
             </div>
-            <ShareButton />
           </div>
           <Card>
             <CardContent className="p-0">
