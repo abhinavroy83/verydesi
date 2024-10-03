@@ -32,6 +32,8 @@ import { IoTransgender } from "react-icons/io5";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
+import LeafletMapRoom from "@/components/map/LefletMapRoom";
+import { number } from "zod";
 const roomDatas = {
   id: "1",
   title: "2BR 2Bath Apartment In Normal",
@@ -82,17 +84,30 @@ const isValidIcon = (iconName: string): iconName is UtilityType => {
   return iconName in utilityIcons;
 };
 
+interface Location {
+  lat: number;
+  lng: number;
+}
 export default function RoomDetails() {
   const [amenityFilter, setAmenityFilter] = useState("");
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
+  const [locationsndString, setLocationsndString] = useState<Location | null>(
+    null
+  );
 
   const fetchRoom = async () => {
     try {
       const res = await axios.get(
         `https://api.verydesi.com/api/getspecificroom/66efe1d47c15710096f8c5d9`
       );
-      console.log(res.data.rooms);
+      // console.log(res.data.rooms);
+
       if (res) {
+        const loc = {
+          lat: res.data.rooms.location.coordinates[1],
+          lng: res.data.rooms.location.coordinates[0],
+        };
+        setLocationsndString(loc);
         setroomData(res.data.rooms);
       }
     } catch (error) {
@@ -236,7 +251,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <IoTransgender className="h-6 w-6 text-blue-500 mr-4" />
+                  <IoTransgender className="h-6 w-6 text-green-500 mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       Preferred Gender
@@ -279,15 +294,9 @@ export default function RoomDetails() {
             </CardHeader>
             <CardContent>
               <div className="aspect-w-16 aspect-h-9">
-                <iframe
-                  // src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(roomData?.location)}`}
-                  width="100%"
-                  height="200"
-                  style={{ border: 0 }}
-                  allowFullScreen={true}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+                {locationsndString && (
+                  <LeafletMapRoom onLocationReceived={locationsndString} />
+                )}{" "}
               </div>
             </CardContent>
           </Card>
