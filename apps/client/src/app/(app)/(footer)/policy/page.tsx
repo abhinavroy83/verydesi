@@ -87,7 +87,7 @@ function page() {
     <div className="mt-[7rem] bg-gray-100">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-bold sm:text-4xl md:text-5xl lg:text-3xl text-center text-black">
-          Terms of Use
+          Privacy Policy{" "}
         </h1>
         <div className="px-4 py-6 sm:px-0">
           <div className="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -95,12 +95,10 @@ function page() {
               Effective Date: [Insert Date]
             </h2>
             <p className="text-gray-700 mb-8 px-4 ">
-              Welcome to VeryDesi.com. By accessing or using our website, you
-              agree to comply with and be bound by the following Terms of Use.
-              These terms govern your use of our social networking, business
-              listings, and classifieds services. Please read them carefully. If
-              you do not agree to these terms, please refrain from using the
-              website.
+              At VeryDesi.com, your privacy is our top priority. This Privacy
+              Policy outlines how we collect, use, disclose, and safeguard your
+              information when you visit our website, interact with our social
+              networking features, or use our classifieds services.
             </p>
             <div className="space-y-4">
               {sections.map((section, index) => (
