@@ -59,13 +59,15 @@ export default function Component() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 max-w-7xl mx-auto p-6 bg-white rounded-lg shadow"
+      className="space-y-6 max-w-7xl mx-auto p-6 bg-white rounded-xl shadow-lg border mt-[9rem]"
     >
       <h1 className="text-2xl font-bold">Post Room In Portland</h1>
       <p className="text-sm text-gray-500">Your Account is belong Portland</p>
 
-      <div>
-        <Label>Posting type*</Label>
+      <div className="flex gap-9 items-center">
+        <Label className="">
+          Posting type<span className=" text-red-500">*</span>
+        </Label>
         <Controller
           name="postingType"
           control={control}
@@ -84,21 +86,27 @@ export default function Component() {
         />
       </div>
 
-      <div>
-        <Label htmlFor="title">Title*</Label>
+      <div className="flex gap-9 items-center">
+        <Label htmlFor="title">
+          Title<span className=" text-red-500">*</span>
+        </Label>
         <Input id="title" {...register("title", { required: true })} />
       </div>
 
-      <div>
-        <Label htmlFor="description">Description*</Label>
+      <div className="flex gap-9 items-center">
+        <Label htmlFor="description">
+          Description<span className=" text-red-500">*</span>
+        </Label>
         <Textarea
           id="description"
           {...register("description", { required: true })}
         />
       </div>
 
-      <div>
-        <Label htmlFor="propertyType">Property Type*</Label>
+      <div className="flex gap-9 items-center">
+        <Label htmlFor="propertyType">
+          Property Type<span className=" text-red-500">*</span>
+        </Label>
         <Select {...register("propertyType", { required: true })}>
           <option value="">Select</option>
           <option value="apartment">Apartment</option>
@@ -107,8 +115,10 @@ export default function Component() {
         </Select>
       </div>
 
-      <div>
-        <Label>Stay/Lease*</Label>
+      <div className="flex gap-9 items-center">
+        <Label>
+          Stay/Lease<span className=" text-red-500">*</span>
+        </Label>
         <Controller
           name="stayLease"
           control={control}
@@ -124,15 +134,19 @@ export default function Component() {
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="Both" id="both" />
-                <Label htmlFor="both">Both*</Label>
+                <Label htmlFor="both">
+                  Both<span className=" text-red-500">*</span>
+                </Label>
               </div>
             </RadioGroup>
           )}
         />
       </div>
 
-      <div>
-        <Label htmlFor="priceModel">Price Model*</Label>
+      <div className="flex gap-9 items-center">
+        <Label htmlFor="priceModel">
+          Price Model<span className=" text-red-500">*</span>
+        </Label>
         <Select {...register("priceModel", { required: true })}>
           <option value="">Select</option>
           <option value="monthly">Monthly</option>
@@ -141,24 +155,47 @@ export default function Component() {
         </Select>
       </div>
 
-      <div>
-        <Label htmlFor="rent">Rent*</Label>
-        <div className="flex items-center space-x-2">
-          <span>$</span>
-          <Input
-            type="number"
-            id="rent"
-            {...register("rent", { required: true, valueAsNumber: true })}
-          />
-          <Checkbox id="negotiable" {...register("negotiable")} />
-          <Label htmlFor="negotiable">Negotiable</Label>
-          <Checkbox id="hideRent" {...register("hideRent")} />
-          <Label htmlFor="hideRent">Hide Rent</Label>
+      <div className="flex gap-9 items-center">
+        <Label htmlFor="rent">
+          Rent<span className=" text-red-500">*</span>
+        </Label>
+        <div className="flex lg:flex-row flex-col">
+          <div className="items-center">
+            <div className="flex">
+              <span className="bg-gray-200 items-center justify-center rounded-tl-md rounded-bl-md inline-block font-['udemy-regular'] font-bold border border-black/20 px-3 py-2 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
+                $
+              </span>
+              <input
+                type="number"
+                placeholder="Rent"
+                className="h-100px w-[218px] lg:w-[462px] rounded-tr-md rounded-br-md font-['udemy-regular'] border border-black/20 bg-transparent px-3 py-2 placeholder:text-gray-400 bg-white focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                // {...register("",\\ {
+                //   required: "Rent is require",
+                // })}
+              />
+            </div>
+            <p className="text-[16px] mt-1 text-red-500"> </p>
+          </div>
+          <div className="flex">
+            <div className="flex items-center gap-1 lg:ml-5 ml-0">
+              <input
+                type="checkbox"
+                // {...register("Negotiable")}
+              />
+              <p className="px-3 py-2 text-black">Negotiable</p>
+            </div>
+            <div className="flex items-center gap-1">
+              <input type="checkbox" />
+              <p className="px-3 py-2 text-black">Hide Rent</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div>
-        <Label>Availability*</Label>
+      <div className="flex gap-9 items-center">
+        <Label>
+          Availability<span className=" text-red-500">*</span>
+        </Label>
         <div className="flex items-center space-x-2">
           <Input type="date" {...register("availabilityFrom")} />
           <span>to</span>
@@ -168,8 +205,10 @@ export default function Component() {
         </div>
       </div>
 
-      <div>
-        <Label htmlFor="separateBathroom">Separate Bathroom*</Label>
+      <div className="flex gap-9 items-center">
+        <Label htmlFor="separateBathroom">
+          Separate Bathroom<span className=" text-red-500">*</span>
+        </Label>
         <Select {...register("separateBathroom", { required: true })}>
           <option value="">Select Number</option>
           <option value="1">1</option>
@@ -178,7 +217,7 @@ export default function Component() {
         </Select>
       </div>
 
-      <div>
+      <div className="flex gap-9 items-center">
         <Label htmlFor="deposit">Deposit</Label>
         <div className="flex items-center space-x-2">
           <span>$</span>
@@ -200,9 +239,9 @@ export default function Component() {
         </Select>
       </div>
 
-      <div>
+      <div className="flex gap-9 items-center">
         <Label>Utilities Include</Label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-4 gap-7 ">
           {[
             "Water",
             "Wi-Fi",
@@ -229,9 +268,9 @@ export default function Component() {
         </div>
       </div>
 
-      <div>
+      <div className="flex gap-9 items-center">
         <Label>Amenities include</Label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-4 gap-7 ">
           {[
             "Gym/Fitness Center",
             "Swimming Pool",
@@ -258,7 +297,7 @@ export default function Component() {
         </div>
       </div>
 
-      <div>
+      <div className="flex gap-9 items-center">
         <Label>Dietary Preference</Label>
         <Controller
           name="dietaryPreference"
@@ -282,7 +321,7 @@ export default function Component() {
         />
       </div>
 
-      <div>
+      <div className="flex gap-9 items-center">
         <Label>Smoking Policy</Label>
         <Controller
           name="smokingPolicy"
@@ -306,7 +345,7 @@ export default function Component() {
         />
       </div>
 
-      <div>
+      <div className="flex gap-9 items-center">
         <Label>Pet Friendly</Label>
         <Controller
           name="petFriendly"
@@ -334,7 +373,7 @@ export default function Component() {
         />
       </div>
 
-      <div>
+      <div className="flex gap-9 items-center">
         <Label>Open House Schedule</Label>
         <Controller
           name="openHouseDate"
@@ -393,43 +432,51 @@ export default function Component() {
       <div>
         <h2 className="text-lg font-semibold">Your Details:</h2>
         <div className="space-y-4">
-          <div>
-            <Label htmlFor="name">Name</Label>
+          <div className="flex gap-9 items-center">
+            <Label htmlFor="name">
+              Name<span className=" text-red-500">*</span>
+            </Label>
             <Input id="name" {...register("name", { required: true })} />
           </div>
-          <div>
-            <Label htmlFor="email">Email</Label>
+          <div className="flex gap-9 items-center">
+            <Label htmlFor="email">
+              Email<span className=" text-red-500">*</span>
+            </Label>
             <Input
               id="email"
               type="email"
               {...register("email", { required: true })}
             />
           </div>
-          <div>
-            <Label htmlFor="phoneNumber">Phone Number*</Label>
+          <div className="flex gap-9 items-center">
+            <Label htmlFor="phoneNumber">
+              Number<span className=" text-red-500">*</span>
+            </Label>
             <Input
               id="phoneNumber"
               {...register("phoneNumber", { required: true })}
             />
           </div>
-          <div>
-            <Label htmlFor="address">Address*</Label>
+          <div className="flex gap-9 items-center">
+            <Label htmlFor="address">
+              Address<span className=" text-red-500">*</span>
+            </Label>
             <Input id="address" {...register("address", { required: true })} />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div>
+            <div className="flex gap-9 items-center">
               <Label htmlFor="city">City</Label>
               <Input id="city" {...register("city")} />
             </div>
-            <div>
+            <div className="flex gap-9 items-center">
               <Label htmlFor="state">State</Label>
               <Input id="state" {...register("state")} />
             </div>
-            <div>
-              <Label htmlFor="zipCode">Enter zipcode</Label>
+            <div className="flex gap-9 items-center">
+              <Label htmlFor="zipCode">Zipcode</Label>
               <Input id="zipCode" {...register("zipCode")} />
             </div>
-            <div>
+            <div className="flex gap-9 items-center">
               <Label htmlFor="country">Country</Label>
               <Input id="country" {...register("country")} />
             </div>
