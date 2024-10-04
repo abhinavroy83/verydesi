@@ -22,12 +22,13 @@ export class RoomService {
     try {
       const cachedrooms = await this.cacheManager.get<IRoom>(cacheKey);
       if (cachedrooms) {
-        console.log(cachedrooms)
+        console.log(cachedrooms);
         return cachedrooms;
       }
-      const rooms = await this.roomModel.find({ postingincity: area }).exec();
+      const rooms = await this.roomModel.find({ postingincity: area });
+      console.log(rooms);
       if (!rooms || rooms.length === 0) {
-        throw new NotFoundException(`Can't find any rooms in ${area}`);
+        return { message: `No rooms found in ${area}`, rooms: [] };
       }
       await this.cacheManager.set(cacheKey, rooms);
       return rooms;
@@ -43,7 +44,7 @@ export class RoomService {
     try {
       const cachedroom = await this.cacheManager.get<IRoom>(cacheKey);
       if (cachedroom) {
-        console.log(cachedroom)
+        console.log(cachedroom);
         return cachedroom;
       }
       const room = await this.roomModel.findById(_id);
