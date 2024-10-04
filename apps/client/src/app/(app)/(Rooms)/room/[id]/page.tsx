@@ -361,17 +361,16 @@ export default function RoomDetails() {
               <CardTitle>Additional Information</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
-                {Object.entries(roomDatas.additionalInfo).map(
-                  ([key, value]) => (
-                    <div key={key} className="flex items-center">
-                      <span className="text-sm font-medium text-gray-500 mr-2">
-                        {key}:
-                      </span>
-                      <span className="text-sm text-gray-700">{value}</span>
-                    </div>
-                  )
-                )}
+              <div className="flex items-center">
+                <IoTransgender className="h-6 w-6 text-green-500 mr-4" />
+                <div>
+                  <p className="text-sm font-medium text-gray-500">
+                    Dietary Preference
+                  </p>
+                  <p className="mt-1 text-sm text-gray-900">
+                    {roomData?.Vegeterian_prefernce}
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
