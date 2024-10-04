@@ -1,9 +1,5 @@
 "use client";
 import { HomeLayout } from "@/components/layout/Home";
-import LeafletMap from "@/components/map/LeafletMap";
-import Design2 from "@/components/Room/Design2";
-import Desing3 from "@/components/Room/Desing3";
-import Desing4 from "@/components/Room/Desing4";
 import FeaturedCard2 from "@/components/Room/FeaturedCard2";
 import FeaturedRoomcard from "@/components/Room/FeaturedRoomcard";
 import NonFeatureCard from "@/components/Room/NonFeatureCard";
@@ -21,8 +17,6 @@ import {
   SkeletonFeaturedCard,
   SkeletonNonFeatureCard,
 } from "@/components/skeleton";
-
-
 
 const Page = () => {
   const router = useRouter();

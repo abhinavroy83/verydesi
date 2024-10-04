@@ -103,9 +103,11 @@ export default function RoomDetails() {
   const [locationsndString, setLocationsndString] = useState<Location | null>(
     null
   );
+  const [loading, setLoading] = useState(true);
 
   const fetchRoom = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(
         `http://localhost:8000/room/findsingleRoom/${param.id}`
       );
@@ -118,8 +120,11 @@ export default function RoomDetails() {
         };
         setLocationsndString(loc);
         setroomData(res.data);
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
+
       console.error("Error fetching room data:", error);
     }
   };
@@ -127,12 +132,13 @@ export default function RoomDetails() {
     fetchRoom();
   }, []);
 
-  // const filteredAmenities = roomData?.Amenities_include.filter((amenity) =>
-  //   amenitytoLowerCase().includes(amenityFilter.toLowerCase())
-  // );
-  const filteredAmenities = roomDatas.amenities.filter((amenity) =>
-    amenity.name.toLowerCase().includes(amenityFilter.toLowerCase())
-  );
+  if (loading) {
+    return (
+      <div>
+        <RoomSketon />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 mt-32">
