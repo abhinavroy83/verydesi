@@ -36,6 +36,10 @@ import LeafletMapRoom from "@/components/map/LefletMapRoom";
 import { useRouter } from "next/router";
 import { number } from "zod";
 import { useParams } from "next/navigation";
+import { FaSmoking } from "react-icons/fa";
+import { BiFoodTag } from "react-icons/bi";
+import { MdOutlinePets } from "react-icons/md";
+
 const roomDatas = {
   id: "1",
   title: "2BR 2Bath Apartment In Normal",
@@ -361,15 +365,39 @@ export default function RoomDetails() {
               <CardTitle>Additional Information</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center">
-                <IoTransgender className="h-6 w-6 text-green-500 mr-4" />
-                <div>
-                  <p className="text-sm font-medium text-gray-500">
-                    Dietary Preference
-                  </p>
-                  <p className="mt-1 text-sm text-gray-900">
-                    {roomData?.Vegeterian_prefernce}
-                  </p>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center">
+                  <BiFoodTag className="h-6 w-6 text-green-500 mr-4" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Dietary Preference
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Vegeterian_prefernce}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <MdOutlinePets className="h-6 w-6 text-green-500 mr-4" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Smoking Policy{" "}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Smoking_policy}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <FaSmoking className="h-6 w-6 text-green-500 mr-4" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">
+                      Pet Friendly{" "}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-900">
+                      {roomData?.Pet_friendly}
+                    </p>
+                  </div>
                 </div>
               </div>
             </CardContent>
