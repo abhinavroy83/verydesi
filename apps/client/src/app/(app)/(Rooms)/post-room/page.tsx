@@ -10,6 +10,7 @@ import { Select } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Calendar } from "@/components/ui/calendar";
+import { Upload } from "lucide-react";
 
 type FormData = {
   postingType: "Rooms" | "Rental";
@@ -43,7 +44,7 @@ type FormData = {
   country: string;
 };
 
-export default function Component() {
+export default function RoomPostingForm() {
   const { register, control, handleSubmit, watch } = useForm<FormData>();
   const [images, setImages] = useState<File[]>([]);
 
@@ -59,426 +60,417 @@ export default function Component() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 max-w-7xl mx-auto p-6 bg-white rounded-xl shadow-lg border mt-[9rem]"
+      className="max-w-[1370px] lg:max-w-[1500px] mx-auto p-6 bg-white rounded-xl shadow-2xl space-y-8 mt-[9rem] border"
     >
-      <h1 className="text-2xl font-bold">Post Room In Portland</h1>
-      <p className="text-sm text-gray-500">Your Account is belong Portland</p>
-
-      <div className="flex gap-9 items-center">
-        <Label className="">
-          Posting type<span className=" text-red-500">*</span>
-        </Label>
-        <Controller
-          name="postingType"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup {...field} className="flex space-x-4">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Rooms" id="rooms" />
-                <Label htmlFor="rooms">Rooms</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Rental" id="rental" />
-                <Label htmlFor="rental">Rental</Label>
-              </div>
-            </RadioGroup>
-          )}
-        />
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">
+          Post Room in Portland
+        </h1>
+        <p className="text-sm text-gray-500">Your account is set to Portland</p>
       </div>
 
-      <div className="flex gap-9 items-center">
-        <Label htmlFor="title">
-          Title<span className=" text-red-500">*</span>
-        </Label>
-        <Input id="title" {...register("title", { required: true })} />
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label htmlFor="description">
-          Description<span className=" text-red-500">*</span>
-        </Label>
-        <Textarea
-          id="description"
-          {...register("description", { required: true })}
-        />
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label htmlFor="propertyType">
-          Property Type<span className=" text-red-500">*</span>
-        </Label>
-        <Select {...register("propertyType", { required: true })}>
-          <option value="">Select</option>
-          <option value="apartment">Apartment</option>
-          <option value="house">House</option>
-          <option value="condo">Condo</option>
-        </Select>
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label>
-          Stay/Lease<span className=" text-red-500">*</span>
-        </Label>
-        <Controller
-          name="stayLease"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup {...field} className="flex space-x-4">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Short term" id="shortTerm" />
-                <Label htmlFor="shortTerm">Short term(Days/6Months)</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Long term" id="longTerm" />
-                <Label htmlFor="longTerm">Long term(6+ Months)</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Both" id="both" />
-                <Label htmlFor="both">
-                  Both<span className=" text-red-500">*</span>
-                </Label>
-              </div>
-            </RadioGroup>
-          )}
-        />
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label htmlFor="priceModel">
-          Price Model<span className=" text-red-500">*</span>
-        </Label>
-        <Select {...register("priceModel", { required: true })}>
-          <option value="">Select</option>
-          <option value="monthly">Monthly</option>
-          <option value="weekly">Weekly</option>
-          <option value="daily">Daily</option>
-        </Select>
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label htmlFor="rent">
-          Rent<span className=" text-red-500">*</span>
-        </Label>
-        <div className="flex lg:flex-row flex-col">
-          <div className="items-center">
-            <div className="flex">
-              <span className="bg-gray-200 items-center justify-center rounded-tl-md rounded-bl-md inline-block font-['udemy-regular'] font-bold border border-black/20 px-3 py-2 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
-                $
-              </span>
-              <input
-                type="number"
-                placeholder="Rent"
-                className="h-100px w-[218px] lg:w-[462px] rounded-tr-md rounded-br-md font-['udemy-regular'] border border-black/20 bg-transparent px-3 py-2 placeholder:text-gray-400 bg-white focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                // {...register("",\\ {
-                //   required: "Rent is require",
-                // })}
-              />
-            </div>
-            <p className="text-[16px] mt-1 text-red-500"> </p>
-          </div>
-          <div className="flex">
-            <div className="flex items-center gap-1 lg:ml-5 ml-0">
-              <input
-                type="checkbox"
-                // {...register("Negotiable")}
-              />
-              <p className="px-3 py-2 text-black">Negotiable</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <input type="checkbox" />
-              <p className="px-3 py-2 text-black">Hide Rent</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label>
-          Availability<span className=" text-red-500">*</span>
-        </Label>
-        <div className="flex items-center space-x-2">
-          <Input type="date" {...register("availabilityFrom")} />
-          <span>to</span>
-          <Input type="date" {...register("availabilityTo")} />
-          <Checkbox id="immediate" {...register("immediate")} />
-          <Label htmlFor="immediate">Immediate</Label>
-        </div>
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label htmlFor="separateBathroom">
-          Separate Bathroom<span className=" text-red-500">*</span>
-        </Label>
-        <Select {...register("separateBathroom", { required: true })}>
-          <option value="">Select Number</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3+">3+</option>
-        </Select>
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label htmlFor="deposit">Deposit</Label>
-        <div className="flex items-center space-x-2">
-          <span>$</span>
-          <Input
-            type="number"
-            id="deposit"
-            {...register("deposit", { valueAsNumber: true })}
+      <div className="space-y-6">
+        <div>
+          <Label className="text-lg font-semibold">
+            Posting type<span className="text-red-500">*</span>
+          </Label>
+          <Controller
+            name="postingType"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup {...field} className="flex space-x-4 mt-2">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Rooms" id="rooms" />
+                  <Label htmlFor="rooms">Rooms</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Rental" id="rental" />
+                  <Label htmlFor="rental">Rental</Label>
+                </div>
+              </RadioGroup>
+            )}
           />
         </div>
-      </div>
 
-      <div>
-        <Label htmlFor="isRoomFurnished">Is room/ furnished?</Label>
-        <Select {...register("isRoomFurnished")}>
-          <option value="">Select</option>
-          <option value="furnished">Furnished</option>
-          <option value="unfurnished">Unfurnished</option>
-          <option value="partially">Partially Furnished</option>
-        </Select>
-      </div>
-
-      <div className="flex gap-9 items-center">
-        <Label>Utilities Include</Label>
-        <div className="gap-7 grid grid-cols-1 lg:grid-cols-4 lg:w-[980px]">
-          {[
-            "Water",
-            "Wi-Fi",
-            "Electricity",
-            "Air Conditioner",
-            "Refrigerator",
-            "Dishwasher",
-            "Dryer",
-            "Washer",
-            "Kitchen",
-            "Microwave",
-            "TV",
-            "Heater",
-          ].map((utility) => (
-            <div key={utility} className="flex items-center space-x-2">
-              <Checkbox
-                id={utility}
-                value={utility}
-                {...register("utilities")}
-              />
-              <Label htmlFor={utility}>{utility}</Label>
-            </div>
-          ))}
+        <div>
+          <Label htmlFor="title" className="text-lg font-semibold">
+            Title<span className="text-red-500">*</span>
+          </Label>
+          <Input
+            id="title"
+            className="mt-1"
+            {...register("title", { required: true })}
+          />
         </div>
-      </div>
 
-      <div className="flex gap-9 items-center">
-        <Label>Amenities include</Label>
-        <div className="gap-7 grid grid-cols-1 lg:grid-cols-4 lg:w-[980px]">
-          {[
-            "Gym/Fitness Center",
-            "Swimming Pool",
-            "Car Park",
-            "Visitors Parking",
-            "Power Backup",
-            "Garbage Disposal",
-            "Private Lawn",
-            "Water Heater Plant",
-            "Security System",
-            "Laundry Service",
-            "Elevator",
-            "Club House",
-          ].map((amenity) => (
-            <div key={amenity} className="flex items-center space-x-2">
-              <Checkbox
-                id={amenity}
-                value={amenity}
-                {...register("amenities")}
-              />
-              <Label htmlFor={amenity}>{amenity}</Label>
-            </div>
-          ))}
+        <div>
+          <Label htmlFor="description" className="text-lg font-semibold">
+            Description<span className="text-red-500">*</span>
+          </Label>
+          <Textarea
+            id="description"
+            className="mt-1"
+            {...register("description", { required: true })}
+          />
         </div>
-      </div>
 
-      <div className="flex gap-9 items-center">
-        <Label>Dietary Preference</Label>
-        <Controller
-          name="dietaryPreference"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup {...field} className="flex space-x-4">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Vegetarian" id="vegetarian" />
-                <Label htmlFor="vegetarian">Vegetarian</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Non-Veg" id="nonVeg" />
-                <Label htmlFor="nonVeg">Non-Veg</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Both Ok" id="bothOk" />
-                <Label htmlFor="bothOk">Both Ok</Label>
-              </div>
-            </RadioGroup>
-          )}
-        />
-      </div>
+        <div>
+          <Label htmlFor="propertyType" className="text-lg font-semibold">
+            Property Type<span className="text-red-500">*</span>
+          </Label>
+          <Select
+            className="mt-1"
+            {...register("propertyType", { required: true })}
+          >
+            <option value="">Select</option>
+            <option value="apartment">Apartment</option>
+            <option value="house">House</option>
+            <option value="condo">Condo</option>
+          </Select>
+        </div>
 
-      <div className="flex gap-9 items-center">
-        <Label>Smoking Policy</Label>
-        <Controller
-          name="smokingPolicy"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup {...field} className="flex space-x-4">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="No Smoking" id="noSmoking" />
-                <Label htmlFor="noSmoking">No Smoking</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Smoking is ok" id="smokingOk" />
-                <Label htmlFor="smokingOk">Smoking is ok</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Smoke outside only" id="smokeOutside" />
-                <Label htmlFor="smokeOutside">Smoke outside only</Label>
-              </div>
-            </RadioGroup>
-          )}
-        />
-      </div>
+        <div>
+          <Label className="text-lg font-semibold">
+            Stay/Lease<span className="text-red-500">*</span>
+          </Label>
+          <Controller
+            name="stayLease"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup {...field} className="flex flex-wrap space-x-4 mt-2">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Short term" id="shortTerm" />
+                  <Label htmlFor="shortTerm">Short term(Days/6Months)</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Long term" id="longTerm" />
+                  <Label htmlFor="longTerm">Long term(6+ Months)</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Both" id="both" />
+                  <Label htmlFor="both">
+                    Both<span className="text-red-500">*</span>
+                  </Label>
+                </div>
+              </RadioGroup>
+            )}
+          />
+        </div>
 
-      <div className="flex gap-9 items-center">
-        <Label>Pet Friendly</Label>
-        <Controller
-          name="petFriendly"
-          control={control}
-          render={({ field }) => (
-            <RadioGroup {...field} className="flex space-x-4">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="No Pets" id="noPets" />
-                <Label htmlFor="noPets">No Pets</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Only Dogs" id="onlyDogs" />
-                <Label htmlFor="onlyDogs">Only Dogs</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Only Cats" id="onlyCats" />
-                <Label htmlFor="onlyCats">Only Cats</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Any Pet is Ok" id="anyPet" />
-                <Label htmlFor="anyPet">Any Pet is Ok</Label>
-              </div>
-            </RadioGroup>
-          )}
-        />
-      </div>
+        <div>
+          <Label htmlFor="priceModel" className="text-lg font-semibold">
+            Price Model<span className="text-red-500">*</span>
+          </Label>
+          <Select
+            {...register("priceModel", { required: true })}
+            className="mt-1"
+          >
+            <option value="">Select</option>
+            <option value="monthly">Monthly</option>
+            <option value="weekly">Weekly</option>
+            <option value="daily">Daily</option>
+          </Select>
+        </div>
 
-      <div className="flex gap-9 items-center">
-        <Label>Open House Schedule</Label>
-        <Controller
-          name="openHouseDate"
-          control={control}
-          render={({ field }) => (
-            <Calendar
-              mode="single"
-              selected={field.value}
-              onSelect={field.onChange}
-              className="rounded-md border"
+        <div>
+          <Label htmlFor="rent" className="text-lg font-semibold">
+            Rent<span className="text-red-500">*</span>
+          </Label>
+          <div className="flex flex-wrap items-center space-x-4 mt-1">
+            <div className="flex">
+              <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-300 text-gray-500 text-sm">
+                $
+              </span>
+              <Input
+                type="number"
+                id="rent"
+                className="rounded-l-none"
+                {...register("rent", { required: true, valueAsNumber: true })}
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="negotiable" {...register("negotiable")} />
+              <Label htmlFor="negotiable">Negotiable</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="hideRent" {...register("hideRent")} />
+              <Label htmlFor="hideRent">Hide Rent</Label>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <Label className="text-lg font-semibold">
+            Availability<span className="text-red-500">*</span>
+          </Label>
+          <div className="flex flex-wrap items-center space-x-4 mt-1">
+            <Input type="date" {...register("availabilityFrom")} />
+            <span>to</span>
+            <Input type="date" {...register("availabilityTo")} />
+            <div className="flex items-center space-x-2 mt-2">
+              <Checkbox id="immediate" {...register("immediate")} />
+              <Label htmlFor="immediate">Immediate</Label>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <Label htmlFor="separateBathroom" className="text-lg font-semibold">
+            Separate Bathroom<span className="text-red-500">*</span>
+          </Label>
+          <Select
+            {...register("separateBathroom", { required: true })}
+            className="mt-1"
+          >
+            <option value="">Select Number</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3+">3+</option>
+          </Select>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="deposit" className="text-lg font-semibold">
+            Deposit
+          </Label>
+          <div className="flex">
+            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-300 text-gray-500 text-sm">
+              $
+            </span>
+            <Input
+              type="number"
+              id="rent"
+              className="rounded-l-none"
+              {...register("rent", { required: true, valueAsNumber: true })}
             />
-          )}
-        />
-      </div>
+          </div>
+        </div>
 
-      <div>
-        <Label>Add your photos below</Label>
-        <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-          <div className="text-center">
-            <svg
-              className="mx-auto h-12 w-12 text-gray-300"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-              <label
-                htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-              >
-                <span>Upload a file</span>
-                <input
-                  id="file-upload"
-                  name="file-upload"
-                  type="file"
-                  className="sr-only"
-                  multiple
-                  onChange={handleImageUpload}
+        <div>
+          <Label htmlFor="isRoomFurnished" className="text-lg font-semibold">
+            Is room furnished?
+          </Label>
+          <Select {...register("isRoomFurnished")} className="mt-1">
+            <option value="">Select</option>
+            <option value="furnished">Furnished</option>
+            <option value="unfurnished">Unfurnished</option>
+            <option value="partially">Partially Furnished</option>
+          </Select>
+        </div>
+
+        <div>
+          <Label className="text-lg font-semibold">Utilities Include</Label>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+            {[
+              "Water",
+              "Wi-Fi",
+              "Electricity",
+              "Air Conditioner",
+              "Refrigerator",
+              "Dishwasher",
+              "Dryer",
+              "Washer",
+              "Kitchen",
+              "Microwave",
+              "TV",
+              "Heater",
+            ].map((utility) => (
+              <div key={utility} className="flex items-center space-x-2">
+                <Checkbox
+                  id={utility}
+                  value={utility}
+                  {...register("utilities")}
                 />
-              </label>
-              <p className="pl-1">or drag and drop</p>
-            </div>
-            <p className="text-xs leading-5 text-gray-600">
-              PNG, JPG, GIF up to 10MB
-            </p>
+                <Label htmlFor={utility}>{utility}</Label>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      <div>
-        <h2 className="text-lg font-semibold">Your Details:</h2>
-        <div className="space-y-4">
-          <div className="flex gap-9 items-center">
-            <Label htmlFor="name">
-              Name<span className=" text-red-500">*</span>
-            </Label>
-            <Input id="name" {...register("name", { required: true })} />
+        <div>
+          <Label className="text-lg font-semibold">Amenities include</Label>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+            {[
+              "Gym/Fitness Center",
+              "Swimming Pool",
+              "Car Park",
+              "Visitors Parking",
+              "Power Backup",
+              "Garbage Disposal",
+              "Private Lawn",
+              "Water Heater Plant",
+              "Security System",
+              "Laundry Service",
+              "Elevator",
+              "Club House",
+            ].map((amenity) => (
+              <div key={amenity} className="flex items-center space-x-2">
+                <Checkbox
+                  id={amenity}
+                  value={amenity}
+                  {...register("amenities")}
+                />
+                <Label htmlFor={amenity}>{amenity}</Label>
+              </div>
+            ))}
           </div>
-          <div className="flex gap-9 items-center">
-            <Label htmlFor="email">
-              Email<span className=" text-red-500">*</span>
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              {...register("email", { required: true })}
-            />
-          </div>
-          <div className="flex gap-9 items-center">
-            <Label htmlFor="phoneNumber">
-              Number<span className=" text-red-500">*</span>
-            </Label>
-            <Input
-              id="phoneNumber"
-              {...register("phoneNumber", { required: true })}
-            />
-          </div>
-          <div className="flex gap-9 items-center">
-            <Label htmlFor="address">
-              Address<span className=" text-red-500">*</span>
-            </Label>
-            <Input id="address" {...register("address", { required: true })} />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex gap-9 items-center">
-              <Label htmlFor="city">City</Label>
-              <Input id="city" {...register("city")} />
+        </div>
+
+        <div>
+          <Label className="text-lg font-semibold">Dietary Preference</Label>
+          <Controller
+            name="dietaryPreference"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup {...field} className="flex space-x-4 mt-2">
+                {["Vegetarian", "Non-Veg", "Both Ok"].map((option) => (
+                  <div key={option} className="flex items-center space-x-2">
+                    <RadioGroupItem value={option} id={option.toLowerCase()} />
+                    <Label htmlFor={option.toLowerCase()}>{option}</Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            )}
+          />
+        </div>
+
+        <div>
+          <Label className="text-lg font-semibold">Smoking Policy</Label>
+          <Controller
+            name="smokingPolicy"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup {...field} className="flex flex-wrap space-x-4 mt-2">
+                {["No Smoking", "Smoking is ok", "Smoke outside only"].map(
+                  (option) => (
+                    <div key={option} className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value={option}
+                        id={option.toLowerCase().replace(/\s/g, "")}
+                      />
+                      <Label htmlFor={option.toLowerCase().replace(/\s/g, "")}>
+                        {option}
+                      </Label>
+                    </div>
+                  )
+                )}
+              </RadioGroup>
+            )}
+          />
+        </div>
+
+        <div>
+          <Label className="text-lg font-semibold">Pet Friendly</Label>
+          <Controller
+            name="petFriendly"
+            control={control}
+            render={({ field }) => (
+              <RadioGroup {...field} className="flex flex-wrap space-x-4 mt-2">
+                {["No Pets", "Only Dogs", "Only Cats", "Any Pet is Ok"].map(
+                  (option) => (
+                    <div key={option} className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value={option}
+                        id={option.toLowerCase().replace(/\s/g, "")}
+                      />
+                      <Label htmlFor={option.toLowerCase().replace(/\s/g, "")}>
+                        {option}
+                      </Label>
+                    </div>
+                  )
+                )}
+              </RadioGroup>
+            )}
+          />
+        </div>
+
+        <div>
+          <Label className="text-lg font-semibold">Open House Schedule</Label>
+          <Controller
+            name="openHouseDate"
+            control={control}
+            render={({ field }) => (
+              <Calendar
+                mode="single"
+                selected={field.value}
+                onSelect={field.onChange}
+                className="rounded-md border mt-2"
+              />
+            )}
+          />
+        </div>
+
+        <div>
+          <Label className="text-lg font-semibold">Add your photos</Label>
+          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+            <div className="text-center">
+              <Upload className="mx-auto h-12 w-12 text-gray-300" />
+              <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                <label
+                  htmlFor="file-upload"
+                  className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                >
+                  <span>Upload a file</span>
+                  <input
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    className="sr-only"
+                    multiple
+                    onChange={handleImageUpload}
+                  />
+                </label>
+                <p className="pl-1">or drag and drop</p>
+              </div>
+              <p className="text-xs leading-5 text-gray-600">
+                PNG, JPG, GIF up to 10MB
+              </p>
             </div>
-            <div className="flex gap-9 items-center">
-              <Label htmlFor="state">State</Label>
-              <Input id="state" {...register("state")} />
-            </div>
-            <div className="flex gap-9 items-center">
-              <Label htmlFor="zipCode">Zipcode</Label>
-              <Input id="zipCode" {...register("zipCode")} />
-            </div>
-            <div className="flex gap-9 items-center">
-              <Label htmlFor="country">Country</Label>
-              <Input id="country" {...register("country")} />
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold mb-4">Your Details:</h2>
+          <div className="space-y-4">
+            {[
+              { name: "name", label: "Name", type: "text" },
+              { name: "email", label: "Email", type: "email" },
+              { name: "phoneNumber", label: "Phone Number", type: "tel" },
+              { name: "address", label: "Address", type: "text" },
+            ].map((field) => (
+              <div key={field.name}>
+                <Label htmlFor={field.name} className="text-lg font-semibold">
+                  {field.label}
+                  <span className="text-red-500">*</span>
+                </Label>
+                <Input
+                  id={field.name}
+                  type={field.type}
+                  {...register(field.name as keyof FormData, {
+                    required: true,
+                  })}
+                  className="mt-1"
+                />
+              </div>
+            ))}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { name: "city", label: "City" },
+                { name: "state", label: "State" },
+                { name: "zipCode", label: "Zipcode" },
+                { name: "country", label: "Country" },
+              ].map((field) => (
+                <div key={field.name}>
+                  <Label htmlFor={field.name} className="text-lg font-semibold">
+                    {field.label}
+                  </Label>
+                  <Input
+                    id={field.name}
+                    {...register(field.name as keyof FormData)}
+                    className="mt-1"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>

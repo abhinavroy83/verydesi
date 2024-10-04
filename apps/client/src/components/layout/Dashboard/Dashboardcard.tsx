@@ -14,13 +14,15 @@ export function DashboardCard({
 }) {
   return (
     <Link href={url}>
-      <Card className="hover:shadow-md transition-shadow">
-        <CardContent className="p-6 flex flex-col items-center justify-center text-center">
-          <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-full mb-4">
+      <Card className="hover:shadow-md transition-shadow group items-center">
+        <CardContent className="lg:p-6 p-3 flex flex-col items-center justify-center text-center">
+          <div className="bg-gray-200 group-hover:bg-gray-300 group-hover:translate-y-1 p-4 rounded-full mb-4">
             {icon}
           </div>
-          <h2 className="text-xl font-semibold mb-2">{title}</h2>
-          <Button variant="link" size="sm" className="mt-2">
+          <h2 className="text-xl font-semibold mb-2 group-hover:translate-y-1">
+            {title}
+          </h2>
+          <Button variant="link" size="sm" className="lg:mt-2 text-center">
             View Details <ChevronRight className="ml-1 h-4 w-4" />
           </Button>
         </CardContent>
