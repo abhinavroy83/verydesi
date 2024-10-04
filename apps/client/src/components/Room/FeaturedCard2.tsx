@@ -10,21 +10,22 @@ import {
   Wifi,
   Utensils,
 } from "lucide-react";
-import { RoomCardProps, RoomInterface } from "@myrepo/types";
+import { RoomInterface } from "@myrepo/types";
 import Link from "next/link";
 import { stateAbbreviations } from "@/constants";
 
 interface FeaturedCard2Props {
-  room: RoomInterface; // Make sure to import and use the correct interface
+  room: RoomInterface;
 }
 
 export default function Component({ room }: FeaturedCard2Props) {
-  function truncateCharacters(str: any, numCharacters: any) {
+  function truncateCharacters(str: string, numCharacters: number) {
     if (str.length > numCharacters) {
       return str.slice(0, numCharacters) + "...";
     }
     return str;
   }
+
   const calculateTimeDifference = (dateStr: Date) => {
     const date = new Date(dateStr);
     const currentDate = new Date();
@@ -47,25 +48,26 @@ export default function Component({ room }: FeaturedCard2Props) {
       return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
     }
   };
+
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="w-[36rem] w-full h-[190px] perspective-1000 group shadow-sm hover:shadow-md">
-        <CardContent className="p-0 flex h-full">
-          <div className="w-1/3 relative group">
+      <Card className="lg:w-full lg:w-[38rem] w-[21rem] h-auto sm:h-[190px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
+        <CardContent className="p-0 flex flex-col sm:flex-row h-full">
+          <div className="w-full sm:w-1/3 relative group">
             <img
               src={
                 room && room.Imgurl && room.Imgurl.length > 0
                   ? room.Imgurl[0]
                   : "https://placeholder.pics/svg/300"
               }
-              alt="Luxury Highrise Studio"
-              className="absolute inset-0 w-full h-full object-cover rounded-lg group-hover:scale-100 transition-transform duration-500 ease-in duration-70"
+              alt="Room Image"
+              className="w-full h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
             />
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent ">
+            <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
               <Button
                 variant="secondary"
                 size="sm"
-                className="w-full bg-white text-blue-500 hover:bg-red-600 hover:text-white group-hover:translate-y-1 transition-transform duration-300"
+                className="w-full bg-white text-blue-500 hover:bg-red-600 hover:text-white group-hover:translate-y-1 transition-all duration-300"
               >
                 <Heart className="h-4 w-4 mr-2" />
                 Add to Wishlist
@@ -74,31 +76,37 @@ export default function Component({ room }: FeaturedCard2Props) {
           </div>
           <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
                 {room?.Title && truncateCharacters(room?.Title, 25)}
               </h2>
 
-              <div className="flex items-center text-sm text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
-                <MapPin className="h-4 w-4 mr-1 text-purple-500" />
-                <span>
-                  {room?.postingincity},
-                  {room?.state &&
-                    (room.state.length > 2
-                      ? stateAbbreviations[room.state]
-                      : room.state)}
-                </span>
-                <span className="mx-1">•</span>
-                <BedDouble className="h-4 w-4 mx-1 text-purple-500" />
-                <span>Studio</span>
+              <div className="flex flex-wrap items-center text-xs sm:text-sm text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
+                <div className="flex items-center mr-2 mb-1 sm:mb-0">
+                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-purple-500" />
+                  <span>
+                    {room?.postingincity},
+                    {room?.state &&
+                      (room.state.length > 2
+                        ? stateAbbreviations[room.state]
+                        : room.state)}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <BedDouble className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-purple-500" />
+                  <span>Studio</span>
+                </div>
               </div>
-              <div className="flex items-center text-xs text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">
-                <User className="h-3 w-3 mr-1 text-indigo-500" />
-                <span>Posted by: {room?.user_name}</span>
-                <span className="mx-1">•</span>
-                <Clock className="h-3 w-3 mr-1 text-indigo-500" />
-                <span> {calculateTimeDifference(room?.postedon)}</span>
+              <div className="flex flex-wrap items-center text-xs text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">
+                <div className="flex items-center mr-2 mb-1 sm:mb-0">
+                  <User className="h-3 w-3 mr-1 text-indigo-500" />
+                  <span>Posted by: {room?.user_name}</span>
+                </div>
+                <div className="flex items-center">
+                  <Clock className="h-3 w-3 mr-1 text-indigo-500" />
+                  <span>{calculateTimeDifference(room?.postedon)}</span>
+                </div>
               </div>
-              <div className="flex space-x-2 mb-4">
+              <div className="flex flex-wrap gap-2 mb-4">
                 <Badge
                   variant="secondary"
                   className="text-xs bg-purple-100 text-purple-700 group-hover:bg-purple-200 transition-colors duration-300"
@@ -115,9 +123,9 @@ export default function Component({ room }: FeaturedCard2Props) {
                 </Badge>
               </div>
             </div>
-            <div className="flex justify-between items-center">
-              <p className="text-2xl font-bold text-blue-600 group-hover:scale-105 transition-transform duration-300">
-                {room?.Expected_Rooms}/mo
+            <div className="flex justify-between items-center mt-auto">
+              <p className="text-xl sm:text-2xl font-bold text-blue-600 group-hover:scale-105 transition-transform duration-300">
+                ${room?.Expected_Rooms}/mo
               </p>
             </div>
           </div>

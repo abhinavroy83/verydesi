@@ -33,8 +33,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="flex h-screen bg-background max-w-[1370px] lg:max-w-[1600px] overflow-x-hidden overflow-y-hidden mx-auto mt-32 border shadow-xl shadow-gray-300 rounded-2xl my-5">
-      <aside className="w-64 border-r bg-muted/30 flex flex-col">
+    <div className="flex h-screen bg-background max-w-[1370px] lg:max-w-[1500px] overflow-x-hidden overflow-y-hidden mx-auto mt-32 border shadow-xl shadow-gray-300 rounded-2xl my-5">
+      <aside className="w-64 border-r bg-muted/30 lg:flex flex-col hidden">
         <div className="p-6 flex flex-col items-center">
           <Avatar className="w-24 h-24 mb-4 border-4 border-primary">
             <AvatarImage src="/placeholder.svg" alt="User" />
