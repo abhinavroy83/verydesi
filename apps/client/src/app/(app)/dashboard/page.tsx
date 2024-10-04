@@ -9,7 +9,7 @@ import React from "react";
 const page = () => {
   const { data: session, status } = useSession();
   const router = useRouter(); // Ensure you're using this hook
-  console.log(session);
+
   if (status === "loading") return <div>Loading...</div>;
   if (!session) {
     // To avoid rendering the component before the redirect completes

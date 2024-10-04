@@ -33,7 +33,9 @@ import { FaHandHoldingDollar } from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 import LeafletMapRoom from "@/components/map/LefletMapRoom";
+import { useRouter } from "next/router";
 import { number } from "zod";
+import { useParams } from "next/navigation";
 const roomDatas = {
   id: "1",
   title: "2BR 2Bath Apartment In Normal",
@@ -89,6 +91,9 @@ interface Location {
   lng: number;
 }
 export default function RoomDetails() {
+  const param = useParams<{ tag: string; id: string }>();
+
+  console.log(param.id);
   const [amenityFilter, setAmenityFilter] = useState("");
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
@@ -98,17 +103,17 @@ export default function RoomDetails() {
   const fetchRoom = async () => {
     try {
       const res = await axios.get(
-        `https://api.verydesi.com/api/getspecificroom/66efe1d47c15710096f8c5d9`
+        `http://localhost:8000/room/findsingleRoom/${param.id}`
       );
       // console.log(res.data.rooms);
-
+      // console.log(res.data);
       if (res) {
         const loc = {
-          lat: res.data.rooms.location.coordinates[1],
-          lng: res.data.rooms.location.coordinates[0],
+          lat: res.data.location.coordinates[1],
+          lng: res.data.location.coordinates[0],
         };
         setLocationsndString(loc);
-        setroomData(res.data.rooms);
+        setroomData(res.data);
       }
     } catch (error) {
       console.error("Error fetching room data:", error);
@@ -166,7 +171,7 @@ export default function RoomDetails() {
                     <CarouselItem key={index}>
                       <div className="relative aspect-video">
                         <Image
-                          src={image}
+                          src={image || "https://placeholder.pics/svg/300"}
                           alt={`Room image ${index + 1}`}
                           layout="fill"
                           objectFit="cover"

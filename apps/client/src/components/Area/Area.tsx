@@ -17,8 +17,7 @@ function Avalableloc() {
   const [cty, setCty] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("Portland");
   const [isOpen, setIsOpen] = useState(false);
-  const { status, currentCity } = useAuthStore();
-
+  const { status, currentCity, updateCity } = useAuthStore();
   // Fetch city data on component mount
   useEffect(() => {
     const fetchData = async () => {
@@ -37,11 +36,10 @@ function Avalableloc() {
     };
     fetchData();
   }, []);
-  console.log(status);
-  console.log(currentCity);
 
   const handleLocation = (city: string) => {
     setSelectedCity(city);
+    updateCity(city);
     console.log("Selected location:", city);
     setIsOpen(false);
   };
@@ -55,7 +53,7 @@ function Avalableloc() {
             className="text-gray-700 hover:text-gray-900 hover:bg-gray-100"
           >
             <Globe className="h-5 w-5" />
-            <span className="font-medium px-1">{selectedCity}</span>
+            <span className="font-medium px-1">{currentCity}</span>
             <ChevronDown
               className={`h-4 w-4 transition-transform duration-200 ${
                 isOpen ? "rotate-180" : ""

@@ -10,27 +10,54 @@ import {
   Wifi,
   Utensils,
 } from "lucide-react";
-import { RoomCardProps } from "@myrepo/types";
+import { RoomCardProps, RoomInterface } from "@myrepo/types";
 import Link from "next/link";
+import { stateAbbreviations } from "@/constants";
 
-export default function Component({
-  id,
-  imageUrl,
-  title,
-  price,
-  location,
-  gender,
-  roomType,
-  postedBy,
-  daysAgo,
-}: RoomCardProps) {
+interface FeaturedCard2Props {
+  room: RoomInterface; // Make sure to import and use the correct interface
+}
+
+export default function Component({ room }: FeaturedCard2Props) {
+  function truncateCharacters(str: any, numCharacters: any) {
+    if (str.length > numCharacters) {
+      return str.slice(0, numCharacters) + "...";
+    }
+    return str;
+  }
+  const calculateTimeDifference = (dateStr: Date) => {
+    const date = new Date(dateStr);
+    const currentDate = new Date();
+    const diffInMs = currentDate.getTime() - date.getTime();
+    const diffInSeconds = Math.floor(diffInMs / 1000);
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+    const diffInMonths = Math.floor(diffInDays / 30);
+
+    if (diffInSeconds < 60) {
+      return "Just now";
+    } else if (diffInMinutes < 60) {
+      return `${diffInMinutes} minute${diffInMinutes > 1 ? "s" : ""} ago`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} ago`;
+    } else if (diffInDays < 30) {
+      return `${diffInDays} day${diffInDays > 1 ? "s" : ""} ago`;
+    } else {
+      return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
+    }
+  };
   return (
-    <Link href={`room/${id}`}>
-      <Card className="w-[36rem] w-full h-[190px] perspective-1000 group shadow-sm hover:shadow-md">
+    <Link href={`room/${room?._id}`}>
+      <Card className="w-[36rem] h-[190px] perspective-1000 group shadow-sm hover:shadow-md">
         <CardContent className="p-0 flex h-full">
           <div className="w-1/3 relative group">
             <img
-              src="https://res.cloudinary.com/druohnmyv/image/upload/v1725526210/krvwwzdxgznzxkintdm8.jpg"
+              src={
+                room && room.Imgurl && room.Imgurl.length > 0
+                  ? room.Imgurl[0]
+                  : "https://placeholder.pics/svg/300"
+              }
               alt="Luxury Highrise Studio"
               className="absolute inset-0 w-full h-full object-cover rounded-lg group-hover:scale-100 transition-transform duration-500 ease-in duration-70"
             />
@@ -48,22 +75,28 @@ export default function Component({
           <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
               <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
-                {title}
+                {room?.Title && truncateCharacters(room?.Title, 25)}
               </h2>
 
               <div className="flex items-center text-sm text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
                 <MapPin className="h-4 w-4 mr-1 text-purple-500" />
-                <span>New York, NY</span>
+                <span>
+                  {room?.postingincity},
+                  {room?.state &&
+                    (room.state.length > 2
+                      ? stateAbbreviations[room.state]
+                      : room.state)}
+                </span>
                 <span className="mx-1">•</span>
                 <BedDouble className="h-4 w-4 mx-1 text-purple-500" />
                 <span>Studio</span>
               </div>
               <div className="flex items-center text-xs text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">
                 <User className="h-3 w-3 mr-1 text-indigo-500" />
-                <span>Posted by: NYCLuxeLiving</span>
+                <span>Posted by: {room?.user_name}</span>
                 <span className="mx-1">•</span>
                 <Clock className="h-3 w-3 mr-1 text-indigo-500" />
-                <span>5 days ago</span>
+                <span> {calculateTimeDifference(room?.postedon)}</span>
               </div>
               <div className="flex space-x-2 mb-4">
                 <Badge
@@ -84,7 +117,7 @@ export default function Component({
             </div>
             <div className="flex justify-between items-center">
               <p className="text-2xl font-bold text-blue-600 group-hover:scale-105 transition-transform duration-300">
-                {price}/mo
+                {room?.Expected_Rooms}/mo
               </p>
             </div>
           </div>

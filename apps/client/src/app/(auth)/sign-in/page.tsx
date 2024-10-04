@@ -25,7 +25,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const login = useAuthStore((state) => state.login);
+  const { login } = useAuthStore();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -35,12 +35,13 @@ export default function SignIn() {
       email,
       password,
     });
-    const city = "Portland";
-    login(city);
+
     if (result?.error) {
       setError(result.error);
     } else {
       // Redirect to the dashboard or any other protected page
+      const city = "Portland";
+      login(city);
       router.push("/dashboard");
     }
   };
