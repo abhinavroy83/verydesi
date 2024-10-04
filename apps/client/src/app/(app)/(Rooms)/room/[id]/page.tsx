@@ -39,6 +39,7 @@ import { useParams } from "next/navigation";
 import { FaSmoking } from "react-icons/fa";
 import { BiFoodTag } from "react-icons/bi";
 import { MdOutlinePets } from "react-icons/md";
+import RoomSketon from "@/components/skeleton/RoomSkeleton";
 
 const roomDatas = {
   id: "1",
