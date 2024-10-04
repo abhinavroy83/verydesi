@@ -16,96 +16,29 @@ import { RoomInterface } from "@myrepo/types";
 import axios from "axios";
 import { stateAbbreviations } from "@/constants";
 import { any } from "zod";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  SkeletonFeaturedCard,
+  SkeletonNonFeatureCard,
+} from "@/components/skeleton";
 
-const roomCardsData = [
-  {
-    id: 1,
-    imageUrl: "https://placeholder.pics/svg/300x350",
-    title: "Cozy Room 1",
-    price: 1200,
-    location: "New York, NY",
-    gender: "male",
-    roomType: "Single Room",
-    postedBy: "Alice",
-    daysAgo: 2,
-  },
-  {
-    id: 2,
-    imageUrl: "https://placeholder.pics/svg/300x350",
-    title: "Modern Room 2",
-    price: 1500,
-    location: "Los Angeles, CA",
-    gender: "female",
-    roomType: "Shared Room",
-    postedBy: "Bob",
-    daysAgo: 5,
-  },
-  {
-    id: 3,
-    imageUrl: "https://placeholder.pics/svg/300x350",
-    title: "Charming Room 3",
-    price: 1400,
-    location: "San Francisco, CA",
-    gender: "other",
-    roomType: "Entire Place",
-    postedBy: "Charlie",
-    daysAgo: 1,
-  },
-  {
-    id: 5,
-    imageUrl: "https://placeholder.pics/svg/300x350",
-    title: "Spacious Room 4",
-    price: 1300,
-    location: "Miami, FL",
-    gender: "male",
-    roomType: "Single Room",
-    postedBy: "Daisy",
-    daysAgo: 3,
-  },
-  {
-    id: 4,
-    imageUrl: "https://placeholder.pics/svg/300x350",
-    title: "Lovely Room 5",
-    price: 1600,
-    location: "Seattle, WA",
-    gender: "female",
-    roomType: "Shared Room",
-    postedBy: "Edward",
-    daysAgo: 4,
-  },
-  {
-    id: 6,
-    imageUrl: "https://placeholder.pics/svg/300x350",
-    title: "Elegant Room 6",
-    price: 1700,
-    location: "Chicago, IL",
-    gender: "other",
-    roomType: "Entire Place",
-    postedBy: "Fiona",
-    daysAgo: 2,
-  },
-];
+
 
 const Page = () => {
-  const { data: session } = useSession();
   const router = useRouter();
   const [Room, setRooms] = useState<RoomInterface[] | null>(null);
   const { currentCity } = useAuthStore();
   const [loading, setLoading] = useState(true);
 
-  if (session) {
-    // Access the JWT token
-    const accessToken = session.accessToken;
-    // console.log("JWT Token: ", accessToken);
-  }
-
   const fetchrooms = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(
         `http://localhost:8000/room/ListingAllRoomByArea/${currentCity}`
       );
-      console.log(res.data);
-      const rooms = res.data.reverse();
+      console.log(res);
+
+      const rooms = res?.data.reverse();
       const areaRes = await axios.get(
         `https://api.verydesi.com/api/admin/area/${currentCity}`
       );
@@ -149,20 +82,38 @@ const Page = () => {
   useEffect(() => {
     fetchrooms();
   }, [currentCity]);
-  // Sample data for room cards
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <HomeLayout>
+        <div className="w-full justify-between flex items-center">
+          <Skeleton className="h-8 w-64" />
+          <Skeleton className="h-10 w-28" />
+        </div>
+        <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
+          {[...Array(6)].map((_, index) => (
+            <SkeletonFeaturedCard key={index} />
+          ))}
+        </div>
+        <Skeleton className="h-8 w-64 my-4" />
+        <div className="flex flex-col gap-2">
+          {[...Array(4)].map((_, index) => (
+            <SkeletonNonFeatureCard key={index} />
+          ))}
+        </div>
+      </HomeLayout>
+    );
   }
-
   if (!Room || Room.length === 0) {
-    return <div>No rooms found in {currentCity}</div>;
+    return <div className=" mt-32">No rooms found in {currentCity}</div>;
   }
 
   return (
     <HomeLayout>
       <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full justify-between flex items-center">
-        <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
+        <h1 className="text-2xl font-bold my-4">
+          Featured Rooms on {currentCity}
+        </h1>
         <button
           type="button"
           className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out"
@@ -178,7 +129,7 @@ const Page = () => {
           <FeaturedCard2 key={index} room={room} />
         ))}
       </div>
-      <h1 className="text-2xl font-bold my-4">More Room on portland</h1>
+      <h1 className="text-2xl font-bold my-4">More Rooms on {currentCity}</h1>
 
       <div className=" flex flex-col gap-2">
         {NonfeatturedRooms?.map((room, index) => (
