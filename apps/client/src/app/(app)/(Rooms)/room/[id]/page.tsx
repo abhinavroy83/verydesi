@@ -148,7 +148,6 @@ export default function RoomDetails() {
           <div className="flex space-x-2 w-full justify-between">
             <div className="flex gap-2">
               <button
-                // onClick={onPrev}
                 className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
                 aria-label="Previous listing"
               >

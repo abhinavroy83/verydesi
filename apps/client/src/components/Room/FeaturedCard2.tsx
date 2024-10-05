@@ -1,3 +1,4 @@
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,18 +14,106 @@ import {
 import { RoomInterface } from "@myrepo/types";
 import Link from "next/link";
 import { stateAbbreviations } from "@/constants";
+import useCartStore from "@/store/useCartStore";
+import useAuthStore from "@/store/useAuthStore";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 interface FeaturedCard2Props {
   room: RoomInterface;
 }
 
 export default function Component({ room }: FeaturedCard2Props) {
+  const { pluscart, minuscart } = useCartStore();
+  const [wishliststatys, setWishlistStatus] = useState(false);
+  const { data: session, status } = useSession();
+
   function truncateCharacters(str: string, numCharacters: number) {
     if (str.length > numCharacters) {
       return str.slice(0, numCharacters) + "...";
     }
     return str;
   }
+  const token = session?.accessToken;
+  const makewishlist = async (_id: string) => {
+    if (status) {
+      try {
+        const dat = { roomId: _id, status: true };
+        const res = await axios.post(
+          `http://localhost:8000/favorite/postAndUpdateFavorite`,
+          dat,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (
+          res.data.msg === "Successfully added to wishlist" ||
+          res.data.msg === "Successfully updated"
+        ) {
+          pluscart();
+          setWishlistStatus(true);
+          toast.success("Added to Favorites.");
+        }
+      } catch (error) {
+        console.error("Error adding to wishlist:", error);
+      }
+    } else {
+      toast.error("Removed from Favorites.");
+    }
+  };
+  const unwish = async (_id: string) => {
+    try {
+      const dat = { roomId: _id, status: false };
+      const res = await axios.post(
+        `http://localhost:8000/favorite/postAndUpdateFavorite`,
+        dat,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (
+        res.data.msg === "Successfully removed" ||
+        res.data.msg === "Wishlist cleared"
+      ) {
+        minuscart();
+        setWishlistStatus(false);
+        toast.error("Removed from Favorites.");
+      }
+    } catch (error) {
+      console.error("Error removing from wishlist:", error);
+    }
+  };
+  useEffect(() => {
+    const fetchWishStatus = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/favorite/findfavoritebyId/${room?._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (res.data.status === "not found") {
+          setWishlistStatus(false);
+        } else {
+          setWishlistStatus(res.data.status);
+        }
+      } catch (error) {
+        console.error("Error during fetching wishlist status:", error);
+      }
+    };
+
+    fetchWishStatus();
+  }, [room?._id, token]);
 
   const calculateTimeDifference = (dateStr: Date) => {
     const date = new Date(dateStr);
@@ -63,16 +152,58 @@ export default function Component({ room }: FeaturedCard2Props) {
               alt="Room Image"
               className="w-full h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
             />
-            <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="w-full bg-white text-blue-500 hover:bg-red-600 hover:text-white group-hover:translate-y-1 transition-all duration-300"
-              >
-                <Heart className="h-4 w-4 mr-2" />
-                Add to Wishlist
-              </Button>
-            </div>
+            {!status && (
+              <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toast.success("please login");
+                  }}
+                  variant="secondary"
+                  size="sm"
+                  className="w-full bg-white text-blue-500 hover:bg-red-600 hover:text-white group-hover:translate-y-1 transition-all duration-300"
+                >
+                  <Heart className="h-4 w-4 mr-2" />
+                  Add to Wishlist
+                </Button>
+              </div>
+            )}
+
+            {status && (
+              <div>
+                {!wishliststatys ? (
+                  <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
+                    <Button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        makewishlist(room?._id);
+                      }}
+                      variant="secondary"
+                      size="sm"
+                      className="w-full bg-white text-blue-500 hover:bg-red-600 hover:text-white group-hover:translate-y-1 transition-all duration-300"
+                    >
+                      <Heart className="h-4 w-4 mr-2" />
+                      Add to Favorite
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
+                    <Button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        unwish(room?._id);
+                      }}
+                      variant="secondary"
+                      size="sm"
+                      className="w-full hover:bg-white hover:text-blue-500 bg-red-600 text-white group-hover:translate-y-1 transition-all duration-300"
+                    >
+                      <Heart className="h-4 w-4 mr-2" />
+                      Remove from Favorite
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>

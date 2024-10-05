@@ -7,6 +7,7 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
 import { RoomModule } from './room/room.module';
+import { FavoriteModule } from './favorite/favorite.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { RoomModule } from './room/room.module';
     DatabaseModule,
     RedisModule,
     RoomModule,
+    FavoriteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

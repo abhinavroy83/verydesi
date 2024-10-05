@@ -27,6 +27,7 @@ import Area from "./Area/Area";
 import Notification from "@/components/Notification/Notification";
 import ModernLogoutPopup from "./Popups/Logoutpop";
 import LogoutComponent from "./Popups/Logoutpop";
+import useCartStore from "@/store/useCartStore";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -39,6 +40,7 @@ export default function Navbar() {
   const [islocationOpen, setIslocationOpen] = useState(false);
   const [IsNotificationOpen, setIsNotificationOpen] = useState(false);
   const router = useRouter();
+  const { cartcount } = useCartStore();
   useEffect(() => {
     axios
       .get(
@@ -106,7 +108,7 @@ export default function Navbar() {
                   <div className="relative">
                     <Heart className="h-6 w-6 text-gray-600 hover:text-gray-900 cursor-pointer" />
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                      1
+                      {cartcount}
                     </span>
                   </div>
                   <div
