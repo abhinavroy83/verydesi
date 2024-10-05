@@ -71,7 +71,7 @@ export default function DashboardUserSettings() {
       const toastId = toast.loading("Updating data...");
       console.log(data);
       const response = await axios.patch(
-        "http://localhost:8000/user/updateUser",
+        "http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/user/updateUser",
         data,
         {
           headers: {
@@ -94,7 +94,7 @@ export default function DashboardUserSettings() {
       if (!token) {
         throw new Error("token not found");
       }
-      const res = await axios.get(`http://localhost:8000/user/userprofile`, {
+      const res = await axios.get(`http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/user/userprofile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

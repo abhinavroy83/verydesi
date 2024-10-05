@@ -42,7 +42,7 @@ export default function Component({ room }: FeaturedCard2Props) {
       try {
         const dat = { roomId: _id, status: true };
         const res = await axios.post(
-          `http://localhost:8000/favorite/postAndUpdateFavorite`,
+          `http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/favorite/postAndUpdateFavorite`,
           dat,
           {
             headers: {
@@ -70,7 +70,7 @@ export default function Component({ room }: FeaturedCard2Props) {
     try {
       const dat = { roomId: _id, status: false };
       const res = await axios.post(
-        `http://localhost:8000/favorite/postAndUpdateFavorite`,
+        `http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/favorite/postAndUpdateFavorite`,
         dat,
         {
           headers: {
@@ -95,7 +95,7 @@ export default function Component({ room }: FeaturedCard2Props) {
     const fetchWishStatus = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/favorite/findfavoritebyId/${room?._id}`,
+          `http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/favorite/findfavoritebyId/${room?._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

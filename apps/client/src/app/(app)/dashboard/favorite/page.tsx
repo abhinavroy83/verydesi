@@ -41,7 +41,7 @@ export default function FavoritesPage() {
   const handleRemoveFavorite = async (roomId: string) => {
     try {
       await axios.post(
-        `http://localhost:8000/favorite/postAndUpdateFavorite`,
+        `http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/favorite/postAndUpdateFavorite`,
         {
           roomId,
           status: false,
@@ -67,7 +67,7 @@ export default function FavoritesPage() {
     const fetchAllList = async () => {
       try {
         const listResponse = await axios.get(
-          `http://localhost:8000/favorite/AlluserFavorite`,
+          `http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/favorite/AlluserFavorite`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
