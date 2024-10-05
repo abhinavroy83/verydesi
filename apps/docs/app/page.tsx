@@ -47,7 +47,7 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button>Open alert</Button>
+  
       </main>
       <footer className={styles.footer}>
         <a
@@ -69,13 +69,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
+       
           Examples
         </a>
         <a

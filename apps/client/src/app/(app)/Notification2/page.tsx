@@ -22,10 +22,10 @@ export default function Component() {
           Notifications
         </h2>
         <span className="bg-white text-purple-600 rounded-full px-2 py-1 text-sm font-semibold">
-          {visibleNotifications.length}
+          {/* {visibleNotifications.length} */}
         </span>
       </div>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {visibleNotifications.length > 0 ? (
           visibleNotifications.map((notification) => (
             <motion.div
@@ -77,7 +77,7 @@ export default function Component() {
             </p>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 }

@@ -32,7 +32,7 @@ import { IoTransgender } from "react-icons/io5";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
-import LeafletMapRoom from "@/components/map/LefletMapRoom";
+const LeafletMapRoom = dynamic(() => import("@/components/map/LefletMapRoom"));
 import { useRouter } from "next/router";
 import { number } from "zod";
 import { useParams } from "next/navigation";
@@ -40,6 +40,7 @@ import { FaSmoking } from "react-icons/fa";
 import { BiFoodTag } from "react-icons/bi";
 import { MdOutlinePets } from "react-icons/md";
 import RoomSketon from "@/components/skeleton/RoomSkeleton";
+import dynamic from "next/dynamic";
 
 const roomDatas = {
   id: "1",

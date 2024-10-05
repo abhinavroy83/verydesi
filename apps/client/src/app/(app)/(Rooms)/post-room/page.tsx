@@ -118,10 +118,7 @@ export default function RoomPostingForm() {
           <Label htmlFor="propertyType" className="text-lg font-semibold">
             Property Type<span className="text-red-500">*</span>
           </Label>
-          <Select
-            className="mt-1"
-            {...register("propertyType", { required: true })}
-          >
+          <Select {...register("propertyType", { required: true })}>
             <option value="">Select</option>
             <option value="apartment">Apartment</option>
             <option value="house">House</option>
@@ -161,10 +158,7 @@ export default function RoomPostingForm() {
           <Label htmlFor="priceModel" className="text-lg font-semibold">
             Price Model<span className="text-red-500">*</span>
           </Label>
-          <Select
-            {...register("priceModel", { required: true })}
-            className="mt-1"
-          >
+          <Select {...register("priceModel", { required: true })}>
             <option value="">Select</option>
             <option value="monthly">Monthly</option>
             <option value="weekly">Weekly</option>
@@ -218,10 +212,7 @@ export default function RoomPostingForm() {
           <Label htmlFor="separateBathroom" className="text-lg font-semibold">
             Separate Bathroom<span className="text-red-500">*</span>
           </Label>
-          <Select
-            {...register("separateBathroom", { required: true })}
-            className="mt-1"
-          >
+          <Select {...register("separateBathroom", { required: true })}>
             <option value="">Select Number</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -250,7 +241,7 @@ export default function RoomPostingForm() {
           <Label htmlFor="isRoomFurnished" className="text-lg font-semibold">
             Is room furnished?
           </Label>
-          <Select {...register("isRoomFurnished")} className="mt-1">
+          <Select {...register("isRoomFurnished")}>
             <option value="">Select</option>
             <option value="furnished">Furnished</option>
             <option value="unfurnished">Unfurnished</option>

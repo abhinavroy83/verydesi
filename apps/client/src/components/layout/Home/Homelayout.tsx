@@ -1,6 +1,9 @@
 "use client";
+import dynamic from "next/dynamic";
 import React, { ReactNode } from "react";
-import LeafletMap from "@/components/map/LeafletMap";
+const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
+  ssr: false,
+});
 
 export function HomeLayout({ children }: { children: ReactNode }) {
   return (

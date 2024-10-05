@@ -1,4 +1,5 @@
 "use client";
+
 import { Heart, ExternalLink, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +10,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import { DashboardLayout } from "@/components/layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -22,7 +32,11 @@ export default function FavoritesPage() {
   const { data: session } = useSession();
   const [favorites, setFavorites] = useState<RoomInterface[]>([]);
   const token = session?.accessToken;
-  const { pluscart, minuscart } = useCartStore();
+  const { pluscart, minuscart, setCartCount } = useCartStore();
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleRemoveFavorite = async (roomId: string) => {
     try {
@@ -38,10 +52,8 @@ export default function FavoritesPage() {
           },
         }
       );
-      // Update the favorites state
       minuscart();
-
-      toast.success("removed from fovorite");
+      toast.success("Removed from favorites");
       setFavorites((prevFavorites) =>
         prevFavorites.filter((favorite) => favorite._id !== roomId)
       );
@@ -51,10 +63,9 @@ export default function FavoritesPage() {
   };
 
   useEffect(() => {
-    let isMounted = true; // To prevent state updates after unmount
+    let isMounted = true;
     const fetchAllList = async () => {
       try {
-        // Fetch the wishlist
         const listResponse = await axios.get(
           `http://localhost:8000/favorite/AlluserFavorite`,
           {
@@ -63,7 +74,8 @@ export default function FavoritesPage() {
             },
           }
         );
-
+        console.log(listResponse.data.count);
+        setCartCount(listResponse?.data.count);
         if (listResponse.data.status === "error") {
           console.error(listResponse.data.msg);
           if (isMounted) setLoading(false);
@@ -74,7 +86,6 @@ export default function FavoritesPage() {
           (item: any) => item.roomId
         );
 
-        // Fetch the rooms
         const roomResponse = await Promise.all(
           list.map((roomId: any) =>
             axios.get(`https://api.verydesi.com/api/getspecificroom/${roomId}`)
@@ -97,21 +108,40 @@ export default function FavoritesPage() {
       fetchAllList();
     }
 
-    // Cleanup function to prevent state updates on unmounted component
     return () => {
       isMounted = false;
     };
   }, [token]);
 
-  if (loading) {
-    return (
-      <DashboardLayout>
-        <div className="container mx-auto bg-white text-black rounded-lg">
-          <div className="p-4">Loading...</div>
+  // Pagination logic
+  const totalPages = Math.ceil(favorites.length / itemsPerPage);
+  const paginatedFavorites = favorites.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const SkeletonRow = () => (
+    <TableRow>
+      <TableCell>
+        <div className="flex items-center space-x-3">
+          <Skeleton className="h-10 w-10 rounded-full" />
+          <Skeleton className="h-4 w-[200px]" />
         </div>
-      </DashboardLayout>
-    );
-  }
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-4 w-20" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-4 w-16" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-8 w-24" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-8 w-8" />
+      </TableCell>
+    </TableRow>
+  );
 
   return (
     <DashboardLayout>
@@ -120,25 +150,30 @@ export default function FavoritesPage() {
           <Heart className="w-6 h-6 text-black" />
           <h1 className="text-2xl font-bold">Favorites</h1>
         </div>
-        {favorites.length > 0 ? (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[300px]">Room</TableHead>
-                <TableHead>City</TableHead>
-                <TableHead>Rent</TableHead>
-                <TableHead>Visit Page</TableHead>
-                <TableHead>Remove</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {favorites.map((favorite) => (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[300px]">Room</TableHead>
+              <TableHead>City</TableHead>
+              <TableHead>Rent</TableHead>
+              <TableHead>Visit Page</TableHead>
+              <TableHead>Remove</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {loading ? (
+              Array.from({ length: itemsPerPage }).map((_, index) => (
+                <SkeletonRow key={index} />
+              ))
+            ) : favorites.length > 0 ? (
+              paginatedFavorites.map((favorite) => (
                 <TableRow key={favorite._id}>
                   <TableCell className="font-medium">
                     <div className="flex items-center space-x-3">
                       <img
                         src={
-                          favorite?.Imgurl?.[0] || "/default-placeholder.png"
+                          favorite?.Imgurl?.[0] ||
+                          "https://placeholder.pics/svg/300"
                         }
                         alt={favorite.Title}
                         className="w-10 h-10 rounded-full"
@@ -166,13 +201,48 @@ export default function FavoritesPage() {
                     </Button>
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        ) : (
-          <div className="p-4">No favorites found.</div>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center">
+                  No favorites found.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        {!loading && favorites.length > 0 && (
+          <div className="mt-4">
+            <Pagination>
+              <PaginationContent>
+                {currentPage > 1 && (
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() => setCurrentPage((prev) => prev - 1)}
+                    />
+                  </PaginationItem>
+                )}
+                {[...Array(totalPages)].map((_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink
+                      onClick={() => setCurrentPage(index + 1)}
+                      isActive={currentPage === index + 1}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                {currentPage < totalPages && (
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() => setCurrentPage((prev) => prev + 1)}
+                    />
+                  </PaginationItem>
+                )}
+              </PaginationContent>
+            </Pagination>
+          </div>
         )}
-        {/* Pagination or additional content can go here */}
       </div>
     </DashboardLayout>
   );

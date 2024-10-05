@@ -11,19 +11,27 @@ import useAuthStore from "@/store/useAuthStore";
 import { RoomInterface } from "@myrepo/types";
 import axios from "axios";
 import { stateAbbreviations } from "@/constants";
-import { any } from "zod";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   SkeletonFeaturedCard,
   SkeletonNonFeatureCard,
 } from "@/components/skeleton";
-
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 const Page = () => {
   const router = useRouter();
   const [Room, setRooms] = useState<RoomInterface[] | null>(null);
   const { currentCity } = useAuthStore();
   const [loading, setLoading] = useState(true);
-
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const fetchrooms = async () => {
     try {
       setLoading(true);
@@ -71,8 +79,13 @@ const Page = () => {
     }
   };
   const featuredRooms = Room?.slice(0, 6);
-  const NonfeatturedRooms = Room?.slice(6);
+  const NonfeatturedRooms = Room?.slice(6) ?? [];
 
+  const totalPages = Math?.ceil(NonfeatturedRooms?.length / itemsPerPage);
+  const paginatedFavorites = NonfeatturedRooms?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
   useEffect(() => {
     fetchrooms();
   }, [currentCity]);
@@ -129,6 +142,36 @@ const Page = () => {
         {NonfeatturedRooms?.map((room, index) => (
           <NonFeatureCard key={index} room={room} />
         ))}
+      </div>
+      <div className="my-4">
+        <Pagination>
+          <PaginationContent>
+            {currentPage > 1 && (
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setCurrentPage((prev) => prev - 1)}
+                />
+              </PaginationItem>
+            )}
+            {[...Array(totalPages)].map((_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(index + 1)}
+                  isActive={currentPage === index + 1}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            {currentPage < totalPages && (
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                />
+              </PaginationItem>
+            )}
+          </PaginationContent>
+        </Pagination>
       </div>
 
       {/* <div className=" py-5">
