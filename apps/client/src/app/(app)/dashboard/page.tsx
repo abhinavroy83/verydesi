@@ -32,7 +32,7 @@ const page = () => {
             icon={<Home className="h-6 w-6" />}
           />
           <DashboardCard
-            url="/dashboard/fav"
+            url="/dashboard/favorite"
             title="Favorites"
             icon={<Heart className="h-6 w-6" />}
           />

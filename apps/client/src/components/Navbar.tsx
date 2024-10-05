@@ -105,12 +105,12 @@ export default function Navbar() {
                     <Bell className="h-6 w-6  text-gray-600 hover:text-gray-900 cursor-pointer" />
                     {IsNotificationOpen && <Notification />}
                   </div>
-                  <div className="relative">
+                  <Link href="/dashboard/favorite" className="relative">
                     <Heart className="h-6 w-6 text-gray-600 hover:text-gray-900 cursor-pointer" />
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                       {cartcount}
                     </span>
-                  </div>
+                  </Link>
                   <div
                     className="relative"
                     onMouseEnter={() => setIsDropdownOpen(true)}
