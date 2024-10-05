@@ -140,7 +140,7 @@ export default function Component({ room }: FeaturedCard2Props) {
 
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="lg:w-full lg:w-[38rem] w-[21rem] h-auto sm:h-[190px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
+      <Card className="lg:w-full  w-[21rem] h-auto sm:h-[190px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
           <div className="w-full sm:w-1/3 relative group">
             <img
