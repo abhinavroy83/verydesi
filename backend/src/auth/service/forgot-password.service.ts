@@ -83,14 +83,14 @@ export class ForgotPasswordService {
           <p>Dear <strong>username</strong>,</p>
           <p>We received a request to reset your password. Click the link below to proceed:</p>
           <p style="text-align: center;">
-            <a href="http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/auth/reset-password/${token}" style="display: inline-block; padding: 10px 20px; background-color: #ff5722; color: #fff; text-decoration: none; border-radius: 5px;">
+            <a href="http://apiv2.verydesi.com/auth/reset-password/${token}" style="display: inline-block; padding: 10px 20px; background-color: #ff5722; color: #fff; text-decoration: none; border-radius: 5px;">
               Reset Password
             </a>
           </p>
           <p>If the button above doesn't work, you can copy and paste the following link into your browser:</p>
           <p style="word-wrap: break-word;">
-            <a href="http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/auth/reset-password/${token}">
-              http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/auth/reset-password/${token}
+            <a href="http://apiv2.verydesi.com/auth/reset-password/${token}">
+              http://apiv2.verydesi.com/auth/reset-password/${token}
             </a>
           </p>
           <p><strong>Note:</strong> This link will expire in 10 minutes.</p>

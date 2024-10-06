@@ -11,7 +11,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await fetch("http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/auth/signin", {
+          const res = await fetch("http://apiv2.verydesi.com/auth/signin", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

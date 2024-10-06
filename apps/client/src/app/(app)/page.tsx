@@ -36,7 +36,7 @@ const Page = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com:8000/room/ListingAllRoomByArea/${currentCity}`
+        `http://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`
       );
       console.log(res);
 
