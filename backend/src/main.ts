@@ -5,13 +5,7 @@ async function bootstrap() {
   dotenv.config();
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: [
-      'http://localhost:3000', // Add this if you're running the frontend locally
-      'https://webmasterbee.com', // Your production domain
-      'http://apiv2.verydesi.com',
-      'http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
-      'http://18.237.230.139',
-    ],
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
