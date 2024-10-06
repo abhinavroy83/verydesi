@@ -36,13 +36,19 @@ const Page = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`
+        `http://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`,
+        {
+          withCredentials: true,
+        }
       );
       console.log(res);
 
       const rooms = res?.data.reverse();
       const areaRes = await axios.get(
-        `https://api.verydesi.com/api/admin/area/${currentCity}`
+        `https://api.verydesi.com/api/admin/area/${currentCity}`,
+        {
+          withCredentials: true,
+        }
       );
       const areaData = areaRes.data.area[0];
       // console.log(areaData);
