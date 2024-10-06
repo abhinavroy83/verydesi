@@ -8,12 +8,11 @@ async function bootstrap() {
       'http://localhost:3000',
       'http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
       'https://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
+      'http://apiv2.verydesi.com',
+      'https://apiv2.verydesi.com',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
     credentials: true,
-    allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
   });
   await app.listen(8000, '0.0.0.0');
 }
