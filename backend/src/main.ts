@@ -6,9 +6,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
     origin: [
-      'https://webmasterbee.com',
-      'http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
-      'http://18.237.230.139',
+      'http://localhost:3000', // Add this if you're running the frontend locally
+      'https://webmasterbee.com', // Your production domain
+      'http://apiv2.verydesi.com',
+      "http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com" // Backend domain (if necessary)
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
