@@ -35,15 +35,24 @@ const Page = () => {
   const fetchrooms = async () => {
     try {
       setLoading(true);
+      setRooms(null);
       const res = await axios.get(
         `http://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`,
         {
           withCredentials: true,
         }
       );
-      console.log(res);
 
-      const rooms = res?.data.reverse();
+      const roomsData = res.data;
+      // console.log(roomsData);
+      if (roomsData.message) {
+        setRooms([]); // Clear room state if no rooms are found
+        setLoading(false);
+        return;
+      }
+
+      const rooms = res.data.reverse();
+
       const areaRes = await axios.get(
         `https://api.verydesi.com/api/admin/area/${currentCity}`,
         {
@@ -95,6 +104,10 @@ const Page = () => {
   useEffect(() => {
     fetchrooms();
   }, [currentCity]);
+
+  if (!Room || Room.length === 0) {
+    return <div className=" mt-32">No rooms found in {currentCity}</div>;
+  }
   if (loading) {
     return (
       <HomeLayout>

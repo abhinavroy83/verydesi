@@ -18,6 +18,7 @@ import { Separator } from "@radix-ui/react-separator";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SignIn() {
   const [isHovering, setIsHovering] = useState(false);
@@ -26,6 +27,7 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const router = useRouter();
   const { login } = useAuthStore();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -42,7 +44,12 @@ export default function SignIn() {
       // Redirect to the dashboard or any other protected page
       const city = "Portland";
       login(city);
-      router.push("/dashboard");
+      toast({
+        title: "Success",
+        description: "Loggedin successfully!",
+        duration: 5000,
+      });
+      router.push("/");
     }
   };
 

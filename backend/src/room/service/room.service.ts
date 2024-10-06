@@ -22,16 +22,16 @@ export class RoomService {
     try {
       const cachedrooms = await this.cacheManager.get<IRoom>(cacheKey);
       if (cachedrooms) {
-        console.log(cachedrooms);
+        // console.log(cachedrooms);
         return cachedrooms;
       }
       const rooms = await this.roomModel.find({ postingincity: area });
-      console.log(rooms);
+      // console.log(rooms);
       if (!rooms || rooms.length === 0) {
         return { message: `No rooms found in ${area}`, rooms: [] };
       }
       await this.cacheManager.set(cacheKey, rooms);
-      return rooms;
+      return { message: null, rooms };
     } catch (error) {
       throw new InternalServerErrorException(
         'Something went wrong while fetching rooms',

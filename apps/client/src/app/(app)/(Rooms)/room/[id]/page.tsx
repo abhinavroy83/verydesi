@@ -127,7 +127,12 @@ export default function RoomDetails() {
     } catch (error) {
       setLoading(false);
 
-      console.error("Error fetching room data:", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response?.data || error.message);
+        // Handle specific error cases
+      } else {
+        console.error("Unexpected error:", error);
+      }
     }
   };
   useEffect(() => {

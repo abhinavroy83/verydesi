@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from '../service/auth.service';
 import {
   Authsignindto,
@@ -11,6 +20,7 @@ import {
   ForgotPasswordService,
   UniqueEmailVerify,
 } from '../service';
+import { JwtGuard } from '../guard';
 
 @Controller('auth')
 export class AuthController {
@@ -53,5 +63,10 @@ export class AuthController {
   uniqueEmail(@Param('email') email: AuthEmailVerify) {
     return this.uniqueEmailVerify.uniqueEmail(email);
   }
-  
+  @UseGuards(JwtGuard)
+  @Patch('update-password')
+  updatepassword(@Request() req, @Body() password: AuthValidPassword) {
+    const userId = req.user.userId;
+    return this.forgotPasswordService.updatepassword(userId, password);
+  }
 }

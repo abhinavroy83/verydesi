@@ -24,6 +24,7 @@ import { DashboardLayout } from "@/components/layout";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   belongcity: string;
@@ -43,6 +44,7 @@ interface FormData {
 export default function DashboardUserSettings() {
   const [isEditing, setIsEditing] = useState(false);
   const { data: session, status } = useSession();
+  const router = useRouter();
   const [userData, setuserData] = useState<FormData | null>(null);
   const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
@@ -94,11 +96,14 @@ export default function DashboardUserSettings() {
       if (!token) {
         throw new Error("token not found");
       }
-      const res = await axios.get(`http://apiv2.verydesi.com/user/userprofile`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `http://apiv2.verydesi.com/user/userprofile`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (res) {
         setuserData(res?.data);
         reset(res.data);
@@ -375,7 +380,13 @@ export default function DashboardUserSettings() {
               <p className="mt-1 text-sm text-gray-500">
                 Click here to change your password.
               </p>
-              <Button variant="outline" className="mt-2">
+              <Button
+                variant="outline"
+                className="mt-2"
+                onClick={() => {
+                  router.push("/dashboard/user/change-password");
+                }}
+              >
                 Change Password
               </Button>
             </div>
@@ -409,6 +420,9 @@ export default function DashboardUserSettings() {
                   </div>
                   <div className="mt-4">
                     <button
+                      onClick={() => {
+                        router.push("/dashboard/user/delete-account");
+                      }}
                       type="button"
                       className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >

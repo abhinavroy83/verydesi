@@ -59,6 +59,24 @@ export class ForgotPasswordService {
       throw new UnauthorizedException('Failed to reset password');
     }
   }
+  async updatepassword(userId: string, password: AuthValidPassword) {
+    try {
+      const hashpassword = await argon.hash(password.password);
+      const user = await this.userModel.findByIdAndUpdate(
+        { _id: userId },
+        { password: hashpassword },
+      );
+      if (!user) {
+        throw new UnauthorizedException('user not found');
+      }
+      await this.sendPasswordChangeConfirmation(user.email);
+
+      return { success: true, message: 'Password updated successfully' };
+    } catch (error) {
+      console.error('Error updating password:', error);
+      return { success: false, message: 'Password update failed', error };
+    }
+  }
 
   //send email to reset password
   async sendemailverification(email: string, token: string) {

@@ -18,6 +18,8 @@ export interface User extends Document {
   state?: string;
   pin?: string;
   joinedon?: Date;
+  otp?: string;
+  otpExpires?: number;
 }
 
 export const UserSchema = new Schema({
@@ -61,4 +63,6 @@ export const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  otp: { type: String },
+  otpExpires: { type: Date },
 });

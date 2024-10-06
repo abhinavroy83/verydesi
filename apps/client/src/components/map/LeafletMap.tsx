@@ -8,6 +8,7 @@ import axios from "axios";
 import markerIcon from "@/assests/map-marker2.png";
 import { renderToString } from "react-dom/server";
 import MapPopup from "./Mappopup";
+import useAuthStore from "@/store/useAuthStore";
 
 // Define types for locdata
 interface RoomData {
@@ -30,15 +31,15 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerClusterRef = useRef<L.MarkerClusterGroup | null>(null);
-  const usercity = "Portland";
   const [locdata, setLocData] = useState<RoomData[]>([]);
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
-
+  const { status, currentCity, updateCity } = useAuthStore();
+  const isMapInitialized = useRef(false);
   // Function to fetch coordinates based on the city name
-  const fetchCoordinatesByCity = async (city: string) => {
+  const fetchCoordinatesByCity = async (cityName: string) => {
     try {
       const res = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=2c4e1822d22e4f4ca5f6ca577b523dfe`
+        `https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=2c4e1822d22e4f4ca5f6ca577b523dfe`
       );
       const { lat, lng } = res.data.results[0].geometry;
       return { lat, lng };
@@ -51,8 +52,8 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
   const getRooms = async (lat: number, lng: number) => {
     try {
       const res = await axios.get(
-        usercity
-          ? `https://api.verydesi.com/api/getallrooms?city=${usercity}`
+        currentCity
+          ? `https://api.verydesi.com/api/getallrooms?city=${currentCity}`
           : `https://api.verydesi.com/api/getallrooms?lat=${lat}&lng=${lng}`
       );
       setLocData(
@@ -68,58 +69,57 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
 
   useEffect(() => {
     const initializeMap = async () => {
-      if (mapRef.current) return;
-
-      let lat: number = 0,
-        lng: number = 0;
-
-      if (usercity) {
-        const cityCoords = await fetchCoordinatesByCity(usercity);
-        if (cityCoords) {
-          lat = cityCoords.lat;
-          lng = cityCoords.lng;
-        }
-      } else {
-        console.error("City not found");
-        return;
+      // Prevent re-initialization
+      if (isMapInitialized.current) {
+        return; // If map is already initialized, do nothing
       }
 
-      if (mapContainerRef.current) {
-        const map = L.map(mapContainerRef.current).setView([lat, lng], 10);
-        mapRef.current = map;
+      if (currentCity) {
+        const cityCoords = await fetchCoordinatesByCity(currentCity);
+        if (cityCoords) {
+          const { lat, lng } = cityCoords;
+          if (mapContainerRef.current) {
+            const map = L.map(mapContainerRef.current).setView([lat, lng], 10);
+            mapRef.current = map;
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          maxZoom: 18,
-          attribution: "© OpenStreetMap contributors",
-        }).addTo(map);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+              maxZoom: 18,
+              attribution: "© OpenStreetMap contributors",
+            }).addTo(map);
 
-        const markerClusterGroup = L.markerClusterGroup({
-          iconCreateFunction: (cluster) => {
-            const count = cluster.getChildCount();
-            return L.divIcon({
-              html: `<div style="
-                background-color: blue;
-                color: white;
-                font-size: 14px;
-                font-weight: bold;
-                text-align: center;
-                border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              ">${count}</div>`,
-              className: "custom-cluster-icon",
-              iconSize: [30, 30],
+            const markerClusterGroup = L.markerClusterGroup({
+              iconCreateFunction: (cluster) => {
+                const count = cluster.getChildCount();
+                return L.divIcon({
+                  html: `<div style="
+                    background-color: blue;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: bold;
+                    text-align: center;
+                    border-radius: 50%;
+                    width: 30px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  ">${count}</div>`,
+                  className: "custom-cluster-icon",
+                  iconSize: [30, 30],
+                });
+              },
             });
-          },
-        });
-        markerClusterRef.current = markerClusterGroup;
-        map.addLayer(markerClusterGroup);
-        setCurrentLocation({ lat, lng });
+            markerClusterRef.current = markerClusterGroup;
+            map.addLayer(markerClusterGroup);
+            setCurrentLocation({ lat, lng });
 
-        getRooms(lat, lng);
+            getRooms(lat, lng);
+
+            isMapInitialized.current = true; // Set the map as initialized
+          }
+        } else {
+          console.error("City not found");
+        }
       }
     };
 
@@ -129,9 +129,10 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
+        isMapInitialized.current = false;
       }
     };
-  }, [usercity]);
+  }, [currentCity]);
 
   useEffect(() => {
     if (mapRef.current && locdata.length > 0) {
