@@ -7,7 +7,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'https://webmasterbee.com',
-      'http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com/',
+      'http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
       'http://18.237.230.139',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
