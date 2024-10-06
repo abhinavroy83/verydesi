@@ -7,6 +7,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:3000',
       'http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
+      'https://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     preflightContinue: false,
@@ -14,6 +15,6 @@ async function bootstrap() {
     credentials: true,
     allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
   });
-  await app.listen(8000);
+  await app.listen(8000, '0.0.0.0');
 }
 bootstrap();
