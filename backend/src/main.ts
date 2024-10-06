@@ -10,8 +10,8 @@ async function bootstrap() {
       'http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com', // EC2 public DNS
       'http://18.237.230.139', // EC2 public IP
     ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: '*',
+    methods: ['GET', 'POST', 'PATCH', 'PUT'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
   await app.listen(8000);
