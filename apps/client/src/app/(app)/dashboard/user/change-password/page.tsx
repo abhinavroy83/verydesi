@@ -49,7 +49,7 @@ export default function Component() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col w-full py-4">
+      <div className="container mx-auto p-4 flex flex-col w-full py-4">
         <nav
           className="flex  mb-4 text-sm text-gray-500 px-4"
           aria-label="Breadcrumb"
@@ -84,7 +84,7 @@ export default function Component() {
             </li>
           </ol>
         </nav>
-        <Card className="w-full max-w-md mx-auto">
+        <Card className=" p-4 w-full">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">
               Update Password

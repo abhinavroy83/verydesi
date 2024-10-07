@@ -119,7 +119,7 @@ export default function DashboardUserSettings() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col h-full overflow-hidden border rounded-lg">
+      <div className="flex flex-col h-screen overflow-hidden border rounded-lg">
         <div className="flex justify-between items-center">
           <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2 mb- flex justify-between w-full">
             <h2 className="text-2xl font-bold flex gap-1 items-center">
@@ -382,7 +382,7 @@ export default function DashboardUserSettings() {
               </p>
               <Button
                 variant="outline"
-                className="mt-2"
+                className="mt-2 bg-gray-300"
                 onClick={() => {
                   router.push("/dashboard/user/change-password");
                 }}
