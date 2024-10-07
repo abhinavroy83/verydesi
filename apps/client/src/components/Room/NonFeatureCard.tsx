@@ -146,15 +146,26 @@ export default function Component({ room }: FeaturedCard2Props) {
             <div className="flex-shrink-0">
               {room?.Preferred_gender === "Male only" ? (
                 <>
-                  <IoIosMale className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
+                  <img
+                    className="h-8 w-8 sm:h-16 sm:w-16 text-gray-400"
+                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
+                  />
+                  {/* <IoIosMale className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" /> */}
                 </>
               ) : room?.Preferred_gender === "Female only" ? (
                 <>
-                  <IoIosFemale className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
+                  <img
+                    className="h-10 w-10 sm:h-16 sm:w-16 text-gray-400"
+                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
+                  />
+                  {/* <IoIosFemale className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" /> */}
                 </>
               ) : (
                 <>
-                  <IoIosTransgender className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
+                  <img
+                    className="h-10 w-10 sm:h-16 sm:w-16 text-gray-400"
+                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
+                  />
                 </>
               )}{" "}
             </div>

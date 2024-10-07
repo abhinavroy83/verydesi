@@ -226,17 +226,29 @@ export default function Component({ room }: FeaturedCard2Props) {
                 <div className="flex items-center">
                   {room?.Preferred_gender === "Male only" ? (
                     <>
-                      <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-purple-500" />
+                      <img
+                        className="h-3 w-3 sm:h-4 sm:w-4 mx-1"
+                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
+                      />
+                      {/* <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-purple-500" /> */}
                       <span>Male</span>
                     </>
                   ) : room?.Preferred_gender === "Female only" ? (
                     <>
-                      <IoIosFemale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" />
+                      <img
+                        className="h-3 w-3 sm:h-4 sm:w-4 mx-1"
+                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
+                      />
+                      {/* <IoIosFemale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
                       <span>Female</span>
                     </>
                   ) : (
                     <>
-                      <IoIosTransgender className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" />
+                      <img
+                        className="h-3 w-3 sm:h-4 sm:w-4 mx-1"
+                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
+                      />
+                      {/* <IoIosTransgender className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
                       <span>Any</span>
                     </>
                   )}
