@@ -24,7 +24,7 @@ import {
   UtilityType,
 } from "@/constants";
 import { FaRegBuilding } from "react-icons/fa";
-import { LucideMapPin } from "lucide-react";
+import { Heart, LucideMapPin } from "lucide-react";
 import { FiClock } from "react-icons/fi";
 import { GiBathtub } from "react-icons/gi";
 import { IoTransgender } from "react-icons/io5";
@@ -168,7 +168,10 @@ export default function RoomDetails() {
                 <ChevronRight className="w-5 h-5 inline-block ml-1" />
               </button>
             </div>
-            <ShareButton />
+            <div className="flex items-center gap-2">
+              <Heart className=" hover:bg-red-500" />
+              <ShareButton />
+            </div>
           </div>
           <div className="flex justify-between items-start mb-4">
             <div>
