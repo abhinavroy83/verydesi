@@ -20,11 +20,14 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/useAuthStore";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
   const router = useRouter();
+  const { firstname, isverified } = useAuthStore();
+  console.log(isverified);
   const menuItems = [
     { name: "Dashboard", icon: Home, url: "/dashboard" },
     { name: "Setting", icon: Settings, url: "/dashboard/user" },
@@ -34,51 +37,55 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-32">
-      <div className="">
-        <div
-          role="alert"
-          className="rounded border-s-4 border-red-500 bg-red-50 p-4"
-        >
-          <div className="flex items-start gap-4 ">
-            <span className=" text-red-800">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-            <div className=" flex-1">
-              <strong className="block font-medium">Verify your email.</strong>
-              <p className="mt-2 text-sm text-red-700">The email was sent</p>
-            </div>
-            <button className="text-gray-500 transition hover:text-gray-600">
-              <span className="sr-only">Dismiss popup</span>
+      {!isverified && (
+        <div className="">
+          <div
+            role="alert"
+            className="rounded border-s-4 border-red-500 bg-red-50 p-4"
+          >
+            <div className="flex items-start gap-4 ">
+              <span className=" text-red-800">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+              <div className=" flex-1">
+                <strong className="block font-medium">
+                  Verify your email.
+                </strong>
+                <p className="mt-2 text-sm text-red-700">The email was sent</p>
+              </div>
+              <button className="text-gray-500 transition hover:text-gray-600">
+                <span className="sr-only">Dismiss popup</span>
 
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="h-6 w-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="mt-2 flex h-screen bg-background overflow-x-hidden overflow-y-hidden mx-auto border shadow-xl shadow-gray-300 rounded-2xl mb-5">
         <aside className="w-64 border-r bg-muted/30 lg:flex flex-col hidden">
           <div className="p-6 flex flex-col items-center">
@@ -86,7 +93,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               <AvatarImage src="/placeholder.svg" alt="User" />
               <AvatarFallback>AB</AvatarFallback>
             </Avatar>
-            <h2 className="text-xl font-semibold mb-1">Abhinav</h2>
+            <h2 className="text-xl font-semibold mb-1">{firstname}</h2>
             <p className="text-sm text-muted-foreground mb-4">Since 2024</p>
             <div className="flex justify-center space-x-2">
               <Button variant="outline" size="icon" className="rounded-full">

@@ -25,28 +25,14 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-
-interface FormData {
-  belongcity: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone_number: string;
-  gender: string;
-  dob: Date | undefined;
-  address: string;
-  city: string;
-  state: string;
-  country: string;
-  pin: string;
-}
+import { UserData } from "@myrepo/types";
 
 export default function DashboardUserSettings() {
   const [isEditing, setIsEditing] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [userData, setuserData] = useState<FormData | null>(null);
-  const { control, handleSubmit, reset } = useForm<FormData>({
+  const [userData, setuserData] = useState<UserData | null>(null);
+  const { control, handleSubmit, reset } = useForm<UserData>({
     defaultValues: {
       belongcity: "",
       firstName: "",
@@ -64,14 +50,14 @@ export default function DashboardUserSettings() {
   });
   // console.log(session?.accessToken);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: UserData) => {
     try {
       const token = session?.accessToken;
       if (!token) {
         throw new Error("token not found");
       }
       const toastId = toast.loading("Updating data...");
-      console.log(data);
+
       const response = await axios.patch(
         "http://apiv2.verydesi.com/user/updateUser",
         data,

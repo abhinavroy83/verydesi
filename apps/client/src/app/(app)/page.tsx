@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import useAuthStore from "@/store/useAuthStore";
-import { RoomInterface } from "@myrepo/types";
+import { RoomInterface, UserData } from "@myrepo/types";
 import axios from "axios";
 import { stateAbbreviations } from "@/constants";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -31,6 +31,9 @@ const Page = () => {
   const [error, setError] = useState<string | null>(null);
   const { currentCity } = useAuthStore();
   const [loading, setLoading] = useState(true);
+  const { data: session, status } = useSession();
+  const [userData, setuserData] = useState<UserData | null>(null);
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -103,7 +106,36 @@ const Page = () => {
   useEffect(() => {
     fetchrooms();
   }, [currentCity]);
-  console.log(Room);
+
+  const token = session?.accessToken;
+  const { updateCity, setVerified, setname } = useAuthStore();
+  const fetchuser = async () => {
+    try {
+      if (!token) {
+        throw new Error("token not found");
+      }
+      const res = await axios.get(
+        `http://apiv2.verydesi.com/user/userprofile`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
+      // updateCity(res.data.belongcity);
+      if (res) {
+        setVerified(res.data.IsEmailVerified);
+        setname(res.data.firstName);
+        setuserData(res?.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchuser();
+  }, [token]);
 
   if (loading) {
     return (

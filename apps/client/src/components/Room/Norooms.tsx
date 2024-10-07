@@ -24,7 +24,7 @@ export default function Norooms() {
           a new room?
         </p>
         <Button
-        onClick={()=>{router.push('/po')}}
+        onClick={()=>{router.push('/post-room')}}
         className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-md transition duration-300 ease-in-out">
           Post Room
         </Button>

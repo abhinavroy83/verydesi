@@ -28,6 +28,7 @@ import Notification from "@/components/Notification/Notification";
 import ModernLogoutPopup from "./Popups/Logoutpop";
 import LogoutComponent from "./Popups/Logoutpop";
 import useCartStore from "@/store/useCartStore";
+import useAuthStore from "@/store/useAuthStore";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -41,6 +42,8 @@ export default function Navbar() {
   const [IsNotificationOpen, setIsNotificationOpen] = useState(false);
   const router = useRouter();
   const { cartcount } = useCartStore();
+  const { firstname } = useAuthStore();
+
   useEffect(() => {
     axios
       .get(
@@ -142,7 +145,7 @@ export default function Navbar() {
                             className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
-                            <User className="mr-2 h-4 w-4" /> Abhinav
+                            <User className="mr-2 h-4 w-4" /> {firstname}
                           </Link>
                           <Link
                             href="/dashboard"
