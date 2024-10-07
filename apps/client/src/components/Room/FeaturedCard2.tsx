@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
+import { useloginstore } from "@/store";
 
 interface FeaturedCard2Props {
   room: RoomInterface;
@@ -29,8 +30,9 @@ interface FeaturedCard2Props {
 export default function Component({ room }: FeaturedCard2Props) {
   const { pluscart, minuscart } = useCartStore();
   const [wishliststatys, setWishlistStatus] = useState(false);
-  const { data: session, status } = useSession();
-
+  const { data: session } = useSession();
+  const { status } = useAuthStore();
+  const { openLogin } = useloginstore();
   function truncateCharacters(str: string, numCharacters: number) {
     if (str.length > numCharacters) {
       return str.slice(0, numCharacters) + "...";
@@ -92,29 +94,32 @@ export default function Component({ room }: FeaturedCard2Props) {
       console.error("Error removing from wishlist:", error);
     }
   };
-  useEffect(() => {
-    const fetchWishStatus = async () => {
-      try {
-        const res = await axios.get(
-          `http://apiv2.verydesi.com/favorite/findfavoritebyId/${room?._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (res.data.status === "not found") {
-          setWishlistStatus(false);
-        } else {
-          setWishlistStatus(res.data.status);
-        }
-      } catch (error) {
-        console.error("Error during fetching wishlist status:", error);
-      }
-    };
 
-    fetchWishStatus();
-  }, [room?._id, token]);
+  if (status) {
+    useEffect(() => {
+      const fetchWishStatus = async () => {
+        try {
+          const res = await axios.get(
+            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${room?._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (res.data.status === "not found") {
+            setWishlistStatus(false);
+          } else {
+            setWishlistStatus(res.data.status);
+          }
+        } catch (error) {
+          console.error("Error during fetching wishlist status:", error);
+        }
+      };
+
+      fetchWishStatus();
+    }, [room?._id, token]);
+  }
 
   const calculateTimeDifference = (dateStr: Date) => {
     const date = new Date(dateStr);
@@ -138,7 +143,6 @@ export default function Component({ room }: FeaturedCard2Props) {
       return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
     }
   };
-
   return (
     <Link href={`room/${room?._id}`}>
       <Card className="lg:w-full w-[20rem] h-auto sm:h-[190px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -158,7 +162,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                 <Button
                   onClick={(e) => {
                     e.preventDefault();
-                    toast.success("please login");
+                    openLogin();
                   }}
                   variant="secondary"
                   size="sm"

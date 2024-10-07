@@ -25,6 +25,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import Norooms from "@/components/Room/Norooms";
+import LoginSlider from "@/components/login/login";
 const Page = () => {
   const router = useRouter();
   const [Room, setRooms] = useState<RoomInterface[] | null>(null);
@@ -140,6 +141,7 @@ const Page = () => {
   if (loading) {
     return (
       <HomeLayout>
+        <LoginSlider />
         <div className="w-full justify-between flex items-center">
           <Skeleton className="h-8 w-64" />
           <Skeleton className="h-10 w-28" />

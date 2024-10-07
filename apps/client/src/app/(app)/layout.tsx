@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import LoginSlider from "@/components/login/login";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 
@@ -12,7 +13,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <Navbar />
       {children}
       <Toaster position="top-right" reverseOrder={false} />
-
+      <LoginSlider />
       <Footer />
     </div>
   );
