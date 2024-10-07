@@ -34,7 +34,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="mt-32">
-      <div className="max-w-[1370px] lg:max-w-[1530px] mx-auto ">
+      <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div
           role="alert"
           className="rounded border-s-4 border-red-500 bg-red-50 p-4"
@@ -79,7 +79,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </div>
-      <div className="mt-2 flex h-screen bg-background max-w-[1370px] lg:max-w-[1530px] overflow-x-hidden overflow-y-hidden mx-auto border shadow-xl shadow-gray-300 rounded-2xl mb-5">
+      <div className="mt-2 flex h-screen bg-background max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 overflow-x-hidden overflow-y-hidden mx-auto border shadow-xl shadow-gray-300 rounded-2xl mb-5">
         <aside className="w-64 border-r bg-muted/30 lg:flex flex-col hidden">
           <div className="p-6 flex flex-col items-center">
             <Avatar className="w-24 h-24 mb-4 border-4 border-primary">
