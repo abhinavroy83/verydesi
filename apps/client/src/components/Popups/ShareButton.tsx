@@ -60,16 +60,12 @@ export default function ModernSharePopup() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="rounded-full">
-          <Share2 className="w-4 h-4 mr-2" />
-          Share
-        </Button>
+        <Share2 className="w-4 h-4 mr-2" />
       </DialogTrigger>
       <DialogContent className="sm:max-w-md p-0 bg-transparent border-none shadow-none">
         <div className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg">
           <DialogHeader className="p-6 border-b border-gray-200 dark:border-gray-700">
             <DialogTitle className="text-2xl font-semibold">Share</DialogTitle>
-         
           </DialogHeader>
           <div className="p-6">
             <div className="flex items-center space-x-2 mb-6 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">

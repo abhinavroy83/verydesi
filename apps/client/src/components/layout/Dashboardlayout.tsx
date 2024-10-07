@@ -21,13 +21,13 @@ import {
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
+import ShareButton from "../Popups/ShareButton";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
   const router = useRouter();
   const { firstname, isverified } = useAuthStore();
-  console.log(isverified);
   const menuItems = [
     { name: "Dashboard", icon: Home, url: "/dashboard" },
     { name: "Setting", icon: Settings, url: "/dashboard/user" },
@@ -102,15 +102,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               <Button variant="outline" size="icon" className="rounded-full">
                 <UserPlus className="h-4 w-4" />
               </Button>
-              <Button
-                onClick={() => {
-                  router.push("/dashboard/Share");
-                }}
-                variant="outline"
-                size="icon"
-                className="rounded-full"
-              >
-                <Share2 className="h-4 w-4" />
+              <Button variant="outline" size="icon" className="rounded-full">
+                <ShareButton />
               </Button>
             </div>
           </div>
