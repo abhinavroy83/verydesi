@@ -156,7 +156,7 @@ export default function SignUp() {
           />
         </Link>
       </div>
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex justify-center lg:p-0 p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

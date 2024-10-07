@@ -68,14 +68,14 @@ export default function SignIn() {
           />
         </Link>
       </div>
-      <div className="min-h-screen  flex items-center justify-center">
+      <div className="min-h-screen  flex  justify-center">
         <form onSubmit={handleSubmit}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Card className="w-full max-w-md shadow-lg ">
+            <Card className="w-full max-w-md shadow-lg">
               <CardHeader>
                 <CardTitle className="text-3xl font-extrabold text-center text-gray-800">
                   Welcome Back
