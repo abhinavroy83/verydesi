@@ -148,7 +148,7 @@ export default function RoomDetails() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 mt-32">
+    <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-32">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
           <div className="flex space-x-2 w-full justify-between">
