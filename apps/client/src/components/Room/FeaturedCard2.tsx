@@ -213,7 +213,7 @@ export default function Component({ room }: FeaturedCard2Props) {
           <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
               <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
-                {room?.Title && truncateCharacters(room?.Title, 40)}
+                {room?.Title && truncateCharacters(room?.Title, 30)}
               </h2>
 
               <div className="flex  flex-wrap items-center text-[17px] text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
