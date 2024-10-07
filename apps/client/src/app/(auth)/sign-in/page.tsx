@@ -54,7 +54,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className=" bg-gradient-to-br from-purple-100 to-indigo-100 no-scrollbar overflow-auto">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 no-scrollbar overflow-auto">
       <div className="p-6">
         <Link href={"/"}>
           <img
@@ -68,7 +68,7 @@ export default function SignIn() {
           />
         </Link>
       </div>
-      <div className="min-h-screen  flex  justify-center">
+      <div className="flex  justify-center mt-16">
         <form onSubmit={handleSubmit}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

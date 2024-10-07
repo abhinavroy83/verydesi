@@ -142,7 +142,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className=" bg-gradient-to-br from-purple-100 to-indigo-100 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 overflow-hidden">
       <div className="p-6">
         <Link href={"/"}>
           <img
@@ -156,7 +156,7 @@ export default function SignUp() {
           />
         </Link>
       </div>
-      <div className="min-h-screen flex justify-center lg:p-0 p-4">
+      <div className=" flex justify-center lg:p-0 p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
