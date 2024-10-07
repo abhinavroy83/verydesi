@@ -1,12 +1,10 @@
 "use client";
-
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Bell, Megaphone, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Component() {
-  //   const [visibleNotifications, setVisibleNotifications] =
-  //     useState(notifications);
+  const [visibleNotifications, setVisibleNotifications] = useState(true);
 
   //   const removeNotification = (id) => {
   //     setVisibleNotifications(
@@ -25,38 +23,28 @@ export default function Component() {
           {/* {visibleNotifications.length} */}
         </span>
       </div>
-      {/* <AnimatePresence>
-        {visibleNotifications.length > 0 ? (
-          visibleNotifications.map((notification) => (
-            <motion.div
-              key={notification.id}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="border-b border-gray-200 last:border-b-0"
-            >
-              <div className="p-4 flex items-start">
-                <div className="bg-purple-100 p-2 rounded-full mr-3">
-                  <Bell className="w-5 h-5 text-purple-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">
-                    {notification.content}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {notification.time}
-                  </p>
-                </div>
-                <button
-                  onClick={() => removeNotification(notification.id)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+      <AnimatePresence>
+        {visibleNotifications ? (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="border-b border-gray-200 last:border-b-0"
+          >
+            <div className="p-4 flex items-start">
+              <div className="bg-purple-100 p-2 rounded-full mr-3">
+                <Bell className="w-5 h-5 text-purple-600" />
               </div>
-            </motion.div>
-          ))
+              <div className="flex-1">
+                <p className="text-sm font-medium text-gray-900">content</p>
+                <p className="text-xs text-gray-500 mt-1">time</p>
+              </div>
+              <button className="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </motion.div>
         ) : (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -77,7 +65,7 @@ export default function Component() {
             </p>
           </motion.div>
         )}
-      </AnimatePresence> */}
+      </AnimatePresence>
     </div>
   );
 }

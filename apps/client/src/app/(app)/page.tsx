@@ -24,9 +24,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import Norooms from "@/components/Room/Norooms";
 const Page = () => {
   const router = useRouter();
   const [Room, setRooms] = useState<RoomInterface[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { currentCity } = useAuthStore();
   const [loading, setLoading] = useState(true);
   // Pagination state
@@ -35,22 +37,19 @@ const Page = () => {
   const fetchrooms = async () => {
     try {
       setLoading(true);
-      setRooms(null);
+      setError(null);
       const res = await axios.get(
         `http://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`,
         {
           withCredentials: true,
         }
       );
-
-      const roomsData = res.data;
-      // console.log(roomsData);
-      if (roomsData.message) {
-        setRooms([]); // Clear room state if no rooms are found
-        setLoading(false);
-        return;
+      if (res.data.rooms.length === 0) {
+        setError(`No rooms found in ${currentCity}`);
+        setRooms([]);
+      } else {
+        setRooms(res.data.rooms);
       }
-
       const rooms = res.data.reverse();
 
       const areaRes = await axios.get(
@@ -60,9 +59,7 @@ const Page = () => {
         }
       );
       const areaData = areaRes.data.area[0];
-      // console.log(areaData);
       const primaryState = areaData.primaryState;
-      // console.log(primaryState);
       const states = areaData.state;
 
       const priority = (room: any) => {
@@ -90,6 +87,8 @@ const Page = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
+      setError("Something went wrong while fetching rooms");
+    } finally {
       setLoading(false);
     }
   };
@@ -104,10 +103,8 @@ const Page = () => {
   useEffect(() => {
     fetchrooms();
   }, [currentCity]);
+  console.log(Room);
 
-  if (!Room || Room.length === 0) {
-    return <div className=" mt-32">No rooms found in {currentCity}</div>;
-  }
   if (loading) {
     return (
       <HomeLayout>
@@ -130,7 +127,11 @@ const Page = () => {
     );
   }
   if (!Room || Room.length === 0) {
-    return <div className=" mt-32">No rooms found in {currentCity}</div>;
+    return (
+      <div className="">
+        <Norooms />
+      </div>
+    );
   }
 
   return (

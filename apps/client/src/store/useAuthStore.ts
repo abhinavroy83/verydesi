@@ -13,7 +13,7 @@ const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       status: false,
-      currentCity: "Portland",
+      currentCity: "",
       login: (city: string) => set({ status: true, currentCity: city }),
       logout: () => set({ status: false, currentCity: null }),
       updateCity: (city: string) => set({ currentCity: city }),
