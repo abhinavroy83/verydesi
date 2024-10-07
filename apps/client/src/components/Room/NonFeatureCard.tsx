@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
 
 interface FeaturedCard2Props {
   room: RoomInterface;
@@ -143,7 +144,19 @@ export default function Component({ room }: FeaturedCard2Props) {
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <div className="flex-shrink-0">
-              <BedDouble className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
+              {room?.Preferred_gender === "Male only" ? (
+                <>
+                  <IoIosMale className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
+                </>
+              ) : room?.Preferred_gender === "Female only" ? (
+                <>
+                  <IoIosFemale className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
+                </>
+              ) : (
+                <>
+                  <IoIosTransgender className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
+                </>
+              )}{" "}
             </div>
             <div className="flex-grow space-y-2">
               <h2 className="text-xl sm:text-2xl font-bold">

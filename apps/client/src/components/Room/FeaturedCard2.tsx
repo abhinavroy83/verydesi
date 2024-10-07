@@ -20,6 +20,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
 
 interface FeaturedCard2Props {
   room: RoomInterface;
@@ -147,7 +148,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               src={
                 room && room.Imgurl && room.Imgurl.length > 0
                   ? room.Imgurl[0]
-                  : "https://placeholder.pics/svg/300"
+                  : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
               }
               alt="Room Image"
               className="w-full h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
@@ -223,8 +224,22 @@ export default function Component({ room }: FeaturedCard2Props) {
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <BedDouble className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-purple-500" />
-                  <span>Studio</span>
+                  {room?.Preferred_gender === "Male only" ? (
+                    <>
+                      <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-purple-500" />
+                      <span>Male</span>
+                    </>
+                  ) : room?.Preferred_gender === "Female only" ? (
+                    <>
+                      <IoIosFemale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" />
+                      <span>Female</span>
+                    </>
+                  ) : (
+                    <>
+                      <IoIosTransgender className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" />
+                      <span>Any</span>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="flex flex-wrap items-center text-xs text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">

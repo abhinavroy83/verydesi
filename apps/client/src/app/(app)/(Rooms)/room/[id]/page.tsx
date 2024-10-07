@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
@@ -183,18 +182,34 @@ export default function RoomDetails() {
             <CardContent className="p-0">
               <Carousel className="w-full">
                 <CarouselContent>
-                  {roomData?.Imgurl?.map((image, index) => (
-                    <CarouselItem key={index}>
+                  {roomData?.Imgurl && roomData.Imgurl.length > 0 ? (
+                    roomData.Imgurl.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <div className="relative aspect-video">
+                          <Image
+                            src={
+                              image ||
+                              "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
+                            }
+                            alt={`Room image ${index + 1}`}
+                            layout="fill"
+                            objectFit="cover"
+                          />
+                        </div>
+                      </CarouselItem>
+                    ))
+                  ) : (
+                    <CarouselItem>
                       <div className="relative aspect-video">
                         <Image
-                          src={image || "https://placeholder.pics/svg/300"}
-                          alt={`Room image ${index + 1}`}
+                          src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
+                          alt="Fallback room image"
                           layout="fill"
-                          objectFit="cover"
+                          objectFit="contain"
                         />
                       </div>
                     </CarouselItem>
-                  ))}
+                  )}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
