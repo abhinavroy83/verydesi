@@ -140,7 +140,7 @@ export default function Component({ room }: FeaturedCard2Props) {
 
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="lg:w-full  w-[21rem] h-auto sm:h-[190px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
+      <Card className="lg:w-full w-[20rem] h-auto sm:h-[190px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
           <div className="w-full sm:w-1/3 relative group">
             <img
@@ -208,7 +208,7 @@ export default function Component({ room }: FeaturedCard2Props) {
           <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
-                {room?.Title && truncateCharacters(room?.Title, 25)}
+                {room?.Title && truncateCharacters(room?.Title, 22)}
               </h2>
 
               <div className="flex flex-wrap items-center text-xs sm:text-sm text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">

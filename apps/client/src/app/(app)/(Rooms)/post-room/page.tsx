@@ -106,7 +106,7 @@ export default function RoomPostingForm() {
           <Input
             id="title"
             className="mt-1"
-            {...register("title", { message: true })}
+            {...register("title", { required: "Title is required" })}
           />
           {errors.title && (
             <p className="mt-1 text-sm text-red-500">{errors.title.message}</p>
@@ -120,15 +120,20 @@ export default function RoomPostingForm() {
           <Textarea
             id="description"
             className="mt-1"
-            {...register("description", { required: true })}
+            {...register("description", { required: "Title is required" })}
           />
+          {errors.title && (
+            <p className="mt-1 text-sm text-red-500">{errors.title.message}</p>
+          )}
         </div>
 
         <div>
           <Label htmlFor="propertyType" className="text-lg font-semibold">
             Property Type<span className="text-red-500">*</span>
           </Label>
-          <Select {...register("propertyType", { required: true })}>
+          <Select
+            {...register("propertyType", { required: "Title is required" })}
+          >
             <option value="">Select</option>
             <option value="apartment">Apartment</option>
             <option value="house">House</option>
@@ -168,7 +173,9 @@ export default function RoomPostingForm() {
           <Label htmlFor="priceModel" className="text-lg font-semibold">
             Price Model<span className="text-red-500">*</span>
           </Label>
-          <Select {...register("priceModel", { required: true })}>
+          <Select
+            {...register("priceModel", { required: "Title is required" })}
+          >
             <option value="">Select</option>
             <option value="monthly">Monthly</option>
             <option value="weekly">Weekly</option>
@@ -189,7 +196,10 @@ export default function RoomPostingForm() {
                 type="number"
                 id="rent"
                 className="rounded-l-none"
-                {...register("rent", { required: true, valueAsNumber: true })}
+                {...register("rent", {
+                  required: "Title is required",
+                  valueAsNumber: true,
+                })}
               />
             </div>
             <div className="flex items-center space-x-2">
@@ -222,7 +232,9 @@ export default function RoomPostingForm() {
           <Label htmlFor="separateBathroom" className="text-lg font-semibold">
             Separate Bathroom<span className="text-red-500">*</span>
           </Label>
-          <Select {...register("separateBathroom", { required: true })}>
+          <Select
+            {...register("separateBathroom", { required: "Title is required" })}
+          >
             <option value="">Select Number</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -242,7 +254,10 @@ export default function RoomPostingForm() {
               type="number"
               id="rent"
               className="rounded-l-none"
-              {...register("rent", { required: true, valueAsNumber: true })}
+              {...register("rent", {
+                required: "Title is required",
+                valueAsNumber: true,
+              })}
             />
           </div>
         </div>
@@ -448,7 +463,7 @@ export default function RoomPostingForm() {
                   id={field.name}
                   type={field.type}
                   {...register(field.name as keyof FormData, {
-                    required: true,
+                    required: "Title is required",
                   })}
                   className="mt-1"
                 />
