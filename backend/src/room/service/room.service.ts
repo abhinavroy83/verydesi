@@ -17,13 +17,13 @@ export class RoomService {
     @Inject('ROOM_MODEL') private roomModel: Model<IRoom>,
   ) {}
   async getAllRoomByArea(area: string) {
-    const cacheKey = 'area: ${area}';
+    const cacheKey = `area: ${area}`;
 
     try {
       const cachedrooms = await this.cacheManager.get<IRoom>(cacheKey);
       if (cachedrooms) {
         // console.log(cachedrooms);
-        return cachedrooms;
+        return { message: null, rooms: cachedrooms };
       }
       const rooms = await this.roomModel.find({ postingincity: area });
       // console.log(rooms);
