@@ -145,7 +145,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="lg:w-full w-[21.2rem] h-auto sm:h-[190px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
+      <Card className="lg:w-full w-[21.2rem] h-auto sm:h-[160px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
           <div className="w-full sm:w-1/3 relative group">
             <img
@@ -212,11 +212,11 @@ export default function Component({ room }: FeaturedCard2Props) {
           </div>
           <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
-                {room?.Title && truncateCharacters(room?.Title, 22)}
+              <h2 className="text-xl font-sans  font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
+                {room?.Title && truncateCharacters(room?.Title, 35)}
               </h2>
 
-              <div className="flex flex-wrap items-center text-xs sm:text-sm text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
+              <div className="flex flex-wrap items-center text-[15px] sm:text-sm text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
                 <div className="flex items-center mr-2 mb-1 sm:mb-0">
                   <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-purple-500" />
                   <span>
@@ -258,7 +258,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   )}
                 </div>
               </div>
-              <div className="flex flex-wrap items-center text-xs text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">
+              <div className="flex flex-wrap items-center text-[15px]  text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">
                 <div className="flex items-center mr-2 mb-1 sm:mb-0">
                   <User className="h-3 w-3 mr-1 text-indigo-500" />
                   <span>Posted by: {room?.user_name}</span>
@@ -267,22 +267,6 @@ export default function Component({ room }: FeaturedCard2Props) {
                   <Clock className="h-3 w-3 mr-1 text-indigo-500" />
                   <span>{calculateTimeDifference(room?.postedon)}</span>
                 </div>
-              </div>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <Badge
-                  variant="secondary"
-                  className="text-xs bg-purple-100 text-purple-700 group-hover:bg-purple-200 transition-colors duration-300"
-                >
-                  <Wifi className="h-3 w-3 mr-1" />
-                  High-speed WiFi
-                </Badge>
-                <Badge
-                  variant="secondary"
-                  className="text-xs bg-indigo-100 text-indigo-700 group-hover:bg-indigo-200 transition-colors duration-300"
-                >
-                  <Utensils className="h-3 w-3 mr-1" />
-                  Gourmet Kitchen
-                </Badge>
               </div>
             </div>
             <div className="flex justify-between items-center mt-auto">

@@ -172,12 +172,12 @@ const Page = () => {
     <HomeLayout>
       <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full justify-between flex items-center">
-        <h1 className="text-2xl font-bold my-4">
+        <h1 className="text-2xl font-sans font-bold my-4">
           Featured Rooms on {currentCity}
         </h1>
         <button
           type="button"
-          className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out"
+          className=" bg-green-800 capitalize hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out"
           onClick={() => {
             router.push("/post-room");
           }}
