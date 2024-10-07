@@ -38,6 +38,7 @@ import { useParams } from "next/navigation";
 import { FaSmoking } from "react-icons/fa";
 import { BiFoodTag } from "react-icons/bi";
 import { MdOutlinePets } from "react-icons/md";
+import { IoIosHeart } from "react-icons/io";
 import RoomSketon from "@/components/skeleton/RoomSkeleton";
 import dynamic from "next/dynamic";
 
@@ -169,7 +170,7 @@ export default function RoomDetails() {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <Heart className=" hover:bg-red-500" />
+              <IoIosHeart size={25} className=" hover:text-red-500 rounded-full" />
               <ShareButton />
             </div>
           </div>
