@@ -141,41 +141,41 @@ export default function Component({ room }: FeaturedCard2Props) {
   return (
     <Link href={`room/${room?._id}`}>
       <Card className="w-full max-w-7xl shadow-sm hover:shadow-md transition-shadow duration-300">
-        <CardContent className="p-4">
+        <CardContent className="p-3 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <div className="flex-shrink-0">
               {room?.Preferred_gender === "Male only" ? (
                 <>
                   <img
-                    className="h-8 w-8 sm:h-16 sm:w-16 text-gray-400"
+                    className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
                   />
-                  {/* <IoIosMale className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" /> */}
+                  {/* <IoIosMale className="h-12 w-12  text-gray-400" /> */}
                 </>
               ) : room?.Preferred_gender === "Female only" ? (
                 <>
                   <img
-                    className="h-10 w-10 sm:h-16 sm:w-16 text-gray-400"
+                    className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
                   />
-                  {/* <IoIosFemale className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" /> */}
+                  {/* <IoIosFemale className="h-12 w-12  text-gray-400" /> */}
                 </>
               ) : (
                 <>
                   <img
-                    className="h-10 w-10 sm:h-16 sm:w-16 text-gray-400"
+                    className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
                   />
                 </>
               )}{" "}
             </div>
-            <div className="flex-grow space-y-2">
-              <h2 className="text-xl sm:text-2xl font-bold">
+            <div className="flex-grow space-y-1">
+              <h2 className="text-[22px] font-bold">
                 {room?.Title && truncateCharacters(room?.Title, 42)}
               </h2>
-              <div className="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm text-gray-600 space-y-1 sm:space-y-0">
+              <div className="flex flex-col sm:flex-row sm:items-center text-[17px] text-gray-600 space-y-1 sm:space-y-0">
                 <div className="flex items-center">
-                  <MapPin className="h-4 w-4 mr-1" />
+                  <MapPin className="h-5 w-5 mr-1 text-indigo-500" />
                   <span>
                     {room?.postingincity},
                     {room?.state &&
@@ -189,7 +189,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   className="hidden sm:block mx-2 h-4"
                 />
                 <div className="flex items-center">
-                  <Clock className="h-4 w-4 mr-1" />
+                  <Clock className="h-5 w-5 mr-1 text-indigo-500" />
                   <span>{calculateTimeDifference(room?.postedon)}</span>
                 </div>
                 <Separator
@@ -197,14 +197,13 @@ export default function Component({ room }: FeaturedCard2Props) {
                   className="hidden sm:block mx-2 h-4"
                 />
                 <div className="flex items-center">
-                  <User className="h-4 w-4 mr-1" />
+                  <User className="h-5 w-5 mr-1 text-indigo-500" />
                   <span>Posted by: {room?.user_name}</span>
                 </div>
               </div>
-             
             </div>
             <div className="flex-shrink-0 w-full sm:w-auto text-left sm:text-right">
-              <p className="text-xl sm:text-2xl font-bold text-blue-600 mb-2">
+              <p className="text-xl sm:text-2xl font-bold text-green-700 mb-2">
                 ${room?.Expected_Rooms}/mo
               </p>
               {!status && (
@@ -218,7 +217,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                     size="sm"
                     className="w-full sm:w-auto rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300"
                   >
-                    <Heart className="h-4 w-4 mr-2" />
+                    <Heart className="h-5 w-5 mr-2" />
                     Add to Wishlist
                   </Button>
                 </div>
@@ -235,7 +234,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                       size="sm"
                       className="w-full sm:w-auto rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300"
                     >
-                      <Heart className="h-4 w-4 mr-2" />
+                      <Heart className="h-5 w-5 mr-2" />
                       Add to Favorite
                     </Button>
                   ) : (
@@ -248,7 +247,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                       size="sm"
                       className="w-full sm:w-auto rounded-lg bg-red-600 text-white hover:bg-white hover:text-blue-500 transition-colors duration-300"
                     >
-                      <Heart className="h-4 w-4 mr-2" />
+                      <Heart className="h-5 w-5 mr-2" />
                       Remove from Favorite
                     </Button>
                   )}

@@ -145,7 +145,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="lg:w-full w-[21.2rem] h-auto sm:h-[160px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
+      <Card className="relative lg:w-full w-[21.2rem] h-auto sm:h-[185px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
           <div className="w-full sm:w-1/3 relative group">
             <img
@@ -212,13 +212,13 @@ export default function Component({ room }: FeaturedCard2Props) {
           </div>
           <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
-              <h2 className="text-xl font-sans  font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
-                {room?.Title && truncateCharacters(room?.Title, 35)}
+              <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
+                {room?.Title && truncateCharacters(room?.Title, 40)}
               </h2>
 
-              <div className="flex flex-wrap items-center text-[15px] sm:text-sm text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
+              <div className="flex  flex-wrap items-center text-[17px] text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
                 <div className="flex items-center mr-2 mb-1 sm:mb-0">
-                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-purple-500" />
+                  <MapPin className="h-5 w-5  mr-1 text-indigo-500" />
                   <span>
                     {room?.postingincity},
                     {room?.state &&
@@ -231,7 +231,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   {room?.Preferred_gender === "Male only" ? (
                     <>
                       <img
-                        className="h-3 w-3 sm:h-4 sm:w-4 mx-1"
+                        className="h-5 w-5 mx-1"
                         src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
                       />
                       {/* <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-purple-500" /> */}
@@ -240,7 +240,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   ) : room?.Preferred_gender === "Female only" ? (
                     <>
                       <img
-                        className="h-3 w-3 sm:h-4 sm:w-4 mx-1"
+                        className="h-5 w-5  mx-1"
                         src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
                       />
                       {/* <IoIosFemale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
@@ -249,7 +249,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   ) : (
                     <>
                       <img
-                        className="h-3 w-3 sm:h-4 sm:w-4 mx-1"
+                        className="h-5 w-5  mx-1"
                         src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
                       />
                       {/* <IoIosTransgender className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
@@ -258,22 +258,27 @@ export default function Component({ room }: FeaturedCard2Props) {
                   )}
                 </div>
               </div>
-              <div className="flex flex-wrap items-center text-[15px]  text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">
+              <div className="flex lg:flex-col flex-wrap  text-[17px] text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">
                 <div className="flex items-center mr-2 mb-1 sm:mb-0">
-                  <User className="h-3 w-3 mr-1 text-indigo-500" />
+                  <User className="h-5 w-5 mr-1 text-indigo-500" />
                   <span>Posted by: {room?.user_name}</span>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="h-3 w-3 mr-1 text-indigo-500" />
+                  <Clock className="h-5 w-5 mr-1 text-indigo-500" />
                   <span>{calculateTimeDifference(room?.postedon)}</span>
                 </div>
               </div>
             </div>
-            <div className="flex justify-between items-center mt-auto">
+            <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
+              <p className="left-5 top-2 text-[22px] text-green-700 text-right">
+                ${room?.Expected_Rooms}/mo
+              </p>
+            </p>
+            {/* <div className="flex justify-between items-center mt-auto">
               <p className="text-xl sm:text-2xl font-bold text-blue-600 group-hover:scale-105 transition-transform duration-300">
                 ${room?.Expected_Rooms}/mo
               </p>
-            </div>
+            </div> */}
           </div>
         </CardContent>
       </Card>
