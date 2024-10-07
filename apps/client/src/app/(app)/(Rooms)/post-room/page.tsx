@@ -45,7 +45,14 @@ type FormData = {
 };
 
 export default function RoomPostingForm() {
-  const { register, control, handleSubmit, watch } = useForm<FormData>();
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>();
+
   const [images, setImages] = useState<File[]>([]);
 
   const onSubmit = (data: FormData) => {
@@ -99,8 +106,11 @@ export default function RoomPostingForm() {
           <Input
             id="title"
             className="mt-1"
-            {...register("title", { required: true })}
+            {...register("title", { message: true })}
           />
+          {errors.title && (
+            <p className="mt-1 text-sm text-red-500">{errors.title.message}</p>
+          )}
         </div>
 
         <div>
