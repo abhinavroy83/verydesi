@@ -170,8 +170,17 @@ export default function RoomDetails() {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <IoIosHeart size={25} className=" hover:text-red-500 rounded-full" />
-              <ShareButton />
+              <IoIosHeart
+                size={25}
+                className=" hover:text-red-500 rounded-full"
+              />
+              <Button
+                variant="outline"
+                className="rounded-full flex items-center"
+              >
+                <ShareButton />
+                <p>Share</p>
+              </Button>
             </div>
           </div>
           <div className="flex justify-between items-start mb-4">

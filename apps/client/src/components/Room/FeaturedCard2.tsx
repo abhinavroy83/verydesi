@@ -95,10 +95,10 @@ export default function Component({ room }: FeaturedCard2Props) {
     }
   };
 
-  if (status) {
-    useEffect(() => {
-      const fetchWishStatus = async () => {
-        try {
+  useEffect(() => {
+    const fetchWishStatus = async () => {
+      try {
+        if (status) {
           const res = await axios.get(
             `http://apiv2.verydesi.com/favorite/findfavoritebyId/${room?._id}`,
             {
@@ -112,14 +112,14 @@ export default function Component({ room }: FeaturedCard2Props) {
           } else {
             setWishlistStatus(res.data.status);
           }
-        } catch (error) {
-          console.error("Error during fetching wishlist status:", error);
         }
-      };
+      } catch (error) {
+        console.error("Error during fetching wishlist status:", error);
+      }
+    };
 
-      fetchWishStatus();
-    }, [room?._id, token]);
-  }
+    fetchWishStatus();
+  }, [room?._id, token]);
 
   const calculateTimeDifference = (dateStr: Date) => {
     const date = new Date(dateStr);

@@ -6,7 +6,7 @@ interface AuthState {
   isverified: boolean;
   currentCity: string | null;
   firstname: string | null;
-  login: (city: string, verified: boolean, name: string) => void;
+  login: (city?: string, verified?: boolean, name?: string) => void;
   logout: () => void;
   updateCity: (city: string) => void;
   setVerified: (verified: boolean) => void;
@@ -20,7 +20,7 @@ const useAuthStore = create<AuthState>()(
       isverified: false,
       currentCity: "",
       firstname: "",
-      login: (city: string, verified: boolean, name: string) =>
+      login: (city?: string, verified?: boolean, name?: string) =>
         set({
           status: true,
           currentCity: city,

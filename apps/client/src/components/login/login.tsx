@@ -8,18 +8,39 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useAuthStore from "@/store/useAuthStore";
 import { useloginstore } from "@/store";
+import { signIn } from "next-auth/react";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function LoginSlider() {
   const { isLoginOpen, closeLogin } = useloginstore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuthStore();
+  const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: any) => {
     e.preventDefault();
-    console.log("Logging in with:", email, password);
-    closeLogin();
-    setEmail("");
-    setPassword("");
+    const result = await signIn("credentials", {
+      redirect: false, // prevent default redirect after sign in
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      setError(result.error);
+    } else {
+      const city = "Portland";
+      login(city);
+      toast({
+        title: "Success",
+        description: "Loggedin successfully!",
+        duration: 5000,
+      });
+      closeLogin();
+      router.push("/");
+    }
   };
 
   return (
