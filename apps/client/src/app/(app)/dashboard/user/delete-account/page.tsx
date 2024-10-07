@@ -74,7 +74,7 @@ export default function Component() {
             </li>
           </ol>
         </nav>
-        <Card className="w-full max-w-md mx-auto ">
+        <Card className="p-4 max-w-2xl w-full lg:ml-3">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-red-600">
               Delete Account
@@ -145,7 +145,11 @@ export default function Component() {
                 be undone. All your data will be permanently deleted.
               </div>
             </div>
-            <Button type="submit" variant="destructive" className="w-full">
+            <Button
+              type="submit"
+              variant="destructive"
+              className=" w-full sm:w-auto"
+            >
               <Trash2Icon className="w-4 h-4 mr-2" />
               Permanently Delete Account
             </Button>

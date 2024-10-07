@@ -84,7 +84,7 @@ export default function Component() {
             </li>
           </ol>
         </nav>
-        <Card className=" p-4 w-full">
+        <Card className="p-4 max-w-2xl w-full">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">
               Update Password
@@ -165,7 +165,7 @@ export default function Component() {
                 password that you don't use for other accounts.
               </div>
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full sm:w-auto">
               <LockIcon className="w-4 h-4 mr-2" />
               Update Password
             </Button>
