@@ -47,7 +47,7 @@ export default function LoginSlider() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-foreground"
+                className="text-4xl font-bold mb-8 text-center bg-clip-text text-black"
               >
                 Welcome Back
               </motion.h2>
