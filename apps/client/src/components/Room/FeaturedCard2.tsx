@@ -22,7 +22,8 @@ import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
 import { useloginstore } from "@/store";
-
+import { LuHeart } from "react-icons/lu";
+import { FaHeart } from "react-icons/fa";
 interface FeaturedCard2Props {
   room: RoomInterface;
 }
@@ -145,7 +146,8 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="relative lg:w-full w-[21.2rem] h-auto sm:h-[185px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
+      <Card className="flex relative max-w-4xl flex-col font-['udemy-regular'] rounded-xl md:flex-row perspective-1000 group border shadow-md hover:shadow-lg h-[450px] lg:h-[165px] duration-300">
+        {/* <Card className="relative lg:w-full w-[21.2rem] h-auto sm:h-[185px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300"> */}
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
           <div className="w-full sm:w-1/3 relative group">
             <img
@@ -157,6 +159,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               alt="Room Image"
               className="w-full h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
             />
+
             {!status && (
               <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
                 <Button
@@ -210,10 +213,36 @@ export default function Component({ room }: FeaturedCard2Props) {
               </div>
             )}
           </div>
-          <div className="flex flex-col flex-grow p-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+          <div className="absolute bottom-[1.5rem] right-[1.5rem]">
+            {/* {!wishliststatys ? ( */}
+            <div
+              className="cursor-pointer hover:text-white"
+              // onClick={(e) => {
+              //   e.preventDefault();
+              //   makewishlist(item._id);
+              // }}
+            >
+              <FaHeart
+                className="text-black hover:bg-red-600 hover:text-white rounded-full hover:p-[0.1rem]"
+                size={22}
+              />
+            </div>
+            {/* ) : ( */}
+            <div
+              className="cursor-pointer "
+              // onClick={(e) => {
+              //   e.preventDefault();
+              //   unwish(item._id);
+              // }}
+            >
+              <FaHeart className="" color="red" size={20} />
+            </div>
+            {/* )} */}
+          </div>
+          <div className="flex flex-col flex-grow px-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
-              <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors duration-300">
-                {room?.Title && truncateCharacters(room?.Title, 30)}
+              <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-1 group-hover:text-purple-700 transition-colors duration-300">
+                {room?.Title && truncateCharacters(room?.Title, 40)}
               </h2>
 
               <div className="flex  flex-wrap items-center text-[17px] text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
@@ -271,14 +300,9 @@ export default function Component({ room }: FeaturedCard2Props) {
             </div>
             <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
               <p className="left-5 top-2 text-[22px] text-green-700 text-right">
-                ${room?.Expected_Rooms}/mo
+                ${room?.Expected_Rooms}
               </p>
             </p>
-            {/* <div className="flex justify-between items-center mt-auto">
-              <p className="text-xl sm:text-2xl font-bold text-blue-600 group-hover:scale-105 transition-transform duration-300">
-                ${room?.Expected_Rooms}/mo
-              </p>
-            </div> */}
           </div>
         </CardContent>
       </Card>
