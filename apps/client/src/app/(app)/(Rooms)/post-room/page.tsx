@@ -101,7 +101,7 @@ export default function RoomPostingForm() {
     <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-[6rem]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="bg-white lg:p-[4rem] pt-9 p-6 rounded-xl shadow-md border border-gray-200">
+          <div className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Post Room in Portland
             </h1>
@@ -957,7 +957,7 @@ export default function RoomPostingForm() {
             </div>
           </div>
 
-          <div className="bg-white lg:p-[4rem] pt-9 p-6 rounded-xl shadow-md border border-gray-200">
+          <div className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200">
             <h2 className="text-2xl font-bold mb-4">Your Details:</h2>
             <div className="space-y-4">
               {[
