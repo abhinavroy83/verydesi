@@ -26,14 +26,16 @@ import {
 } from "@/components/ui/pagination";
 import Norooms from "@/components/Room/Norooms";
 import LoginSlider from "@/components/login/login";
+import { useloginstore } from "@/store";
 const Page = () => {
   const router = useRouter();
   const [Room, setRooms] = useState<RoomInterface[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { currentCity } = useAuthStore();
+  const { currentCity, status } = useAuthStore();
   const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [userData, setuserData] = useState<UserData | null>(null);
+  const { openLogin } = useloginstore();
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -179,7 +181,11 @@ const Page = () => {
           type="button"
           className=" bg-green-800 capitalize hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition-all duration-200 ease-in-out"
           onClick={() => {
-            router.push("/post-room");
+            if (status) {
+              router.push("/post-room");
+            } else {
+              openLogin();
+            }
           }}
         >
           Add Room
