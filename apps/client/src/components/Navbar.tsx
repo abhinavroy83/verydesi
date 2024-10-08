@@ -201,6 +201,16 @@ export default function Navbar() {
                   </p>
                 </div>
               )}
+              <div className="leading-4 flex items-center gap-2 mr-0 lg:mr">
+                <User />
+                <p
+                  className="text-[12px] cursor-pointer"
+                  // onClick={() => handlemModal(true)}
+                >
+                  Hello, Sign in
+                  <p className="text-[15px]">Or Sign up</p>
+                </p>
+              </div>
             </div>
             <div className="md:hidden">
               <Button
