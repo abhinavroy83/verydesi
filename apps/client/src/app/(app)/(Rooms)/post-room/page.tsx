@@ -101,7 +101,7 @@ export default function RoomPostingForm() {
     <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-[6rem]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+          <div className="bg-white lg:p-[4rem] pt-9 p-6 rounded-xl shadow-md border border-gray-200">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Post Room in Portland
             </h1>
@@ -115,7 +115,9 @@ export default function RoomPostingForm() {
                 name="postingType"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">Posting type</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Posting type
+                    </FormLabel>
                     <div className="flex-grow">
                       <FormControl>
                         <RadioGroup
@@ -153,7 +155,9 @@ export default function RoomPostingForm() {
                 name="Title"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">Title</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Title
+                    </FormLabel>
                     <div className="flex-grow">
                       <FormControl>
                         <Input placeholder="Enter title" {...field} />
@@ -169,7 +173,9 @@ export default function RoomPostingForm() {
                 name="description"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
-                    <FormLabel className="md:w-1/4">Description</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Description
+                    </FormLabel>
                     <div className="flex-grow">
                       <FormControl>
                         <Textarea
@@ -189,7 +195,9 @@ export default function RoomPostingForm() {
                 name="propertyType"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">Property Type</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Property Type
+                    </FormLabel>
                     <div className="flex-grow">
                       <Select
                         onValueChange={field.onChange}
@@ -217,7 +225,9 @@ export default function RoomPostingForm() {
                 name="stayLength"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">Stay Length</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Stay Length
+                    </FormLabel>
                     <div className="flex-grow">
                       <Select
                         onValueChange={field.onChange}
@@ -249,7 +259,9 @@ export default function RoomPostingForm() {
                 name="priceModel"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">Price Model</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Price Model
+                    </FormLabel>
                     <div className="flex-grow">
                       <Select
                         onValueChange={field.onChange}
@@ -277,7 +289,9 @@ export default function RoomPostingForm() {
                 name="price"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">Rent</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Rent
+                    </FormLabel>
                     <div className="flex-grow">
                       <FormControl>
                         <div className="flex items-center">
@@ -302,7 +316,9 @@ export default function RoomPostingForm() {
               />
 
               <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                <FormLabel className="md:w-1/4">Options</FormLabel>
+                <FormLabel className="md:w-1/4 text-md font-medium">
+                  Options
+                </FormLabel>
                 <div className="flex-grow flex space-x-4">
                   <FormField
                     control={form.control}
@@ -342,7 +358,9 @@ export default function RoomPostingForm() {
               </div>
 
               <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
-                <FormLabel className="md:w-1/4">Availability</FormLabel>
+                <FormLabel className="md:w-1/4 text-md font-medium">
+                  Availability
+                </FormLabel>
                 <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -436,7 +454,9 @@ export default function RoomPostingForm() {
                 name="immediate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">Immediate</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Immediate
+                    </FormLabel>
                     <div className="flex-grow">
                       <FormControl>
                         <Checkbox
@@ -455,7 +475,7 @@ export default function RoomPostingForm() {
                 name="separateBathroom"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">
+                    <FormLabel className="md:w-1/4 text-md font-medium">
                       Separate Bathroom
                     </FormLabel>
                     <div className="flex-grow">
@@ -485,7 +505,9 @@ export default function RoomPostingForm() {
                 name="securityDeposit"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">Security Deposit</FormLabel>
+                    <FormLabel className="md:w-1/4 text-md font-medium">
+                      Security Deposit
+                    </FormLabel>
                     <div className="flex-grow">
                       <FormControl>
                         <div className="flex items-center">
@@ -514,7 +536,7 @@ export default function RoomPostingForm() {
                 name="toShare"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">
+                    <FormLabel className="md:w-1/4 text-md font-medium">
                       Is room furnished?
                     </FormLabel>
                     <div className="flex-grow">
@@ -548,7 +570,7 @@ export default function RoomPostingForm() {
                 name="utilities"
                 render={() => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
-                    <div className="md:w-1/4">
+                    <div className="md:w-1/4 text-md font-medium">
                       <FormLabel className="text-base">
                         Utilities Include
                       </FormLabel>
@@ -614,7 +636,7 @@ export default function RoomPostingForm() {
                 name="amenities"
                 render={() => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
-                    <div className="md:w-1/4">
+                    <div className="md:w-1/4 text-md font-medium">
                       <FormLabel className="text-base">
                         Amenities include
                       </FormLabel>
@@ -680,7 +702,7 @@ export default function RoomPostingForm() {
                 name="dietaryPreferences"
                 render={() => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
-                    <div className="md:w-1/4">
+                    <div className="md:w-1/4 text-md font-medium">
                       <FormLabel className="text-base">
                         Dietary Preferences
                       </FormLabel>
@@ -733,7 +755,7 @@ export default function RoomPostingForm() {
                 name="smokingPolicy"
                 render={() => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
-                    <div className="md:w-1/4">
+                    <div className="md:w-1/4 text-md font-medium">
                       <FormLabel className="text-base">
                         Smoking Policy
                       </FormLabel>
@@ -791,7 +813,7 @@ export default function RoomPostingForm() {
                 name="petPolicy"
                 render={() => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
-                    <div className="md:w-1/4">
+                    <div className="md:w-1/4 text-md font-medium">
                       <FormLabel className="text-base">Pet Policy</FormLabel>
                       <FormDescription>
                         Select the pet policy for the room.
@@ -847,7 +869,7 @@ export default function RoomPostingForm() {
                 name="openHouseDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                    <FormLabel className="md:w-1/4">
+                    <FormLabel className="md:w-1/4 text-md font-medium">
                       Open House Schedule
                     </FormLabel>
                     <div className="flex-grow">
@@ -889,7 +911,7 @@ export default function RoomPostingForm() {
               />
 
               <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
-                <Label className="text-lg font-semibold md:w-1/4">
+                <Label className="text-lg font-semibold md:w-1/4 text-md">
                   Add your photos (up to 5)
                 </Label>
                 <div className="flex-grow">
@@ -935,7 +957,7 @@ export default function RoomPostingForm() {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+          <div className="bg-white lg:p-[4rem] pt-9 p-6 rounded-xl shadow-md border border-gray-200">
             <h2 className="text-2xl font-bold mb-4">Your Details:</h2>
             <div className="space-y-4">
               {[
@@ -950,12 +972,13 @@ export default function RoomPostingForm() {
                   name={fieldInfo.name as keyof FormData}
                   render={({ field }) => (
                     <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
                         {fieldInfo.label}
                       </FormLabel>
                       <div className="flex-grow">
                         <FormControl>
                           <Input
+                            className=""
                             type={fieldInfo.type}
                             {...field}
                             value={field.value as string}
@@ -967,7 +990,7 @@ export default function RoomPostingForm() {
                   )}
                 />
               ))}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 {[
                   { name: "city", label: "City" },
                   { name: "state", label: "State" },
@@ -979,8 +1002,8 @@ export default function RoomPostingForm() {
                     control={form.control}
                     name={fieldInfo.name as keyof FormData}
                     render={({ field }) => (
-                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                        <FormLabel className="md:w-1/3">
+                      <FormItem className="flex flex-col md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                        <FormLabel className="md:w-1/4 text-md font-medium">
                           {fieldInfo.label}
                         </FormLabel>
                         <div className="flex-grow">
@@ -997,7 +1020,7 @@ export default function RoomPostingForm() {
             </div>
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="flex items-center justify-center">
             Add New Room
           </Button>
         </form>
