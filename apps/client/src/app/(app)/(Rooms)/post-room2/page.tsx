@@ -20,49 +20,9 @@ import {
   Settings,
   User,
 } from "lucide-react";
+import { postroomschema } from "@/schemas";
 
-const schema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  description: z
-    .string()
-    .min(10, { message: "Description must be at least 10 characters" }),
-  propertyType: z.string().min(1, { message: "Property type is required" }),
-  stayLength: z.string().min(1, { message: "Stay length is required" }),
-  price: z.number().min(1, { message: "Price is required" }),
-  availableFrom: z
-    .string()
-    .min(1, { message: "Available from date is required" }),
-  availableTo: z.string().min(1, { message: "Available to date is required" }),
-  securityDeposit: z
-    .string()
-    .min(1, { message: "Security deposit is required" }),
-  toShare: z.string().min(1, { message: "To share/furnished is required" }),
-  utilities: z
-    .array(z.string())
-    .min(1, { message: "Select at least one utility" }),
-  amenities: z
-    .array(z.string())
-    .min(1, { message: "Select at least one amenity" }),
-  dietaryPreferences: z
-    .array(z.string())
-    .min(1, { message: "Select at least one dietary preference" }),
-  smokingPolicy: z
-    .array(z.string())
-    .min(1, { message: "Select at least one smoking policy" }),
-  petPolicy: z
-    .array(z.string())
-    .min(1, { message: "Select at least one pet policy" }),
-  openHouseDate: z.string().optional(),
-  name: z.string().min(1, { message: "Name is required" }),
-  email: z.string().email({ message: "Invalid email address" }),
-  phone: z.string().min(10, { message: "Phone number is required" }),
-  address: z.string().min(1, { message: "Address is required" }),
-  city: z.string().min(1, { message: "City is required" }),
-  state: z.string().min(1, { message: "State is required" }),
-  zipCode: z.string().min(5, { message: "Zip code is required" }),
-});
-
-type FormData = z.infer<typeof schema>;
+type FormData = z.infer<typeof postroomschema>;
 
 const formSections = [
   { id: 1, title: "Basic Info", icon: Home },
@@ -80,7 +40,7 @@ export default function Component() {
     formState: { errors },
     watch,
   } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(postroomschema),
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -129,10 +89,10 @@ export default function Component() {
                 <>
                   <div className="space-y-2">
                     <Label htmlFor="title">Title</Label>
-                    <Input id="title" {...register("title")} />
-                    {errors.title && (
+                    <Input id="title" {...register("Title")} />
+                    {errors.Title && (
                       <p className="text-red-500 text-sm">
-                        {errors.title.message}
+                        {errors.Title.message}
                       </p>
                     )}
                   </div>
