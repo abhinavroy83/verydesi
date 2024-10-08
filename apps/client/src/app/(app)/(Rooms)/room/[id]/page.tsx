@@ -41,49 +41,11 @@ import { MdOutlinePets } from "react-icons/md";
 import { IoIosHeart } from "react-icons/io";
 import RoomSketon from "@/components/skeleton/RoomSkeleton";
 import dynamic from "next/dynamic";
-
-const roomDatas = {
-  id: "1",
-  title: "2BR 2Bath Apartment In Normal",
-  description:
-    "I Have A Master Bedroom Available For Rent In Parkview Apartments About 5.5 Miles From Rivian Normal Plant And I Am Looking For A Roommate. Availability August 20th. Rent Will Be $700 A Month (Includes Water, Trash And Internet). Electricity And Gas Will Be Separate. Apartment Has Inhouse Washer And Dryer Access And Kitchen Includes Stainless Steel Microwave, Dishwasher And Refrigerator. The Apartment Is 2 Bed 2 Bath.",
-  price: 700,
-  location: "Portland, OR",
-  owner: "Raees Rohit Sohil",
-  images: [
-    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-    "https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-    "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-  ],
-  amenities: [
-    { name: "Car Park", icon: "Car" },
-    { name: "Visitors Parking", icon: "Users" },
-    { name: "Private Lawn", icon: "Tree" },
-    { name: "High-Speed Internet", icon: "Wifi" },
-    { name: "Laundry Facilities", icon: "Shirt" },
-    { name: "Air Conditioning", icon: "Wind" },
-  ],
-  utilities: [
-    { name: "Internet", icon: "Wifi" },
-    { name: "Electricity", icon: "Zap" },
-    { name: "Water", icon: "Droplet" },
-  ],
-  details: {
-    "Property Type": "Single Family Home",
-    City: "Portland",
-    "Availability From": "08/20/2024",
-    "Available To": "Immediate",
-    "Attached Bath": "Yes",
-    "Preferred Gender": "Any",
-    Deposit: "$ 350",
-    "Is Room Furnished": "Unfurnished",
-  },
-  additionalInfo: {
-    "Dietary Preference": "Both",
-    "Smoking Policy": "No Smoking",
-    "Pet Friendly": "No Pets",
-  },
-};
+import useAuthStore from "@/store/useAuthStore";
+import { useloginstore } from "@/store";
+import useCartStore from "@/store/useCartStore";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const isValidAmenityIcon = (iconName: string): iconName is AmenityType => {
   return iconName in AmenityIcon;
@@ -99,14 +61,16 @@ interface Location {
 export default function RoomDetails() {
   const param = useParams<{ tag: string; id: string }>();
 
-  console.log(param.id);
   const [amenityFilter, setAmenityFilter] = useState("");
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
     null
   );
+  const { pluscart, minuscart } = useCartStore();
+  const [wishliststatys, setWishlistStatus] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const { status } = useAuthStore();
+  const { openLogin } = useloginstore();
   const fetchRoom = async () => {
     try {
       setLoading(true);
@@ -138,6 +102,90 @@ export default function RoomDetails() {
   useEffect(() => {
     fetchRoom();
   }, []);
+  const { data: session } = useSession();
+
+  const token = session?.accessToken;
+
+  const makewishlist = async (_id: string) => {
+    if (status) {
+      try {
+        const dat = { roomId: _id, status: true };
+        const res = await axios.post(
+          `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
+          dat,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (
+          res.data.msg === "Successfully added to wishlist" ||
+          res.data.msg === "Successfully updated"
+        ) {
+          pluscart();
+          setWishlistStatus(true);
+          toast.success("Added to Favorites.");
+        }
+      } catch (error) {
+        console.error("Error adding to wishlist:", error);
+      }
+    } else {
+      toast.error("Removed from Favorites.");
+    }
+  };
+  const unwish = async (_id: string) => {
+    try {
+      const dat = { roomId: _id, status: false };
+      const res = await axios.post(
+        `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
+        dat,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (
+        res.data.msg === "Successfully removed" ||
+        res.data.msg === "Wishlist cleared"
+      ) {
+        minuscart();
+        setWishlistStatus(false);
+        toast.error("Removed from Favorites.");
+      }
+    } catch (error) {
+      console.error("Error removing from wishlist:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchWishStatus = async () => {
+      try {
+        if (status) {
+          const res = await axios.get(
+            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${param.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (res.data.status === "not found") {
+            setWishlistStatus(false);
+          } else {
+            setWishlistStatus(res.data.status);
+          }
+        }
+      } catch (error) {
+        console.error("Error during fetching wishlist status:", error);
+      }
+    };
+
+    fetchWishStatus();
+  }, [param.id]);
 
   if (loading) {
     return (
@@ -170,10 +218,40 @@ export default function RoomDetails() {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <IoIosHeart
-                size={25}
-                className=" hover:text-red-500 rounded-full"
-              />
+              {!status && (
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openLogin();
+                  }}
+                >
+                  <Heart className="h-6 w-6 fill-red-600 stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                </div>
+              )}
+              {status && (
+                <div>
+                  {!wishliststatys ? (
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        makewishlist(param.id);
+                      }}
+                    >
+                      <Heart className="h-6 w-6 hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                    </div>
+                  ) : (
+                    <div
+                      className="cursor-pointer "
+                      onClick={(e) => {
+                        e.preventDefault();
+                        unwish(param.id);
+                      }}
+                    >
+                      <Heart className="h-6 w-6 hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                    </div>
+                  )}
+                </div>
+              )}
               <Button
                 variant="outline"
                 className="rounded-full flex items-center"
@@ -444,29 +522,44 @@ export default function RoomDetails() {
           </Card>
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle>Contact Host</CardTitle>
+              <CardTitle>
+                {!status && (
+                  <span
+                    className=" hover:text-blue-500 cursor-pointer"
+                    onClick={() => {
+                      openLogin();
+                    }}
+                  >
+                    Click Here To{" "}
+                  </span>
+                )}
+                Contact Host{" "}
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <form className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Your name" />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Your email" />
-                </div>
-                <div>
-                  <Label htmlFor="message">Message</Label>
-                  <textarea
-                    id="message"
-                    placeholder="Your message"
-                    className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
-                  />
-                </div>
-                <Button className="w-full">Send Message</Button>
-              </form>
-            </CardContent>
+
+            {status && (
+              <CardContent>
+                <form className="space-y-4">
+                  <div>
+                    <Label htmlFor="name">Name</Label>
+                    <Input id="name" placeholder="Your name" />
+                  </div>
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" type="email" placeholder="Your email" />
+                  </div>
+                  <div>
+                    <Label htmlFor="message">Message</Label>
+                    <textarea
+                      id="message"
+                      placeholder="Your message"
+                      className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
+                    />
+                  </div>
+                  <Button className="w-full">Send Message</Button>
+                </form>
+              </CardContent>
+            )}
           </Card>
         </div>
       </div>

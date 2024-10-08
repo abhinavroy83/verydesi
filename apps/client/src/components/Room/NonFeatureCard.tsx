@@ -24,6 +24,8 @@ import toast from "react-hot-toast";
 import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
 import { LuHeart } from "react-icons/lu";
 import { FaHeart } from "react-icons/fa";
+import useAuthStore from "@/store/useAuthStore";
+import { useloginstore } from "@/store";
 interface FeaturedCard2Props {
   room: RoomInterface;
 }
@@ -31,7 +33,10 @@ interface FeaturedCard2Props {
 export default function Component({ room }: FeaturedCard2Props) {
   const { pluscart, minuscart } = useCartStore();
   const [wishliststatys, setWishlistStatus] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const { status } = useAuthStore();
+  const { openLogin } = useloginstore();
+
   function truncateCharacters(str: string, numCharacters: number) {
     if (str.length > numCharacters) {
       return str.slice(0, numCharacters) + "...";
@@ -206,29 +211,40 @@ export default function Component({ room }: FeaturedCard2Props) {
             <div className="flex">
               <div className="flex w-full sm:w-auto text-left sm:text-right">
                 <div className="flex items-center gap-2 absolute lg:bottom-[1.5rem] bottom-[0.9rem] right-[2.2rem] lg:right-[4rem]">
-                  {/* {!wishliststatys ? ( */}
-                  <div
-                    className="cursor-pointer hover:text-white"
-                    // onClick={(e) => {
-                    //   e.preventDefault();
-                    //   makewishlist(item._id);
-                    // }}
-                  >
-                    {/* <FaHeart
-                className="text-black hover:bg-red-600 hover:text-white rounded-full hover:p-[0.1rem]"
-                size={22}
-              /> */}
-                  </div>
-                  {/* ) : ( */}
-                  <div
-                    className="cursor-pointer "
-                    // onClick={(e) => {
-                    //   e.preventDefault();
-                    //   unwish(item._id);
-                    // }}
-                  >
-                    <FaHeart className="" color="red" size={20} />
-                  </div>
+                  {!status && (
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        openLogin();
+                      }}
+                    >
+                      <Heart className=" fill-red-600 stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                    </div>
+                  )}
+                  {status && (
+                    <div>
+                      {!wishliststatys ? (
+                        <div
+                          onClick={(e) => {
+                            e.preventDefault();
+                            makewishlist(room?._id);
+                          }}
+                        >
+                          <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                        </div>
+                      ) : (
+                        <div
+                          className="cursor-pointer "
+                          onClick={(e) => {
+                            e.preventDefault();
+                            unwish(room?._id);
+                          }}
+                        >
+                          <Heart className=" hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <div>
                     <p className="text-xl sm:text-2xl font-bold text-green-700 w-[4rem]">
                       ${room?.Expected_Rooms}/mo

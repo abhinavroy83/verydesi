@@ -159,86 +159,43 @@ export default function Component({ room }: FeaturedCard2Props) {
               alt="Room Image"
               className="w-full h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
             />
-
-            {/* {!status && (
-              <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
-                <Button
+          </div>
+          {!status && (
+            <div
+              className="absolute bottom-[1.5rem] right-[1.5rem]"
+              onClick={(e) => {
+                e.preventDefault();
+                openLogin();
+              }}
+            >
+              <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+            </div>
+          )}
+          {status && (
+            <div className="absolute bottom-[1.5rem] right-[1.5rem]">
+              {!wishliststatys ? (
+                <div
                   onClick={(e) => {
                     e.preventDefault();
-                    openLogin();
+                    makewishlist(room?._id);
                   }}
-                  variant="secondary"
-                  size="sm"
-                  className="w-full bg-white text-blue-500 hover:bg-red-600 hover:text-white group-hover:translate-y-1 transition-all duration-300"
                 >
-                  <Heart className="h-4 w-4 mr-2" />
-                  Add to Wishlist
-                </Button>
-              </div>
-            )}
+                  <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                </div>
+              ) : (
+                <div
+                  className="cursor-pointer "
+                  onClick={(e) => {
+                    e.preventDefault();
+                    unwish(room?._id);
+                  }}
+                >
+                  <Heart className=" hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                </div>
+              )}
+            </div>
+          )}
 
-            {status && (
-              <div>
-                {!wishliststatys ? (
-                  <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
-                    <Button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        makewishlist(room?._id);
-                      }}
-                      variant="secondary"
-                      size="sm"
-                      className="w-full bg-white text-blue-500 hover:bg-red-600 hover:text-white group-hover:translate-y-1 transition-all duration-300"
-                    >
-                      <Heart className="h-4 w-4 mr-2" />
-                      Add to Favorite
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
-                    <Button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        unwish(room?._id);
-                      }}
-                      variant="secondary"
-                      size="sm"
-                      className="w-full hover:bg-white hover:text-blue-500 bg-red-600 text-white group-hover:translate-y-1 transition-all duration-300"
-                    >
-                      <Heart className="h-4 w-4 mr-2" />
-                      Remove from Favorite
-                    </Button>
-                  </div>
-                )}
-              </div>
-            )} */}
-          </div>
-          <div className="absolute bottom-[1.5rem] right-[1.5rem]">
-            {/* {!wishliststatys ? ( */}
-            <div
-              className="cursor-pointer hover:text-white"
-              // onClick={(e) => {
-              //   e.preventDefault();
-              //   makewishlist(item._id);
-              // }}
-            >
-              {/* <FaHeart
-                className="text-black hover:bg-red-600 hover:text-white rounded-full hover:p-[0.1rem]"
-                size={22}
-              /> */}
-            </div>
-            {/* ) : ( */}
-            <div
-              className="cursor-pointer "
-              // onClick={(e) => {
-              //   e.preventDefault();
-              //   unwish(item._id);
-              // }}
-            >
-              <LuHeart className="text-black hover:text-red-600"  size={20} />
-            </div>
-            {/* )} */}
-          </div>
           <div className="flex flex-col flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
               <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-1 group-hover:text-purple-700 transition-colors duration-300">
