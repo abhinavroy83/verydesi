@@ -22,7 +22,8 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
-
+import { LuHeart } from "react-icons/lu";
+import { FaHeart } from "react-icons/fa";
 interface FeaturedCard2Props {
   room: RoomInterface;
 }
@@ -140,7 +141,7 @@ export default function Component({ room }: FeaturedCard2Props) {
 
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="w-full max-w-7xl shadow-sm hover:shadow-md transition-shadow duration-300">
+      <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[270px] lg:h-[90px]">
         <CardContent className="p-3 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <div className="flex-shrink-0">
@@ -202,57 +203,40 @@ export default function Component({ room }: FeaturedCard2Props) {
                 </div>
               </div>
             </div>
-            <div className="flex-shrink-0 w-full sm:w-auto text-left sm:text-right">
-              <p className="text-xl sm:text-2xl font-bold text-green-700 mb-2">
-                ${room?.Expected_Rooms}/mo
-              </p>
-              {!status && (
-                <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
-                  <Button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toast.success("please login");
-                    }}
-                    variant="outline"
-                    size="sm"
-                    className="w-full sm:w-auto rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300"
+            <div className="flex">
+              <div className="flex w-full sm:w-auto text-left sm:text-right">
+                <div className="flex items-center gap-2 absolute lg:bottom-[1.5rem] bottom-[0.9rem] right-[2.2rem] lg:right-[4rem]">
+                  {/* {!wishliststatys ? ( */}
+                  <div
+                    className="cursor-pointer hover:text-white"
+                    // onClick={(e) => {
+                    //   e.preventDefault();
+                    //   makewishlist(item._id);
+                    // }}
                   >
-                    <Heart className="h-5 w-5 mr-2" />
-                    Add to Wishlist
-                  </Button>
+                    {/* <FaHeart
+                className="text-black hover:bg-red-600 hover:text-white rounded-full hover:p-[0.1rem]"
+                size={22}
+              /> */}
+                  </div>
+                  {/* ) : ( */}
+                  <div
+                    className="cursor-pointer "
+                    // onClick={(e) => {
+                    //   e.preventDefault();
+                    //   unwish(item._id);
+                    // }}
+                  >
+                    <FaHeart className="" color="red" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-xl sm:text-2xl font-bold text-green-700 w-[4rem]">
+                      ${room?.Expected_Rooms}/mo
+                    </p>
+                  </div>
+                  {/* )} */}
                 </div>
-              )}
-              {status && (
-                <div>
-                  {!wishliststatys ? (
-                    <Button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        makewishlist(room?._id);
-                      }}
-                      variant="outline"
-                      size="sm"
-                      className="w-full sm:w-auto rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300"
-                    >
-                      <Heart className="h-5 w-5 mr-2" />
-                      Add to Favorite
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        unwish(room?._id);
-                      }}
-                      variant="outline"
-                      size="sm"
-                      className="w-full sm:w-auto rounded-lg bg-red-600 text-white hover:bg-white hover:text-blue-500 transition-colors duration-300"
-                    >
-                      <Heart className="h-5 w-5 mr-2" />
-                      Remove from Favorite
-                    </Button>
-                  )}
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </CardContent>

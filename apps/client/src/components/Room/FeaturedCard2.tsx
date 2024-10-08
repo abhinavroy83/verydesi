@@ -146,7 +146,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="flex relative max-w-4xl flex-col font-['udemy-regular'] rounded-xl md:flex-row perspective-1000 group border shadow-md hover:shadow-lg h-[450px] lg:h-[165px] duration-300">
+      <Card className="flex relative max-w-4xl flex-col items-center rounded-xl md:flex-row perspective-1000 group border shadow-md hover:shadow-lg h-[400px] lg:h-[165px] duration-300">
         {/* <Card className="relative lg:w-full w-[21.2rem] h-auto sm:h-[185px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300"> */}
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
           <div className="w-full sm:w-1/3 relative group">
@@ -160,7 +160,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               className="w-full h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
             />
 
-            {!status && (
+            {/* {!status && (
               <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-black to-transparent">
                 <Button
                   onClick={(e) => {
@@ -211,7 +211,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   </div>
                 )}
               </div>
-            )}
+            )} */}
           </div>
           <div className="absolute bottom-[1.5rem] right-[1.5rem]">
             {/* {!wishliststatys ? ( */}
@@ -222,10 +222,10 @@ export default function Component({ room }: FeaturedCard2Props) {
               //   makewishlist(item._id);
               // }}
             >
-              <FaHeart
+              {/* <FaHeart
                 className="text-black hover:bg-red-600 hover:text-white rounded-full hover:p-[0.1rem]"
                 size={22}
-              />
+              /> */}
             </div>
             {/* ) : ( */}
             <div
@@ -235,11 +235,11 @@ export default function Component({ room }: FeaturedCard2Props) {
               //   unwish(item._id);
               // }}
             >
-              <FaHeart className="" color="red" size={20} />
+              <LuHeart className="text-black hover:text-red-600"  size={20} />
             </div>
             {/* )} */}
           </div>
-          <div className="flex flex-col flex-grow px-4 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+          <div className="flex flex-col flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
               <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-1 group-hover:text-purple-700 transition-colors duration-300">
                 {room?.Title && truncateCharacters(room?.Title, 40)}
