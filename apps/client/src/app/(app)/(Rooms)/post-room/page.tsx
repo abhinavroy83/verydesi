@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Upload, X } from "lucide-react";
 import { format } from "date-fns";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -126,7 +125,7 @@ export default function RoomPostingForm() {
                             form.trigger("postingType");
                           }}
                           defaultValue={field.value}
-                          className="flex flex-col space-y-1"
+                          className="flex"
                         >
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>

@@ -157,7 +157,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
               }
               alt="Room Image"
-              className="w-full h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
+              className="w-full max-w-2xl h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
             />
           </div>
           {!status && (
