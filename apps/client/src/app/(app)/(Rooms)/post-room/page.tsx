@@ -98,7 +98,7 @@ export default function RoomPostingForm() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-32">
+    <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-[6rem]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
@@ -281,7 +281,7 @@ export default function RoomPostingForm() {
                     <div className="flex-grow">
                       <FormControl>
                         <div className="flex items-center">
-                          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                          <span className="inline-flex items-center p-[0.5rem] rounded-l-md border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
                             $
                           </span>
                           <Input
@@ -489,7 +489,7 @@ export default function RoomPostingForm() {
                     <div className="flex-grow">
                       <FormControl>
                         <div className="flex items-center">
-                          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                          <span className="inline-flex items-center p-[0.5rem] rounded-l-md border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
                             $
                           </span>
                           <Input
