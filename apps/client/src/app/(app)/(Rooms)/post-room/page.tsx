@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Upload, X } from "lucide-react";
@@ -41,6 +41,7 @@ import { postroomschema, FormData } from "@/schemas";
 export default function RoomPostingForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(postroomschema),
+    mode: "onChange",
     defaultValues: {
       postingType: "Rooms",
       Title: "",
@@ -79,6 +80,9 @@ export default function RoomPostingForm() {
   const onSubmit = (data: FormData) => {
     console.log(data, images);
   };
+  useEffect(() => {
+    form.trigger();
+  }, [form]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -115,7 +119,10 @@ export default function RoomPostingForm() {
                     <div className="flex-grow">
                       <FormControl>
                         <RadioGroup
-                          onValueChange={field.onChange}
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                            form.trigger("postingType");
+                          }}
                           defaultValue={field.value}
                           className="flex flex-col space-y-1"
                         >
