@@ -93,7 +93,11 @@ export default function Navbar() {
                 onMouseEnter={() => setIslocationOpen(true)}
                 onMouseLeave={() => setIslocationOpen(false)}
               >
-                <Area />
+                {" "}
+                <div className="flex items-center">
+                  <MapPin className="h-5 w-5 text-gray-400" />
+                  <Area />
+                </div>
               </div>
             </div>
 
@@ -219,9 +223,9 @@ export default function Navbar() {
       </div>
 
       <div className="bg-gray-800">
-        <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto  sm:px-6 lg:px-2">
+        <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto sm:px-6 lg:px-2">
           <div className="flex items-center justify-between h-12">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center">
               <Button
                 onClick={() => {
                   router.push("/");
@@ -247,11 +251,12 @@ export default function Navbar() {
                 variant="ghost"
                 className="text-white hover:bg-white"
               >
-                <Users className="mr-2 h-5 w-5" /> Business
+                <Users className="mr-2 h-5 w-5" />
+                BUSNIESS
               </Button>
             </div>
             <div className="hidden md:flex items-center space-x-2 text-white">
-              <MapPin className="h-5 w-5 text-gray-400" />
+              {/* <MapPin className="h-5 w-5 text-gray-400" /> */}
               <span className="font-medium">{weatherData?.name}</span>
               <div>
                 {weatherData?.main && (

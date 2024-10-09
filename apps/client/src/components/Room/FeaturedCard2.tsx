@@ -147,9 +147,9 @@ export default function Component({ room }: FeaturedCard2Props) {
   return (
     <Link href={`room/${room?._id}`}>
       {/* <Card className="flex relative max-w-4xl flex-col items-center rounded-xl md:flex-row perspective-1000 group border shadow-md hover:shadow-lg h-[400px] lg:h-[165px] duration-300"> */}
-      <Card className="relative lg:w-full w-[21.2rem] h-auto sm:h-[185px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
+      <Card className="relative lg:w-full w-[21.2rem] lg:h-[157px] sm:h-[585px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
-          <div className="w-full max-w-[200px] sm:w-[300px] relative">
+          <div className="relative w-full max-w-[200px] sm:w-[300px] lg:w-72 h-[100%] overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
             <Image
               src={
                 room && room.Imgurl && room.Imgurl.length > 0
@@ -159,7 +159,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               alt="Room Image"
               layout="fill"
               objectFit="cover"
-              className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none"
+              className="group-hover:scale-110 object-cover transition-transform duration-500 ease-in duration-70 w-full lg:h-full "
             />
           </div>
           {!status && (
@@ -200,13 +200,13 @@ export default function Component({ room }: FeaturedCard2Props) {
 
           <div className="flex flex-col flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
-              <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-1 group-hover:text-purple-700 transition-colors duration-300">
+              <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-1 group-hover:text-blue-700 transition-colors duration-300">
                 {room?.Title && truncateCharacters(room?.Title, 40)}
               </h2>
 
-              <div className="flex  flex-wrap items-center text-[17px] text-gray-600 mb-1 group-hover:text-purple-600 transition-colors duration-300">
+              <div className="flex  flex-wrap items-center text-[17px] text-gray-600 mb-1 group-hover:text-blue-700 transition-colors duration-300">
                 <div className="flex items-center mr-2 mb-1 sm:mb-0">
-                  <MapPin className="h-5 w-5  mr-1 text-indigo-500" />
+                  <MapPin className="h-5 w-5  mr-1 text-[#054687]" />
                   <span>
                     {room?.postingincity},
                     {room?.state &&
@@ -222,7 +222,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                         className="h-5 w-5 mx-1"
                         src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
                       />
-                      {/* <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-purple-500" /> */}
+                      {/* <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-blue-700" /> */}
                       <span>Male</span>
                     </>
                   ) : room?.Preferred_gender === "Female only" ? (
@@ -246,13 +246,13 @@ export default function Component({ room }: FeaturedCard2Props) {
                   )}
                 </div>
               </div>
-              <div className="flex lg:flex-col flex-wrap  text-[17px] text-gray-500 mb-2 group-hover:text-purple-500 transition-colors duration-300">
+              <div className="flex lg:flex-col flex-wrap  text-[17px] text-gray-500 mb-2 group-hover:text-blue-700 transition-colors duration-300">
                 <div className="flex items-center mr-2 mb-1 sm:mb-0">
-                  <User className="h-5 w-5 mr-1 text-indigo-500" />
+                  <User className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>Posted by: {room?.user_name}</span>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="h-5 w-5 mr-1 text-indigo-500" />
+                  <Clock className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>{calculateTimeDifference(room?.postedon)}</span>
                 </div>
               </div>

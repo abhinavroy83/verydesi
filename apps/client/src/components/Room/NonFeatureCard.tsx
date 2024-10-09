@@ -146,8 +146,8 @@ export default function Component({ room }: FeaturedCard2Props) {
 
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[270px] lg:h-[90px]">
-        <CardContent className="p-3 px-4">
+      <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[270px] lg:h-[80px]">
+        <CardContent className="py-1 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <div className="flex-shrink-0">
               {room?.Preferred_gender === "Male only" ? (
@@ -184,7 +184,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               </h2>
               <div className="flex flex-col sm:flex-row sm:items-center text-[17px] text-gray-600 space-y-1 sm:space-y-0">
                 <div className="flex items-center">
-                  <MapPin className="h-5 w-5 mr-1 text-indigo-500" />
+                  <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>
                     {room?.postingincity},
                     {room?.state &&
@@ -198,7 +198,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   className="hidden sm:block mx-2 h-4"
                 />
                 <div className="flex items-center">
-                  <Clock className="h-5 w-5 mr-1 text-indigo-500" />
+                  <Clock className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>{calculateTimeDifference(room?.postedon)}</span>
                 </div>
                 <Separator
@@ -206,7 +206,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   className="hidden sm:block mx-2 h-4"
                 />
                 <div className="flex items-center">
-                  <User className="h-5 w-5 mr-1 text-indigo-500" />
+                  <User className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>Posted by: {room?.user_name}</span>
                 </div>
               </div>

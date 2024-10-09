@@ -197,9 +197,53 @@ export default function RoomDetails() {
 
   return (
     <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-32">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex space-x-2 w-full justify-between">
+      <div className="flex space-x-2 w-full justify-between">
+        <div>hi</div>
+        <div className="flex gap-2">
+          <div className="flex items-center gap-2">
+            {!status && (
+              <div
+                onClick={(e) => {
+                  e.preventDefault();
+                  openLogin();
+                }}
+              >
+                <Heart className="h-6 w-6 fill-red-600 stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+              </div>
+            )}
+            {status && (
+              <div>
+                {!wishliststatys ? (
+                  <div
+                    onClick={(e) => {
+                      e.preventDefault();
+                      makewishlist(param.id);
+                    }}
+                  >
+                    <Heart className="h-6 w-6 hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                  </div>
+                ) : (
+                  <div
+                    className="cursor-pointer "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      unwish(param.id);
+                    }}
+                  >
+                    <Heart className="h-6 w-6 hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                  </div>
+                )}
+              </div>
+            )}
+            <Button
+              variant="outline"
+              className="rounded-full flex items-center"
+            >
+              <ShareButton />
+              <p>Share</p>
+            </Button>
+          </div>
+          <div>
             <div className="flex gap-2">
               <button
                 className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
@@ -217,57 +261,24 @@ export default function RoomDetails() {
                 <ChevronRight className="w-5 h-5 inline-block ml-1" />
               </button>
             </div>
-            <div className="flex items-center gap-2">
-              {!status && (
-                <div
-                  onClick={(e) => {
-                    e.preventDefault();
-                    openLogin();
-                  }}
-                >
-                  <Heart className="h-6 w-6 fill-red-600 stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-                </div>
-              )}
-              {status && (
-                <div>
-                  {!wishliststatys ? (
-                    <div
-                      onClick={(e) => {
-                        e.preventDefault();
-                        makewishlist(param.id);
-                      }}
-                    >
-                      <Heart className="h-6 w-6 hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-                    </div>
-                  ) : (
-                    <div
-                      className="cursor-pointer "
-                      onClick={(e) => {
-                        e.preventDefault();
-                        unwish(param.id);
-                      }}
-                    >
-                      <Heart className="h-6 w-6 hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-                    </div>
-                  )}
-                </div>
-              )}
-              <Button
-                variant="outline"
-                className="rounded-full flex items-center"
-              >
-                <ShareButton />
-                <p>Share</p>
-              </Button>
-            </div>
           </div>
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        </div>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-3">
+          <div className="flex justify-between items-start">
+            <div className="flex w-full justify-between items-center">
+              <h1 className="text-3xl font-bold text-gray-900">
                 {roomData?.Title}
               </h1>
-              <p className="text-gray-600">{roomData?.postingincity}</p>
+              <h1 className="text-2xl font-bold text-gray-900">POSTED BY: </h1>
             </div>
+          </div>
+          <div className="flex items-center gap-2 text-xl font-bold">
+            <p className="text-gray-600">{roomData?.postingincity}, OR</p>|
+            <p className="text-xl  text-green-600">
+              ${roomData?.Expected_Rooms}
+            </p>
           </div>
           <Card>
             <CardContent className="p-0">
@@ -311,10 +322,7 @@ export default function RoomDetails() {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-2xl font-bold text-green-600">
-                  ${roomData?.Expected_Rooms}/month
-                </p>
-                <p className="text-gray-700">By {roomData?.user_name}</p>
+                <p className="text-gray-900 text-xl">ABOUT THE PROPERTY</p>
               </div>
               <p className="text-gray-700 mb-4">{roomData?.Description}</p>
             </CardContent>
@@ -327,7 +335,7 @@ export default function RoomDetails() {
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center">
-                  <FaRegBuilding className="h-6 w-6 text-green-500 mr-4" />
+                  <FaRegBuilding className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500 flex gap-2">
                       Property Type
@@ -338,7 +346,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <LucideMapPin className="h-6 w-6 text-green-500 mr-4" />
+                  <LucideMapPin className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">City</p>
                     <p className="mt-1 text-sm text-gray-900">
@@ -347,7 +355,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <FiClock className="h-6 w-6 text-green-500 mr-4" />
+                  <FiClock className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       Available From
@@ -358,7 +366,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <FiClock className="h-6 w-6 text-green-500 mr-4" />
+                  <FiClock className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       Available To
@@ -369,7 +377,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <GiBathtub className="h-6 w-6 text-green-500 mr-4" />
+                  <GiBathtub className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       Attached Bath
@@ -380,7 +388,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <IoTransgender className="h-6 w-6 text-green-500 mr-4" />
+                  <IoTransgender className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       Preferred Gender
@@ -391,7 +399,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <FaHandHoldingDollar className="h-6 w-6 text-green-500 mr-4" />
+                  <FaHandHoldingDollar className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">Deposit</p>
                     <p className="mt-1 text-sm text-gray-900">
@@ -400,7 +408,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <IoBed className="h-6 w-6 text-green-500 mr-4" />
+                  <IoBed className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     {" "}
                     <p className="text-sm font-medium text-gray-500">
@@ -416,7 +424,7 @@ export default function RoomDetails() {
           </Card>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 lg:mt-4">
           <Card>
             <CardHeader>
               <CardTitle>Location</CardTitle>
@@ -442,7 +450,7 @@ export default function RoomDetails() {
                     return (
                       <div key={amenity} className="flex items-center">
                         {IconComponent && (
-                          <IconComponent className="h-5 w-5 text-green-500 mr-2" />
+                          <IconComponent className="h-5 w-5 text-[#054687] mr-2" />
                         )}
                         <span className="text-sm text-gray-700">{amenity}</span>
                       </div>
@@ -466,7 +474,7 @@ export default function RoomDetails() {
                     return (
                       <div key={utility} className="flex  items-center">
                         {IconComponent && (
-                          <IconComponent className="h-5 w-5 text-green-500 mr-2" />
+                          <IconComponent className="h-5 w-5 text-[#054687] mr-2" />
                         )}
                         <span className="text-sm text-gray-700">{utility}</span>
                       </div>
@@ -485,7 +493,7 @@ export default function RoomDetails() {
             <CardContent>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center">
-                  <BiFoodTag className="h-6 w-6 text-green-500 mr-4" />
+                  <BiFoodTag className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       Dietary Preference
@@ -496,7 +504,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <MdOutlinePets className="h-6 w-6 text-green-500 mr-4" />
+                  <FaSmoking className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       Smoking Policy{" "}
@@ -507,7 +515,7 @@ export default function RoomDetails() {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <FaSmoking className="h-6 w-6 text-green-500 mr-4" />
+                  <MdOutlinePets className="h-6 w-6 text-[#054687] mr-4" />
                   <div>
                     <p className="text-sm font-medium text-gray-500">
                       Pet Friendly{" "}
