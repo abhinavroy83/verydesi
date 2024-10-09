@@ -22,8 +22,8 @@ import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
 import { useloginstore } from "@/store";
-import { LuHeart } from "react-icons/lu";
-import { FaHeart } from "react-icons/fa";
+import Image from "next/image";
+
 interface FeaturedCard2Props {
   room: RoomInterface;
 }
@@ -146,18 +146,20 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <Link href={`room/${room?._id}`}>
-      <Card className="flex relative max-w-4xl flex-col items-center rounded-xl md:flex-row perspective-1000 group border shadow-md hover:shadow-lg h-[400px] lg:h-[165px] duration-300">
-        {/* <Card className="relative lg:w-full w-[21.2rem] h-auto sm:h-[185px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300"> */}
+      {/* <Card className="flex relative max-w-4xl flex-col items-center rounded-xl md:flex-row perspective-1000 group border shadow-md hover:shadow-lg h-[400px] lg:h-[165px] duration-300"> */}
+      <Card className="relative lg:w-full w-[21.2rem] h-auto sm:h-[185px] perspective-1000 group shadow-sm hover:shadow-md transition-shadow duration-300">
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
-          <div className="w-full sm:w-1/3 relative group">
-            <img
+          <div className="w-full max-w-[200px] sm:w-[300px] relative">
+            <Image
               src={
                 room && room.Imgurl && room.Imgurl.length > 0
                   ? room.Imgurl[0]
                   : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
               }
               alt="Room Image"
-              className="w-full max-w-2xl h-48 sm:h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none duration-500 ease-in"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none"
             />
           </div>
           {!status && (
