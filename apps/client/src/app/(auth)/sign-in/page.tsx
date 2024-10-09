@@ -68,7 +68,7 @@ export default function SignIn() {
           />
         </Link>
       </div>
-      <div className="flex  justify-center mt-16 ">
+      <div className="flex  justify-center ">
         <form onSubmit={handleSubmit}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

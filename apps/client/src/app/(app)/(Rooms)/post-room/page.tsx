@@ -45,6 +45,7 @@ const sections = [
   { id: "preferences", title: "Preferences" },
   { id: "photos", title: "Photos" },
   { id: "your-details", title: "Your Details" },
+  { id: "submit", title: "Submit" },
 ];
 
 export default function RoomPostingForm() {
@@ -114,7 +115,7 @@ export default function RoomPostingForm() {
 
   return (
     <div className="flex max-w-[1370px] lg:max-w-[1600px] mx-auto  px-4 sm:px-6 lg:px-8 py-12 mt-[6rem]">
-      <nav className="hidden lg:block w-64 fixed left-8 top-26 overflow-y-auto h-[calc(100vh-6rem)]">
+      <nav className="hidden lg:block w-64 fixed left-8 top-26 overflow-y-auto h-[calc(100vh-7rem)]">
         <ul className="space-y-2">
           {sections.map((section) => (
             <li key={section.id}>
@@ -1121,9 +1122,18 @@ export default function RoomPostingForm() {
               </div>
             </div>
 
-            <Button type="submit" className="flex items-center justify-center">
-              Add New Room
-            </Button>
+            <div
+              ref={(el) => {
+                sectionRefs.current["submit"] = el;
+              }}
+            >
+              <Button
+                type="submit"
+                className="flex items-center justify-center"
+              >
+                Add New Room
+              </Button>
+            </div>
           </form>
         </Form>
       </div>

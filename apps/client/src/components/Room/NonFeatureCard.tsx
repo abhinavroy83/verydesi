@@ -155,6 +155,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   <img
                     className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
+                    alt="male"
                   />
                   {/* <IoIosMale className="h-12 w-12  text-gray-400" /> */}
                 </>
@@ -163,6 +164,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   <img
                     className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
+                    alt="female"
                   />
                   {/* <IoIosFemale className="h-12 w-12  text-gray-400" /> */}
                 </>
@@ -171,6 +173,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   <img
                     className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
+                    alt="any"
                   />
                 </>
               )}{" "}

@@ -125,7 +125,7 @@ const Page = () => {
           },
         }
       );
-      console.log(res);
+      // console.log(res);
       // updateCity(res.data.belongcity);
       if (res) {
         setVerified(res.data.IsEmailVerified);
