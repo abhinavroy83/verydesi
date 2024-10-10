@@ -109,13 +109,20 @@ export default function RoomPostingForm() {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
-  const scrollToSection = (sectionId: string) => {
-    sectionRefs.current[sectionId]?.scrollIntoView({ behavior: "smooth" });
+  const scrollToSection = (sectionId: string, offset = 130) => {
+    const section = sectionRefs.current[sectionId];
+    if (section) {
+      const yOffset = offset; // Custom height to add
+      const y =
+        section.getBoundingClientRect().top + window.pageYOffset - yOffset;
+
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
   };
 
   return (
     <div className="flex max-w-[1370px] lg:max-w-[1600px] mx-auto  px-4 sm:px-6 lg:px-8 py-12 mt-[6rem]">
-      <nav className="hidden lg:block w-64 fixed left-8 top-26 overflow-y-auto h-[calc(100vh-7rem)]">
+      <nav className="hidden lg:block w-64 fixed left-[3.2rem] top-[7.9rem] overflow-y-auto h-[calc(100vh-7rem)]">
         <ul className="space-y-2">
           {sections.map((section) => (
             <li key={section.id}>
