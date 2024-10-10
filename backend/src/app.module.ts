@@ -20,7 +20,6 @@ import { FavoriteModule } from './favorite/favorite.module';
     RedisModule,
     RoomModule,
     FavoriteModule,
-    S3Module,
   ],
   controllers: [AppController],
   providers: [AppService],
