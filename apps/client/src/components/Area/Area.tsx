@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ChevronDown, Globe } from "lucide-react";
+import { ChevronDown, Globe, MapPin } from "lucide-react";
 import axios from "axios";
 import {
   DropdownMenu,
@@ -52,7 +52,7 @@ function Avalableloc() {
             variant="ghost"
             className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 "
           >
-            <Globe className="h-5 w-5" />
+            <MapPin className="h-5 w-5 " />
             <span className="font-medium px-1">{currentCity}</span>
             <ChevronDown
               className={`h-4 w-4 transition-transform duration-200 ${

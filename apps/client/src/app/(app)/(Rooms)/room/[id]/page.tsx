@@ -24,7 +24,7 @@ import {
   UtilityType,
 } from "@/constants";
 import { FaRegBuilding } from "react-icons/fa";
-import { Heart, LucideMapPin } from "lucide-react";
+import { Heart, Home, Hotel, LucideMapPin } from "lucide-react";
 import { FiClock } from "react-icons/fi";
 import { GiBathtub } from "react-icons/gi";
 import { IoTransgender } from "react-icons/io5";
@@ -211,13 +211,25 @@ export default function RoomDetails() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                <BreadcrumbLink
+                  href="/"
+                  className="flex items-center text-primary hover:text-primary-dark transition-colors"
+                >
+                  <Home className="w-4 h-4 mr-2" />
+                  <span className="font-medium">Home</span>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
-                <Slash />
+                <ChevronRight className="w-4 h-4 text-gray-400" />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/components">Rooms</BreadcrumbLink>
+                <BreadcrumbLink
+                  href="/rooms"
+                  className="flex items-center text-primary hover:text-primary-dark transition-colors"
+                >
+                  <Hotel className="w-4 h-4 mr-2" />
+                  <span className="font-medium">Rooms</span>
+                </BreadcrumbLink>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -287,15 +299,18 @@ export default function RoomDetails() {
           </div>
         </div>
       </div>
+      <div className="flex justify-between items-start">
+        <div className="flex w-full justify-between items-center">
+          <h1 className="text-3xl font-bold text-gray-900">
+            {roomData?.Title}
+          </h1>
+          <h1 className="text-xl font-bold p-2 text-gray-900">
+            Posted By: {roomData?.user_name}{" "}
+          </h1>
+        </div>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-3">
-          <div className="flex justify-between items-start">
-            <div className="flex w-full justify-between items-center">
-              <h1 className="text-3xl font-bold text-gray-900">
-                {roomData?.Title}
-              </h1>
-            </div>
-          </div>
           <div className="flex items-center gap-2 text-xl font-bold">
             <p className="text-gray-600">{roomData?.postingincity}, OR</p>|
             <p className="text-xl  text-green-600">
@@ -446,8 +461,7 @@ export default function RoomDetails() {
           </Card>
         </div>
 
-        <div className="space-y-6 lg:mt-7">
-          <h1 className="text-2xl font-bold text-gray-900">POSTED BY: </h1>
+        <div className="space-y-6 lg:mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Location</CardTitle>

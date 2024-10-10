@@ -95,7 +95,6 @@ export default function Navbar() {
               >
                 {" "}
                 <div className="flex items-center">
-                  <MapPin className="h-5 w-5 text-gray-400" />
                   <Area />
                 </div>
               </div>
