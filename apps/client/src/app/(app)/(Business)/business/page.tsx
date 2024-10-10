@@ -98,7 +98,7 @@ export default function Component() {
   return (
     <HomeLayout>
       <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9">
-        <h2 className="text-2xl font-bold mb-6">Categories</h2>
+        <h2 className="text-2xl font-bold mb-4">Categories</h2>
         <div className="flex flex-wrap gap-2">
           {visibleCategories.map((category) => (
             <Badge
