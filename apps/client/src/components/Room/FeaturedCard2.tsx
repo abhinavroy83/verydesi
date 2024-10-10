@@ -200,13 +200,13 @@ export default function Component({ room }: FeaturedCard2Props) {
 
           <div className="flex flex-col flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
             <div>
-              <h2 className="text-[22px] font-sans  font-bold text-gray-800 mb-1 group-hover:text-blue-700 transition-colors duration-300">
+              <h2 className="text-[22px] font-sans  font-bold text-gray-800 group-hover:text-blue-700 transition-colors duration-300">
                 {room?.Title && truncateCharacters(room?.Title, 40)}
               </h2>
 
-              <div className="flex  flex-wrap items-center text-[17px] text-gray-600 mb-1 group-hover:text-blue-700 transition-colors duration-300">
-                <div className="flex items-center mr-2 mb-1 sm:mb-0">
-                  <MapPin className="h-5 w-5  mr-1 text-[#054687]" />
+              <div className="flex  flex-wrap items-center text-[17px] text-gray-600 group-hover:text-blue-700 transition-colors duration-300">
+                <div className="flex items-center mr-2 sm:mb-0">
+                  <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>
                     {room?.postingincity},
                     {room?.state &&
@@ -246,8 +246,8 @@ export default function Component({ room }: FeaturedCard2Props) {
                   )}
                 </div>
               </div>
-              <div className="flex lg:flex-col flex-wrap  text-[17px] text-gray-500 mb-2 group-hover:text-blue-700 transition-colors duration-300">
-                <div className="flex items-center mr-2 mb-1 sm:mb-0">
+              <div className="flex lg:flex-col flex-wrap text-[17px] text-gray-500 group-hover:text-blue-700 transition-colors duration-300">
+                <div className="flex items-center mr-2 sm:mb-0">
                   <User className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>Posted by: {room?.user_name}</span>
                 </div>
