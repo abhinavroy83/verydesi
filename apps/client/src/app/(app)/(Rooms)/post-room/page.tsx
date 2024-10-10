@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/popover";
 
 import { postroomschema, FormData } from "@/schemas";
+import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 
 const sections = [
   { id: "basic-info", title: "Basic Information" },
@@ -87,7 +88,20 @@ export default function RoomPostingForm() {
 
   const [images, setImages] = useState<File[]>([]);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const { addressComponents } = useGoogleAutocomplete();
 
+  useEffect(() => {
+    if (Object.keys(addressComponents).length > 0) {
+      form.setValue(
+        "address",
+        `${addressComponents.street_number} ${addressComponents.street}`
+      );
+      form.setValue("city", addressComponents.city);
+      form.setValue("state", addressComponents.state);
+      form.setValue("zipCode", addressComponents.zipCode);
+      form.setValue("country", addressComponents.country);
+    }
+  }, [addressComponents, form]);
   const onSubmit = (data: FormData) => {
     console.log(data, images);
   };
@@ -1089,6 +1103,7 @@ export default function RoomPostingForm() {
                             <Input
                               className=""
                               type={fieldInfo.type}
+                              id={fieldInfo.name}
                               {...field}
                               value={field.value as string}
                             />
