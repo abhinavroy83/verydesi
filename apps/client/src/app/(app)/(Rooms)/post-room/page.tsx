@@ -1151,7 +1151,7 @@ export default function RoomPostingForm() {
             >
               <Button
                 type="submit"
-                className="flex items-center justify-center"
+                className="flex items-center justify-center w-full"
               >
                 Add New Room
               </Button>

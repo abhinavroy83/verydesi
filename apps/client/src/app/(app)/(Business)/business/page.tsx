@@ -104,7 +104,7 @@ export default function Component() {
             <Badge
               key={category.name}
               variant="secondary"
-              className="flex items-center gap-1 py-1 text-xs cursor-pointer bg-gray-200 hover:bg-gray-300"
+              className="flex items-center gap-1 py-1 text-xs cursor-pointer bg-gray-200 hover:bg-green-200"
             >
               {category.icon}
               <span>{category.name}</span>
