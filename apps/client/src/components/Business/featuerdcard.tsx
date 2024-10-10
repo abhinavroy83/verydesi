@@ -1,19 +1,19 @@
-import { Heart, Star } from "lucide-react";
+import { Check, Heart, Star, TicketCheck } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 
 export function FeaturedBusinessCard() {
   return (
-    <Card className="w-full max-w-3xl overflow-hidden">
+    <Card className="w-full max-w-3xl overflow-hidden shadow-md hover:shadow-lg ">
       <div className="flex flex-col sm:flex-row">
         <div className="sm:w-1/3">
           <img
-            src="/placeholder.svg?height=200&width=200"
+            src="https://res.cloudinary.com/druohnmyv/image/upload/v1725364188/duw9dhbpevprltzdyi7d.jpg"
             alt="Modern Downtown Loft"
             className="w-full h-full object-cover"
           />
         </div>
-        <CardContent className="p-6 sm:w-2/3">
+        <CardContent className="p-3 sm:w-2/3">
           <div className="flex justify-between items-start">
             <div>
               <h2 className="text-xl font-semibold text-gray-800">
@@ -24,7 +24,7 @@ export function FeaturedBusinessCard() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-4 h-4 ${i < 4 ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`}
+                      className={`w-4 h-4 ${i < 4 ? "text-orange-500 fill-orange-500" : "text-gray-300"}`}
                     />
                   ))}
                 </div>
@@ -39,16 +39,20 @@ export function FeaturedBusinessCard() {
                 602-600-0217 (Pin: 76065)
               </p>
             </div>
-            <Heart className="w-6 h-6 text-gray-400 hover:fill-red-500 hover:text-red-500 cursor-pointer" />
+            <Heart className="w-6 h-6 text-gray-900 hover:fill-red-500 hover:text-red-500 cursor-pointer" />
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
             {["Psychiatrists", "Cardiologists", "Gastroenterologists"].map(
               (tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full"
+                  className="px-2 py-1 bg-gray-100 text-pink-500 text-xs font-medium rounded-full"
                 >
-                  {tag}
+                  <div className="flex gap-1">
+                    {" "}
+                    <Check size={15} />
+                    {tag}{" "}
+                  </div>
                 </span>
               )
             )}
