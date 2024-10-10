@@ -46,6 +46,15 @@ import { useloginstore } from "@/store";
 import useCartStore from "@/store/useCartStore";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Slash } from "lucide-react";
 
 const isValidAmenityIcon = (iconName: string): iconName is AmenityType => {
   return iconName in AmenityIcon;
@@ -196,9 +205,23 @@ export default function RoomDetails() {
   }
 
   return (
-    <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-32">
+    <div className="max-w-[1370px] lg:max-w-[1638px] mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-[6.8rem]">
       <div className="flex space-x-2 w-full justify-between">
-        <div>hi</div>
+        <div>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <Slash />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/components">Rooms</BreadcrumbLink>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
         <div className="flex gap-2">
           <div className="flex items-center gap-2">
             {!status && (
@@ -271,7 +294,6 @@ export default function RoomDetails() {
               <h1 className="text-3xl font-bold text-gray-900">
                 {roomData?.Title}
               </h1>
-              <h1 className="text-2xl font-bold text-gray-900">POSTED BY: </h1>
             </div>
           </div>
           <div className="flex items-center gap-2 text-xl font-bold">
@@ -424,7 +446,8 @@ export default function RoomDetails() {
           </Card>
         </div>
 
-        <div className="space-y-6 lg:mt-4">
+        <div className="space-y-6 lg:mt-7">
+          <h1 className="text-2xl font-bold text-gray-900">POSTED BY: </h1>
           <Card>
             <CardHeader>
               <CardTitle>Location</CardTitle>
