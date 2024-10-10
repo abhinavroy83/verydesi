@@ -8,7 +8,6 @@ import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
 import { RoomModule } from './room/room.module';
 import { FavoriteModule } from './favorite/favorite.module';
-import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
@@ -21,7 +20,6 @@ import { S3Module } from './s3/s3.module';
     RedisModule,
     RoomModule,
     FavoriteModule,
-    S3Module,
   ],
   controllers: [AppController],
   providers: [AppService],
