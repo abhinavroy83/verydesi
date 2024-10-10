@@ -4,6 +4,8 @@ export interface IRoom extends Document {
   UserId: ObjectId;
   postedon?: Date;
   Title?: string;
+  expiresAt?: Date;
+  isVisible?: Boolean;
   postingincity?: string;
   postingtype?: string;
   Description?: string;
@@ -44,6 +46,12 @@ export const RoomSchema = new Schema({
   UserId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   postedon: { type: Date, default: Date.now },
   Title: { type: String },
+  expiresAt: {
+    type: Date,
+    default: () => Date.now() + 90 * 24 * 60 * 60 * 1000,
+    index: { expires: '90d' },
+  },
+  isVisible: { type: Boolean, default: true },
   postingincity: { type: String },
   postingtype: { type: String },
   Description: { type: String },
@@ -88,3 +96,4 @@ export const RoomSchema = new Schema({
   },
 });
 RoomSchema.index({ location: '2dsphere' });
+RoomSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
