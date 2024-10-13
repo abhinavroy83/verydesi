@@ -3,6 +3,7 @@ import { Types, Document, Schema, ObjectId } from 'mongoose';
 export interface IRoom extends Document {
   UserId: ObjectId;
   postedon?: Date;
+  renewedon: { type: Date };
   Title?: string;
   expiresAt?: Date;
   isVisible?: Boolean;
@@ -45,6 +46,7 @@ export interface IRoom extends Document {
 export const RoomSchema = new Schema({
   UserId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   postedon: { type: Date, default: Date.now },
+  renewedon: { type: Date },
   Title: { type: String },
   expiresAt: {
     type: Date,

@@ -3,12 +3,13 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { RoomService } from '../service/room.service';
-import { CreateRoomDto } from '../dto';
+import { CreateRoomDto, UpdateRoomDto } from '../dto';
 import { JwtGuard } from 'src/auth/guard';
 
 @Controller('room')
@@ -35,5 +36,21 @@ export class RoomController {
   @Get('visibleRoomsByArea/:area')
   getVisibleRoomsByArea(@Param('area') area: string) {
     return this.roomService.getVisibleRoomsByArea(area);
+  }
+  @UseGuards(JwtGuard)
+  @Post('renew-room/:roomId')
+  async renewRoom(@Param('roomId') roomId: string) {
+    return this.roomService.renewRoom(roomId);
+  }
+
+  @UseGuards(JwtGuard)
+  @Patch('update-room/:roomId')
+  async updateRoom(
+    @Param('roomId') roomId: string,
+    @Body() updateRoomDto: UpdateRoomDto,
+    @Request() req,
+  ) {
+    const userId = req.user.userId; 
+    return this.roomService.updateRoom(roomId, updateRoomDto, userId);
   }
 }

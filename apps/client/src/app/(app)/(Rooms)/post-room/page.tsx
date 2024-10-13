@@ -1148,10 +1148,11 @@ export default function RoomPostingForm() {
               ref={(el) => {
                 sectionRefs.current["submit"] = el;
               }}
+              className=" w-full mx-auto flex justify-center"
             >
               <Button
                 type="submit"
-                className="flex items-center justify-center w-full"
+                className="flex items-center justify-center"
               >
                 Add New Room
               </Button>

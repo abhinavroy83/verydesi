@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 import { IRoom } from '../schemas';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
-import { CreateRoomDto } from '../dto';
+import { CreateRoomDto, UpdateRoomDto } from '../dto';
 import * as cron from 'node-cron';
 
 @Injectable()
@@ -48,7 +48,7 @@ export class RoomService {
     try {
       const cachedroom = await this.cacheManager.get<IRoom>(cacheKey);
       if (cachedroom) {
-        console.log(cachedroom);
+        // console.log(cachedroom);
         return cachedroom;
       }
       const room = await this.roomModel.findById(_id);
@@ -103,12 +103,88 @@ export class RoomService {
     try {
       // Find rooms that are older than 30 days and are still visible
       await this.roomModel.updateMany(
-        { postedon: { $lt: thirtyDaysAgo }, isVisible: true },
-        { $set: { isVisible: false } }, // Set visibility to false
+        {
+          $or: [
+            {
+              postedon: { $lt: thirtyDaysAgo },
+              renewedon: { $exists: false },
+              isVisible: true,
+            },
+            { renewedon: { $lt: thirtyDaysAgo }, isVisible: true },
+          ],
+        },
+        { $set: { isVisible: false } },
       );
       console.log('Room visibility updated for rooms older than 30 days');
     } catch (error) {
       console.error('Error updating room visibility:', error.message);
+    }
+  }
+
+  async renewRoom(roomId: string) {
+    const renewedDate = new Date();
+    try {
+      const updatedRoom = await this.roomModel.findByIdAndUpdate(
+        roomId,
+        { renewedon: renewedDate, postedon: renewedDate, isVisible: true },
+        { new: true },
+      );
+      if (!updatedRoom) {
+        throw new Error('Room not found');
+      }
+      return updatedRoom;
+    } catch (error) {
+      throw new Error(`Error renewing room: ${error.message}`);
+    }
+  }
+
+  async deleteExpiredRooms() {
+    const sixtyDaysAgo = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000);
+    try {
+      // Delete rooms that were not renewed within 60 days
+      const result = await this.roomModel.deleteMany({
+        $or: [
+          { postedon: { $lt: sixtyDaysAgo }, renewedon: { $exists: false } }, // Not renewed, 60 days after postedon
+          { renewedon: { $lt: sixtyDaysAgo } }, // Renewed, 60 days after renewedon
+        ],
+      });
+      console.log(`Deleted ${result.deletedCount} rooms expired after 60 days`);
+    } catch (error) {
+      console.error('Error deleting expired rooms:', error.message);
+    }
+  }
+
+  async updateRoom(
+    roomId: string,
+    updateRoomDto: UpdateRoomDto,
+    userId: string,
+  ) {
+    try {
+      const room = await this.roomModel.findOne({
+        _id: roomId,
+        UserId: userId,
+      });
+
+      if (!room) {
+        throw new NotFoundException(
+          'Room not found or you are not authorized to update it',
+        );
+      }
+
+      // Update the room with the new data
+      const updatedRoom = await this.roomModel.findByIdAndUpdate(
+        roomId,
+        { $set: updateRoomDto },
+        { new: true },
+      );
+
+      if (!updatedRoom) {
+        throw new InternalServerErrorException('Failed to update the room');
+      }
+
+      return updatedRoom;
+    } catch (error) {
+      throw new Error(`Error while updating room: ${error.message}`);
     }
   }
 }
