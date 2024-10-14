@@ -1,17 +1,30 @@
 import { z } from "zod";
 
 export const postroomschema = z.object({
-  postingIn: z.string(),
+  postingIn: z.string({ required_error: "PostingIn is required" }),
   postingType: z.enum(["Rooms", "Rental"], {
     required_error: "Posting type is required",
   }),
   Title: z.string().min(1, { message: "Title is required" }),
   description: z
     .string()
-    .min(10, { message: "Description must be at least 10 characters" }),
-  propertyType: z.enum(["apartment", "house", "condo"], {
-    required_error: "Property type is required",
-  }),
+    .min(50, { message: "Description must be at least 50 characters" }),
+  propertyType: z.enum(
+    [
+      "Room",
+      "Shared Room",
+      "Single Room",
+      "Apartment",
+      "Condo",
+      "Town House",
+      "Home",
+      "House",
+      "Basement",
+    ],
+    {
+      required_error: "Property type is required",
+    }
+  ),
   stayLength: z.enum(["short", "long", "both"], {
     required_error: "Stay length is required",
   }),
@@ -21,37 +34,24 @@ export const postroomschema = z.object({
   price: z.number().min(1, { message: "Price is required" }),
   negotiable: z.boolean(),
   hideRent: z.boolean(),
-  availableFrom: z.date({
-    required_error: "Available from date is required",
-  }),
-  availableTo: z.date({
-    required_error: "Available to date is required",
-  }),
+  availableFrom: z.date().nullable(),
+  availableTo: z.date().nullable(),
   immediate: z.boolean(),
-  separateBathroom: z.enum(["1", "2", "3+"], {
-    required_error: "Number of separate bathrooms is required",
-  }),
-  securityDeposit: z
-    .number()
-    .min(0, { message: "Security deposit must be 0 or more" }),
-  toShare: z.enum(["furnished", "unfurnished", "partially"], {
-    required_error: "Furnishing status is required",
-  }),
-  utilities: z
-    .array(z.string())
-    .min(1, { message: "Select at least one utility" }),
-  amenities: z
-    .array(z.string())
-    .min(1, { message: "Select at least one amenity" }),
-  dietaryPreferences: z
-    .array(z.string())
-    .min(1, { message: "Select at least one dietary preference" }),
-  smokingPolicy: z
-    .array(z.string())
-    .min(1, { message: "Select at least one smoking policy" }),
-  petPolicy: z
-    .array(z.string())
-    .min(1, { message: "Select at least one pet policy" }),
+  separateBathroom: z.string(),
+  PreferredGender: z.enum(["Male", "Female", "Any"]),
+  securityDeposit: z.number(),
+  toShare: z.enum([
+    "Furnished",
+    "Unfurnished",
+    "Furnished only with Bed",
+    "Semi Furnished",
+    "Fully Furnished",
+  ]),
+  utilities: z.array(z.string()),
+  amenities: z.array(z.string()),
+  dietaryPreferences: z.string(),
+  smokingPolicy: z.string(),
+  petPolicy: z.string(),
   openHouseDate: z.date().optional(),
   name: z.string().min(1, { message: "Name is required" }),
   email: z.string().email({ message: "Invalid email address" }),

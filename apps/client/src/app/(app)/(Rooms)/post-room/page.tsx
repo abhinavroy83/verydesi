@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, Upload, X } from "lucide-react";
+import { CalendarIcon, Loader2, Upload, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -35,8 +35,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { postroomschema, FormData } from "@/schemas";
+import { postroomschema } from "@/schemas";
+import type { FormData } from "@/schemas";
+
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
+import { useCityData } from "@/hooks/use-city-hooks";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const sections = [
   { id: "basic-info", title: "Basic Information" },
@@ -54,27 +59,28 @@ export default function RoomPostingForm() {
     resolver: zodResolver(postroomschema),
     mode: "onChange",
     defaultValues: {
-      postingIn: "",
-      postingType: "Rooms",
+      postingIn: "Portland",
+      postingType: undefined,
       Title: "",
       description: "",
-      propertyType: "apartment",
-      stayLength: "short",
-      priceModel: "monthly",
-      price: 0,
+      propertyType: undefined,
+      stayLength: undefined,
+      priceModel: undefined,
+      price: undefined,
       negotiable: false,
       hideRent: false,
-      availableFrom: undefined,
-      availableTo: undefined,
+      availableFrom: null,
+      availableTo: null,
       immediate: false,
-      separateBathroom: "1",
-      securityDeposit: 0,
-      toShare: "unfurnished",
+      separateBathroom: "",
+      PreferredGender: undefined,
+      securityDeposit: undefined,
+      toShare: undefined,
       utilities: [],
       amenities: [],
-      dietaryPreferences: [],
-      smokingPolicy: [],
-      petPolicy: [],
+      dietaryPreferences: undefined,
+      smokingPolicy: undefined,
+      petPolicy: undefined,
       openHouseDate: undefined,
       name: "",
       email: "",
@@ -88,10 +94,16 @@ export default function RoomPostingForm() {
   });
 
   const [images, setImages] = useState<File[]>([]);
+  const [imageurl, setimageurls] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  const { addressComponents } = useGoogleAutocomplete();
+  const { addressComponents, location } = useGoogleAutocomplete();
   const watchstaylength = form.watch("stayLength");
   const watchpostingtype = form.watch("postingType");
+  const watchImmediate = form.watch("immediate");
+  const { data: session, status } = useSession();
+
+  const { cities, isLoading, error } = useCityData();
 
   useEffect(() => {
     if (Object.keys(addressComponents).length > 0) {
@@ -105,9 +117,9 @@ export default function RoomPostingForm() {
       form.setValue("country", addressComponents.country);
     }
   }, [addressComponents, form]);
-  const onSubmit = (data: FormData) => {
-    console.log(data, images);
-  };
+
+  // console.log("Address Components:", addressComponents);
+  // console.log("Latitude and Longitude:", location);
 
   useEffect(() => {
     form.trigger();
@@ -119,11 +131,100 @@ export default function RoomPostingForm() {
       alert("You can only upload up to 5 images");
       return;
     }
-    setImages((prevImages) => [...prevImages, ...files]);
+    setImages((prevImages) => {
+      const updatefiles = [...prevImages, ...files];
+      return updatefiles;
+    });
   };
 
   const removeImage = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setimageurls((prevUrls) => prevUrls.filter((_, i) => i !== index));
+  };
+
+  const uploadtos3 = async (updatefiles: File[]) => {
+    setIsUploading(true);
+    try {
+      const data = new FormData();
+      updatefiles.forEach((file) => {
+        data.append("my_files", file);
+      });
+      const res = await axios.post("http://localhost:8000/img/upload", data);
+      console.log(res.data.urls);
+      setimageurls(res.data.urls);
+    } catch (error) {
+      console.error("Upload failed", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (images.length > 0) {
+      uploadtos3(images);
+    }
+  }, [images]);
+
+  const fetchAreaData = async (city: string) => {
+    // console.log(city);
+    const response = await axios(
+      `https://api.verydesi.com/api/admin/area/${city}`
+    );
+
+    return response.data.area[0];
+  };
+  const onSubmit = async (data: FormData) => {
+    const roomdata = {
+      postingincity: data.postingIn,
+      postingtype: data.postingType,
+      Title: data.Title,
+      Description: data.description,
+      Propertytype: data.propertyType,
+      Stay_lease: data.stayLength,
+      Avaliblity_from: data.availableFrom,
+      Available_to: data.availableTo,
+      Immediate: data.immediate,
+      Attchd_Bath: data.separateBathroom,
+      Preferred_gender: data.PreferredGender,
+      Expected_Rooms: data.price,
+      Pricemodel: data.priceModel,
+      Desposite: data.securityDeposit,
+      is_room_furnished: data.toShare,
+      Utility_include: data.utilities,
+      Amenities_include: data.amenities,
+      Vegeterian_prefernce: data.dietaryPreferences,
+      Smoking_policy: data.smokingPolicy,
+      Pet_friendly: data.petPolicy,
+      Open_house_schedule: data.openHouseDate,
+      Imgurl: imageurl,
+      user_name: data.name,
+      email: data.email,
+      city: data.city,
+      state: data.state,
+      zip_code: data.zipCode,
+      location: {
+        coordinates: [location?.lng, location?.lat],
+      },
+    };
+
+    try {
+      const token = session?.accessToken;
+      if (!token) {
+        throw new Error("token not found");
+      }
+      const res = await axios.post(
+        "http://localhost:8000/room/post-room",
+        roomdata,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
+    } catch (error) {
+      console.error("Error while adding room:", error);
+    }
   };
 
   const scrollToSection = (sectionId: string, offset = 130) => {
@@ -136,6 +237,10 @@ export default function RoomPostingForm() {
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
+
+  if (isLoading) {
+    return <div>Loading cities...</div>;
+  }
 
   return (
     <div className="flex max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-[6rem]">
@@ -184,9 +289,11 @@ export default function RoomPostingForm() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="apartment">Portland</SelectItem>
-                            <SelectItem value="house">New York</SelectItem>
-                            <SelectItem value="condo">New Jersey</SelectItem>
+                            {cities.map((city) => (
+                              <SelectItem key={city} value={city}>
+                                {city}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -296,9 +403,21 @@ export default function RoomPostingForm() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="apartment">Apartment</SelectItem>
-                            <SelectItem value="house">House</SelectItem>
-                            <SelectItem value="condo">Condo</SelectItem>
+                            <SelectItem value="Room">Room</SelectItem>
+                            <SelectItem value="Shared Room">
+                              Shared Room
+                            </SelectItem>
+                            <SelectItem value="Single Room">
+                              Single Room
+                            </SelectItem>
+                            <SelectItem value="Apartment">Apartment</SelectItem>
+                            <SelectItem value="Condo">Condo</SelectItem>
+                            <SelectItem value="Town House">
+                              Town House
+                            </SelectItem>
+                            <SelectItem value="Home">Home</SelectItem>
+                            <SelectItem value="House">House</SelectItem>
+                            <SelectItem value="Basement">Basement</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -469,36 +588,38 @@ export default function RoomPostingForm() {
                   </div>
                 </div>
 
-                <FormField
-                  control={form.control}
-                  name="securityDeposit"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0  md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Security Deposit
-                      </FormLabel>
-                      <div className="flex-grow">
-                        <FormControl>
-                          <div className="flex items-center">
-                            <span className="inline-flex items-center p-[0.5rem] rounded-l-md border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
-                              $
-                            </span>
-                            <Input
-                              type="number"
-                              placeholder="Enter security deposit"
-                              {...field}
-                              onChange={(e) =>
-                                field.onChange(Number(e.target.value))
-                              }
-                              className="rounded-l-none"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                {watchpostingtype === "Rooms" && (
+                  <FormField
+                    control={form.control}
+                    name="securityDeposit"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0  md:space-x-4 md:items-center">
+                        <FormLabel className="md:w-1/4 text-md font-medium">
+                          Security Deposit
+                        </FormLabel>
+                        <div className="flex-grow">
+                          <FormControl>
+                            <div className="flex items-center">
+                              <span className="inline-flex items-center p-[0.5rem] rounded-l-md border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
+                                $
+                              </span>
+                              <Input
+                                type="number"
+                                placeholder="Enter security deposit"
+                                {...field}
+                                onChange={(e) =>
+                                  field.onChange(Number(e.target.value))
+                                }
+                                className="rounded-l-none"
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                )}
               </div>
             </div>
 
@@ -525,10 +646,12 @@ export default function RoomPostingForm() {
                             <PopoverTrigger asChild>
                               <FormControl>
                                 <Button
+                                  disabled={watchImmediate}
                                   variant={"outline"}
                                   className={cn(
                                     "w-full pl-3 text-left font-normal",
-                                    !field.value && "text-muted-foreground"
+                                    !field.value && "text-muted-foreground",
+                                    watchImmediate && "cursor-not-allowed"
                                   )}
                                 >
                                   {field.value ? (
@@ -546,7 +669,7 @@ export default function RoomPostingForm() {
                             >
                               <Calendar
                                 mode="single"
-                                selected={field.value}
+                                selected={field.value || undefined}
                                 onSelect={field.onChange}
                                 disabled={(date) =>
                                   date < new Date() ||
@@ -570,10 +693,12 @@ export default function RoomPostingForm() {
                             <PopoverTrigger asChild>
                               <FormControl>
                                 <Button
+                                  disabled={watchImmediate}
                                   variant={"outline"}
                                   className={cn(
                                     "w-full pl-3 text-left font-normal",
-                                    !field.value && "text-muted-foreground"
+                                    !field.value && "text-muted-foreground",
+                                    watchImmediate && "cursor-not-allowed"
                                   )}
                                 >
                                   {field.value ? (
@@ -591,7 +716,7 @@ export default function RoomPostingForm() {
                             >
                               <Calendar
                                 mode="single"
-                                selected={field.value}
+                                selected={field.value || undefined}
                                 onSelect={field.onChange}
                                 disabled={(date) =>
                                   date < new Date() ||
@@ -620,7 +745,13 @@ export default function RoomPostingForm() {
                         <FormControl>
                           <Checkbox
                             checked={field.value}
-                            onCheckedChange={field.onChange}
+                            onCheckedChange={(checked) => {
+                              field.onChange(checked);
+                              if (checked) {
+                                form.setValue("availableFrom", null);
+                                form.setValue("availableTo", null);
+                              }
+                            }}
                           />
                         </FormControl>
                         <FormMessage />
@@ -686,35 +817,100 @@ export default function RoomPostingForm() {
             >
               <h2 className="text-2xl font-bold mb-4">Amenities</h2>
               <div className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="separateBathroom"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Separate Bathroom
-                      </FormLabel>
-                      <div className="flex-grow">
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select number of bathrooms" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="1">1</SelectItem>
-                            <SelectItem value="2">2</SelectItem>
-                            <SelectItem value="3+">3+</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                {watchpostingtype == "Rental" && (
+                  <FormField
+                    control={form.control}
+                    name="separateBathroom"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                        <FormLabel className="md:w-1/4 text-md font-medium">
+                          Separate Bathroom
+                        </FormLabel>
+                        <div className="flex-grow">
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select number of bathrooms" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="1">1</SelectItem>
+                              <SelectItem value="2">2</SelectItem>
+                              <SelectItem value="3">3</SelectItem>
+                              <SelectItem value="4">4</SelectItem>
+                              <SelectItem value="5+">5+</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {watchpostingtype == "Rooms" && (
+                  <>
+                    <FormField
+                      control={form.control}
+                      name="separateBathroom"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                          <FormLabel className="md:w-1/4 text-md font-medium">
+                            Separate Bathroom
+                          </FormLabel>
+                          <div className="flex-grow">
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Separate Bathrooms" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Yes">Yes</SelectItem>
+                                <SelectItem value="No">No</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="PreferredGender"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                          <FormLabel className="md:w-1/4 text-md font-medium">
+                            Prefer Gender
+                          </FormLabel>
+                          <div className="flex-grow">
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Preferred Gender" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Male">Male</SelectItem>
+                                <SelectItem value="Female">Female</SelectItem>
+                                <SelectItem value="Any">Any</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </>
+                )}
 
                 <FormField
                   control={form.control}
@@ -735,12 +931,18 @@ export default function RoomPostingForm() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="furnished">Furnished</SelectItem>
-                            <SelectItem value="unfurnished">
+                            <SelectItem value="Furnished">Furnished</SelectItem>
+                            <SelectItem value="Unfurnished">
                               Unfurnished
                             </SelectItem>
-                            <SelectItem value="partially">
-                              Partially Furnished
+                            <SelectItem value="Furnished only with Bed">
+                              Furnished only with Bed
+                            </SelectItem>
+                            <SelectItem value="Semi Furnished">
+                              Semi Furnished
+                            </SelectItem>
+                            <SelectItem value="Fully Furnished">
+                              Fully Furnished
                             </SelectItem>
                           </SelectContent>
                         </Select>
@@ -925,18 +1127,15 @@ export default function RoomPostingForm() {
                                 >
                                   <FormControl>
                                     <Checkbox
-                                      checked={field.value?.includes(item)}
+                                      checked={field.value === item}
                                       onCheckedChange={(checked) => {
-                                        return checked
-                                          ? field.onChange([
-                                              ...field.value,
-                                              item,
-                                            ])
-                                          : field.onChange(
-                                              field.value?.filter(
-                                                (value) => value !== item
-                                              )
-                                            );
+                                        if (checked) {
+                                          // If checked, set the field value to only this item
+                                          field.onChange(item);
+                                        } else {
+                                          // If unchecked, clear the field value
+                                          field.onChange(null);
+                                        }
                                       }}
                                     />
                                   </FormControl>
@@ -982,18 +1181,15 @@ export default function RoomPostingForm() {
                                   >
                                     <FormControl>
                                       <Checkbox
-                                        checked={field.value?.includes(item)}
+                                        checked={field.value === item}
                                         onCheckedChange={(checked) => {
-                                          return checked
-                                            ? field.onChange([
-                                                ...field.value,
-                                                item,
-                                              ])
-                                            : field.onChange(
-                                                field.value?.filter(
-                                                  (value) => value !== item
-                                                )
-                                              );
+                                          if (checked) {
+                                            // If checked, set the field value to only this item
+                                            field.onChange(item);
+                                          } else {
+                                            // If unchecked, clear the field value
+                                            field.onChange(null);
+                                          }
                                         }}
                                       />
                                     </FormControl>
@@ -1038,18 +1234,15 @@ export default function RoomPostingForm() {
                                   >
                                     <FormControl>
                                       <Checkbox
-                                        checked={field.value?.includes(item)}
+                                        checked={field.value === item}
                                         onCheckedChange={(checked) => {
-                                          return checked
-                                            ? field.onChange([
-                                                ...field.value,
-                                                item,
-                                              ])
-                                            : field.onChange(
-                                                field.value?.filter(
-                                                  (value) => value !== item
-                                                )
-                                              );
+                                          if (checked) {
+                                            // If checked, set the field value to only this item
+                                            field.onChange(item);
+                                          } else {
+                                            // If unchecked, clear the field value
+                                            field.onChange(null);
+                                          }
                                         }}
                                       />
                                     </FormControl>
@@ -1119,6 +1312,12 @@ export default function RoomPostingForm() {
                       </div>
                     ))}
                   </div>
+                  {isUploading && (
+                    <div className="flex items-center justify-center mt-4">
+                      <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                      <span>Uploading images...</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
