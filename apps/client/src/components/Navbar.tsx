@@ -243,6 +243,15 @@ export default function Navbar() {
               >
                 <Users className="mr-2 h-5 w-5" /> ROOMMATES
               </Button>
+              <Button
+                onClick={() => {
+                  router.push("/business");
+                }}
+                variant="ghost"
+                className="text-white hover:bg-white"
+              >
+                <Users className="mr-2 h-5 w-5" /> BUSSINESS
+              </Button>
             </div>
             <div className="hidden md:flex items-center space-x-2 text-white">
               {/* <MapPin className="h-5 w-5 text-gray-400" /> */}
