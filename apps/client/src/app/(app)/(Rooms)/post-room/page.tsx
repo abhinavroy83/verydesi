@@ -54,6 +54,7 @@ export default function RoomPostingForm() {
     resolver: zodResolver(postroomschema),
     mode: "onChange",
     defaultValues: {
+      postingIn: "",
       postingType: "Rooms",
       Title: "",
       description: "",
@@ -89,6 +90,8 @@ export default function RoomPostingForm() {
   const [images, setImages] = useState<File[]>([]);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const { addressComponents } = useGoogleAutocomplete();
+  const watchstaylength = form.watch("stayLength");
+  const watchpostingtype = form.watch("postingType");
 
   useEffect(() => {
     if (Object.keys(addressComponents).length > 0) {
@@ -162,6 +165,36 @@ export default function RoomPostingForm() {
             >
               <h2 className="text-2xl font-bold mb-4">Basic Information</h2>
               <div className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="postingIn"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Posting in
+                      </FormLabel>
+                      <div className="flex-grow">
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select posting city" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="apartment">Portland</SelectItem>
+                            <SelectItem value="house">New York</SelectItem>
+                            <SelectItem value="condo">New Jersey</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="postingType"
@@ -294,10 +327,10 @@ export default function RoomPostingForm() {
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="short">
-                              Short term (1-89 nights)
+                              Short term (1Day to 6 Month)
                             </SelectItem>
                             <SelectItem value="long">
-                              Long term (90+ nights)
+                              Long term (6+ Months)
                             </SelectItem>
                             <SelectItem value="both">Both</SelectItem>
                           </SelectContent>
@@ -337,9 +370,24 @@ export default function RoomPostingForm() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="monthly">Monthly</SelectItem>
-                            <SelectItem value="weekly">Weekly</SelectItem>
-                            <SelectItem value="daily">Daily</SelectItem>
+                            {watchstaylength === "short" && (
+                              <>
+                                <SelectItem value="nightly">Nightly</SelectItem>
+                                <SelectItem value="monthly">Monthly</SelectItem>
+                                <SelectItem value="yearly">Yearly</SelectItem>
+                              </>
+                            )}
+
+                            {watchstaylength === "long" && (
+                              <SelectItem value="monthly">Monthly</SelectItem>
+                            )}
+                            {watchstaylength === "both" && (
+                              <>
+                                <SelectItem value="nightly">Nightly</SelectItem>
+                                <SelectItem value="monthly">Monthly</SelectItem>
+                                <SelectItem value="yearly">Yearly</SelectItem>
+                              </>
+                            )}
                           </SelectContent>
                         </Select>
                         <FormMessage />

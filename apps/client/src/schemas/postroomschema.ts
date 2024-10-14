@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const postroomschema = z.object({
+  postingIn: z.string(),
   postingType: z.enum(["Rooms", "Rental"], {
     required_error: "Posting type is required",
   }),
