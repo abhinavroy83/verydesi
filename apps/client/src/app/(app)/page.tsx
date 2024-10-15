@@ -175,7 +175,7 @@ const Page = () => {
       <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full justify-between flex items-center">
         <h1 className="text-2xl font-sans font-bold my-4">
-          Featured Rooms on {currentCity}
+          Featured Rooms In {currentCity}
         </h1>
         <button
           type="button"
@@ -196,7 +196,7 @@ const Page = () => {
           <FeaturedCard2 key={index} room={room} />
         ))}
       </div>
-      <h1 className="text-2xl font-bold my-4">More Rooms on {currentCity}</h1>
+      <h1 className="text-2xl font-bold my-4">More Rooms In {currentCity}</h1>
 
       <div className=" flex flex-col gap-2">
         {NonfeatturedRooms?.map((room, index) => (

@@ -29,6 +29,7 @@ import ModernLogoutPopup from "./Popups/Logoutpop";
 import LogoutComponent from "./Popups/Logoutpop";
 import useCartStore from "@/store/useCartStore";
 import useAuthStore from "@/store/useAuthStore";
+import { Badge } from "@/components/ui/badge";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -73,10 +74,10 @@ export default function Navbar() {
 
   return (
     <nav className="flex flex-col shadow-md fixed top-0 left-0 right-0 z-10">
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto sm:px-6 px-4 ">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
+      <div className="bg-white border-b border-gray-200 items-center">
+        <div className="max-w-[1370px] lg:max-w-[1600px] h-[100px] mx-auto sm:px-6 px-4 ">
+          <div className="flex items-center justify-between h-16 ">
+            <div className="flex items-center mt-9">
               <Link href={"/"}>
                 <Image
                   src={
@@ -99,7 +100,48 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-
+            <div className="w-[37rem] mt-9 bg-gradient-to-r from-purple-900 to-purple-900 p-1 px-3 rounded-lg shadow-lg overflow-hidden relative">
+              <div className="flex justify-between items-center">
+                <div className="space-y-2">
+                  <h2 className="text-[18px] font-bold text-yellow-300">
+                    Lifepoint Lactation
+                    <br />
+                    <span className="text-white"> Breastfeeding Awareness</span>
+                  </h2>
+                  {/* <p className="text-purple-200 text-lg">Join our events</p> */}
+                </div>
+                <div className="hidden md:flex space-x-4 mt-9">
+                  <svg
+                    className="w-8 h-8 text-yellow-300"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path
+                      fillRule="evenodd"
+                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <svg
+                    className="w-8 h-8 text-pink-300"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <Badge className="absolute top-4 right-2 bg-pink-500 text-white px-3 py-1">
+                Talk to a Breastfeeding Educator Now{" "}
+              </Badge>
+              <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div>
+              <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
+            </div>
             <div className="hidden sm:flex items-center space-x-6">
               {session ? (
                 <>
@@ -246,6 +288,48 @@ export default function Navbar() {
                 ROOMMATES
               </Button>
             </div>
+            {/* <div className="w-full bg-gradient-to-r from-purple-700 to-purple-900 p-2 rounded-lg shadow-lg overflow-hidden relative">
+              <div className="flex justify-between items-center">
+                <div className="space-y-2">
+                  <h2 className="text-[21px] font-bold text-yellow-300">
+                    Lifepoint Lactation
+                    <br />
+                    <span className="text-white"> Breastfeeding Awareness</span>
+                  </h2>
+                  <p className="text-purple-200 text-lg">Join our events</p>
+                </div>
+                <div className="hidden md:flex space-x-4">
+                  <svg
+                    className="w-8 h-8 text-yellow-300"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path
+                      fillRule="evenodd"
+                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <svg
+                    className="w-8 h-8 text-pink-300"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <Badge className="absolute top-4 right-4 bg-pink-500 text-white px-3 py-1">
+                Talk to a Breastfeeding Educator Now{" "}
+              </Badge>
+              <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div>
+              <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
+            </div> */}
             <div className="hidden md:flex items-center space-x-2 text-white">
               {/* <MapPin className="h-5 w-5 text-gray-400" /> */}
               <span className="font-medium">{weatherData?.name}</span>

@@ -30,7 +30,7 @@ export default function Component({
     <Link href={`room/${id}`}>
       <Card className="w-[36rem] h-[163px] overflow-hidden">
         <CardContent className="p-0 flex">
-          <div className="lg:w-72 h-full relative">
+          <div className="lg:w-[180px] h-full relative">
             <img
               src={imageUrl}
               alt={title}
