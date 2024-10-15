@@ -142,11 +142,11 @@ export default function Navbar() {
               <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div>
               <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
             </div>
-            <div className="hidden sm:flex items-center space-x-6">
+            <div className="hidden sm:flex items-center space-x-6  mt-9">
               {session ? (
                 <>
                   <div
-                    className=" relative text-black"
+                    className=" relative text-black "
                     onMouseEnter={() => setIsNotificationOpen(true)}
                     onMouseLeave={() => setIsNotificationOpen(false)}
                   >
@@ -234,7 +234,7 @@ export default function Navbar() {
               ) : (
                 <div
                   onClick={() => router.push("/sign-in")}
-                  className="leading-4 flex items-center gap-2 mr-0 lg:mr-3 text-gray-700 hover:text-gray-900"
+                  className=" mt-9 leading-4 flex items-center gap-2 mr-0 lg:mr-3 text-gray-700 hover:text-gray-900"
                 >
                   <User />
                   <p
@@ -366,7 +366,7 @@ export default function Navbar() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-gray-200">
+        <div className="md:hidden  bg-white border-b border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Button
               variant="ghost"
@@ -375,7 +375,7 @@ export default function Navbar() {
               Portland <ChevronDown className="ml-1 h-4 w-4" />
             </Button>
             {session ? (
-              <div className="flex items-center space-x-6 px-3 py-2">
+              <div className="flex items-center space-x-6 px-3 py-2 ">
                 <Bell className="h-6 w-6 text-gray-600" />
                 <div className="relative">
                   <Heart className="h-6 w-6 text-gray-600" />
