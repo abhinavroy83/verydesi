@@ -37,7 +37,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-32">
-      {!isverified && (
+      {isverified && (
         <div className="">
           <div
             role="alert"
@@ -144,11 +144,23 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   transition={{ duration: 0.2 }}
                   className="ml-4 space-y-2"
                 >
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() => {
+                      router.push("/dashboard/my-rooms");
+                    }}
+                  >
                     <HomeIcon className="mr-2 h-4 w-4" />
                     My Rooms
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Button
+                    onClick={() => {
+                      router.push("/dashboard/my-rooms");
+                    }}
+                    variant="ghost"
+                    className="w-full justify-start"
+                  >
                     <Briefcase className="mr-2 h-4 w-4" />
                     My Business
                   </Button>

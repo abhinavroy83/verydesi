@@ -1,7 +1,9 @@
+"use client";
+import { DashboardLayout } from "@/components/layout";
 import React from "react";
 
 function page() {
-  return <div>page</div>;
+  return <DashboardLayout>hello</DashboardLayout>;
 }
 
 export default page;

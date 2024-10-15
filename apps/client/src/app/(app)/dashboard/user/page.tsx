@@ -28,6 +28,7 @@ import { useRouter } from "next/navigation";
 import { UserData } from "@myrepo/types";
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 import { useCityData } from "@/hooks/use-city-hooks";
+import useAuthStore from "@/store/useAuthStore";
 
 export default function DashboardUserSettings() {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,6 +36,7 @@ export default function DashboardUserSettings() {
   const router = useRouter();
   const { addressComponents, location } = useGoogleAutocomplete();
   const { cities, isLoading, error } = useCityData();
+  const { isverified } = useAuthStore();
 
   const [userData, setuserData] = useState<UserData | null>(null);
   const { control, handleSubmit, reset, setValue } = useForm<UserData>({
@@ -202,9 +204,13 @@ export default function DashboardUserSettings() {
                     <Input {...field} disabled type="email" />
                   )}
                 />
-                {!isEditing && (
+                {!isverified ? (
                   <p className="text-sm text-green-600 mt-1">
                     Email is verified
+                  </p>
+                ) : (
+                  <p className="text-sm text-red-600 mt-1">
+                    Email not verified
                   </p>
                 )}
               </div>
