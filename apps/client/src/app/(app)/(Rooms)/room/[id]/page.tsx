@@ -205,7 +205,7 @@ export default function RoomDetails() {
   }
 
   return (
-    <div className="max-w-[1370px] lg:max-w-[1600px]  px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6rem]">
+    <div className="max-w-[1370px] lg:max-w-[1600px]  px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[9.5rem]">
       <div className="flex space-x-2 w-full justify-between">
         <div>
           <Breadcrumb>
