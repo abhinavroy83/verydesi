@@ -6,35 +6,212 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <div>
-      <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
-        <p>hi</p>
-        {/* <Link to={"/"} className="bg-cover bg-center flex">
-      <img
-        // height={300}
-        width={300}
-        className="w-[140px] lg:w-[140px]"
-        src={WebsiteLogo}
-        alt=""
-      />
-    </Link> */}
-        {/* <div
-      className="relative inline-block text-black border p-1 border-[#999] rounded-md"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <p className="text-[14px] flex cursor-pointer items-center hover:font-bold gap-1 group text-[#ddd]">
-        <IoIosGlobe size={20} />
-        {currntcty}
-        <MdOutlineKeyboardArrowDown
-          className={`transition-transform duration-300 ${
-            isHovered ? "rotate-180" : ""
-          }`}
-          size={22}
-        />
-      </p>
+      <div className="lg:mt-9 mt-6 w-full">
+        <div
+          onClick={() => {
+            window.open("https://redletterweb.com/", "_blank");
+          }}
+          className="flex flex-col justify-center items-center mb-2 font-['udemy-regular']"
+        >
+          <div className="cursor-pointer lg:w-[44rem] w-[22rem] bg-red-700 border-4 border-[#232f3e] justify-between gap-4 lg:gap-7 flex  lg:p-0 shadow-sm shadow-gray-500 rounded-md">
+            <div className="flex flex-col gap-3 ">
+              <span className="text-[#232f3e] bg-white rounded-br-full font-bold px-6 text-[18px]">
+                Very Desi Guides
+              </span>
+            </div>
+            <div className="flex flex-col items-center justify-center text-white">
+              <h2 className="lg:text-[25px] text-[20px] font-bold">
+                Red Letter Jobs{" "}
+              </h2>
+              <p className="lg:text-[19px] text-[15px] mb-4 text-gray-300">
+                Elevate Your Online Presence
+              </p>
+            </div>
+            <img
+              className="w-[120px] lg:w-[190px] md:bg-none hidden md:block"
+              src={`https://res.cloudinary.com/druohnmyv/image/upload/v1724996141/R.2894cf285c04316dd503b8d215827e2c_vbweas.png`}
+              alt="logo"
+            />
+          </div>
+        </div>
 
-      {isHovered && <Avalableloc />}
-    </div> */}
+        <div className=" mx-auto mt-8">
+          <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
+            <p>hi</p>
+            {/* <Link to={"/"} className="bg-cover bg-center flex">
+          </div> */}
+          </div>
+          <div className=" w-full bg-[#131A22] border-t-7 border-[#232f3e]">
+            <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto bg-[#131A22] font-['udemy-regular']">
+              <div className="max-w-[1600px] w-full m-auto flex flex-col items-center pb-3 lg:flex-row py-2 justify-center">
+                <div className=""></div>
+              </div>
+              <div className="lg:flex justify-center gap-10">
+                <div className="flex text-white items-center gap-5 px-3 lg:px-0">
+                  <Link href={"/"} className="bg-cover bg-center flex">
+                    <img
+                      // height={300}
+                      width={300}
+                      className="w-[170px] lg:w-[140px]"
+                      src={
+                        "https://res.cloudinary.com/druohnmyv/image/upload/v1723819327/assests/x31ydsmb8hkg05fqbkjf.png"
+                      }
+                      alt=""
+                    />
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 lg:grid-cols-3 justify-center gap-10 px-4 lg:px-0 lg:mt-0 mt-3 mb-7">
+                  <div className="">
+                    <p className="font-semibold tracking-wide text-[#DDD]">
+                      Make Money
+                    </p>
+                    <ul className="mt-2 space-y-1 leading-4 text-[14px]">
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline "
+                        >
+                          Facebook
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline"
+                        >
+                          Twitter
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline"
+                        >
+                          Instagram
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="">
+                    <p className="font-semibold tracking-wide text-[#DDD]">
+                      Make Money
+                    </p>
+                    <ul className="mt-2 space-y-1 leading-4 text-[14px]">
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline "
+                        >
+                          Facebook
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline"
+                        >
+                          Twitter
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline"
+                        >
+                          Instagram
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="">
+                    <p className="font-semibold tracking-wide text-[#DDD]">
+                      Let Us Help You
+                    </p>
+                    <ul className="mt-2 space-y-1 leading-4 text-[14px]">
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline "
+                        >
+                          Facebook
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline"
+                        >
+                          Twitter
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline"
+                        >
+                          Instagram
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/"
+                          className="text-[#999] transition-colors duration-300 hover:text-deep-purple-accent-400 hover:underline"
+                        >
+                          Instagram
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="border-t border-gray-700 pt-8 text-[15px] text-white">
+                <ul className="flex flex-wrap justify-center space-x-9 mb-4">
+                  <li>
+                    <Link
+                      href="/about"
+                      className="hover:text-white transition-colors duration-200 ease-in-out hover:underline"
+                    >
+                      About VeryDesi.com
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/copyright"
+                      className="hover:text-white transition-colors duration-200 ease-in-out hover:underline"
+                    >
+                      Copyright Policy{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/terms"
+                      className="hover:text-white transition-colors duration-200 ease-in-out hover:underline"
+                    >
+                      Terms of Use{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/policy"
+                      className="hover:text-white transition-colors duration-200 ease-in-out hover:underline"
+                    >
+                      Privacy Policy{" "}
+                    </Link>
+                  </li>
+                </ul>
+                <p className="text-center text-gray-400 hover:text-white">
+                  © 2024, VeryDesi.com, Inc.
+                </p>
+              </div>
+
+              <div className="flex flex-col justify-between pt-5 sm:flex-row sm:items-center max-w-[1600px] w-full mx-auto"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
+        <p>hi</p>
       </div>
       <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 py-12 ">
         <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 ">
@@ -134,7 +311,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }
