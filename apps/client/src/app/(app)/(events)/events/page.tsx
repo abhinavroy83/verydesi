@@ -96,25 +96,26 @@ export default function Component() {
             </div>
           </div>
         </div>
-
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full max-w-[74rem] mt-5"
-        >
-          <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
-                <div className="px-2 w-full ">
-                  <Featuredeventscard key={index} />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        <div className="w-full max-w-[70rem] mt-5 mx-auto">
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className=""
+          >
+            <CarouselContent>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
+                  <div className="px-2 w-full ">
+                    <Featuredeventscard key={index} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext  />
+          </Carousel>
+        </div>
       </div>
       <h1 className="capitalize text-[23px] lg:text-[23px] font-bold">
         <p>More Featured Events In </p>
