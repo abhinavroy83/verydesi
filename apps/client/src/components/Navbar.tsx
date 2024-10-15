@@ -13,6 +13,7 @@ import {
   HelpCircle,
   LogOut,
   User,
+  Star,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -100,7 +101,7 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-            <div className="w-[37rem] mt-9 bg-gradient-to-r from-purple-900 to-purple-900 p-1 px-3 rounded-lg shadow-lg overflow-hidden relative">
+            {/* <div className="w-[37rem] mt-9 bg-gradient-to-r from-purple-900 to-purple-900 p-1 px-3 rounded-lg shadow-lg overflow-hidden relative">
               <div className="flex justify-between items-center">
                 <div className="space-y-2">
                   <h2 className="text-[18px] font-bold text-yellow-300">
@@ -108,7 +109,6 @@ export default function Navbar() {
                     <br />
                     <span className="text-white"> Breastfeeding Awareness</span>
                   </h2>
-                  {/* <p className="text-purple-200 text-lg">Join our events</p> */}
                 </div>
                 <div className="hidden md:flex space-x-4 mt-9">
                   <svg
@@ -141,7 +141,38 @@ export default function Navbar() {
               </Badge>
               <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div>
               <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
+            </div> */}
+            <div className="w-7xl h-[100px] bg-gray-800 p-6 rounded-lg shadow-md flex items-center justify-between">
+              <div>
+                <div className="flex items-center space-x-2 mb-2">
+                  <Star className="text-yellow-400 w-6 h-6" />
+                  <Star className="text-yellow-400 w-6 h-6" />
+                  <Star className="text-yellow-400 w-6 h-6" />
+                  <Star className="text-yellow-400 w-6 h-6" />
+                  <Star className="text-yellow-400 w-6 h-6" />
+                </div>
+                <h2 className="text-3xl font-bold text-white mb-2">
+                  Life Point Lactation
+                </h2>
+                <p className="text-gray-300">
+                  Professional lactation support you can trust
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-yellow-400 text-lg font-semibold mb-2">
+                  Certified Experts
+                </p>
+                <Button
+                  className="bg-yellow-400 hover:bg-yellow-500 text-gray-900"
+                  onClick={() =>
+                    window.open("https://lifepointlactation.com/", "_blank")
+                  }
+                >
+                  Book a Consultation
+                </Button>
+              </div>
             </div>
+
             <div className="hidden sm:flex items-center space-x-6  mt-9">
               {session ? (
                 <>
