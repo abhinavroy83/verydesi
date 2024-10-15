@@ -26,13 +26,18 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { UserData } from "@myrepo/types";
+import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
+import { useCityData } from "@/hooks/use-city-hooks";
 
 export default function DashboardUserSettings() {
   const [isEditing, setIsEditing] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
+  const { addressComponents, location } = useGoogleAutocomplete();
+  const { cities, isLoading, error } = useCityData();
+
   const [userData, setuserData] = useState<UserData | null>(null);
-  const { control, handleSubmit, reset } = useForm<UserData>({
+  const { control, handleSubmit, reset, setValue } = useForm<UserData>({
     defaultValues: {
       belongcity: "",
       firstName: "",
@@ -49,6 +54,18 @@ export default function DashboardUserSettings() {
     },
   });
   // console.log(session?.accessToken);
+  useEffect(() => {
+    if (Object.keys(addressComponents).length > 0) {
+      setValue(
+        "address",
+        `${addressComponents.street_number} ${addressComponents.street}`
+      );
+      setValue("city", addressComponents.city);
+      setValue("state", addressComponents.state);
+      setValue("pin", addressComponents.zipCode);
+      setValue("country", addressComponents.country);
+    }
+  }, [addressComponents, setValue]);
 
   const onSubmit = async (data: UserData) => {
     try {
@@ -67,7 +84,7 @@ export default function DashboardUserSettings() {
           },
         }
       );
-      console.log(response);
+      // console.log(response);
       toast.success("Data updated successfully!", { id: toastId });
 
       setIsEditing(false);
@@ -146,10 +163,11 @@ export default function DashboardUserSettings() {
                         <SelectValue placeholder="Select city" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Portland">Portland</SelectItem>
-                        <SelectItem value="New York">New York</SelectItem>
-                        <SelectItem value="Los Angeles">Los Angeles</SelectItem>
-                        <SelectItem value="Chicago">Chicago</SelectItem>
+                        {cities.map((city) => (
+                          <SelectItem key={city} value={city}>
+                            {city}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   )}
@@ -268,7 +286,13 @@ export default function DashboardUserSettings() {
                   name="address"
                   control={control}
                   render={({ field }) => (
-                    <Input {...field} disabled={!isEditing} />
+                    <Input
+                      {...field}
+                      id="address"
+                      disabled={!isEditing}
+                      value={addressComponents.street || field.value}
+                      onChange={field.onChange}
+                    />
                   )}
                 />
               </div>

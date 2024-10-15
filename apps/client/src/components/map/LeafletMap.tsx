@@ -227,7 +227,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
       ref={mapContainerRef}
       style={{
         ...style,
-        height: "550px",
+        height: "400px",
         width: "290px",
         borderRadius: "8px",
         position: "relative",

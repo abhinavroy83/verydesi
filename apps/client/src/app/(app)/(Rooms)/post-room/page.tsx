@@ -42,6 +42,8 @@ import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 import { useCityData } from "@/hooks/use-city-hooks";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { stateAbbreviations } from "@/constants";
+import toast from "react-hot-toast";
 
 const sections = [
   { id: "basic-info", title: "Basic Information" },
@@ -174,56 +176,79 @@ export default function RoomPostingForm() {
     return response.data.area[0];
   };
   const onSubmit = async (data: FormData) => {
-    const roomdata = {
-      postingincity: data.postingIn,
-      postingtype: data.postingType,
-      Title: data.Title,
-      Description: data.description,
-      Propertytype: data.propertyType,
-      Stay_lease: data.stayLength,
-      Avaliblity_from: data.availableFrom,
-      Available_to: data.availableTo,
-      Immediate: data.immediate,
-      Attchd_Bath: data.separateBathroom,
-      Preferred_gender: data.PreferredGender,
-      Expected_Rooms: data.price,
-      Pricemodel: data.priceModel,
-      Desposite: data.securityDeposit,
-      is_room_furnished: data.toShare,
-      Utility_include: data.utilities,
-      Amenities_include: data.amenities,
-      Vegeterian_prefernce: data.dietaryPreferences,
-      Smoking_policy: data.smokingPolicy,
-      Pet_friendly: data.petPolicy,
-      Open_house_schedule: data.openHouseDate,
-      Imgurl: imageurl,
-      user_name: data.name,
-      email: data.email,
-      city: data.city,
-      state: data.state,
-      zip_code: data.zipCode,
-      location: {
-        coordinates: [location?.lng, location?.lat],
-      },
-    };
+    const city = data.postingIn;
+    const areaData = await fetchAreaData(city);
+    const enteredStateAbbreviation = data.state;
+    const enteredStateFullName = Object.keys(stateAbbreviations).find(
+      (key) => stateAbbreviations[key] === enteredStateAbbreviation
+    );
+    // const enteredState = data.state;
+    const enteredCity = data.city;
+    const enteredZip = data.zipCode;
+    const isPrimaryState = areaData.primaryState.includes(
+      enteredStateFullName || data.state
+    );
+    const isStateInList = areaData.state.includes(
+      enteredStateFullName || data.state
+    );
+    const isValidCity = areaData.subarea.some(
+      (subarea: string) => subarea.split(",")[0] === enteredCity
+    );
+    const isValidZip = areaData.zipcode.includes(enteredZip);
+    if (isPrimaryState || (isStateInList && (isValidCity || isValidZip))) {
+      const roomdata = {
+        postingincity: data.postingIn,
+        postingtype: data.postingType,
+        Title: data.Title,
+        Description: data.description,
+        Propertytype: data.propertyType,
+        Stay_lease: data.stayLength,
+        Avaliblity_from: data.availableFrom,
+        Available_to: data.availableTo,
+        Immediate: data.immediate,
+        Attchd_Bath: data.separateBathroom,
+        Preferred_gender: data.PreferredGender,
+        Expected_Rooms: data.price,
+        Pricemodel: data.priceModel,
+        Desposite: data.securityDeposit,
+        is_room_furnished: data.toShare,
+        Utility_include: data.utilities,
+        Amenities_include: data.amenities,
+        Vegeterian_prefernce: data.dietaryPreferences,
+        Smoking_policy: data.smokingPolicy,
+        Pet_friendly: data.petPolicy,
+        Open_house_schedule: data.openHouseDate,
+        Imgurl: imageurl,
+        user_name: data.name,
+        email: data.email,
+        city: data.city,
+        state: data.state,
+        zip_code: data.zipCode,
+        location: {
+          coordinates: [location?.lng, location?.lat],
+        },
+      };
 
-    try {
-      const token = session?.accessToken;
-      if (!token) {
-        throw new Error("token not found");
-      }
-      const res = await axios.post(
-        "http://localhost:8000/room/post-room",
-        roomdata,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      try {
+        const token = session?.accessToken;
+        if (!token) {
+          throw new Error("token not found");
         }
-      );
-      console.log(res);
-    } catch (error) {
-      console.error("Error while adding room:", error);
+        const res = await axios.post(
+          "http://localhost:8000/room/post-room",
+          roomdata,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(res);
+      } catch (error) {
+        console.error("Error while adding room:", error);
+      }
+    } else {
+      toast.error("Enter Address is not available");
     }
   };
 

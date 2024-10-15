@@ -10,7 +10,7 @@ export function HomeLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[9.5rem] mx-auto px-4 sm:px-6 lg:px-8 ">
       <div className="w-full lg:w-4/5 mr-4">{children}</div>
-      <div className="w-full lg:max-w-[300px] max-w-full lg:ml-0 lg:mt-3 mt-5 h-[725px] flex flex-col gap-6 justify-center">
+      <div className="w-full mt-2 lg:max-w-[300px] max-w-full lg:ml-0  h-[725px] flex flex-col gap-6">
         <LeafletMap />
         <Card className="w-full flex flex-col max-w-md mx-auto bg-gradient-to-br from-gray-900 to-gray-700 text-white overflow-hidden">
           <CardContent className="p-6 relative">
