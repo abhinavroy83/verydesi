@@ -8,6 +8,7 @@ import {
   IsOptional,
   IsString,
   IsDateString,
+  IsDate,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -49,11 +50,11 @@ export class CreateRoomDto {
   Stay_lease?: string;
 
   @IsOptional()
-  @IsString()
+  @IsDate()
   Avaliblity_from?: string;
 
   @IsOptional()
-  @IsString()
+  @IsDate()
   Available_to?: string;
 
   @IsOptional()
@@ -71,6 +72,14 @@ export class CreateRoomDto {
   @IsOptional()
   @IsNumber()
   Expected_Rooms?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  negotiable?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  hideRent?: boolean;
 
   @IsOptional()
   @IsString()

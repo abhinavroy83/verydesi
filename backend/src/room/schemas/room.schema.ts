@@ -19,6 +19,8 @@ export interface IRoom extends Document {
   Attchd_Bath?: string;
   Preferred_gender?: string;
   Expected_Rooms?: number;
+  negotiable?: boolean;
+  hideRent?: boolean;
   Pricemodel?: string;
   Bath_Location?: string;
   Couples_welcome?: string;
@@ -66,6 +68,8 @@ export const RoomSchema = new Schema({
   Attchd_Bath: { type: String },
   Preferred_gender: { type: String },
   Expected_Rooms: { type: Number },
+  negotiable: { type: Boolean },
+  hideRent: { type: Boolean },
   Pricemodel: { type: String },
   Bath_Location: { type: String },
   Couples_welcome: { type: String },

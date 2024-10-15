@@ -8,6 +8,7 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { Button } from "../ui/button";
 import useAuthStore from "@/store/useAuthStore";
+import { useCityData } from "@/hooks/use-city-hooks";
 
 interface CityResponse {
   city: { area: string }[];
@@ -19,23 +20,7 @@ function Avalableloc() {
   const [isOpen, setIsOpen] = useState(false);
   const { status, currentCity, updateCity } = useAuthStore();
   // Fetch city data on component mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get<CityResponse>(
-          "https://api.verydesi.com/api/admin/getallcity"
-        );
-        const uniqueCities = Array.from(
-          new Set(res.data.city.map((item) => item.area))
-        );
-        uniqueCities.sort((a, b) => a.localeCompare(b));
-        setCty(uniqueCities);
-      } catch (error) {
-        console.error("Error fetching city data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  const { cities, isLoading, error } = useCityData();
 
   const handleLocation = (city: string) => {
     setSelectedCity(city);
@@ -66,7 +51,7 @@ function Avalableloc() {
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-2">
-            {cty.map((city) => (
+            {cities.map((city) => (
               <Button
                 key={city}
                 variant="ghost"

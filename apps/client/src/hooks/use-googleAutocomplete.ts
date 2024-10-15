@@ -5,6 +5,9 @@ const useGoogleAutocomplete = () => {
   const [addressComponents, setAddressComponents] = useState<{
     [key: string]: string;
   }>({});
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
+    null
+  ); // State to store latitude and longitude
 
   useEffect(() => {
     const loadGoogleMapsScript = () => {
@@ -59,11 +62,17 @@ const useGoogleAutocomplete = () => {
           }
         });
         setAddressComponents(newAddressComponents);
+
+        if (place.geometry && place.geometry.location) {
+          const lat = place.geometry.location.lat();
+          const lng = place.geometry.location.lng();
+          setLocation({ lat, lng }); 
+        }
       }
     });
   };
 
-  return { addressComponents };
+  return { addressComponents, location };
 };
 
 export default useGoogleAutocomplete;
