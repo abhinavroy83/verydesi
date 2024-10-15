@@ -39,10 +39,12 @@ import { FeaturedBusinessCard } from "@/components/Business";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
 export default function Component() {
   const [showAll, setShowAll] = useState(false);
+  const router = useRouter();
 
   const categories = [
     { name: "Landscaping", icon: <Leaf className="h-4 w-4" /> },
@@ -113,7 +115,8 @@ export default function Component() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setShowAll(!showAll)}
+            // onClick={() => setShowAll(!showAll)}
+            onClick={() => router.push('business-all-category')}
             className=""
           >
             {showAll ? (
