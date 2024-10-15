@@ -44,7 +44,7 @@ export default function roomsPage() {
     const fetchAllList = async () => {
       try {
         const listResponse = await axios.get(
-          `http://localhost:8000/room/listmyroom`,
+          `http://apiv2.verydesi.com/room/listmyroom`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

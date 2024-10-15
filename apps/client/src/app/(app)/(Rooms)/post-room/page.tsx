@@ -44,6 +44,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { stateAbbreviations } from "@/constants";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const sections = [
   { id: "basic-info", title: "Basic Information" },
@@ -106,7 +107,7 @@ export default function RoomPostingForm() {
   const { data: session, status } = useSession();
 
   const { cities, isLoading, error } = useCityData();
-
+  const router = useRouter();
   useEffect(() => {
     if (Object.keys(addressComponents).length > 0) {
       form.setValue(
@@ -151,7 +152,10 @@ export default function RoomPostingForm() {
       updatefiles.forEach((file) => {
         data.append("my_files", file);
       });
-      const res = await axios.post("http://localhost:8000/img/upload", data);
+      const res = await axios.post(
+        "http://apiv2.verydesi.com/img/upload",
+        data
+      );
       console.log(res.data.urls);
       setimageurls(res.data.urls);
     } catch (error) {
@@ -235,7 +239,7 @@ export default function RoomPostingForm() {
           throw new Error("token not found");
         }
         const res = await axios.post(
-          "http://localhost:8000/room/post-room",
+          "http://apiv2.verydesi.com/room/post-room",
           roomdata,
           {
             headers: {
@@ -243,7 +247,12 @@ export default function RoomPostingForm() {
             },
           }
         );
-        console.log(res);
+        // console.log(res);
+        if (res) {
+          toast.success("room added succesfully");
+          form.reset();
+          router.push("/");
+        }
       } catch (error) {
         console.error("Error while adding room:", error);
       }
