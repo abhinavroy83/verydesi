@@ -1,0 +1,790 @@
+"use client";
+
+import React from "react";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
+import { BiSolidMessageRounded } from "react-icons/bi";
+import { FaHeart, FaShare } from "react-icons/fa";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { MdOutlineDateRange } from "react-icons/md";
+import { IoTicketOutline } from "react-icons/io5";
+import { RiShareBoxLine } from "react-icons/ri";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { FiFlag } from "react-icons/fi";
+import { BsFilePerson } from "react-icons/bs";
+import { FaRegStar } from "react-icons/fa";
+
+function Events() {
+  return (
+    <div className="mt-[6rem] h-full w-full max-w-[1600px] mx-auto">
+      <div className=" w-full mx-auto px-4 py-2 mt-5 font-['udemy-regular']">
+        <div className="flex justify-between items-start">
+          <div className=" flex gap-2">
+            <div>
+              <div className="">
+                <div
+                  className="text-center flex gap-2"
+                  // onClick={fetchPreviousRoom}
+                  // disabled={!hasNextRoom}
+                >
+                  <button className="p-1 px-2 rounded-xl flex bg-red-600 text-[19px] items-center text-white shadow-sm shadow-[#000] mb-3 gap-2 hover:shadow-lg">
+                    <MdKeyboardDoubleArrowLeft
+                      size={45}
+                      className="text-white flex"
+                    />
+                    <button
+                      // type="submit"
+                      // disabled={!hasPreviousRoom}
+                      className="flex text-[22px] items-center text-white font-bold px-2 pl-0"
+                    >
+                      PREV
+                    </button>
+                  </button>
+                </div>
+              </div>
+              <p></p>
+            </div>
+            <div>
+              {/* {hasPreviousRoom ? ( */}
+              <div
+                className="flex justify-end"
+                // onClick={fetchNextRoom}
+                // disabled={!hasPreviousRoom}
+              >
+                <button className="p-1 px-2 rounded-xl flex bg-blue-600 text-[19px] items-center text-white shadow-sm shadow-[#000] mb-3 gap-2 hover:shadow-lg">
+                  <button
+                    // type="submit"
+                    className="flex text-[22px] items-center text-white font-bold"
+                  >
+                    NEXT
+                  </button>
+                  <MdKeyboardDoubleArrowRight
+                    size={45}
+                    className="flex text-[22px] items-center text-white font-bold"
+                  />
+                </button>
+              </div>
+              {/* ) : ( */}
+              <p></p>
+              {/* )} */}
+            </div>
+          </div>
+
+          <div className="flex gap-4 items-center self-center">
+            {/* <div
+              className="flex justify-end"
+              onClick={fetchNextRoom}
+              disabled={!hasPreviousRoom}
+            >
+              <button className="rounded-xl flex p-1 px-3 bg-blue-700 text-[22px] items-center text-white shadow-sm shadow-[#000] gap-2 hover:shadow-lg">
+                <button
+                  // type="submit"
+                  className="flex text-[22px] items-center text-white font-bold"
+                >
+                  NEXT
+                </button>
+                <MdKeyboardDoubleArrowRight
+                  size={45}
+                  className="flex text-[22px] items-center text-white font-bold"
+                />
+              </button>
+            </div> */}
+            <div className="gap-2 flex">
+              {/* {!wishliststatys ? ( */}
+              <div
+                className="cursor-pointer p-2 bg-gray-600 rounded-full shadow-lg shadow-gray-500 hover:shadow-gray-600"
+                // onClick={makewishlist}
+              >
+                <FaHeart color="#fff" size={30} />
+              </div>
+              {/* ) : ( */}
+              {/* <div
+                className="cursor-pointer p-2 border border-gray-300 rounded-full bg-red-600 "
+                // onClick={unwish}
+              >
+                <FaHeart color="#fff" size={30} />
+              </div> */}
+              {/* )} */}
+              <div className="cursor-pointer p-2 bg-green-500 rounded-full shadow-lg shadow-gray-500 hover:shadow-gray-600">
+                <BiSolidMessageRounded color="#fff" size={30} />
+              </div>
+              {/* <div className="cursor-pointer p-2 bg-blue-600 rounded-full">
+                <CopyToClipboard text={url} onCopy={handlecopy}>
+                  <IoIosShareAlt color="#fff" size={30} />
+                </CopyToClipboard>
+              </div> */}
+              <button
+                type="submit"
+                // onClick={toggleSharePopup}
+                className="rounded-md justify-between bg-gray-400 gap-2 px-5 py-2 text-[19px] flex items-center text-black shadow-lg shadow-gray-500 hover:shadow-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              >
+                <FaShare className="text-black" /> Share
+              </button>
+
+              {/* {isSharePopupOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+                  <div className="bg-white rounded-lg shadow-lg">
+                    <ShareComponent
+                      url={url}
+                      title="Room title"
+                      onClose={toggleSharePopupclose}
+                    />
+                    <button
+                      onClick={toggleSharePopup}
+                      className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              )} */}
+            </div>
+          </div>
+        </div>
+        <p className="text-[1.8rem] font-semibold">
+          Lavender U-Pick at Wayward Winds
+        </p>
+        <p className="text-[1rem] text-[#0073bb] hover:underline cursor-pointer">
+          Other{" "}
+        </p>
+        <div className="flex mx-auto gap-7">
+          <div className="w-full">
+            <div className="flex border rounded-md mt-[1rem]">
+              <img
+                src={
+                  "https://www.theseedcollection.com.au/assets/full/B2-01.jpg?20201208112734"
+                }
+                alt="not"
+                className="h-[20rem] w-[52rem] rounded-tl-md rounded-bl-md object-cover"
+              />
+              <div className="flex gap-2 flex-col text-[1rem] ml-6 mt-4">
+                <div className="flex border-b border-gray-300 p-3 gap-2">
+                  <div>
+                    <p>
+                      <HiOutlineLocationMarker size={25} color="gray" />
+                    </p>
+                  </div>
+                  <div>
+                    <p> Wayward Winds Lavender Farm</p>
+                    <p>17005 Ne Courtney Rd</p>
+                    <p>Newberg, OR 97132</p>
+                  </div>
+                </div>
+                <div className="flex border-b border-gray-300 p-3 gap-2">
+                  <div>
+                    <p>
+                      <MdOutlineDateRange size={25} color="gray" />
+                    </p>
+                  </div>
+                  <div>
+                    <p className="flex gap-2">
+                      <p className="font-bold">From:</p> Saturday, Jun 29, 10:00
+                      am
+                    </p>
+                    <p className="flex gap-2">
+                      <p className="font-bold">To:</p> Monday, Jul 29, 5:00 pm
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-2 p-3">
+                  <IoTicketOutline size={25} color="gray" />
+                  <p>Free</p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-[1rem] text-[1rem] flex gap-3 flex-col">
+              <p className="text-[#d32323] font-bold text-[17px]">What/Why:</p>
+              <p className="text-[15px]">
+                Free Admission! Open daily June 29th-August 11th from 10 am-5
+                pm. An abundance of the most fragrant and beautiful lavender in
+                existence, nestled in the hills of Newberg, Oregon. Explore the
+                twists and turns of our Lavender-a-maze. Experience everything
+                lavender you can imagine, and shop award-winning essential oils,
+                plants, and products in our vintage farm store. If it can be
+                made with this magical herb, we do it!
+              </p>
+              <div className="justify-between flex items-center">
+                <button
+                  className="border flex gap-1 text-gray-500 font-bold p-1 rounded-sm items-center text-center"
+                  type="button"
+                >
+                  <RiShareBoxLine size={20} color="gray" />
+                  Official Website
+                </button>
+                <button
+                  className="border flex gap-1 text-gray-500 hover:text-black p-1 rounded-sm items-center text-center"
+                  type="button"
+                >
+                  <FiFlag size={17} color="gray" />
+                </button>
+              </div>
+              <p className="text-[#d32323] font-bold text-[17px]">
+                Discuss This Event
+              </p>
+              <p className="text-[16px] flex gap-1 items-center text-[#0073bb] hover:underline cursor-pointer">
+                <MdOutlineMailOutline size={17} />
+                Email about event
+              </p>
+              <p>No one has commented on this event yet.</p>
+              <button
+                className="bg-[#d32323] text-white text-[16px] p-1 rounded-sm items-center w-[3rem] text-center"
+                type="button"
+              >
+                Post
+              </button>
+              <div className="bg-yellow-100 text-black p-3 rounded-md">
+                <p className="flex gap-1">
+                  To use talk boards you must first confirm your email address.
+                  Click the link in email wee sent. If you would like us to
+                  resend confirmation email, go{" "}
+                  <p className="text-[#0073bb] cursor-pointer">here.</p>
+                </p>
+              </div>
+            </div>
+            <h1 className="flex text-[#000] text-[17px] font-bold mt-5 gap-2">
+              {/* <FaUserFriends size={37} /> */}
+              {/* <img
+              className="w-[3rem] h-13"
+              src={"https://cdn-icons-png.flaticon.com/512/6682/6682701.png"}
+              alt="logo"
+            /> */}
+              User Details-{" "}
+            </h1>
+            <div className="grid grid-cols-3 justify-between border rounded-md p-5">
+              <div className="flex gap-2 items-center">
+                {/* <FaUserAlt size={35} /> */}
+                <img
+                  className="w-[2rem] h-15"
+                  src={
+                    "https://icon-library.com/images/username-icon-png/username-icon-png-0.jpg"
+                  }
+                  alt="logo"
+                />
+                <div className="flex">
+                  <p className="text-black text-[15px]">
+                    Name
+                    <p className="text-black flex text-[15px]">
+                      {/* {rooms.user_name} */}
+                    </p>
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                {/* <FaPhoneVolume size={35} /> */}
+                <img
+                  className="w-[2rem] h-13"
+                  src={
+                    "https://th.bing.com/th/id/OIP.5_xxdbU1J1GoLaVng_PBRQHaHa?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="flex">
+                  <p className="text-black text-[15px]">
+                    Phone number
+                    <p className="text-black flex text-[18px]">
+                      {/* {rooms.phone_number} */}
+                    </p>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-2 items-center">
+                {/* <MdOutlineEmail size={35} /> */}
+                <img
+                  className="w-[2rem] h-13"
+                  src={
+                    "https://th.bing.com/th/id/OIP.XIRvuujS5JE0LJYwXfvxwQHaHa?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="flex">
+                  <p className="text-black text-[15px]">
+                    Email
+                    {/* <p className="text-black flex text-[18px]">{rooms.email}</p> */}
+                  </p>
+                </div>
+              </div>
+              {/* <div className="mt-4 mb-2 border-t-2 border-black">
+                <div className="mt-2 flex items-center ">
+                  <div className=" flex justify-between w-full text-[25px] font-['udemy-regular'] text-[#0b5e86] font-bold">
+                    <p>Similar room In The Area</p>
+                    <p
+                      className=" cursor-pointer"
+                      onClick={() => {
+                        navigate("/rooms");
+                      }}
+                    >
+                      See full list of Roommates
+                    </p>
+                  </div>
+                </div> */}
+              {/* <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 xl:mt-5 xl:grid-cols-3 xl:gap-8">
+                {renderRooms()}
+              </div> */}
+            </div>
+          </div>
+          <div className="mt-5">
+            <img
+              className="w-full rounded-md"
+              src={
+                "https://th.bing.com/th/id/OIP.dptj3_-KYpJQTYPL9ab7awHaEz?rs=1&pid=ImgDetMain"
+              }
+              alt="logo"
+            />
+            <div className="border-l pl-4 flex gap-2 flex-col mt-10">
+              <p className="text-[#d32323] font-bold text-[17px]">
+                Are You Interested?
+              </p>
+              <button
+                className="bg-[#d32323] text-white text-[16px] p-1 rounded-sm items-center w-[6rem] text-center"
+                type="button"
+              >
+                Respond
+              </button>
+              <p className="text-[#d32323] font-bold text-[17px] flex gap-3">
+                Who's in? <p className="text-black font-light">8 responses</p>
+              </p>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[2rem] h-[2rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline">
+                    Terees A.
+                  </p>
+                  <p className="flex gap-1 mt-1">
+                    <BsFilePerson className="text-[#f15c00]" />
+                    <p className="text-gray-500 font-bold text-[13px]">22</p>
+                    <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
+                    <p className="text-gray-500 font-bold text-[13px]">261</p>
+                    <p className="text-[#f15c00] font-bold text-[13px] ml-[0.4rem]">
+                      Elite 24
+                    </p>
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[2rem] h-[2rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline">
+                    Terees A.
+                  </p>
+                  <p className="flex gap-1 mt-1">
+                    <BsFilePerson className="text-[#f15c00]" />
+                    <p className="text-gray-500 font-bold text-[13px]">22</p>
+                    <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
+                    <p className="text-gray-500 font-bold text-[13px]">261</p>
+                    <p className="text-[#f15c00] font-bold text-[13px] ml-[0.4rem]">
+                      Elite 24
+                    </p>
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[2rem] h-[2rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer">
+                    Terees A.
+                  </p>
+                  <p className="flex gap-1 mt-1">
+                    <BsFilePerson className="text-[#f15c00]" />
+                    <p className="text-gray-500 font-bold text-[12px]">22</p>
+                    <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
+                    <p className="text-gray-500 font-bold text-[12px]">261</p>
+                    <p className="text-[#f15c00] font-bold text-[12px] ml-[0.4rem]">
+                      Elite 24
+                    </p>
+                  </p>
+                </div>
+              </div>
+              <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
+                See All
+              </p>
+
+              <p className="text-[#d32323] font-bold text-[17px] flex gap-3">
+                Sounds Cool <p className="text-black font-light">5 responses</p>
+              </p>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[2rem] h-[2rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline">
+                    Terees A.
+                  </p>
+                  <p className="flex gap-1 mt-1">
+                    <BsFilePerson className="text-[#f15c00]" />
+                    <p className="text-gray-500 font-bold text-[13px]">22</p>
+                    <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
+                    <p className="text-gray-500 font-bold text-[13px]">261</p>
+                    <p className="text-[#f15c00] font-bold text-[13px] ml-[0.4rem]">
+                      Elite 24
+                    </p>
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[2rem] h-[2rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline">
+                    Terees A.
+                  </p>
+                  <p className="flex gap-1 mt-1">
+                    <BsFilePerson className="text-[#f15c00]" />
+                    <p className="text-gray-500 font-bold text-[13px]">22</p>
+                    <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
+                    <p className="text-gray-500 font-bold text-[13px]">261</p>
+                    <p className="text-[#f15c00] font-bold text-[13px] ml-[0.4rem]">
+                      Elite 24
+                    </p>
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[2rem] h-[2rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer">
+                    Terees A.
+                  </p>
+                  <p className="flex gap-1 mt-1">
+                    <BsFilePerson className="text-[#f15c00]" />
+                    <p className="text-gray-500 font-bold text-[12px]">22</p>
+                    <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
+                    <p className="text-gray-500 font-bold text-[12px]">261</p>
+                    <p className="text-[#f15c00] font-bold text-[12px] ml-[0.4rem]">
+                      Elite 24
+                    </p>
+                  </p>
+                </div>
+              </div>
+              <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
+                See All
+              </p>
+              <p className="text-[#d32323] font-bold text-[17px] flex gap-3">
+                Nearby businesses
+              </p>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[4rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
+                    JORY{" "}
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <img
+                      className="w-[5rem] h-[2rem] rounded-md"
+                      src={
+                        "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
+                      }
+                      alt="logo"
+                    />
+                    <p className="text-gray-500 font-bold text-[12px]">
+                      327 reviews
+                    </p>
+                  </div>
+                  <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
+                    New American, Wine Bars
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[4rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
+                    JORY{" "}
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <img
+                      className="w-[5rem] h-[2rem] rounded-md"
+                      src={
+                        "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
+                      }
+                      alt="logo"
+                    />
+                    <p className="text-gray-500 font-bold text-[12px]">
+                      327 reviews
+                    </p>
+                  </div>
+                  <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
+                    New American, Wine Bars
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[4rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
+                    JORY{" "}
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <img
+                      className="w-[5rem] h-[2rem] rounded-md"
+                      src={
+                        "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
+                      }
+                      alt="logo"
+                    />
+                    <p className="text-gray-500 font-bold text-[12px]">
+                      327 reviews
+                    </p>
+                  </div>
+                  <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
+                    New American, Wine Bars
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[4rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
+                    JORY{" "}
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <img
+                      className="w-[5rem] h-[2rem] rounded-md"
+                      src={
+                        "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
+                      }
+                      alt="logo"
+                    />
+                    <p className="text-gray-500 font-bold text-[12px]">
+                      327 reviews
+                    </p>
+                  </div>
+                  <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
+                    New American, Wine Bars
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[4rem] rounded-md"
+                  src={
+                    "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
+                    JORY{" "}
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <img
+                      className="w-[5rem] h-[2rem] rounded-md"
+                      src={
+                        "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
+                      }
+                      alt="logo"
+                    />
+                    <p className="text-gray-500 font-bold text-[12px]">
+                      327 reviews
+                    </p>
+                  </div>
+                  <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
+                    New American, Wine Bars
+                  </p>
+                </div>
+              </div>
+              <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
+                More nearby{" "}
+              </p>
+              <p className="text-[#d32323] font-bold text-[17px] flex gap-3">
+                Other events this week{" "}
+              </p>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[3.4rem] rounded-md"
+                  src={
+                    "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
+                  }
+                  alt="logo"
+                />
+                <div className=" ml-[0.4rem]">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
+                    Area 51 Encounter{" "}
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      Wednesday, Jul 3,
+                    </p>
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      {" "}
+                      11:00 am – Saturday, Jul 27, 7:00 pm
+                    </p>
+                  </div>
+                  <p className="text-gray-400 text-[12px] flex gap-2">
+                    4 are interested{" "}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[3.4rem] rounded-md"
+                  src={
+                    "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
+                  }
+                  alt="logo"
+                />
+                <div className=" ml-[0.4rem]">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
+                    Area 51 Encounter{" "}
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      Wednesday, Jul 3,
+                    </p>
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      {" "}
+                      11:00 am – Saturday, Jul 27, 7:00 pm
+                    </p>
+                  </div>
+                  <p className="text-gray-400 text-[12px] flex gap-2">
+                    4 are interested{" "}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[3.4rem] rounded-md"
+                  src={
+                    "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
+                  }
+                  alt="logo"
+                />
+                <div className=" ml-[0.4rem]">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
+                    Area 51 Encounter{" "}
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      Wednesday, Jul 3,
+                    </p>
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      {" "}
+                      11:00 am – Saturday, Jul 27, 7:00 pm
+                    </p>
+                  </div>
+                  <p className="text-gray-400 text-[12px] flex gap-2">
+                    4 are interested{" "}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[3.4rem] rounded-md"
+                  src={
+                    "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
+                  }
+                  alt="logo"
+                />
+                <div className=" ml-[0.4rem]">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
+                    Area 51 Encounter{" "}
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      Wednesday, Jul 3,
+                    </p>
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      {" "}
+                      11:00 am – Saturday, Jul 27, 7:00 pm
+                    </p>
+                  </div>
+                  <p className="text-gray-400 text-[12px] flex gap-2">
+                    4 are interested{" "}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 items-center">
+                <img
+                  className="w-[3.4rem] h-[3.4rem] rounded-md"
+                  src={
+                    "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
+                  }
+                  alt="logo"
+                />
+                <div className=" ml-[0.4rem]">
+                  <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
+                    Area 51 Encounter{" "}
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      Wednesday, Jul 3,
+                    </p>
+                  </p>
+                  <div className="flex gap-1 items-center">
+                    <p className="text-black font-normal text-[13px] mt-[0.2rem]">
+                      {" "}
+                      11:00 am – Saturday, Jul 27, 7:00 pm
+                    </p>
+                  </div>
+                  <p className="text-gray-400 text-[12px] flex gap-2">
+                    4 are interested{" "}
+                  </p>
+                </div>
+              </div>
+              <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
+                More events{" "}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Events;

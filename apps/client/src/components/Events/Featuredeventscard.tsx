@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 export default function Eventcard() {
   return (
     <Link
-      href={`/events/122142331223124123324122`}
+      href={`/event`}
       className="border border-gray-200 max-h-200 h-90 flex flex-col justify-center bg-white rounded-lg mb-5"
     >
       <Card className="h-full transition-shadow hover:shadow-md">
