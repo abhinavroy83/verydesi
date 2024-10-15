@@ -4,7 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthValidEmail, AuthValidPassword } from '../dto';
+import { Authupdatpassword, AuthValidEmail, AuthValidPassword } from '../dto';
 import { Model } from 'mongoose';
 import { User } from '../schemas';
 import { JwtService } from '@nestjs/jwt';
@@ -59,9 +59,9 @@ export class ForgotPasswordService {
       throw new UnauthorizedException('Failed to reset password');
     }
   }
-  async updatepassword(userId: string, password: AuthValidPassword) {
+  async updatepassword(userId: string, password: Authupdatpassword) {
     try {
-      const hashpassword = await argon.hash(password.password);
+      const hashpassword = await argon.hash(password.newpassword);
       const user = await this.userModel.findByIdAndUpdate(
         { _id: userId },
         { password: hashpassword },

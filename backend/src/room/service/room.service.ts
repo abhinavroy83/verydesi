@@ -65,6 +65,28 @@ export class RoomService {
     }
   }
 
+  async getroompostedbyuser(userId: string) {
+    const cacheKey = 'userId: ${userId}';
+
+    try {
+      const cachedroom = await this.cacheManager.get<IRoom>(cacheKey);
+      if (cachedroom) {
+        return cachedroom;
+      }
+      const room = await this.roomModel.find({ UserId: userId });
+      if (!room) {
+        throw new NotFoundException('no room found by user');
+      }
+      await this.cacheManager.set(cacheKey, room);
+
+      return room;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Something went wrong while fetching rooms',
+      );
+    }
+  }
+
   async postroom(createroomdto: CreateRoomDto, userId: string) {
     try {
       // Assign userId to the room data

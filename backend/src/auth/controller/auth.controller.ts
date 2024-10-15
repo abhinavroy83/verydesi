@@ -12,6 +12,7 @@ import { AuthService } from '../service/auth.service';
 import {
   Authsignindto,
   Authsignupdto,
+  Authupdatpassword,
   AuthValidEmail,
   AuthValidPassword,
 } from '../dto';
@@ -65,7 +66,7 @@ export class AuthController {
   }
   @UseGuards(JwtGuard)
   @Patch('update-password')
-  updatepassword(@Request() req, @Body() password: AuthValidPassword) {
+  updatepassword(@Request() req, @Body() password: Authupdatpassword) {
     const userId = req.user.userId;
     return this.forgotPasswordService.updatepassword(userId, password);
   }

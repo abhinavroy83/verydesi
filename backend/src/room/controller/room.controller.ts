@@ -27,6 +27,13 @@ export class RoomController {
   }
 
   @UseGuards(JwtGuard)
+  @Get('listmyroom')
+  getallroompostedbyuser(@Request() req) {
+    const userId = req.user.userId;
+    return this.roomService.getroompostedbyuser(userId);
+  }
+
+  @UseGuards(JwtGuard)
   @Post('post-room')
   async postroom(@Request() req, @Body() createroomdto: CreateRoomDto) {
     const userId = req.user.userId;
@@ -50,7 +57,7 @@ export class RoomController {
     @Body() updateRoomDto: UpdateRoomDto,
     @Request() req,
   ) {
-    const userId = req.user.userId; 
+    const userId = req.user.userId;
     return this.roomService.updateRoom(roomId, updateRoomDto, userId);
   }
 }
