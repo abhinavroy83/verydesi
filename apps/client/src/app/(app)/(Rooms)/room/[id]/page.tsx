@@ -205,7 +205,7 @@ export default function RoomDetails() {
   }
 
   return (
-    <div className="max-w-[1370px] lg:max-w-[1600px]  px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6.8rem]">
+    <div className="max-w-[1370px] lg:max-w-[1600px]  px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6rem]">
       <div className="flex space-x-2 w-full justify-between">
         <div>
           <Breadcrumb>
@@ -357,19 +357,19 @@ export default function RoomDetails() {
           </Card>
 
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-3">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-gray-900 text-xl">ABOUT THE PROPERTY</p>
               </div>
-              <p className="text-gray-700 mb-4">{roomData?.Description}</p>
+              <p className="text-gray-700">{roomData?.Description}</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader>
+            <CardHeader className="p-3">
               <CardTitle>More Info About Room</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center">
                   <FaRegBuilding className="h-6 w-6 text-[#054687] mr-4" />
@@ -463,10 +463,10 @@ export default function RoomDetails() {
 
         <div className="space-y-6 lg:mt-8">
           <Card>
-            <CardHeader>
+            <CardHeader className="p-3">
               <CardTitle>Location</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3">
               <div className="aspect-w-16 aspect-h-9">
                 {locationsndString && (
                   <LeafletMapRoom onLocationReceived={locationsndString} />
@@ -476,10 +476,10 @@ export default function RoomDetails() {
           </Card>
 
           <Card>
-            <CardHeader>
+            <CardHeader className="p-3">
               <CardTitle>Amenities Included</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {roomData?.Amenities_include?.map((amenity) => {
                   if (isValidAmenityIcon(amenity)) {
@@ -500,10 +500,10 @@ export default function RoomDetails() {
           </Card>
 
           <Card>
-            <CardHeader>
+            <CardHeader className="p-3">
               <CardTitle>Utilities</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3">
               <div className="grid grid-cols-2 gap-4">
                 {roomData?.Utility_include?.map((utility) => {
                   if (isValidIcon(utility)) {
@@ -524,10 +524,10 @@ export default function RoomDetails() {
           </Card>
 
           <Card>
-            <CardHeader>
+            <CardHeader className="p-3">
               <CardTitle>Additional Information</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3">
               <div className="flex flex-col gap-3">
                 <div className="flex items-center">
                   <BiFoodTag className="h-6 w-6 text-[#054687] mr-4" />
@@ -566,7 +566,7 @@ export default function RoomDetails() {
             </CardContent>
           </Card>
           <Card className="mb-6">
-            <CardHeader>
+            <CardHeader className="p-3">
               <CardTitle>
                 {!status && (
                   <span
@@ -583,7 +583,7 @@ export default function RoomDetails() {
             </CardHeader>
 
             {status && (
-              <CardContent>
+              <CardContent className="p-3">
                 <form className="space-y-4">
                   <div>
                     <Label htmlFor="name">Name</Label>

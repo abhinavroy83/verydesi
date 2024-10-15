@@ -28,13 +28,13 @@ export default function Component({
 
   return (
     <Link href={`room/${id}`}>
-      <Card className="w-[36rem] h-[165px] overflow-hidden">
+      <Card className="w-[36rem] h-[163px] overflow-hidden">
         <CardContent className="p-0 flex">
-          <div className="w-1/4 h-full relative">
+          <div className="lg:w-72 h-full relative">
             <img
               src={imageUrl}
               alt={title}
-              className="w-full h-full object-cover"
+              className=" h-full object-cover lg:w-72"
             />
             <Badge className="absolute top-2 left-2 bg-white text-black">
               <GenderIcon />
@@ -44,7 +44,7 @@ export default function Component({
             <div>
               <div className="flex justify-between items-start">
                 <h3 className="text-xl font-semibold text-gray-800 line-clamp-1">
-                  {title}
+                  {}
                 </h3>
                 <Heart className="h-6 w-6 text-gray-400 hover:text-red-500 cursor-pointer" />
               </div>

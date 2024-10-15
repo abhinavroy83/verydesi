@@ -230,18 +230,20 @@ export default function Navbar() {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white"
+                className="text-white hover:bg-white group  transition duration-300 ease-in-out"
               >
-                <Home className="mr-2 h-5 w-5" /> HOME
+                <Home className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />
+                HOME
               </Button>
               <Button
                 onClick={() => {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white"
+                className="text-white hover:bg-white group  transition duration-300 ease-in-out"
               >
-                <Users className="mr-2 h-5 w-5" /> ROOMMATES
+                <Users className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                ROOMMATES
               </Button>
             </div>
             <div className="hidden md:flex items-center space-x-2 text-white">
