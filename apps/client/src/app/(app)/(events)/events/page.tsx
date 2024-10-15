@@ -96,7 +96,7 @@ export default function Component() {
             </div>
           </div>
         </div>
-        <div className="w-full max-w-[70rem] mt-5 mx-auto">
+        <div className="w-full max-w-[77rem] mt-5 mx-auto">
           <Carousel
             opts={{
               align: "start",
@@ -112,8 +112,8 @@ export default function Component() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext  />
+            <CarouselPrevious className="absolute left-[-12] top-1/2 -translate-y-1/2" />
+            <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
           </Carousel>
         </div>
       </div>
