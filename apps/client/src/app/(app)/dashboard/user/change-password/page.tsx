@@ -10,7 +10,6 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   AlertCircle,
@@ -28,6 +27,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 type PasswordFormValues = z.infer<typeof passwordSchema>;
 
@@ -47,19 +47,20 @@ export default function Component() {
 
   const newPassword = watch("newpassword");
   const confirmPassword = watch("confirmPassword");
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     setPasswordsMatch(newPassword === confirmPassword);
   }, [newPassword, confirmPassword]);
 
-  const OnSubmit = async (data: PasswordFormValues) => {
+  const onsubmit = async (data: PasswordFormValues) => {
     const token = session?.accessToken;
+
     if (!token) {
-      throw new Error("token not found");
+      return console.error("Token not found");
     }
+
     if (passwordsMatch) {
-      console.log(data);
       try {
         const res = await axios.patch(
           "http://apiv2.verydesi.com/auth/update-password",
@@ -70,10 +71,30 @@ export default function Component() {
             },
           }
         );
-        console.log(res);
+        // console.log(res.data);
+
+        toast.success(res.data.message);
       } catch (error) {
-        console.error("Error updating data:", error);
+        if (axios.isAxiosError(error)) {
+          if (error.response) {
+            console.error("Server responded with:", error.response.data);
+            toast.error(
+              error.response.data.message || "Error updating password"
+            );
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+            toast.error("No response from server");
+          } else {
+            console.error("Error setting up request:", error.message);
+            toast.error("An error occurred while updating the password");
+          }
+        } else {
+          console.error("Unexpected error:", error);
+          toast.error("An unexpected error occurred");
+        }
       }
+    } else {
+      toast.error("Passwords do not match");
     }
   };
 
@@ -126,7 +147,7 @@ export default function Component() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit(OnSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onsubmit)} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="oldpassword">Current Password</Label>
                 <div className="relative">

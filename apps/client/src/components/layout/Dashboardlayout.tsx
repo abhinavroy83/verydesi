@@ -37,7 +37,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 mt-[10rem]">
-      {isverified && (
+      {!isverified && (
         <div className="">
           <div
             role="alert"

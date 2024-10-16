@@ -204,7 +204,7 @@ export default function DashboardUserSettings() {
                     <Input {...field} disabled type="email" />
                   )}
                 />
-                {!isverified ? (
+                {userData?.IsEmailVerified ? (
                   <p className="text-sm text-green-600 mt-1">
                     Email is verified
                   </p>
