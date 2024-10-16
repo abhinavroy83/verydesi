@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { UserData } from "@myrepo/types";
@@ -21,18 +21,34 @@ export const useUserData = () => {
   const token = session?.accessToken;
   const { updateCity, setVerified, setname } = useAuthStore();
 
-  const { data, isLoading, error } = useQuery<UserData, Error>(
-    ["userData", token],
-    () => fetchUserData(token as string),
-    {
-      enabled: !!token,
-      onSuccess: (data) => {
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!token) return;
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const data = await fetchUserData(token);
+        setUserData(data);
+
+        // Update store based on fetched user data
         updateCity(data.belongcity);
         setVerified(data.IsEmailVerified);
         setname(data.firstName);
-      },
-    }
-  );
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  return { userData: data, isLoading, error };
+    fetchData();
+  }, [token, updateCity, setVerified, setname]);
+
+  return { userData, isLoading, error };
 };
