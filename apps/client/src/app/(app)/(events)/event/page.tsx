@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { BiSolidMessageRounded } from "react-icons/bi";
@@ -21,9 +21,28 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { ChevronLeft, ChevronRight, Heart, Home } from "lucide-react";
+import {
+  Calendar,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+  Heart,
+  Home,
+} from "lucide-react";
 import ShareButton from "@/components/Popups/ShareButton";
 import { Button } from "@/components/ui/button";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+interface SellerProfileProps {
+  name: string;
+  logo: string;
+  positiveFeedback: number;
+  itemsSold: string;
+  joinDate: string;
+  description: string;
+}
+
 function Events() {
   return (
     <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6.1rem]">
@@ -60,7 +79,10 @@ function Events() {
               <div className="flex items-center gap-2">
                 <Heart className="h-6 w-6 fill-red-600 stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
               </div>
-              <Button className="rounded-full flex items-center">
+              <Button
+                variant="outline"
+                className="rounded-full flex items-center"
+              >
                 <ShareButton />
                 <p>Share</p>
               </Button>
@@ -87,21 +109,24 @@ function Events() {
           </div>
         </div>
       </div>
-      <p className="text-[1.8rem] font-semibold">
+      <h1 className="text-3xl font-bold text-gray-900">
         Lavender U-Pick at Wayward Winds
-      </p>
+      </h1>
+      <div className="flex items-center gap-2 text-xl font-bold">
+        <p className="text-gray-600">, OR</p>
+      </div>
       <p className="text-[1rem] text-[#0073bb] hover:underline cursor-pointer">
         Other{" "}
       </p>
       <div className="flex mx-auto gap-7">
         <div className="w-full">
-          <div className="flex border rounded-md mt-[1rem]">
+          <div className="flex border rounded-xl mt-[1rem]">
             <img
               src={
                 "https://www.theseedcollection.com.au/assets/full/B2-01.jpg?20201208112734"
               }
               alt="not"
-              className="h-[20rem] w-[52rem] rounded-tl-md rounded-bl-md object-cover"
+              className="h-[20rem] w-[50rem] rounded-tl-xl rounded-bl-xl object-cover"
             />
             <div className="flex gap-2 flex-col text-[1rem] ml-6 mt-4">
               <div className="flex border-b border-gray-300 p-3 gap-2">
@@ -138,17 +163,24 @@ function Events() {
               </div>
             </div>
           </div>
-          <div className="mt-[1rem] text-[1rem] flex gap-3 flex-col">
-            <p className="text-[#d32323] font-bold text-[17px]">What/Why:</p>
-            <p className="text-[15px]">
-              Free Admission! Open daily June 29th-August 11th from 10 am-5 pm.
-              An abundance of the most fragrant and beautiful lavender in
-              existence, nestled in the hills of Newberg, Oregon. Explore the
-              twists and turns of our Lavender-a-maze. Experience everything
-              lavender you can imagine, and shop award-winning essential oils,
-              plants, and products in our vintage farm store. If it can be made
-              with this magical herb, we do it!
-            </p>
+          <Card className="mt-3">
+            <CardContent className="p-2">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-gray-900 text-xl">What/Why:</p>
+              </div>
+              <p className="text-gray-700">
+                {" "}
+                Free Admission! Open daily June 29th-August 11th from 10 am-5
+                pm. An abundance of the most fragrant and beautiful lavender in
+                existence, nestled in the hills of Newberg, Oregon. Explore the
+                twists and turns of our Lavender-a-maze. Experience everything
+                lavender you can imagine, and shop award-winning essential oils,
+                plants, and products in our vintage farm store. If it can be
+                made with this magical herb, we do it!
+              </p>
+            </CardContent>
+          </Card>
+          <div className="mt-[1rem] flex gap-3 flex-col">
             <div className="justify-between flex items-center">
               <button
                 className="border flex gap-1 text-gray-500 font-bold p-1 rounded-sm items-center text-center"
@@ -164,16 +196,14 @@ function Events() {
                 <FiFlag size={17} color="gray" />
               </button>
             </div>
-            <p className="text-[#d32323] font-bold text-[17px]">
-              Discuss This Event
-            </p>
+            <p className="text-gray-900 text-xl">Discuss This Event</p>
             <p className="text-[16px] flex gap-1 items-center text-[#0073bb] hover:underline cursor-pointer">
               <MdOutlineMailOutline size={17} />
               Email about event
             </p>
             <p>No one has commented on this event yet.</p>
             <button
-              className="bg-[#d32323] text-white text-[16px] p-1 rounded-sm items-center w-[3rem] text-center"
+              className="bg-green-800 text-white text-[16px] p-1 rounded-sm items-center w-[3rem] text-center"
               type="button"
             >
               Post
@@ -187,70 +217,65 @@ function Events() {
               </p>
             </div>
           </div>
-          <h1 className="flex text-[#000] text-[17px] font-bold mt-5 gap-2">
-            {/* <FaUserFriends size={37} /> */}
-            {/* <img
-              className="w-[3rem] h-13"
-              src={"https://cdn-icons-png.flaticon.com/512/6682/6682701.png"}
-              alt="logo"
-            /> */}
-            User Details-{" "}
-          </h1>
-          <div className="grid grid-cols-3 justify-between border rounded-md p-5">
-            <div className="flex gap-2 items-center">
-              {/* <FaUserAlt size={35} /> */}
-              <img
-                className="w-[2rem] h-15"
-                src={
-                  "https://icon-library.com/images/username-icon-png/username-icon-png-0.jpg"
-                }
-                alt="logo"
-              />
-              <div className="flex">
-                <p className="text-black text-[15px]">
-                  Name
-                  <p className="text-black flex text-[15px]">
-                    {/* {rooms.user_name} */}
+          <div>
+            <h1 className="flex text-[#000] text-[17px] font-bold mt-5 gap-2">
+              User Details-{" "}
+            </h1>
+            <div className="grid grid-cols-3 justify-between border rounded-md p-5">
+              <div className="flex gap-2 items-center">
+                {/* <FaUserAlt size={35} /> */}
+                <img
+                  className="w-[2rem] h-15"
+                  src={
+                    "https://icon-library.com/images/username-icon-png/username-icon-png-0.jpg"
+                  }
+                  alt="logo"
+                />
+                <div className="flex">
+                  <p className="text-black text-[15px]">
+                    Name
+                    <p className="text-black flex text-[15px]">
+                      {/* {rooms.user_name} */}
+                    </p>
                   </p>
-                </p>
+                </div>
               </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              {/* <FaPhoneVolume size={35} /> */}
-              <img
-                className="w-[2rem] h-13"
-                src={
-                  "https://th.bing.com/th/id/OIP.5_xxdbU1J1GoLaVng_PBRQHaHa?rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="flex">
-                <p className="text-black text-[15px]">
-                  Phone number
-                  <p className="text-black flex text-[18px]">
-                    {/* {rooms.phone_number} */}
+              <div className="flex gap-2 items-center">
+                {/* <FaPhoneVolume size={35} /> */}
+                <img
+                  className="w-[2rem] h-13"
+                  src={
+                    "https://th.bing.com/th/id/OIP.5_xxdbU1J1GoLaVng_PBRQHaHa?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="flex">
+                  <p className="text-black text-[15px]">
+                    Phone number
+                    <p className="text-black flex text-[18px]">
+                      {/* {rooms.phone_number} */}
+                    </p>
                   </p>
-                </p>
+                </div>
               </div>
-            </div>
 
-            <div className="flex gap-2 items-center">
-              {/* <MdOutlineEmail size={35} /> */}
-              <img
-                className="w-[2rem] h-13"
-                src={
-                  "https://th.bing.com/th/id/OIP.XIRvuujS5JE0LJYwXfvxwQHaHa?rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="flex">
-                <p className="text-black text-[15px]">
-                  Email
-                  {/* <p className="text-black flex text-[18px]">{rooms.email}</p> */}
-                </p>
+              <div className="flex gap-2 items-center">
+                {/* <MdOutlineEmail size={35} /> */}
+                <img
+                  className="w-[2rem] h-13"
+                  src={
+                    "https://th.bing.com/th/id/OIP.XIRvuujS5JE0LJYwXfvxwQHaHa?rs=1&pid=ImgDetMain"
+                  }
+                  alt="logo"
+                />
+                <div className="flex">
+                  <p className="text-black text-[15px]">
+                    Email
+                    {/* <p className="text-black flex text-[18px]">{rooms.email}</p> */}
+                  </p>
+                </div>
               </div>
-            </div>
-            {/* <div className="mt-4 mb-2 border-t-2 border-black">
+              {/* <div className="mt-4 mb-2 border-t-2 border-black">
                 <div className="mt-2 flex items-center ">
                   <div className=" flex justify-between w-full text-[25px] font-['udemy-regular'] text-[#0b5e86] font-bold">
                     <p>Similar room In The Area</p>
@@ -264,9 +289,10 @@ function Events() {
                     </p>
                   </div>
                 </div> */}
-            {/* <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 xl:mt-5 xl:grid-cols-3 xl:gap-8">
+              {/* <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 xl:mt-5 xl:grid-cols-3 xl:gap-8">
                 {renderRooms()}
               </div> */}
+            </div>
           </div>
         </div>
         <div className="mt-5">
@@ -277,7 +303,81 @@ function Events() {
             }
             alt="logo"
           />
-          <div className="border-l pl-4 flex gap-2 flex-col mt-10">
+          <Card className="w-full max-w-md mt-4 rounded-none">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold">
+                About this Brand{" "}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <img
+                  src={
+                    "https://cdn11.bigcommerce.com/s-fg272t4iw0/images/stencil/1280x1280/products/238/491/C-10241__19959.1557813146.jpg?c=2&imbypass=on"
+                  }
+                  alt={`${name} logo`}
+                  className="w-16 h-16 rounded-full"
+                />
+                <div>
+                  <h2 className="text-xl font-bold">adidas</h2>
+                  <p className="text-sm text-gray-600">
+                    % positive feedback · items sold
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 text-sm text-gray-800">
+                <p className="flex gap-2">
+                  <Calendar className="w-4 h-4" />
+                  <p>Joined Sep 2016</p>
+                </p>
+                <p>
+                  "At adidas, our love for sport drives who we are and what we
+                  do. Every day. It is not only about faster shoes and fashion
+                  statements. Just as a shoe is more than padding and foam,
+                  there is more to us ..."
+                </p>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 text-sm text-gray-800 font-bold">
+                  See more <ChevronDown className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Button className="rounded-full w-full bg-blue-600 hover:bg-blue-700 text-white">
+                  Visit store
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full flex items-center justify-center rounded-full text-blue-600 border-blue-600"
+                >
+                  Contact
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full flex items-center justify-center rounded-full text-blue-600 border-blue-600"
+                >
+                  <Heart className="w-4 h-4 mr-2" />
+                  Save seller
+                </Button>
+              </div>
+              <div>
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold">
+                    Popular categories from <br></br>this store
+                  </h3>
+                  <a
+                    href="#"
+                    className="text-sm text-blue-600 font-medium underline"
+                  >
+                    See all
+                  </a>
+                </div>
+                {/* Add popular categories here */}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* <div className="border-l pl-4 flex gap-2 flex-col mt-10">
             <p className="text-[#d32323] font-bold text-[17px]">
               Are You Interested?
             </p>
@@ -725,7 +825,7 @@ function Events() {
             <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
               More events{" "}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
