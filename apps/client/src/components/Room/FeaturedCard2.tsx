@@ -23,6 +23,7 @@ import toast from "react-hot-toast";
 import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
 import { useloginstore } from "@/store";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface FeaturedCard2Props {
   room: RoomInterface;
@@ -34,6 +35,8 @@ export default function Component({ room }: FeaturedCard2Props) {
   const { data: session } = useSession();
   const { status } = useAuthStore();
   const { openLogin } = useloginstore();
+  const router = useRouter();
+
   function truncateCharacters(str: string, numCharacters: number) {
     if (str.length > numCharacters) {
       return str.slice(0, numCharacters) + "...";
@@ -145,7 +148,13 @@ export default function Component({ room }: FeaturedCard2Props) {
     }
   };
   return (
-    <Link href={`room/${room?._id}`}>
+    <div
+      onClick={() => {
+        router.push(
+          `/room?id=${room?._id}&title=${encodeURIComponent(room?.Title)}`
+        );
+      }}
+    >
       <Card className="relative lg:w-full w-[21.2rem] lg:h-[144px] sm:h-[585px] perspective-1000 group shadow-md hover:shadow-lg transition-shadow duration-300">
         <CardContent className="p-0 flex flex-col sm:flex-row h-full">
           <div className="relative w-[200px] sm:w-[300px] lg:w-[200px] h-[100%] overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
@@ -264,6 +273,6 @@ export default function Component({ room }: FeaturedCard2Props) {
           </div>
         </CardContent>
       </Card>
-    </Link>
+    </div>
   );
 }

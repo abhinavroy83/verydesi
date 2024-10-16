@@ -32,9 +32,8 @@ import { FaHandHoldingDollar } from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 const LeafletMapRoom = dynamic(() => import("@/components/map/LefletMapRoom"));
-import { useRouter } from "next/router";
 import { number } from "zod";
-import { useParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { FaSmoking } from "react-icons/fa";
 import { BiFoodTag } from "react-icons/bi";
 import { MdOutlinePets } from "react-icons/md";
@@ -68,8 +67,11 @@ interface Location {
   lng: number;
 }
 export default function RoomDetails() {
-  const param = useParams<{ tag: string; id: string }>();
-
+  // const param = useParams<{ tag: string; id: string }>();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const title = searchParams.get("title");
   const [amenityFilter, setAmenityFilter] = useState("");
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
@@ -78,13 +80,15 @@ export default function RoomDetails() {
   const { pluscart, minuscart } = useCartStore();
   const [wishliststatys, setWishlistStatus] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { status } = useAuthStore();
+  const [allRooms, setAllRooms] = useState<RoomInterface[]>([]);
+
+  const { currentCity, status } = useAuthStore();
   const { openLogin } = useloginstore();
   const fetchRoom = async () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://apiv2.verydesi.com/room/findsingleRoom/${param.id}`
+        `http://apiv2.verydesi.com/room/findsingleRoom/${id}`
       );
       // console.log(res.data.rooms);
       // console.log(res.data);
@@ -97,6 +101,13 @@ export default function RoomDetails() {
         setroomData(res.data);
         setLoading(false);
       }
+      const allRoomsResponse = await axios.get(
+        `http://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setAllRooms(allRoomsResponse.data.rooms);
     } catch (error) {
       setLoading(false);
 
@@ -110,15 +121,27 @@ export default function RoomDetails() {
   };
   useEffect(() => {
     fetchRoom();
-  }, []);
+  }, [id]);
+
+  const currentIndex = allRooms.findIndex((room) => room._id === id);
+
+  const navigateRoom = (direction: "prev" | "next") => {
+    const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1;
+    if (newIndex >= 0 && newIndex < allRooms.length) {
+      const newRoom = allRooms[newIndex];
+      router.push(
+        `/room?id=${newRoom._id}&Title=${encodeURIComponent(newRoom.Title)}`
+      );
+    }
+  };
   const { data: session } = useSession();
 
   const token = session?.accessToken;
 
-  const makewishlist = async (_id: string) => {
+  const makewishlist = async () => {
     if (status) {
       try {
-        const dat = { roomId: _id, status: true };
+        const dat = { roomId: id, status: true };
         const res = await axios.post(
           `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
           dat,
@@ -144,9 +167,9 @@ export default function RoomDetails() {
       toast.error("Removed from Favorites.");
     }
   };
-  const unwish = async (_id: string) => {
+  const unwish = async () => {
     try {
-      const dat = { roomId: _id, status: false };
+      const dat = { roomId: id, status: false };
       const res = await axios.post(
         `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
         dat,
@@ -175,7 +198,7 @@ export default function RoomDetails() {
       try {
         if (status) {
           const res = await axios.get(
-            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${param.id}`,
+            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -194,7 +217,7 @@ export default function RoomDetails() {
     };
 
     fetchWishStatus();
-  }, [param.id]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -252,7 +275,7 @@ export default function RoomDetails() {
                   <div
                     onClick={(e) => {
                       e.preventDefault();
-                      makewishlist(param.id);
+                      makewishlist();
                     }}
                   >
                     <Heart className="h-6 w-6 hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
@@ -262,7 +285,7 @@ export default function RoomDetails() {
                     className="cursor-pointer "
                     onClick={(e) => {
                       e.preventDefault();
-                      unwish(param.id);
+                      unwish();
                     }}
                   >
                     <Heart className="h-6 w-6 hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
@@ -281,6 +304,8 @@ export default function RoomDetails() {
           <div>
             <div className="flex gap-2">
               <button
+                onClick={() => navigateRoom("prev")}
+                disabled={currentIndex === 0}
                 className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
                 aria-label="Previous listing"
               >
@@ -288,7 +313,8 @@ export default function RoomDetails() {
                 PREV
               </button>
               <button
-                // onClick={onNext}
+                onClick={() => navigateRoom("next")}
+                disabled={currentIndex === allRooms.length - 1}
                 className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors"
                 aria-label="Next listing"
               >

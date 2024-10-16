@@ -209,6 +209,7 @@ const Page = () => {
             {currentPage > 1 && (
               <PaginationItem>
                 <PaginationPrevious
+                  className="border-2 border-black"
                   onClick={() => setCurrentPage((prev) => prev - 1)}
                 />
               </PaginationItem>
@@ -216,6 +217,7 @@ const Page = () => {
             {[...Array(totalPages)].map((_, index) => (
               <PaginationItem key={index}>
                 <PaginationLink
+                  className="border-2 border-black"
                   onClick={() => setCurrentPage(index + 1)}
                   isActive={currentPage === index + 1}
                 >
@@ -226,6 +228,7 @@ const Page = () => {
             {currentPage < totalPages && (
               <PaginationItem>
                 <PaginationNext
+                  className="border-2 border-black"
                   onClick={() => setCurrentPage((prev) => prev + 1)}
                 />
               </PaginationItem>
