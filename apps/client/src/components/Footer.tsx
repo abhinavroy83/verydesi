@@ -2,6 +2,7 @@
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Card, CardContent } from "./ui/card";
 
 export default function Footer() {
   return (
@@ -13,7 +14,27 @@ export default function Footer() {
           }}
           className="flex flex-col justify-center items-center mb-2 font-['udemy-regular']"
         >
-          <div className="cursor-pointer lg:w-[44rem] w-[22rem] bg-red-700 border-4 border-[#232f3e] justify-between gap-4 lg:gap-7 flex  lg:p-0 shadow-sm shadow-gray-500 rounded-md">
+          <div className="lg:w-[728px] w-[350px] lg:h-[90px] h-[250px] bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between overflow-hidden">
+            <div className="flex flex-col justify-center h-full pl-6 space-y-1">
+              <h1 className="text-white text-2xl font-bold">RED LETTER WEB </h1>
+              <p className="text-white text-lg font-semibold">
+                Get Your Business Online
+              </p>
+              <p className="text-yellow-200 text-sm">
+                Elevate Your Online Presence
+              </p>
+            </div>
+            <div className="flex items-center justify-end h-full pr-6">
+              <button className="bg-yellow-400 hover:bg-yellow-500 text-red-700 font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
+                Start Now
+              </button>
+            </div>
+            <img
+              className="w-[10rem] h-[7.5rem]"
+              src="https://www.pngmart.com/files/3/Business-People-PNG-Pic.png"
+            />
+          </div>
+          {/* <div className="cursor-pointer lg:w-[44rem] w-[22rem] bg-red-700 border-4 border-[#232f3e] justify-between gap-4 lg:gap-7 flex  lg:p-0 shadow-sm shadow-gray-500 rounded-md">
             <div className="flex flex-col gap-3 ">
               <span className="text-[#232f3e] bg-white rounded-br-full font-bold px-6 text-[18px]">
                 Very Desi Guides
@@ -32,7 +53,7 @@ export default function Footer() {
               src={`https://res.cloudinary.com/druohnmyv/image/upload/v1724996141/R.2894cf285c04316dd503b8d215827e2c_vbweas.png`}
               alt="logo"
             />
-          </div>
+          </div> */}
         </div>
 
         <div className=" mx-auto mt-8">
