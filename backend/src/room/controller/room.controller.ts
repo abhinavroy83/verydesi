@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -59,5 +60,10 @@ export class RoomController {
   ) {
     const userId = req.user.userId;
     return this.roomService.updateRoom(roomId, updateRoomDto, userId);
+  }
+  @UseGuards(JwtGuard)
+  @Delete('delete-room/:roomId')
+  async deleteroom(@Param('roomId') roomId: string) {
+    return this.roomService;
   }
 }

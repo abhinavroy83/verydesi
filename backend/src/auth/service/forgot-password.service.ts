@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Inject,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Authupdatpassword, AuthValidEmail, AuthValidPassword } from '../dto';
@@ -40,6 +41,7 @@ export class ForgotPasswordService {
     }
   }
 
+  // through email link
   async resetpassword(token: string, password: AuthValidPassword) {
     try {
       const payload = await this.jwt.verifyAsync(token, {
@@ -59,22 +61,56 @@ export class ForgotPasswordService {
       throw new UnauthorizedException('Failed to reset password');
     }
   }
+
+  // in user dashboard
   async updatepassword(userId: string, password: Authupdatpassword) {
     try {
+      const user = await this.userModel.findById(userId);
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+      const isPasswordCorrect = await argon.verify(
+        user.password,
+        password.oldpassword,
+      );
+      if (!isPasswordCorrect) {
+        throw new UnauthorizedException('Incorrect current password');
+      }
       const hashpassword = await argon.hash(password.newpassword);
-      const user = await this.userModel.findByIdAndUpdate(
+
+      await this.userModel.findByIdAndUpdate(
         { _id: userId },
         { password: hashpassword },
       );
-      if (!user) {
-        throw new UnauthorizedException('user not found');
-      }
+
       await this.sendPasswordChangeConfirmation(user.email);
 
       return { success: true, message: 'Password updated successfully' };
     } catch (error) {
       console.error('Error updating password:', error);
       return { success: false, message: 'Password update failed', error };
+    }
+  }
+
+  async deleteAccount(userId: string, password: AuthValidPassword) {
+    try {
+      const user = await this.userModel.findById(userId);
+
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      const isPasswordCorrect = await argon.verify(
+        user.password,
+        password.password,
+      );
+      if (!isPasswordCorrect) {
+        throw new UnauthorizedException('Incorrect password');
+      }
+      await this.userModel.findByIdAndDelete(userId);
+      return { success: true, message: 'Account deleted successfully' };
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      return { success: false, message: 'Account deletion failed', error };
     }
   }
 

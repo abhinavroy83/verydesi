@@ -19,6 +19,7 @@ export class RoomService {
     @Inject('ROOM_MODEL') private roomModel: Model<IRoom>,
   ) {
     cron.schedule('0 0 * * *', this.updateRoomVisibility);
+    cron.schedule('0 1 * * *', this.deleteExpiredRooms);
   }
   async getAllRoomByArea(area: string) {
     const cacheKey = `area: ${area}`;
@@ -107,6 +108,22 @@ export class RoomService {
       throw new Error(`Error while posting room: ${error.message}`);
     }
   }
+
+  async DeleteRoom(roomId: string) {
+    try {
+      const room = await this.roomModel.findByIdAndDelete({ _id: roomId });
+      if (!room) {
+        throw new NotFoundException('Room not found');
+      }
+      return { success: true, message: 'Room deleted successfully' };
+    } catch (error) {
+      throw new Error(`Error while delete room: ${error.message}`);
+    }
+  }
+
+
+  
+  //check below later
 
   async getVisibleRoomsByArea(area: string) {
     try {

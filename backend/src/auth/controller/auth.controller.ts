@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -69,5 +70,12 @@ export class AuthController {
   updatepassword(@Request() req, @Body() password: Authupdatpassword) {
     const userId = req.user.userId;
     return this.forgotPasswordService.updatepassword(userId, password);
+  }
+
+  @UseGuards(JwtGuard)
+  @Delete('delete-account')
+  deleteaccount(@Request() req, @Body() password: AuthValidPassword) {
+    const userId = req.user.userId;
+    return this.forgotPasswordService.deleteAccount(userId, password);
   }
 }
