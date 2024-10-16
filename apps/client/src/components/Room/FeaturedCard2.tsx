@@ -149,7 +149,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <div
-      className={`flex relative  cursor-pointer max-w-4xl flex-col font-['udemy-regular'] rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[165px]`}
+      className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[165px]`}
       onClick={() => {
         router.push(
           `/room?id=${room?._id}&title=${encodeURIComponent(room?.Title)}`
@@ -164,7 +164,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
           }
           alt="Room Image"
-          className="group-hover:scale-110 w-full object-cover transition-transform duration-500 ease-in duration-70 lg:h-full "
+          className="group-hover:scale-90 w-full object-cover transition-transform duration-500 ease-in duration-70 lg:h-full "
         />
       </div>
       {!status && (
