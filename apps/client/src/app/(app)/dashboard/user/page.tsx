@@ -98,7 +98,6 @@ export default function DashboardUserSettings() {
       console.log(error);
     }
   };
-
   useEffect(() => {
     fetchuser();
   }, [token]);
@@ -184,9 +183,13 @@ export default function DashboardUserSettings() {
                     <Input {...field} disabled type="email" />
                   )}
                 />
-                {!isEditing && (
+                {userData?.IsEmailVerified ? (
                   <p className="text-sm text-green-600 mt-1">
                     Email is verified
+                  </p>
+                ) : (
+                  <p className="text-sm text-red-600 mt-1">
+                    Email not verified
                   </p>
                 )}
               </div>

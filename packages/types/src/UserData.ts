@@ -11,4 +11,6 @@ export interface UserData {
   state: string;
   country: string;
   pin: string;
+
+  IsEmailVerified: boolean;
 }
