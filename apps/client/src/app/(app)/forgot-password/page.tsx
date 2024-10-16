@@ -14,15 +14,24 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Lock, Mail, ArrowRight, CheckCircle } from "lucide-react";
+import axios from "axios";
 
 export default function Component() {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send a request to your backend
-    setIsSubmitted(true);
+    try {
+      const res = await axios.post(
+        "http://apiv2.verydesi.com/auth/forgot-passsword",
+        email
+      );
+      console.log(res);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
