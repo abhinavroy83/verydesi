@@ -131,9 +131,7 @@ export default function RoomDetails() {
     const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1;
     if (newIndex >= 0 && newIndex < allRooms.length) {
       const newRoom = allRooms[newIndex];
-      router.push(
-        `/room?id=${newRoom._id}&Title=${encodeURIComponent(newRoom.Title)}`
-      );
+      router.push(`/room/${newRoom._id}`);
     }
   };
   const { data: session } = useSession();
