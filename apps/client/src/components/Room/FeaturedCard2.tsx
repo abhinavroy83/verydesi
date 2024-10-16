@@ -148,13 +148,9 @@ export default function Component({ room }: FeaturedCard2Props) {
     }
   };
   return (
-    <div
+    <Link
+      href={`room/${room?._id}`}
       className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[146px]`}
-      onClick={() => {
-        router.push(
-          `/room?id=${room?._id}&title=${encodeURIComponent(room?.Title)}`
-        );
-      }}
     >
       <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] h-[300px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
         <img
@@ -268,6 +264,6 @@ export default function Component({ room }: FeaturedCard2Props) {
           </p>
         </p>
       </div>
-    </div>
+    </Link>
   );
 }

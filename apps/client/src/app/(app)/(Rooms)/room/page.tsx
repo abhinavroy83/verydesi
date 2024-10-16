@@ -71,9 +71,7 @@ interface Location {
 export default function RoomDetails() {
   // const param = useParams<{ tag: string; id: string }>();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-  const title = searchParams.get("title");
+  const param = useParams<{ tag: string; id: string }>();
   const [amenityFilter, setAmenityFilter] = useState("");
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
@@ -92,7 +90,7 @@ export default function RoomDetails() {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://apiv2.verydesi.com/room/findsingleRoom/${id}`
+        `http://apiv2.verydesi.com/room/findsingleRoom/${param.id}`
       );
       // console.log(res.data.rooms);
       // console.log(res.data);
@@ -125,9 +123,9 @@ export default function RoomDetails() {
   };
   useEffect(() => {
     fetchRoom();
-  }, [id]);
+  }, [param.id]);
 
-  const currentIndex = allRooms.findIndex((room) => room._id === id);
+  const currentIndex = allRooms.findIndex((room) => room._id === param.id);
 
   const navigateRoom = (direction: "prev" | "next") => {
     const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1;
@@ -145,7 +143,7 @@ export default function RoomDetails() {
   const makewishlist = async () => {
     if (status) {
       try {
-        const dat = { roomId: id, status: true };
+        const dat = { roomId: param.id, status: true };
         const res = await axios.post(
           `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
           dat,
@@ -173,7 +171,7 @@ export default function RoomDetails() {
   };
   const unwish = async () => {
     try {
-      const dat = { roomId: id, status: false };
+      const dat = { roomId: param.id, status: false };
       const res = await axios.post(
         `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
         dat,
@@ -202,7 +200,7 @@ export default function RoomDetails() {
       try {
         if (status) {
           const res = await axios.get(
-            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${id}`,
+            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${param.id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -221,7 +219,7 @@ export default function RoomDetails() {
     };
 
     fetchWishStatus();
-  }, [id]);
+  }, [param.id]);
 
   if (loading) {
     return (

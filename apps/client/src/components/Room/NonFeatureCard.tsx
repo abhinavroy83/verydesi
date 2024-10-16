@@ -144,14 +144,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
 
   return (
-    <div
-    className=" cursor-pointer"
-      onClick={() => {
-        router.push(
-          `/room?id=${room?._id}&title=${encodeURIComponent(room?.Title)}`
-        );
-      }}
-    >
+    <Link className=" cursor-pointer" href={`room/${room?._id}`}>
       <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[270px] lg:h-[80px]">
         <CardContent className="py-1 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -266,6 +259,6 @@ export default function Component({ room }: FeaturedCard2Props) {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </Link>
   );
 }
