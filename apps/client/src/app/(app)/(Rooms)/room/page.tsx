@@ -488,6 +488,7 @@ export default function RoomDetails() {
               </div>
             </CardContent>
           </Card>
+          
         </div>
 
         <div className="space-y-6 lg:mt-8">
