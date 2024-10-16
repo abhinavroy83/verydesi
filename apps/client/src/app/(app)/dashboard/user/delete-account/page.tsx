@@ -39,12 +39,17 @@ export default function Component() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col w-full py-4">
+      <div className="flex flex-col w-full">
+        <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2  flex justify-between w-full">
+          <h2 className="text-2xl font-bold flex gap-1 items-center">
+            <Trash2Icon className="mr-2" /> Update Password
+          </h2>
+        </div>
         <nav
           className="flex  mb-4 text-sm text-gray-500 px-4"
           aria-label="Breadcrumb"
         >
-          <ol className="inline-flex items-center space-x-1 md:space-x-3">
+          <ol className="inline-flex items-center space-x-1 md:space-x-3 mt-4">
             <li className="inline-flex items-center">
               <Link
                 href="/dashboard"
@@ -74,11 +79,11 @@ export default function Component() {
             </li>
           </ol>
         </nav>
-        <Card className="p-4 max-w-2xl w-full lg:ml-3">
+        <Card className="p-2 max-w-2xl w-full lg:ml-3">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-red-600">
+            {/* <CardTitle className="text-2xl font-bold text-red-600">
               Delete Account
-            </CardTitle>
+            </CardTitle> */}
             <CardDescription>
               We're sorry to see you go. Please note that this action is
               irreversible.
