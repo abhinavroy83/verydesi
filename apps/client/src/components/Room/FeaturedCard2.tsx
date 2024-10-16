@@ -149,7 +149,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <div
-      className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[165px]`}
+      className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[146px]`}
       onClick={() => {
         router.push(
           `/room?id=${room?._id}&title=${encodeURIComponent(room?.Title)}`
