@@ -275,23 +275,14 @@ function Events() {
                   </p>
                 </div>
               </div>
-              {/* <div className="mt-4 mb-2 border-t-2 border-black">
-                <div className="mt-2 flex items-center ">
-                  <div className=" flex justify-between w-full text-[25px] font-['udemy-regular'] text-[#0b5e86] font-bold">
-                    <p>Similar room In The Area</p>
-                    <p
-                      className=" cursor-pointer"
-                      onClick={() => {
-                        navigate("/rooms");
-                      }}
-                    >
-                      See full list of Roommates
-                    </p>
-                  </div>
-                </div> */}
-              {/* <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 xl:mt-5 xl:grid-cols-3 xl:gap-8">
-                {renderRooms()}
-              </div> */}
+              <section className="container mx-auto px-4">
+                <h2 className="text-2xl font-bold mb-6">Similar Rooms</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {allRooms.slice(0, 3).map((even) => (
+                    <Similareventcard key={room._id} room={room} />
+                  ))}
+                </div>
+              </section>
             </div>
           </div>
         </div>
