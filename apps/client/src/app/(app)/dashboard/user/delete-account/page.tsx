@@ -22,19 +22,38 @@ import {
 import { AlertCircle, ChevronRight, Trash2Icon } from "lucide-react";
 import { DashboardLayout } from "@/components/layout";
 import Link from "next/link";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 export default function Component() {
   const [password, setPassword] = useState("");
   const [reason, setReason] = useState("");
   const [customReason, setCustomReason] = useState("");
+  const { data: session, status } = useSession();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the account deletion logic
-    console.log("Account deletion submitted", {
-      password,
-      reason: reason === "other" ? customReason : reason,
-    });
+    const token = session?.accessToken;
+    if (!token) {
+      throw new Error("token not found");
+    }
+    try {
+      const res = await axios({
+        method: "delete",
+        url: "http://apiv2.verydesi.com/auth/delete-account",
+        data: { password },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res);
+      console.log("Account deletion submitted", {
+        password,
+        reason: reason === "other" ? customReason : reason,
+      });
+    } catch (error) {
+      console.error("Error during account deletion:", error);
+    }
   };
 
   return (

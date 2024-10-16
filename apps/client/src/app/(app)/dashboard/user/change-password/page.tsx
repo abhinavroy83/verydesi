@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,27 +26,55 @@ import { passwordSchema } from "@/schemas";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 type PasswordFormValues = z.infer<typeof passwordSchema>;
 
 export default function Component() {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
   });
 
-  const OnSubmit = (data: PasswordFormValues) => {
-    // Here you would typically handle the password update logic
-    console.log("Password update submitted");
+  const newPassword = watch("newpassword");
+  const confirmPassword = watch("confirmPassword");
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    setPasswordsMatch(newPassword === confirmPassword);
+  }, [newPassword, confirmPassword]);
+
+  const OnSubmit = async (data: PasswordFormValues) => {
+    const token = session?.accessToken;
+    if (!token) {
+      throw new Error("token not found");
+    }
+    if (passwordsMatch) {
+      console.log(data);
+      try {
+        const res = await axios.patch(
+          "http://apiv2.verydesi.com/auth/update-password",
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(res);
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
   };
 
   return (
@@ -99,15 +128,13 @@ export default function Component() {
           <CardContent>
             <form onSubmit={handleSubmit(OnSubmit)} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="current-password">Current Password</Label>
+                <Label htmlFor="oldpassword">Current Password</Label>
                 <div className="relative">
                   <Input
-                    id="current-password"
+                    id="oldpassword"
                     type={showCurrentPassword ? "text" : "password"}
-                    value={currentPassword}
-                    {...register("currentPassword")}
+                    {...register("oldpassword")}
                     className="pr-10"
-                    required
                   />
                   <button
                     type="button"
@@ -121,16 +148,20 @@ export default function Component() {
                     )}
                   </button>
                 </div>
+                {errors.oldpassword && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.oldpassword.message}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="new-password">New Password</Label>
+                <Label htmlFor="newpassword">New Password</Label>
                 <div className="relative">
                   <Input
-                    id="new-password"
+                    id="newpassword"
                     type={showNewPassword ? "text" : "password"}
-                    {...register("newPassword")}
+                    {...register("newpassword")}
                     className="pr-10"
-                    required
                   />
                   <button
                     type="button"
@@ -144,35 +175,53 @@ export default function Component() {
                     )}
                   </button>
                 </div>
+                {errors.newpassword && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.newpassword.message}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm New Password</Label>
+                <Label htmlFor="confirmPassword">Confirm New Password</Label>
                 <Input
-                  id="confirm-password"
+                  id="confirmPassword"
                   type="password"
                   {...register("confirmPassword")}
-                  required
                 />
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+                {!passwordsMatch && (
+                  <p className="text-red-500 text-sm mt-1">
+                    Passwords do not match
+                  </p>
+                )}
               </div>
+              <CardFooter className="flex flex-col space-y-4 px-0">
+                <div
+                  className="flex items-center p-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50"
+                  role="alert"
+                >
+                  <AlertCircle className="flex-shrink-0 inline w-4 h-4 mr-3" />
+                  <span className="sr-only">Info</span>
+                  <div>
+                    <span className="font-medium">Tip:</span> Use a strong,
+                    unique password that you don't use for other accounts.
+                  </div>
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full sm:w-auto"
+                  disabled={!passwordsMatch}
+                >
+                  <LockIcon className="w-4 h-4 mr-2" />
+                  Update Password
+                </Button>
+              </CardFooter>
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <div
-              className="flex items-center p-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50"
-              role="alert"
-            >
-              <AlertCircle className="flex-shrink-0 inline w-4 h-4 mr-3" />
-              <span className="sr-only">Info</span>
-              <div>
-                <span className="font-medium">Tip:</span> Use a strong, unique
-                password that you don't use for other accounts.
-              </div>
-            </div>
-            <Button type="submit" className="w-full sm:w-auto">
-              <LockIcon className="w-4 h-4 mr-2" />
-              Update Password
-            </Button>
-          </CardFooter>
         </Card>
       </div>
     </DashboardLayout>

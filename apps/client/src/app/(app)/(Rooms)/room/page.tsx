@@ -84,6 +84,7 @@ export default function RoomDetails() {
 
   const { currentCity, status } = useAuthStore();
   const { openLogin } = useloginstore();
+  
   const fetchRoom = async () => {
     try {
       setLoading(true);
