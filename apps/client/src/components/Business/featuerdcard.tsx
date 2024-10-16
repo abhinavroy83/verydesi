@@ -1,5 +1,4 @@
 import { Check, Heart, Star, TicketCheck } from "lucide-react";
-
 import { Card, CardContent } from "@/components/ui/card";
 
 export function FeaturedBusinessCard() {
@@ -22,7 +21,6 @@ export function FeaturedBusinessCard() {
               <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
                 <p className="left-5 top-2 text-[22px] text-green-700 text-right">
                   <div className="flex items-center">
-                  
                     {/* <span className="ml-2 text-sm text-gray-600">
                       4.5 (11 reviews)
                     </span> */}
