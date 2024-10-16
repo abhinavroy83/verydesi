@@ -248,7 +248,7 @@ export default function Navbar() {
               ) : (
                 <div
                   onClick={() => router.push("/sign-in")}
-                  className=" mt-9 leading-4 flex items-center gap-2 mr-0 lg:mr-3 text-gray-700 hover:text-gray-900"
+                  className="leading-4 flex items-center gap-2 mr-0 lg:mr-3 text-gray-700 hover:text-gray-900"
                 >
                   <User />
                   <p
