@@ -54,6 +54,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Slash } from "lucide-react";
+import { useUserData } from "@/hooks/use-userData";
 
 const isValidAmenityIcon = (iconName: string): iconName is AmenityType => {
   return iconName in AmenityIcon;
@@ -84,7 +85,8 @@ export default function RoomDetails() {
 
   const { currentCity, status } = useAuthStore();
   const { openLogin } = useloginstore();
-  
+
+  const { userData } = useUserData();
   const fetchRoom = async () => {
     try {
       setLoading(true);
@@ -614,11 +616,20 @@ export default function RoomDetails() {
                 <form className="space-y-4">
                   <div>
                     <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Your name" />
+                    <Input
+                      defaultValue={userData?.firstName}
+                      id="name"
+                      placeholder="Your name"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="Your email" />
+                    <Input
+                      defaultValue={userData?.email}
+                      id="email"
+                      type="email"
+                      placeholder="Your email"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="message">Message</Label>

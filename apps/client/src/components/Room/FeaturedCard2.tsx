@@ -149,130 +149,125 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <div
+      className={`flex relative  cursor-pointer max-w-4xl flex-col font-['udemy-regular'] rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[165px]`}
       onClick={() => {
         router.push(
           `/room?id=${room?._id}&title=${encodeURIComponent(room?.Title)}`
         );
       }}
     >
-      <Card className="relative lg:w-full w-[21.2rem] lg:h-[144px] sm:h-[585px] perspective-1000 group shadow-md hover:shadow-lg transition-shadow duration-300">
-        <CardContent className="p-0 flex flex-col sm:flex-row h-full">
-          <div className="relative w-[200px] sm:w-[300px] lg:w-[200px] h-[100%] overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
-            <Image
-              src={
-                room && room.Imgurl && room.Imgurl.length > 0
-                  ? room.Imgurl[0]
-                  : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
-              }
-              alt="Room Image"
-              layout="fill"
-              objectFit="cover"
-              className="group-hover:scale-110 object-cover transition-transform duration-500 ease-in duration-70 w-full lg:h-full "
-            />
-          </div>
-          {!status && (
+      <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] h-[300px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
+        <img
+          src={
+            room && room.Imgurl && room.Imgurl.length > 0
+              ? room.Imgurl[0]
+              : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
+          }
+          alt="Room Image"
+          className="group-hover:scale-110 w-full object-cover transition-transform duration-500 ease-in duration-70 lg:h-full "
+        />
+      </div>
+      {!status && (
+        <div
+          className="absolute bottom-[1.5rem] right-[1.5rem]"
+          onClick={(e) => {
+            e.preventDefault();
+            openLogin();
+          }}
+        >
+          <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+        </div>
+      )}
+      {status && (
+        <div className="absolute bottom-[1.5rem] right-[1.5rem]">
+          {!wishliststatys ? (
             <div
-              className="absolute bottom-[1.5rem] right-[1.5rem]"
               onClick={(e) => {
                 e.preventDefault();
-                openLogin();
+                makewishlist(room?._id);
               }}
             >
               <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
             </div>
+          ) : (
+            <div
+              className="cursor-pointer "
+              onClick={(e) => {
+                e.preventDefault();
+                unwish(room?._id);
+              }}
+            >
+              <Heart className=" hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+            </div>
           )}
-          {status && (
-            <div className="absolute bottom-[1.5rem] right-[1.5rem]">
-              {!wishliststatys ? (
-                <div
-                  onClick={(e) => {
-                    e.preventDefault();
-                    makewishlist(room?._id);
-                  }}
-                >
-                  <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-                </div>
+        </div>
+      )}
+
+      <div className="flex flex-col w-full flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+        <div>
+          <h2 className="text-[21px] font-sans  font-bold text-gray-800  transition-colors duration-300">
+            {room?.Title && truncateCharacters(room?.Title, 65)}
+          </h2>
+
+          <div className="flex  flex-wrap items-center text-[17px] text-gray-600  transition-colors duration-300">
+            <div className="flex items-center mr-2 sm:mb-0">
+              <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
+              <span>
+                {room?.postingincity},
+                {room?.state &&
+                  (room.state.length > 2
+                    ? stateAbbreviations[room.state]
+                    : room.state)}
+              </span>
+            </div>
+            <div className="flex items-center">
+              {room?.Preferred_gender === "Male only" ? (
+                <>
+                  <img
+                    className="h-5 w-5 mx-1"
+                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
+                  />
+                  {/* <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-blue-700" /> */}
+                  <span>Male</span>
+                </>
+              ) : room?.Preferred_gender === "Female only" ? (
+                <>
+                  <img
+                    className="h-5 w-5  mx-1"
+                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
+                  />
+                  {/* <IoIosFemale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
+                  <span>Female</span>
+                </>
               ) : (
-                <div
-                  className="cursor-pointer "
-                  onClick={(e) => {
-                    e.preventDefault();
-                    unwish(room?._id);
-                  }}
-                >
-                  <Heart className=" hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-                </div>
+                <>
+                  <img
+                    className="h-5 w-5  mx-1"
+                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
+                  />
+                  {/* <IoIosTransgender className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
+                  <span>Any</span>
+                </>
               )}
             </div>
-          )}
-
-          <div className="flex flex-col flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
-            <div>
-              <h2 className="text-[21px] font-sans  font-bold text-gray-800  transition-colors duration-300">
-                {room?.Title && truncateCharacters(room?.Title, 72)}
-              </h2>
-
-              <div className="flex  flex-wrap items-center text-[17px] text-gray-600  transition-colors duration-300">
-                <div className="flex items-center mr-2 sm:mb-0">
-                  <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
-                  <span>
-                    {room?.postingincity},
-                    {room?.state &&
-                      (room.state.length > 2
-                        ? stateAbbreviations[room.state]
-                        : room.state)}
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  {room?.Preferred_gender === "Male only" ? (
-                    <>
-                      <img
-                        className="h-5 w-5 mx-1"
-                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
-                      />
-                      {/* <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-blue-700" /> */}
-                      <span>Male</span>
-                    </>
-                  ) : room?.Preferred_gender === "Female only" ? (
-                    <>
-                      <img
-                        className="h-5 w-5  mx-1"
-                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
-                      />
-                      {/* <IoIosFemale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
-                      <span>Female</span>
-                    </>
-                  ) : (
-                    <>
-                      <img
-                        className="h-5 w-5  mx-1"
-                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
-                      />
-                      {/* <IoIosTransgender className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
-                      <span>Any</span>
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="flex lg:flex-col flex-wrap text-[17px] text-gray-500  transition-colors duration-300">
-                <div className="flex items-center mr-2 sm:mb-0">
-                  <User className="h-5 w-5 mr-1 text-[#054687]" />
-                  <span>Posted by: {room?.user_name}</span>
-                </div>
-                <div className="flex items-center">
-                  <Clock className="h-5 w-5 mr-1 text-[#054687]" />
-                  <span>{calculateTimeDifference(room?.postedon)}</span>
-                </div>
-              </div>
-            </div>
-            <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
-              <p className="left-5 top-2 text-[22px] text-green-700 text-right">
-                ${room?.Expected_Rooms}
-              </p>
-            </p>
           </div>
-        </CardContent>
-      </Card>
+          <div className="flex lg:flex-col flex-wrap text-[17px] text-gray-500  transition-colors duration-300">
+            <div className="flex items-center mr-2 sm:mb-0">
+              <User className="h-5 w-5 mr-1 text-[#054687]" />
+              <span>Posted by: {room?.user_name}</span>
+            </div>
+            <div className="flex items-center">
+              <Clock className="h-5 w-5 mr-1 text-[#054687]" />
+              <span>{calculateTimeDifference(room?.postedon)}</span>
+            </div>
+          </div>
+        </div>
+        <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
+          <p className="left-5 top-2 text-[22px] text-green-700 text-right">
+            ${room?.Expected_Rooms}
+          </p>
+        </p>
+      </div>
     </div>
   );
 }

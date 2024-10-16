@@ -21,9 +21,9 @@ export class ForgotPasswordService {
 
   async sendPasswordResetEmail(email: AuthValidEmail) {
     try {
-      const user = await this.userModel.findOne(email);
+      const user = await this.userModel.findOne({ email: email.email });
       if (!user) {
-        throw new BadRequestException('User Not Found');
+        return { status: false, msg: 'User not found' };
       }
       const jwttoken = await this.jwt.signAsync(
         { sub: user._id },
@@ -35,6 +35,7 @@ export class ForgotPasswordService {
       await this.sendemailverification(user.email, jwttoken);
       return { msg: 'Sucessfully Email Send' };
     } catch (error) {
+      console.log(error);
       throw new UnauthorizedException(
         'Something went wrong while sending reset email',
       );
