@@ -34,16 +34,7 @@ import ShareButton from "@/components/Popups/ShareButton";
 import { Button } from "@/components/ui/button";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { array } from "zod";
 import Similareventcard from "@/components/Events/Similareventcard";
-interface SellerProfileProps {
-  name: string;
-  logo: string;
-  positiveFeedback: number;
-  itemsSold: string;
-  joinDate: string;
-  description: string;
-}
 
 function Events() {
   return (
@@ -301,7 +292,7 @@ function Events() {
                     src={
                       "https://cdn11.bigcommerce.com/s-fg272t4iw0/images/stencil/1280x1280/products/238/491/C-10241__19959.1557813146.jpg?c=2&imbypass=on"
                     }
-                    alt={`${name} logo`}
+                    // alt={`${name} logo`}
                     className="w-16 h-16 rounded-full"
                   />
                   <div>
