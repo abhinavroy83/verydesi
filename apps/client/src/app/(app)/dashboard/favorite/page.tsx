@@ -26,6 +26,7 @@ import { useSession } from "next-auth/react";
 import { RoomInterface } from "@myrepo/types";
 import toast from "react-hot-toast";
 import useCartStore from "@/store/useCartStore";
+import { useRouter } from "next/navigation";
 
 export default function FavoritesPage() {
   const [loading, setLoading] = useState(true);
@@ -33,7 +34,7 @@ export default function FavoritesPage() {
   const [favorites, setFavorites] = useState<RoomInterface[]>([]);
   const token = session?.accessToken;
   const { pluscart, minuscart, setCartCount } = useCartStore();
-
+  const router = useRouter();
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -74,7 +75,8 @@ export default function FavoritesPage() {
             },
           }
         );
-        console.log(listResponse.data.count);
+        // console.log(listResponse)
+        // console.log(listResponse.data.count);
         setCartCount(listResponse?.data.count);
         if (listResponse.data.status === "error") {
           console.error(listResponse.data.msg);
@@ -88,11 +90,11 @@ export default function FavoritesPage() {
 
         const roomResponse = await Promise.all(
           list.map((roomId: any) =>
-            axios.get(`https://api.verydesi.com/api/getspecificroom/${roomId}`)
+            axios.get(`http://apiv2.verydesi.com/room/findsingleRoom/${roomId}`)
           )
         );
-
-        const rooms = roomResponse.map((response) => response.data.rooms);
+        // console.log(roomResponse);
+        const rooms = roomResponse.map((response) => response.data);
 
         if (isMounted) {
           setFavorites(rooms);
@@ -186,7 +188,15 @@ export default function FavoritesPage() {
                   <TableCell>{favorite.city}</TableCell>
                   <TableCell>${favorite.Expected_Rooms}</TableCell>
                   <TableCell>
-                    <Button variant="outline" size="sm">
+                    <Button
+                      onClick={() => {
+                        router.push(
+                          `/room?id=${favorite?._id}&title=${encodeURIComponent(favorite?.Title)}`
+                        );
+                      }}
+                      variant="outline"
+                      size="sm"
+                    >
                       <ExternalLink className="w-4 h-4 mr-2" />
                       Click here
                     </Button>

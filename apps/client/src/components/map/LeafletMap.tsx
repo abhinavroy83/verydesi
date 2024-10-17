@@ -39,7 +39,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
   const fetchCoordinatesByCity = async (cityName: string) => {
     try {
       const res = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=2c4e1822d22e4f4ca5f6ca577b523dfe`
+        `https://api.opencagedata.com/geocode/v1/json?q=${cityName || "Portland"}&key=2c4e1822d22e4f4ca5f6ca577b523dfe`
       );
       const { lat, lng } = res.data.results[0].geometry;
       return { lat, lng };
@@ -53,7 +53,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
     try {
       const res = await axios.get(
         currentCity
-          ? `https://api.verydesi.com/api/getallrooms?city=${currentCity}`
+          ? `https://api.verydesi.com/api/getallrooms?city=${currentCity || "Portland"}`
           : `https://api.verydesi.com/api/getallrooms?lat=${lat}&lng=${lng}`
       );
       setLocData(
@@ -74,8 +74,10 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
         return; // If map is already initialized, do nothing
       }
 
-      if (currentCity) {
-        const cityCoords = await fetchCoordinatesByCity(currentCity);
+      if (currentCity || "Portland") {
+        const cityCoords = await fetchCoordinatesByCity(
+          currentCity || "Portland"
+        );
         if (cityCoords) {
           const { lat, lng } = cityCoords;
           if (mapContainerRef.current) {
