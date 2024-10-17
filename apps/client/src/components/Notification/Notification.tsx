@@ -51,7 +51,7 @@ export default function Notification() {
           Notifications
         </h2>
         <span className="bg-white text-black rounded-full px-2 py-1 text-sm font-semibold">
-          {visibleNotifications.length}
+          {/* {visibleNotifications.length} */}
         </span>
       </div>
       <AnimatePresence>
