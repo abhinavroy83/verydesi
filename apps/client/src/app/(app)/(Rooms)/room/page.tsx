@@ -12,8 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Icons } from "@/components/Room/Icons";
 import ShareButton from "@/components/Popups/ShareButton";
 import { RoomInterface } from "@myrepo/types";
 import axios from "axios";
@@ -32,12 +30,9 @@ import { FaHandHoldingDollar } from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 const LeafletMapRoom = dynamic(() => import("@/components/map/LefletMapRoom"));
-import { number } from "zod";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { FaSmoking } from "react-icons/fa";
 import { BiFoodTag } from "react-icons/bi";
 import { MdOutlinePets } from "react-icons/md";
-import { IoIosHeart } from "react-icons/io";
 import RoomSketon from "@/components/skeleton/RoomSkeleton";
 import dynamic from "next/dynamic";
 import useAuthStore from "@/store/useAuthStore";
@@ -50,12 +45,12 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Slash } from "lucide-react";
 import { useUserData } from "@/hooks/use-userData";
 import Similarroomcard from "@/components/Room/Similarroomcard";
+import { notFound, useRouter } from "next/navigation";
 
 const isValidAmenityIcon = (iconName: string): iconName is AmenityType => {
   return iconName in AmenityIcon;
@@ -68,11 +63,15 @@ interface Location {
   lat: number;
   lng: number;
 }
-export default function RoomDetails() {
+export default function RoomDetails({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   // const param = useParams<{ tag: string; id: string }>();
   const router = useRouter();
-  const param = useParams<{ tag: string; id: string }>();
-  const [amenityFilter, setAmenityFilter] = useState("");
+  const id = searchParams.id;
+  const title = searchParams.title;
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
     null
@@ -90,7 +89,7 @@ export default function RoomDetails() {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://apiv2.verydesi.com/room/findsingleRoom/${param.id}`
+        `http://apiv2.verydesi.com/room/findsingleRoom/${id}`
       );
       // console.log(res.data.rooms);
       // console.log(res.data);
@@ -123,15 +122,17 @@ export default function RoomDetails() {
   };
   useEffect(() => {
     fetchRoom();
-  }, [param.id]);
+  }, [id]);
 
-  const currentIndex = allRooms.findIndex((room) => room._id === param.id);
+  const currentIndex = allRooms.findIndex((room) => room._id === id);
 
   const navigateRoom = (direction: "prev" | "next") => {
     const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1;
     if (newIndex >= 0 && newIndex < allRooms.length) {
       const newRoom = allRooms[newIndex];
-      router.push(`/room/${newRoom._id}`);
+      router.push(
+        `/room?id=${newRoom._id}&title=${encodeURIComponent(newRoom?.Title)}`
+      );
     }
   };
   const { data: session } = useSession();
@@ -141,7 +142,7 @@ export default function RoomDetails() {
   const makewishlist = async () => {
     if (status) {
       try {
-        const dat = { roomId: param.id, status: true };
+        const dat = { roomId: id, status: true };
         const res = await axios.post(
           `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
           dat,
@@ -169,7 +170,7 @@ export default function RoomDetails() {
   };
   const unwish = async () => {
     try {
-      const dat = { roomId: param.id, status: false };
+      const dat = { roomId: id, status: false };
       const res = await axios.post(
         `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
         dat,
@@ -198,7 +199,7 @@ export default function RoomDetails() {
       try {
         if (status) {
           const res = await axios.get(
-            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${param.id}`,
+            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -217,7 +218,7 @@ export default function RoomDetails() {
     };
 
     fetchWishStatus();
-  }, [param.id]);
+  }, [id]);
 
   if (loading) {
     return (
@@ -225,6 +226,9 @@ export default function RoomDetails() {
         <RoomSketon />
       </div>
     );
+  }
+  if (!id) {
+    notFound();
   }
 
   return (

@@ -26,13 +26,13 @@ import { useSession } from "next-auth/react";
 import { RoomInterface } from "@myrepo/types";
 import toast from "react-hot-toast";
 import useCartStore from "@/store/useCartStore";
+import ConfirmationPopup from "@/components/Popups/confirmpopups";
 
 export default function roomsPage() {
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
   const [rooms, setrooms] = useState<RoomInterface[]>([]);
   const token = session?.accessToken;
-
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -69,6 +69,21 @@ export default function roomsPage() {
       isMounted = false;
     };
   }, [token]);
+
+  const deleteRoom = async (roomId: string) => {
+    try {
+      await axios.delete(`http://localhost:8000/room/delete-room/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setrooms((prevRooms) => prevRooms.filter((room) => room._id !== roomId));
+      toast.success("Room deleted successfully");
+    } catch (error) {
+      console.error("Error deleting room:", error);
+      toast.error("Failed to delete room");
+    }
+  };
 
   // Pagination logic
   const totalPages = Math.ceil(rooms.length / itemsPerPage);
@@ -149,13 +164,13 @@ export default function roomsPage() {
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button
+                    <ConfirmationPopup
+                      buttonText={<Trash2 className="w-4 h-4 text-red-500" />}
+                      title="Confirm Room Deletion"
+                      description={`Are you sure you want to delete the room "${favorite.Title}"? This action cannot be undone.`}
+                      onConfirm={() => deleteRoom(favorite._id)}
                       variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveFavorite(favorite._id)}
-                    >
-                      <Trash2 className="w-4 h-4 text-red-500" />
-                    </Button>
+                    />
                   </TableCell>
                 </TableRow>
               ))
