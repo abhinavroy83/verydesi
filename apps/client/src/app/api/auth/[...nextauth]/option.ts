@@ -42,10 +42,15 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      // Attach the access token to the session
 
       session.accessToken = token.accessToken as string;
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      const nextAuthUrl = process.env.NEXTAUTH_URL || baseUrl;
+      if (url.startsWith("/")) return `${nextAuthUrl}${url}`;
+      if (new URL(url).origin === nextAuthUrl) return url;
+      return nextAuthUrl;
     },
   },
   pages: {

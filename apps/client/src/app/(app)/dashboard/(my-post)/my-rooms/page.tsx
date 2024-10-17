@@ -72,7 +72,7 @@ export default function roomsPage() {
 
   const deleteRoom = async (roomId: string) => {
     try {
-      await axios.delete(`http://localhost:8000/room/delete-room/${roomId}`, {
+      await axios.delete(`http://apiv2.verydesi.com/room/delete-room/${roomId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

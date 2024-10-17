@@ -164,7 +164,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
           }
           alt="Room Image"
-          className="hover:scale-110 object-cover transition-transform duration-500 ease-in duration-70 w-full h-full"
+          className="hover:scale-110 w-full object-cover transition-transform duration-500 ease-in duration-70 lg:h-full "
         />
       </div>
       {!status && (
