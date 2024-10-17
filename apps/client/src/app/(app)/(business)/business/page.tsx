@@ -99,7 +99,7 @@ export default function Component() {
 
   return (
     <HomeLayout>
-      <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9">
+      <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3">
         <h2 className="text-2xl font-bold mb-4">Categories</h2>
         <div className="flex flex-wrap gap-2">
           {visibleCategories.map((category) => (
@@ -132,7 +132,7 @@ export default function Component() {
         </div>
         <div>
           <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-1">
-            <h1 className="capitalize text-[23px] lg:text-[23px] font-bold mt-4">
+            <h1 className="capitalize text-[23px] lg:text-[24px] font-bold mt-4">
               <p>Featured Business In </p>
             </h1>
             <div className="flex  gap-3 items-center">

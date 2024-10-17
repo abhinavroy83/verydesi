@@ -13,6 +13,7 @@ import {
   HelpCircle,
   LogOut,
   User,
+  Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -29,6 +30,8 @@ import ModernLogoutPopup from "./Popups/Logoutpop";
 import LogoutComponent from "./Popups/Logoutpop";
 import useCartStore from "@/store/useCartStore";
 import useAuthStore from "@/store/useAuthStore";
+import { BsSuitcase } from "react-icons/bs";
+import { MdOutlineBusinessCenter } from "react-icons/md";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -230,36 +233,37 @@ export default function Navbar() {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white"
+                className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <Home className="mr-2 h-5 w-5" /> HOME
+                <Home className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " /> HOME
               </Button>
               <Button
                 onClick={() => {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white"
+                className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <Users className="mr-2 h-5 w-5" /> ROOMMATES
+                <Users className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " /> ROOMMATES
               </Button>
               <Button
                 onClick={() => {
                   router.push("/business");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white"
+                className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <Users className="mr-2 h-5 w-5" /> BUSSINESS
+                <MdOutlineBusinessCenter className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                BUSINESS
               </Button>
               <Button
                 onClick={() => {
                   router.push("/events");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white"
+                className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <Users className="mr-2 h-5 w-5" /> EVENTS
+                <Calendar className="mr-2 h-4 w-4 group-hover:rotate-[360deg] transition-transform duration-300 " /> EVENTS
               </Button>
             </div>
             <div className="hidden md:flex items-center space-x-2 text-white">

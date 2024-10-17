@@ -39,7 +39,7 @@ export default function Component() {
 
   return (
     <HomeLayout>
-      <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9">
+      <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3">
         <div>
           <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-1">
             <h1 className="capitalize text-[23px] lg:text-[23px] font-bold">
@@ -89,14 +89,14 @@ export default function Component() {
 
               <button
                 type="submit"
-                className="rounded-md bg-green-800 whitespace-nowrap py-2 px-3 lg:px-2 text-[1rem] lg:text-[1.1rem] items-center text-white shadow-sm shadow-[#ccc] hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                className="rounded-md bg-green-800 font-bold whitespace-nowrap py-2 px-3 lg:px-2 text-[16px] items-center text-white shadow-sm shadow-[#ccc] hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
               >
                 Post Business
               </button>
             </div>
           </div>
         </div>
-        <div className="w-full max-w-[77rem] mt-5 mx-auto">
+        <div className="w-full max-w-[77rem] mt-3 mx-auto">
           <Carousel
             opts={{
               align: "start",
@@ -117,10 +117,10 @@ export default function Component() {
           </Carousel>
         </div>
       </div>
-      <h1 className="capitalize text-[23px] lg:text-[23px] font-bold">
+      <h1 className="capitalize text-[23px] lg:text-[23px] font-bold mt-0">
         <p>More Featured Events In </p>
       </h1>
-      <div className="flex flex-col gap-3 mt-2 mb-10">
+      <div className="flex flex-col gap-2 mt-2 mb-10">
         {[...Array(6)].map((_, index) => (
           <EventNonfeaturedCard key={index} />
         ))}

@@ -16,20 +16,19 @@ export function FeaturedBusinessCard() {
         <CardContent className="p-3 sm:w-2/3">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-xl font-semibold text-gray-800">
+              <h2 className="text-[22px] font-sans font-bold text-gray-800">
                 Modern Downtown Loft
               </h2>
               <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
                 <p className="left-5 top-2 text-[22px] text-green-700 text-right">
                   <div className="flex items-center">
-                  
-                    {/* <span className="ml-2 text-sm text-gray-600">
+                    {/* <span className="ml-2  text-gray-600">
                       4.5 (11 reviews)
                     </span> */}
                   </div>
                 </p>
               </p>
-              <div className="flex items-center mt-1">
+              <div className="flex items-center mt-1 text-[17px] text-gray-600">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -38,14 +37,12 @@ export function FeaturedBusinessCard() {
                     />
                   ))}
                 </div>
-                <span className="ml-2 text-sm text-gray-600">
-                  4.5 (11 reviews)
-                </span>
+                <span className="ml-2 text-gray-600">4.5 (11 reviews)</span>
               </div>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className=" text-gray-600 mt-1">
                 2808 Rt North Brunswick, New Jersey
               </p>
-              <p className="text-sm font-semibold text-gray-800 mt-1">
+              <p className=" font-semibold text-gray-800 mt-1">
                 602-600-0217 (Pin: 76065)
               </p>
             </div>
