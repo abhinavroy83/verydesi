@@ -107,11 +107,10 @@ export default function Navbar() {
                   src="https://res.cloudinary.com/druohnmyv/image/upload/v1726470942/finallogo_oamxsn.png"
                   className="w-[7rem] h-[5rem]"
                 />
-                <div className="space-y-2 ml-2">
-                  <h2 className="text-[18px] font-bold text-yellow-300">
+                <div className=" ml-2 ">
+                  <span className="text-white"> Healthy Baby</span>
+                  <h2 className="text-[18px] font-bold text-yellow-300 mt-0">
                     Lifepoint Lactation
-                    <br />
-                    <span className="text-white"> Healthy Baby</span>
                   </h2>
                 </div>
                 <img
@@ -122,7 +121,7 @@ export default function Navbar() {
               <Badge className="absolute top-4 right-2 bg-pink-500 text-white px-3 py-1">
                 Talk to Breastfeeding Educator
               </Badge>
-              {/* <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div> */}
+              <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-yellow-700 rounded-full opacity-20"></div>
               <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
             </div>
             {/* <div className="w-[40rem] h-[100px] bg-gray-800 p-6 rounded-lg shadow-md flex items-center mt-6 justify-between">
