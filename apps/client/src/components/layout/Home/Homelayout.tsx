@@ -8,11 +8,16 @@ const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
 
 export function HomeLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[9.5rem] mx-auto px-4 sm:px-6">
+    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6">
       <div className="w-full lg:w-4/5 mr-4">{children}</div>
       <div className="w-full mt-2 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
         <LeafletMap />
-        <div className="w-full max-w-md mx-auto bg-[#0e2144] text-white overflow-hidden shadow-lg h-[270px]">
+        <div
+          onClick={() => {
+            window.open("https://g.co/fi/r/Y2A1CA", "_blank");
+          }}
+          className="w-full max-w-md mx-auto bg-[#0e2144] text-white overflow-hidden shadow-lg h-[290px] cursor-pointer"
+        >
           <div className="flex justify-between">
             <img
               src="https://www.onepay.com/wp-content/uploads/2021/09/AdobeStock_601870823-600x477.jpg"
@@ -36,7 +41,7 @@ export function HomeLayout({ children }: { children: ReactNode }) {
               className="object-cover"
             />
           </div>
-          <div className="p-1 space-y-1">
+          <div className="p-1 space-y-3">
             <img
               src="https://www.thesmbguide.com/images/Google-Fi-1024x512-20190912.png"
               width={150}
@@ -55,12 +60,11 @@ export function HomeLayout({ children }: { children: ReactNode }) {
                 )
               )}
             </div> */}
-            
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
-              Start Free Trial
+
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition duration-300">
+              Most affordable plan{" "}
             </button>
           </div>
-          
         </div>
         {/* <Card className="w-full flex flex-col max-w-md mx-auto bg-gradient-to-br from-gray-900 to-gray-700 text-white overflow-hidden">
           <CardContent className="p-6 relative">

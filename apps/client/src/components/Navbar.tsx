@@ -76,9 +76,9 @@ export default function Navbar() {
   return (
     <nav className="flex flex-col shadow-md fixed top-0 left-0 right-0 z-10">
       <div className="bg-white border-b border-gray-200 items-center">
-        <div className="max-w-[1370px] lg:max-w-[1600px] h-[100px] mx-auto sm:px-6 px-4 ">
+        <div className="max-w-[1370px] lg:max-w-[1600px] h-[79px] mx-auto sm:px-6 px-4 ">
           <div className="flex items-center justify-between h-16 ">
-            <div className="flex items-center mt-9">
+            <div className="flex items-center mt-3">
               <Link href={"/"}>
                 <Image
                   src={
@@ -101,13 +101,18 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-            <div className="w-[37rem] mt-9 bg-purple-900 px-3 shadow-lg overflow-hidden relative">
+            <div
+              onClick={() => {
+                window.open("https://lifepointlactation.com/", "_blank");
+              }}
+              className="w-[37rem] mt-4 bg-purple-900 px-1 shadow-lg overflow-hidden relative cursor-pointer"
+            >
               <div className="flex items-center">
                 <img
                   src="https://res.cloudinary.com/druohnmyv/image/upload/v1726470942/finallogo_oamxsn.png"
-                  className="w-[7rem] h-[5rem]"
+                  className="w-[7rem] h-[5rem] shadow-inner shadow-black"
                 />
-                <div className=" ml-2 ">
+                <div className="ml-3">
                   <span className="text-white"> Healthy Baby</span>
                   <h2 className="text-[18px] font-bold text-yellow-300 mt-0">
                     Lifepoint Lactation
@@ -121,7 +126,12 @@ export default function Navbar() {
               <Badge className="absolute top-4 right-2 bg-pink-500 text-white px-3 py-1">
                 Talk to Breastfeeding Educator
               </Badge>
-              <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-yellow-700 rounded-full opacity-20"></div>
+              <span className="absolute top-11 right-12 text-[18px] font-bold text-white">
+                {" "}
+                678-310-4660{" "}
+              </span>
+
+              {/* <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-white rounded-full opacity-10"></div> */}
               <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
             </div>
             {/* <div className="w-[40rem] h-[100px] bg-gray-800 p-6 rounded-lg shadow-md flex items-center mt-6 justify-between">
@@ -155,7 +165,7 @@ export default function Navbar() {
               </div>
             </div> */}
 
-            <div className="hidden sm:flex items-center space-x-6  mt-9">
+            <div className="hidden sm:flex items-center space-x-6 mt-3">
               {session ? (
                 <>
                   <div

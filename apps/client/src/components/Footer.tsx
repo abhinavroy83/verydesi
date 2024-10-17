@@ -13,16 +13,16 @@ export default function Footer() {
           onClick={() => {
             window.open("https://redletterweb.com/", "_blank");
           }}
-          className="flex flex-col justify-center items-center mb-2 font-['udemy-regular']"
+          className="flex flex-col justify-center items-center mb-2 cursor-pointer"
         >
-          <div className="lg:w-[728px] w-[350px] lg:h-[90px] h-[250px] bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between overflow-hidden">
-            <div className="flex flex-col justify-center h-full pl-6 space-y-1">
-              <h1 className="text-white text-2xl font-bold">RED LETTER WEB </h1>
+          <div className="font-[arial] lg:w-[728px] w-[350px] lg:h-[90px] h-[250px] bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between overflow-hidden">
+            <div className="flex flex-col justify-center h-full pl-6">
+              <h1 className="text-white text-xl font-bold">RED LETTER WEB </h1>
               <p className="text-white text-lg font-semibold">
-                Get Your Business Online
+                Cheapest domain names in the USA{" "}
               </p>
               <p className="text-yellow-200 text-sm">
-                Elevate Your Online Presence
+                Get your own .com, .org, & .net{" "}
               </p>
             </div>
             <div className="flex items-center justify-end h-full pr-6">
@@ -64,24 +64,28 @@ export default function Footer() {
           </div> */}
           </div>
           <div className=" w-full bg-[#131A22] border-t-7 border-[#232f3e]">
-            <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto bg-[#131A22] font-['udemy-regular']">
-              <div className="max-w-[1600px] w-full m-auto flex flex-col items-center pb-3 lg:flex-row py-2 justify-center">
-                <div className=""></div>
-              </div>
+            <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto bg-[#131A22] ">
+              <div className="max-w-[1600px] w-full m-auto flex flex-col items-center pb-3 lg:flex-row py-2 justify-center"></div>
               <div className="lg:flex justify-center gap-10">
                 <div className="flex text-white items-center gap-5 px-3 lg:px-0">
-                  <Link href={"/"} className="bg-cover bg-center flex">
-                    <img
-                      // height={300}
-                      width={300}
-                      className="w-[170px] lg:w-[140px]"
-                      src={
-                        "https://res.cloudinary.com/druohnmyv/image/upload/v1723819327/assests/x31ydsmb8hkg05fqbkjf.png"
-                      }
-                      alt=""
-                    />
-                  </Link>
-                  <Area />
+                  <div className="flex items-center mt-3">
+                    <Link href={"/"}>
+                      <Image
+                        src={
+                          "https://res.cloudinary.com/druohnmyv/image/upload/v1723819327/assests/x31ydsmb8hkg05fqbkjf.png"
+                        }
+                        alt="Very Desi Logo"
+                        width={300}
+                        height={300}
+                        className="w-[120px] lg:w-[190px]"
+                      />
+                    </Link>
+                    <div className=" relative text-white">
+                      <div className="flex items-center text-white">
+                        <Area />
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="grid grid-cols-2 lg:grid-cols-3 justify-center gap-10 px-4 lg:px-0 lg:mt-0 mt-3 mb-7">
                   <div className="">
@@ -232,109 +236,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
-      {/* <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
-        <p>hi</p>
-      </div>
-      <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 py-12 ">
-        <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 ">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 mb-8">
-            <div className="flex flex-col items-start">
-              <Link href={"/"}>
-                <Image
-                  src={
-                    "https://res.cloudinary.com/druohnmyv/image/upload/v1723819327/assests/x31ydsmb8hkg05fqbkjf.png"
-                  }
-                  alt="Very Desi Logo"
-                  width={300}
-                  height={300}
-                  className="w-[120px] lg:w-[190px]"
-                />
-              </Link>
-              <div className="group cursor-pointer mt-4">
-                <div className="flex items-center border border-gray-700 rounded-md px-3 py-2 transition-colors duration-200 ease-in-out group-hover:border-gray-500">
-                  <span className="mr-2">Portland</span>
-                  <ChevronDown
-                    size={16}
-                    className="group-hover:text-gray-400"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {[
-              {
-                title: "Make Money",
-                links: ["Facebook", "Twitter", "Instagram"],
-              },
-              {
-                title: "Make Money",
-                links: ["Facebook", "Twitter", "Instagram"],
-              },
-              {
-                title: "Let Us Help You",
-                links: ["Facebook", "Twitter", "Instagram", "Instagram"],
-              },
-            ].map((column, index) => (
-              <div key={index}>
-                <h3 className="font-bold text-white mb-4">{column.title}</h3>
-                <ul className="space-y-2">
-                  {column.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Link
-                        href="#"
-                        className="hover:text-white transition-colors duration-200 ease-in-out"
-                      >
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="border-t border-gray-700 pt-8 text-sm">
-            <ul className="flex flex-wrap justify-center space-x-9 mb-4">
-              <li>
-                <Link
-                  href="/about"
-                  className="hover:text-white transition-colors duration-200 ease-in-out"
-                >
-                  About VeryDesi.com
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/copyright"
-                  className="hover:text-white transition-colors duration-200 ease-in-out"
-                >
-                  Copyright Policy{" "}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terms"
-                  className="hover:text-white transition-colors duration-200 ease-in-out"
-                >
-                  Terms of Use{" "}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/policy"
-                  className="hover:text-white transition-colors duration-200 ease-in-out"
-                >
-                  Privacy Policy{" "}
-                </Link>
-              </li>
-            </ul>
-            <p className="text-center text-gray-500">
-              © 2024, VeryDesi.com, Inc.
-            </p>
-          </div>
-        </div>
-      </footer> */}
     </div>
   );
 }
