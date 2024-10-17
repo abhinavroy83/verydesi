@@ -52,18 +52,18 @@ function Avalableloc() {
           className="w-[300px] p-4 bg-white rounded-xl shadow-xl border-none "
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
-          <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-2">
+          <div className="grid grid-cols-2 gap-2 max-h-[300px]  overflow-y-auto">
             {cities.map((city) => (
               <Button
                 key={city}
                 variant="ghost"
                 size="sm"
                 onClick={() => handleLocation(city)}
-                className={`justify-start px-3 py-2 rounded-md text-left w-full ${
-                  city === selectedCity
-                    ? "bg-[#054687] text-white text-[16px]"
-                    : "text-gray-700 hover:bg-primary/10 text-[16px]"
-                } transition-colors duration-200`}
+                className={`w-full text-start px-3 py-2 rounded hover:bg-primary hover:text-primary-foreground focus:outline-none transition duration-150 ease-in-out ${
+                  selectedCity === city
+                    ? "bg-primary text-primary-foreground"
+                    : "text-gray-700"
+                }`}
               >
                 {city}
               </Button>
