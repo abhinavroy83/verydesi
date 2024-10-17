@@ -220,7 +220,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                         openLogin();
                       }}
                     >
-                      <Heart className=" fill-red-600 stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                      <Heart className=" hover:fill-red-600 hover:stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
                     </div>
                   )}
                   {status && (

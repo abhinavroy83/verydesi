@@ -13,17 +13,17 @@ import {
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import useAuthStore from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 export default function LogoutComponent() {
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const logout = useAuthStore((state) => state.logout);
-
+  const router = useRouter();
   const handleLogout = () => {
     // Simulate logout action
-    signOut({
-      callbackUrl: "/sign-in",
-    });
+    signOut();
     logout();
+    router.push("/");
     console.log("Logging out...");
     // Here you would typically call your logout API or clear session data
     setShowLogoutDialog(false);
