@@ -361,7 +361,6 @@ export default function Navbar() {
                   alt="logo"
                 />
               )}
-
               <span className="font-medium">76.1°F</span>
             </div>
           </div>
