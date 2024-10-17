@@ -39,7 +39,7 @@ import Similareventcard from "@/components/Events/Similareventcard";
 function Events() {
   return (
     <>
-      <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6.1rem]">
+      <div className="max-w-[1370px] lg:max-w-[1600px]  px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6.1rem]">
         <div className=" w-full mx-auto">
           <div className="flex justify-between items-start">
             <div className="flex space-x-2 w-full justify-between">
@@ -292,7 +292,7 @@ function Events() {
                     src={
                       "https://cdn11.bigcommerce.com/s-fg272t4iw0/images/stencil/1280x1280/products/238/491/C-10241__19959.1557813146.jpg?c=2&imbypass=on"
                     }
-                    // alt={`${name} logo`}
+                    alt={`logo`}
                     className="w-16 h-16 rounded-full"
                   />
                   <div>

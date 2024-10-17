@@ -16,10 +16,11 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import EventNonfeaturedCard from "@/components/Events/Nonfeaturedeventcard";
+import { useRouter } from "next/navigation";
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
 export default function Component() {
   const [showAll, setShowAll] = useState(false);
-
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] =
     useState<SortOption>("Recommended");
@@ -89,9 +90,12 @@ export default function Component() {
 
               <button
                 type="submit"
+                onClick={() => {
+                  router.push("/post-events");
+                }}
                 className="rounded-md bg-green-800 font-bold whitespace-nowrap py-2 px-3 lg:px-2 text-[16px] items-center text-white shadow-sm shadow-[#ccc] hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
               >
-                Post Business
+                Post Events
               </button>
             </div>
           </div>
