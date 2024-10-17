@@ -143,7 +143,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
 
   return (
     <Link
-      href={`room/${room?._id}`}
+      href={`/room/${room?._id}`}
       className={`flex relative w-full max-w-4xl flex-col  rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[155px]`}
     >
       <div className="relative w-full lg:w-72 lg:h-[100%] max-w-4xl overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">

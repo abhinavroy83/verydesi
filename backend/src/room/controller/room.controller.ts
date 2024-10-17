@@ -64,6 +64,6 @@ export class RoomController {
   @UseGuards(JwtGuard)
   @Delete('delete-room/:roomId')
   async deleteroom(@Param('roomId') roomId: string) {
-    return this.roomService;
+    return this.roomService.DeleteRoom(roomId);
   }
 }
