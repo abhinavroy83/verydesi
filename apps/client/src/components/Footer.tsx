@@ -3,6 +3,7 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
+import Area from "./Area/Area";
 
 export default function Footer() {
   return (
@@ -80,6 +81,7 @@ export default function Footer() {
                       alt=""
                     />
                   </Link>
+                  <Area />
                 </div>
                 <div className="grid grid-cols-2 lg:grid-cols-3 justify-center gap-10 px-4 lg:px-0 lg:mt-0 mt-3 mb-7">
                   <div className="">
