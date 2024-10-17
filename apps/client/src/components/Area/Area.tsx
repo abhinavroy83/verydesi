@@ -59,10 +59,10 @@ function Avalableloc() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleLocation(city)}
-                className={`justify-start px-3 py-2 rounded-md text-left  ${
+                className={`justify-start px-3 py-2 rounded-md text-left w-full ${
                   city === selectedCity
-                    ? "bg-[#054687] text-white text-[15px]"
-                    : "text-gray-700 hover:bg-primary/10 text-[15px]"
+                    ? "bg-[#054687] text-white text-[16px]"
+                    : "text-gray-700 hover:bg-primary/10 text-[16px]"
                 } transition-colors duration-200`}
               >
                 {city}
