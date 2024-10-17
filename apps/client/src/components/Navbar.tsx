@@ -134,36 +134,6 @@ export default function Navbar() {
               {/* <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-white rounded-full opacity-10"></div> */}
               <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
             </div>
-            {/* <div className="w-[40rem] h-[100px] bg-gray-800 p-6 rounded-lg shadow-md flex items-center mt-6 justify-between">
-              <div>
-                <div className="flex items-center space-x-2">
-                  <Star className="text-yellow-400 w-6 h-6" />
-                  <Star className="text-yellow-400 w-6 h-6" />
-                  <Star className="text-yellow-400 w-6 h-6" />
-                  <Star className="text-yellow-400 w-6 h-6" />
-                  <Star className="text-yellow-400 w-6 h-6" />
-                </div>
-                <h2 className="text-3xl font-bold text-white mb-2">
-                  Life Point Lactation
-                </h2>
-                <p className="text-gray-300">
-                  Professional lactation support you can trust
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-yellow-400 text-lg font-semibold mb-2">
-                  Certified Experts
-                </p>
-                <Button
-                  className="bg-yellow-400 hover:bg-yellow-500 text-gray-900"
-                  onClick={() =>
-                    window.open("https://lifepointlactation.com/", "_blank")
-                  }
-                >
-                  Book a Consultation
-                </Button>
-              </div>
-            </div> */}
 
             <div className="hidden sm:flex items-center space-x-6 mt-3">
               {session ? (
@@ -311,48 +281,7 @@ export default function Navbar() {
                 ROOMMATES
               </Button>
             </div>
-            {/* <div className="w-full bg-gradient-to-r from-purple-700 to-purple-900 p-2 rounded-lg shadow-lg overflow-hidden relative">
-              <div className="flex justify-between items-center">
-                <div className="space-y-2">
-                  <h2 className="text-[21px] font-bold text-yellow-300">
-                    Lifepoint Lactation
-                    <br />
-                    <span className="text-white"> Breastfeeding Awareness</span>
-                  </h2>
-                  <p className="text-purple-200 text-lg">Join our events</p>
-                </div>
-                <div className="hidden md:flex space-x-4">
-                  <svg
-                    className="w-8 h-8 text-yellow-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                    <path
-                      fillRule="evenodd"
-                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <svg
-                    className="w-8 h-8 text-pink-300"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <Badge className="absolute top-4 right-4 bg-pink-500 text-white px-3 py-1">
-                Talk to a Breastfeeding Educator Now{" "}
-              </Badge>
-              <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div>
-              <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
-            </div> */}
+
             <div className="hidden md:flex items-center space-x-2 text-white">
               {/* <MapPin className="h-5 w-5 text-gray-400" /> */}
               <span className="font-medium">{weatherData?.name}</span>
@@ -432,11 +361,7 @@ export default function Navbar() {
                   alt="logo"
                 />
               )}
-              {/* <img
-                src="/placeholder.svg?height=24&width=24"
-                alt="Weather Icon"
-                className="h-6 w-6"
-              /> */}
+
               <span className="font-medium">76.1°F</span>
             </div>
           </div>
