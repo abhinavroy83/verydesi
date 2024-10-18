@@ -222,7 +222,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <Edit className="h-4 w-4" />
               </Button>
 
-              <Button variant="outline" size="icon" className="rounded-full">
+              <Button variant="outline" size="icon" className="rounded-full ">
                 <UserPlus className="h-4 w-4" />
               </Button>
               <Button variant="outline" size="icon" className="rounded-full">
@@ -237,7 +237,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <Button
                   key={item.name}
                   variant={activeItem === item.name ? "secondary" : "ghost"}
-                  className="w-full justify-start text-[14px]"
+                  className="w-full justify-start text-[14px] font-sans"
                   onClick={() => {
                     setActiveItem(item.name);
 
