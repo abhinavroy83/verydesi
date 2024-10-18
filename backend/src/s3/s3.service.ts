@@ -49,9 +49,12 @@ export class S3Service {
     }
   }
 
-  async uploadsingleimagetos3(file: Express.Multer.File) {
+  async uploadsingleimagetos3(file: Express.Multer.File): Promise<string> {
     const fileName = `${Date.now()}_${file.originalname}`;
     const bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
+    if (!file.buffer) {
+      throw new Error('File buffer is empty');
+    }
     try {
       const parallelUpload = new Upload({
         client: this.s3,
@@ -75,9 +78,9 @@ export class S3Service {
 
   //delete function
 
-  async deletesingleimagefroms3(fileUrl: string) {
+  async deletesingleimagefroms3(fileUrl: string): Promise<void> {
     const bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
-    const fileName = fileUrl.split('/').pop(); 
+    const fileName = fileUrl.split('/').pop();
 
     try {
       const deleteCommand = new DeleteObjectCommand({

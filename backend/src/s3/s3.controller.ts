@@ -12,8 +12,9 @@ import {
   MaxFileSizeValidator,
   FileTypeValidator,
   HttpStatus,
+  UploadedFile,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { S3Service } from './s3.service';
 
 @Controller('img')
@@ -51,9 +52,9 @@ export class UploadController {
   }
 
   @Post('uploadSingleImage')
-  @UseInterceptors(FilesInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file'))
   async uploadsinglefile(
-    @UploadedFiles(
+    @UploadedFile(
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }), // 5MB limit
@@ -71,7 +72,6 @@ export class UploadController {
       if (oldImageUrl) {
         await this.s3Service.deletesingleimagefroms3(oldImageUrl);
       }
-
       const uploadfileurl = await this.s3Service.uploadsingleimagetos3(file);
       return { url: uploadfileurl };
     } catch (error) {
