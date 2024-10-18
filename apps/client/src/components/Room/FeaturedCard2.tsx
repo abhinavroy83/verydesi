@@ -154,14 +154,14 @@ export default function Component({ room }: FeaturedCard2Props) {
           `/room?id=${room?._id}&title=${encodeURIComponent(room?.Title)}`
         );
       }}
-      className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[146px]`}
+      className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[152px]`}
     >
       <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] h-[300px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
         <img
           src={
             room && room.Imgurl && room.Imgurl.length > 0
               ? room.Imgurl[0]
-              : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
+              : "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
           }
           alt="Room Image"
           className="hover:scale-110 w-full object-cover transition-transform duration-500 ease-in duration-70 lg:h-full "
@@ -209,11 +209,11 @@ export default function Component({ room }: FeaturedCard2Props) {
             {room?.Title && truncateCharacters(room?.Title, 45)}
           </h2>
 
-          <div className="flex  flex-wrap items-center text-[17px] text-gray-600  transition-colors duration-300">
+          <div className="flex  flex-wrap items-center text-[19px] text-gray-600  transition-colors duration-300">
             <div className="flex items-center mr-2 sm:mb-0">
               <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
               <span>
-                {room?.postingincity},
+                {room?.postingincity},{" "}
                 {room?.state &&
                   (room.state.length > 2
                     ? stateAbbreviations[room.state]
@@ -251,14 +251,18 @@ export default function Component({ room }: FeaturedCard2Props) {
               )}
             </div>
           </div>
-          <div className="flex lg:flex-col flex-wrap text-[17px] text-gray-500  transition-colors duration-300">
+          <div className="flex lg:flex-col flex-wrap text-[19px] text-gray-500  transition-colors duration-300">
             <div className="flex items-center mr-2 sm:mb-0">
               <User className="h-5 w-5 mr-1 text-[#054687]" />
-              <span>Posted by: {room?.user_name}</span>
+              <span className="text-blue-800">
+                Posted by: {room?.user_name}
+              </span>
             </div>
             <div className="flex items-center">
               <Clock className="h-5 w-5 mr-1 text-[#054687]" />
-              <span>{calculateTimeDifference(room?.postedon)}</span>
+              <span className="text-blue-800">
+                {calculateTimeDifference(room?.postedon)}
+              </span>
             </div>
           </div>
         </div>

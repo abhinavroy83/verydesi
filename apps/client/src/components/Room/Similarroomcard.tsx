@@ -151,7 +151,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
           src={
             room && room.Imgurl && room.Imgurl.length > 0
               ? room.Imgurl[0]
-              : "https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
+              : "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
           }
           alt=""
           className="hover:scale-110 object-cover transition-transform duration-500 ease-in duration-70 w-full h-full"
@@ -202,23 +202,23 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
       )}
 
       <div className={`px-4 py-1 flex flex-col w-full`}>
-        <p className="flex flex-col text-[21px] capitalize mt-3 lg:mt-1 font-bold">
-          {room?.Title && truncateCharacters(room?.Title, 20)}
+        <p className="flex flex-col text-[19px] capitalize mt-3 lg:mt-1 font-bold">
+          {room?.Title && truncateCharacters(room?.Title, 41)}
         </p>
-        <p className="flex gap-1 text-[19px] text-gray-600 mt-1  items-center">
-          <GrLocation size={20} />
+        <p className="flex gap-1 text-[14px] text-gray-600 mt-1 items-center">
+          <GrLocation  />
           {room?.postingincity},
           {room?.state &&
             (room.state.length > 2
               ? stateAbbreviations[room.state]
               : room.state)}
         </p>
-        <p className="text-blue-800 capitalize text-[19px] mt-1 flex gap-1 items-center ">
+        <p className="text-blue-800 capitalize text-[14px] mt-1 flex gap-1 items-center ">
           <CgProfile />
           Username
         </p>
         <span className="flex gap-1 items-center">
-          <p className="text-blue-800 text-[19px] flex gap-1 mt-1 items-center ">
+          <p className="text-blue-800 text-[14px] flex gap-1 mt-1 items-center ">
             <MdDateRange />
             <p>{calculateTimeDifference(room?.postedon)}</p>
           </p>

@@ -496,10 +496,8 @@ export default function RoomDetails({
 
           <div className="space-y-6 lg:mt-8">
             <Card>
-              <CardHeader className="p-3">
-                <CardTitle>Location</CardTitle>
-              </CardHeader>
-              <CardContent className="p-3">
+              <CardHeader className="p-3"></CardHeader>
+              <CardContent className="">
                 <div className="aspect-w-16 aspect-h-9">
                   {locationsndString && (
                     <LeafletMapRoom onLocationReceived={locationsndString} />
@@ -508,7 +506,7 @@ export default function RoomDetails({
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="">
               <CardHeader className="p-3">
                 <CardTitle>Amenities Included</CardTitle>
               </CardHeader>

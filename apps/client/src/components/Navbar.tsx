@@ -14,6 +14,7 @@ import {
   LogOut,
   User,
   Star,
+  DoorOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -277,7 +278,7 @@ export default function Navbar() {
                 variant="ghost"
                 className="text-white hover:bg-white group  transition duration-300 ease-in-out"
               >
-                <Users className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                <DoorOpen className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
                 ROOMMATES
               </Button>
             </div>
