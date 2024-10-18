@@ -186,7 +186,7 @@ export default function Navbar() {
                             className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
-                            <User className="mr-2 h-4 w-4" /> {firstname}
+                            <User className="mr-2 h-4 w-4" />Welcome, {firstname}
                           </Link>
                           <Link
                             href="/dashboard"

@@ -27,7 +27,8 @@ import { useUserData } from "@/hooks/use-userData";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
-
+import { AlertTriangle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -125,10 +126,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <div className="">
           <div
             role="alert"
-            className="rounded border-s-4 border-red-500 bg-red-50 p-4"
+            className="rounded border-s-[8px] border-orange-700 bg-[rgba(255,237,221,1)] p-4"
           >
             <div className="flex items-start gap-4 ">
-              <span className=" text-red-800">
+              <span className=" text-orange-700">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -143,10 +144,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 </svg>
               </span>
               <div className=" flex-1">
-                <strong className="block font-medium">
+                {/* <strong className="block font-medium">
                   Verify your email.
-                </strong>
-                <p className="mt-2 text-sm text-red-700">The email was sent</p>
+                </strong> */}
+                <p className=" text-[16px] text-gray-700">
+                  {" "}
+                  You must confirm your email address to post to Very Desi.
+                  Check your inbox and spam folders for a confirmation email, or{" "}
+                  <button className="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    click here to resend
+                  </button>
+                </p>
               </div>
               <button className="text-gray-500 transition hover:text-gray-600">
                 <span className="sr-only">Dismiss popup</span>
@@ -229,7 +237,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <Button
                   key={item.name}
                   variant={activeItem === item.name ? "secondary" : "ghost"}
-                  className="w-full justify-start"
+                  className="w-full justify-start text-[14px]"
                   onClick={() => {
                     setActiveItem(item.name);
 

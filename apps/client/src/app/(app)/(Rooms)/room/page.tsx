@@ -332,10 +332,10 @@ export default function RoomDetails({
         </div>
         <div className="flex justify-between items-start">
           <div className="flex w-full justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-gray-900 w-[82rem]">
               {roomData?.Title}
             </h1>
-            <h1 className="text-xl font-bold p-2 text-gray-900">
+            <h1 className="text-xl font-bold p-2 text-gray-900 whitespace-nowrap">
               Posted By: {roomData?.user_name}{" "}
             </h1>
           </div>
@@ -494,7 +494,7 @@ export default function RoomDetails({
             </Card>
           </div>
 
-          <div className="space-y-6 lg:mt-8">
+          <div className="space-y-3 lg:mt-8">
             <Card>
               <CardHeader className="p-3"></CardHeader>
               <CardContent className="">
