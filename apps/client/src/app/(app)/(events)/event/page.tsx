@@ -63,7 +63,8 @@ function Events() {
                         href="/rooms"
                         className="flex items-center text-primary hover:text-primary-dark transition-colors"
                       >
-                        <span className="font-medium">Rooms</span>
+                        <Calendar className="w-4 h-4 mr-2" />
+                        <span className="font-medium">Events</span>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                   </BreadcrumbList>
@@ -806,7 +807,7 @@ function Events() {
           </div>
         </div>
       </div>
-      <section className="container mx-auto px-4">
+      <section className="container mx-auto mb-11">
         <h2 className="text-2xl font-bold mb-6">Similar Rooms</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(3)].map((_, index) => (
