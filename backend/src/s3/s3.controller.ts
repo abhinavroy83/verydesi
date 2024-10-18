@@ -50,6 +50,37 @@ export class UploadController {
     }
   }
 
+  @Post('uploadSingleImage')
+  @UseInterceptors(FilesInterceptor('file'))
+  async uploadsinglefile(
+    @UploadedFiles(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }), // 5MB limit
+          new FileTypeValidator({ fileType: /^image\/(jpg|jpeg|png|gif)$/ }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Body('oldImageUrl') oldImageUrl: string,
+  ) {
+    if (!file) {
+      throw new BadRequestException('No file uploaded');
+    }
+    try {
+      if (oldImageUrl) {
+        await this.s3Service.deletesingleimagefroms3(oldImageUrl);
+      }
+
+      const uploadfileurl = await this.s3Service.uploadsingleimagetos3(file);
+      return { url: uploadfileurl };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `File upload failed: ${error.message}`,
+      );
+    }
+  }
+
   @Delete('delete')
   async deleteFile(@Body('fileUrl') fileUrl: string) {
     if (!fileUrl) {

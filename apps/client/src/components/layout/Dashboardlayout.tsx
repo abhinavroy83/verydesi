@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,18 +22,52 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import ShareButton from "../Popups/ShareButton";
+import { useUserData } from "@/hooks/use-userData";
+import axios from "axios";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
   const router = useRouter();
   const { firstname, isverified } = useAuthStore();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [newImageUrl, setNewImageUrl] = useState<string | null>(null);
+  const { userData } = useUserData();
   const menuItems = [
     { name: "Dashboard", icon: Home, url: "/dashboard" },
     { name: "Setting", icon: Settings, url: "/dashboard/user" },
     { name: "Favorites", icon: Heart, url: "/dashboard/favorite" },
     { name: "Help", icon: HelpCircle, url: "/dashboard/help" },
   ];
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
+  const handleuploadimages3 = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedFile) {
+      alert("please select a file to upload");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("oldImageUrl", userData?.userimg || "");
+    console.log(formData);
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/img/uploadSingleImage",
+        formData
+      );
+      console.log(response);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("An error occurred while uploading the image");
+    }
+  };
 
   return (
     <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 mt-[10rem]">
@@ -96,9 +130,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <h2 className="text-xl font-semibold mb-1">{firstname}</h2>
             <p className="text-sm text-muted-foreground mb-4">Since 2024</p>
             <div className="flex justify-center space-x-2">
-              <Button variant="outline" size="icon" className="rounded-full">
-                <Edit className="h-4 w-4" />
-              </Button>
+              {/* <form onSubmit={handleuploadimages3}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+              </form> */}
+              <Button type="submit">Update Image</Button>
               <Button variant="outline" size="icon" className="rounded-full">
                 <UserPlus className="h-4 w-4" />
               </Button>

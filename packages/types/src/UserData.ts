@@ -12,4 +12,5 @@ export interface UserData {
   country: string;
   pin: string;
   IsEmailVerified: boolean;
+  userimg: string;
 }

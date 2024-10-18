@@ -49,6 +49,50 @@ export class S3Service {
     }
   }
 
+  async uploadsingleimagetos3(file: Express.Multer.File) {
+    const fileName = `${Date.now()}_${file.originalname}`;
+    const bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
+    try {
+      const parallelUpload = new Upload({
+        client: this.s3,
+        params: {
+          Bucket: bucketName,
+          Key: fileName,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+        },
+      });
+
+      await parallelUpload.done();
+
+      const cloudFrontUrl = `${this.configService.get<string>('CLOUDFRONT_URL')}/${fileName}`;
+      return cloudFrontUrl;
+    } catch (error) {
+      this.logger.error(`Error uploading file to S3: ${error.message}`);
+      throw new Error(`S3 upload failed: ${error.message}`);
+    }
+  }
+
+  //delete function
+
+  async deletesingleimagefroms3(fileUrl: string) {
+    const bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
+    const fileName = fileUrl.split('/').pop(); 
+
+    try {
+      const deleteCommand = new DeleteObjectCommand({
+        Bucket: bucketName,
+        Key: fileName,
+      });
+
+      await this.s3.send(deleteCommand);
+      this.logger.log(`Successfully deleted image: ${fileName}`);
+    } catch (error) {
+      this.logger.error(`Error deleting file from S3: ${error.message}`);
+      throw new Error(`S3 deletion failed: ${error.message}`);
+    }
+  }
+
   async deleteFromS3(fileKey: string): Promise<void> {
     const bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
 
