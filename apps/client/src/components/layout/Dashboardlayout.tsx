@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,17 +17,29 @@ import {
   Home as HomeIcon,
   Briefcase,
   LogOut,
+  Loader2,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import ShareButton from "../Popups/ShareButton";
+import { useUserData } from "@/hooks/use-userData";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import { useSession } from "next-auth/react";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
   const router = useRouter();
-  const { firstname, isverified } = useAuthStore();
+  const { firstname, isverified, userimage, setUserImgae } = useAuthStore();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [newImageUrl, setNewImageUrl] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
+  const { userData } = useUserData();
+  const { data: session } = useSession();
   const menuItems = [
     { name: "Dashboard", icon: Home, url: "/dashboard" },
     { name: "Setting", icon: Settings, url: "/dashboard/user" },
@@ -35,6 +47,78 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     { name: "Help", icon: HelpCircle, url: "/dashboard/help" },
   ];
 
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      await handleUpload(file);
+    }
+  };
+
+  const handleEditClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleUpload = async (file: File) => {
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("oldImageUrl", userData?.userimg || "");
+    console.log(formData);
+    try {
+      const response = await fetch(
+        "http://apiv2.verydesi.com/img/uploadSingleImage",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+      const data = await response.json();
+      // console.log(data.url);
+      setNewImageUrl(data.url);
+      setUserImgae(data.url);
+      const token = session?.accessToken;
+      if (!token) {
+        throw new Error("token not found");
+      }
+
+      await axios.patch(
+        "http://apiv2.verydesi.com/user/updateUser",
+        { userimg: data.url },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Success",
+        description: "Image uploaded successfully",
+      });
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast({
+        title: "Error",
+        description: "An error occurred while uploading the image",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
   return (
     <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 mt-[10rem]">
       {!isverified && (
@@ -90,15 +174,46 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <aside className="w-64 border-r bg-muted/30 lg:flex flex-col hidden">
           <div className="p-6 flex flex-col items-center">
             <Avatar className="w-24 h-24 mb-4 border-4 border-primary">
-              <AvatarImage src="/placeholder.svg" alt="User" />
-              <AvatarFallback>AB</AvatarFallback>
+              {isUploading ? (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/80">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                </div>
+              ) : (
+                <AvatarImage
+                  src={userimage || userData?.userimg}
+                  alt={userData?.firstName || "User"}
+                />
+              )}
+              <AvatarFallback>
+                {getInitials(userData?.firstName || "User")}
+              </AvatarFallback>
             </Avatar>
             <h2 className="text-xl font-semibold mb-1">{firstname}</h2>
             <p className="text-sm text-muted-foreground mb-4">Since 2024</p>
             <div className="flex justify-center space-x-2">
-              <Button variant="outline" size="icon" className="rounded-full">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                ref={fileInputRef}
+                className="sr-only"
+                id="image-upload"
+                aria-label="Upload image"
+              />
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-full"
+                type="button"
+                onClick={handleEditClick}
+                disabled={isUploading}
+                aria-label={
+                  isUploading ? "Uploading image" : "Select image to upload"
+                }
+              >
                 <Edit className="h-4 w-4" />
               </Button>
+
               <Button variant="outline" size="icon" className="rounded-full">
                 <UserPlus className="h-4 w-4" />
               </Button>

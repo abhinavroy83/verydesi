@@ -12,8 +12,9 @@ import {
   MaxFileSizeValidator,
   FileTypeValidator,
   HttpStatus,
+  UploadedFile,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { S3Service } from './s3.service';
 
 @Controller('img')
@@ -43,6 +44,36 @@ export class UploadController {
       );
       const uploadedFiles = await Promise.all(uploadPromises);
       return { urls: uploadedFiles };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `File upload failed: ${error.message}`,
+      );
+    }
+  }
+
+  @Post('uploadSingleImage')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadsinglefile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }), // 5MB limit
+          new FileTypeValidator({ fileType: /^image\/(jpg|jpeg|png|gif)$/ }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Body('oldImageUrl') oldImageUrl: string,
+  ) {
+    if (!file) {
+      throw new BadRequestException('No file uploaded');
+    }
+    try {
+      if (oldImageUrl) {
+        await this.s3Service.deletesingleimagefroms3(oldImageUrl);
+      }
+      const uploadfileurl = await this.s3Service.uploadsingleimagetos3(file);
+      return { url: uploadfileurl };
     } catch (error) {
       throw new InternalServerErrorException(
         `File upload failed: ${error.message}`,

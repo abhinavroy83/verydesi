@@ -111,7 +111,7 @@ const Page = () => {
   }, [currentCity]);
 
   const token = session?.accessToken;
-  const { updateCity, setVerified, setname } = useAuthStore();
+  const { updateCity, setVerified, setname, setUserImgae } = useAuthStore();
   const fetchuser = async () => {
     try {
       if (!token) {
@@ -130,7 +130,8 @@ const Page = () => {
       if (res) {
         setVerified(res.data.IsEmailVerified);
         setname(res.data.firstName);
-        setuserData(res?.data);
+        setUserImgae(res.data.image);
+        setuserData(res?.data.userimg);
       }
     } catch (error) {
       console.log(error);
