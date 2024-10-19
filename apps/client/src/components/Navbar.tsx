@@ -111,7 +111,7 @@ export default function Navbar() {
               <div className="flex items-center">
                 <img
                   src="https://res.cloudinary.com/druohnmyv/image/upload/v1726470942/finallogo_oamxsn.png"
-                  className="w-[7rem] h-[5rem] shadow-inner shadow-black"
+                  className="w-[6rem] h-[5rem] drop-shadow-[0_0_0.95rem_rgb(259,227,0)]"
                 />
                 <div className="ml-3">
                   <span className="text-white"> Healthy Baby</span>
@@ -186,7 +186,8 @@ export default function Navbar() {
                             className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
-                            <User className="mr-2 h-4 w-4" />Welcome, {firstname}
+                            <User className="mr-2 h-4 w-4" />
+                            Welcome, {firstname}
                           </Link>
                           <Link
                             href="/dashboard"

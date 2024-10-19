@@ -221,7 +221,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               >
                 <Edit className="h-4 w-4" />
               </Button>
-
               <Button variant="outline" size="icon" className="rounded-full ">
                 <UserPlus className="h-4 w-4" />
               </Button>
@@ -230,33 +229,33 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               </Button>
             </div>
           </div>
-          <Separator className="my-4" />
+          <Separator className="my-1" />
           <ScrollArea className="flex-grow">
-            <nav className="space-y-2 p-4">
+            <nav className="space-y-3 p-4">
               {menuItems.map((item) => (
                 <Button
                   key={item.name}
                   variant={activeItem === item.name ? "secondary" : "ghost"}
-                  className="w-full justify-start text-[14px] font-sans"
+                  className="w-full justify-start text-[15px] font-sans border-b border-gray-200 p-1 rounded-sm"
                   onClick={() => {
                     setActiveItem(item.name);
 
                     router.push(item.url);
                   }}
                 >
-                  <item.icon className="mr-2 h-4 w-4" />
+                  <item.icon className="mr-2 h-5 w-5" />
                   {item.name}
                 </Button>
               ))}
               <Button
                 variant="ghost"
-                className="w-full justify-start"
+                className="w-full justify-start font-sans text-[15px] border-b border-gray-200 p-1"
                 onClick={() => setIsMyPostExpanded(!isMyPostExpanded)}
               >
-                <FileText className="mr-2 h-4 w-4" />
+                <FileText className="mr-2 h-5 w-5" />
                 My Post
                 <ChevronDown
-                  className={`ml-auto h-4 w-4 transition-transform duration-200 ${isMyPostExpanded ? "rotate-180" : ""}`}
+                  className={`ml-auto h-5 w-5 transition-transform duration-200 ${isMyPostExpanded ? "rotate-180" : ""}`}
                 />
               </Button>
               {isMyPostExpanded && (
@@ -265,16 +264,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="ml-4 space-y-2"
+                  className="ml-2 space-y-1"
                 >
                   <Button
                     variant="ghost"
-                    className="w-full justify-start"
+                    className="w-full justify-start text-[15px] font-sans p-1"
                     onClick={() => {
                       router.push("/dashboard/my-rooms");
                     }}
                   >
-                    <HomeIcon className="mr-2 h-4 w-4" />
+                    <HomeIcon className="mr-2 h-5 w-5" />
                     My Rooms
                   </Button>
                   <Button
@@ -282,9 +281,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       router.push("/dashboard/my-rooms");
                     }}
                     variant="ghost"
-                    className="w-full justify-start"
+                    className="w-full justify-start text-[15px] font-sans p-1"
                   >
-                    <Briefcase className="mr-2 h-4 w-4" />
+                    <Briefcase className="mr-2 h-5 w-5" />
                     My Business
                   </Button>
                 </motion.div>
