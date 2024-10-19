@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -81,6 +81,8 @@ const formSchema = z.object({
   country: z.string(),
 });
 export default function EventForm() {
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -127,18 +129,17 @@ export default function EventForm() {
   const scrollToSection = (sectionId: string) => {
     sectionRefs[sectionId as keyof typeof sectionRefs].current?.scrollIntoView({
       behavior: "smooth",
-    });
-    const [selectedLanguages, setSelectedLanguages] = React.useState<string[]>(
-      []
-    );
+    })
+  }
 
-    const toggleLanguage = (code: string) => {
-      setSelectedLanguages((prev) =>
-        prev.includes(code)
-          ? prev.filter((lang) => lang !== code)
-          : [...prev, code]
-      );
-    };
+
+  const toggleLanguage = (code: string) => {
+    setSelectedLanguages((prev:any) =>
+      prev.includes(code)
+        ? prev.filter((lang:any) => lang !== code)
+        : [...prev, code]
+    )
+  }
 
     return (
       <div className="flex max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-[8rem]">
@@ -750,4 +751,4 @@ export default function EventForm() {
       </div>
     );
   };
-}
+
