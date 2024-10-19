@@ -5,7 +5,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, Clock } from "lucide-react";
+import {
+  Calendar as CalendarIcon,
+  Clock,
+  MapPin,
+  Repeat,
+  Video,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -36,64 +42,45 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CardContent } from "@/components/ui/card";
+import { Label } from "@radix-ui/react-label";
 
 const formSchema = z.object({
-  postingIn: z.string().min(1, { message: "Posting location is required" }),
-  postingType: z.enum(["rooms", "rental"], {
-    required_error: "Posting type is required",
+  eventTitle: z.string().min(2, {
+    message: "Event title must be at least 2 characters.",
   }),
-  title: z.string().min(2, { message: "Title must be at least 2 characters" }),
-  description: z
-    .string()
-    .min(50, { message: "Description must be at least 50 characters" }),
-  propertyType: z.string().min(1, { message: "Property type is required" }),
-  stayLength: z.string().min(1, { message: "Stay length is required" }),
-  price: z.number().min(0, { message: "Price must be a positive number" }),
-  availableFrom: z.date({
-    required_error: "Available from date is required",
+  eventName: z.string().min(2, {
+    message: "Event name must be at least 2 characters.",
   }),
-  availableTo: z.date({
-    required_error: "Available to date is required",
-  }),
-  amenities: z
-    .array(z.string())
-    .min(1, { message: "Select at least one amenity" }),
-  preferences: z.object({
-    gender: z.enum(["male", "female", "any"]),
-    smoking: z.boolean(),
-    pets: z.boolean(),
-  }),
-  photos: z
-    .array(z.string())
-    .min(1, { message: "At least one photo is required" }),
-  contactName: z.string().min(2, { message: "Contact name is required" }),
-  contactEmail: z.string().email({ message: "Invalid email address" }),
-  contactPhone: z.string().min(10, { message: "Invalid phone number" }),
+  startDate: z.string(),
+  startTime: z.string(),
+  endDate: z.string(),
+  endTime: z.string(),
+  timeZone: z.string(),
+  repeatEvent: z.string(),
+  venueName: z.string(),
+  address: z.string(),
+  city: z.string(),
+  zipCode: z.string(),
+  country: z.string(),
 });
-
 export default function EventForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      postingIn: "",
-      postingType: "rooms",
-      title: "",
-      description: "",
-      propertyType: "",
-      stayLength: "",
-      price: 0,
-      availableFrom: new Date(),
-      availableTo: new Date(),
-      amenities: [],
-      preferences: {
-        gender: "any",
-        smoking: false,
-        pets: false,
-      },
-      photos: [],
-      contactName: "",
-      contactEmail: "",
-      contactPhone: "",
+      eventTitle: "",
+      eventName: "",
+      startDate: "2024-10-17",
+      startTime: "00:00",
+      endDate: "2024-10-17",
+      endTime: "03:00",
+      timeZone: "PDT",
+      repeatEvent: "never",
+      venueName: "FBC Portland",
+      address: "909 Southwest 11th Avenue, Portland, OR, USA",
+      city: "Portland",
+      zipCode: "97205",
+      country: "US",
     },
   });
 
@@ -103,11 +90,11 @@ export default function EventForm() {
 
   const sections = [
     { id: "basic-info", label: "Basic Information" },
-    { id: "pricing", label: "Pricing" },
-    { id: "availability", label: "Availability" },
-    { id: "amenities", label: "Amenities" },
-    { id: "preferences", label: "Preferences" },
-    { id: "photos", label: "Photos" },
+    { id: "pricing", label: "Date and time" },
+    { id: "availability", label: "Category & Language" },
+    { id: "amenities", label: "Organizer & Artist details" },
+    { id: "preferences", label: "Description" },
+    { id: "photos", label: "Upload banners" },
     { id: "contact", label: "Contact Details" },
   ];
 
@@ -128,16 +115,16 @@ export default function EventForm() {
   };
 
   return (
-    <div className="flex h-screen mt-[7.5rem]">
-      <aside className="w-64 bg-gray-100 p-4">
-        <nav>
+    <div className="flex max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-[5rem]">
+      <aside className="w-64 bg-[#232f3e] p-4 text-white ">
+        <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
           <ul className="space-y-2">
             {sections.map((section) => (
               <li key={section.id}>
                 <button
                   className={cn(
                     "w-full text-left px-4 py-2 rounded",
-                    "hover:bg-gray-200"
+                    "hover:bg-white hover:text-[#232f3e]"
                   )}
                   onClick={() => scrollToSection(section.id)}
                 >
@@ -154,446 +141,252 @@ export default function EventForm() {
             <div className="space-y-8">
               <div ref={sectionRefs["basic-info"]} className="space-y-4">
                 <h2 className="text-2xl font-bold">Basic Information</h2>
-                <FormField
-                  control={form.control}
-                  name="postingIn"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Posting in</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter location" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="postingType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Posting type</FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-1"
-                        >
-                          <FormItem className="flex items-center space-x-3 space-y-0">
+
+                <CardContent>
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-6"
+                    >
+                      <FormField
+                        control={form.control}
+                        name="eventTitle"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Event Title *</FormLabel>
                             <FormControl>
-                              <RadioGroupItem value="rooms" />
+                              <Input placeholder="Event name" {...field} />
                             </FormControl>
-                            <FormLabel className="font-normal">Rooms</FormLabel>
+                            <FormMessage />
                           </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="rental" />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              Rental
+                        )}
+                      />
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="startDate"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Start date</FormLabel>
+                              <FormControl>
+                                <div className="relative">
+                                  <Input type="date" {...field} />
+                                  <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="startTime"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Start time</FormLabel>
+                              <FormControl>
+                                <div className="relative">
+                                  <Input type="time" {...field} />
+                                  <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="timeZone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Time zone</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select time zone" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="PDT">PDT</SelectItem>
+                                  {/* Add more time zones as needed */}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="endDate"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>End date</FormLabel>
+                              <FormControl>
+                                <div className="relative">
+                                  <Input type="date" {...field} />
+                                  <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="endTime"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>End time</FormLabel>
+                              <FormControl>
+                                <div className="relative">
+                                  <Input type="time" {...field} />
+                                  <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="repeatEvent"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Repeat event</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <Repeat className="h-4 w-4 text-gray-400 mr-2" />
+                                  <SelectValue placeholder="Select repeat frequency" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="never">Never</SelectItem>
+                                <SelectItem value="daily">Daily</SelectItem>
+                                <SelectItem value="weekly">Weekly</SelectItem>
+                                <SelectItem value="monthly">Monthly</SelectItem>
+                                <SelectItem value="custom">Custom</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="venueName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              Enter a new Venue / select from existing venue
                             </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Enter the venue's name"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
                           </FormItem>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter title" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Enter description"
-                          className="resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="propertyType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Property Type</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select property type" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="apartment">Apartment</SelectItem>
-                          <SelectItem value="house">House</SelectItem>
-                          <SelectItem value="condo">Condo</SelectItem>
-                          <SelectItem value="townhouse">Townhouse</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="stayLength"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Stay Length</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select stay length" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="short">Short term</SelectItem>
-                          <SelectItem value="long">Long term</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                        )}
+                      />
 
-              <div ref={sectionRefs.pricing} className="space-y-4">
-                <h2 className="text-2xl font-bold">Pricing</h2>
-                <FormField
-                  control={form.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Price</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter price"
-                          {...field}
-                          onChange={(e) => field.onChange(+e.target.value)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                      <FormField
+                        control={form.control}
+                        name="address"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Address *</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Enter address" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-              <div ref={sectionRefs.availability} className="space-y-4">
-                <h2 className="text-2xl font-bold">Availability</h2>
-                <div className="flex space-x-4">
-                  <FormField
-                    control={form.control}
-                    name="availableFrom"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                        <FormLabel>Available From</FormLabel>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant={"outline"}
-                                className={cn(
-                                  "w-[240px] pl-3 text-left font-normal",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value ? (
-                                  format(field.value, "PPP")
-                                ) : (
-                                  <span>Pick a date</span>
-                                )}
-                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => date < new Date()}
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="availableTo"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                        <FormLabel>Available To</FormLabel>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant={"outline"}
-                                className={cn(
-                                  "w-[240px] pl-3 text-left font-normal",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value ? (
-                                  format(field.value, "PPP")
-                                ) : (
-                                  <span>Pick a date</span>
-                                )}
-                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => date < new Date()}
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      <div className="grid grid-cols-2 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="city"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>City</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="zipCode"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>ZIP/POSTAL *</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="country"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Country *</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select country" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="US">
+                                  United States
+                                </SelectItem>
+                                {/* Add more countries as needed */}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center">
+                        <MapPin className="h-8 w-8 text-gray-400" />
+                        <span className="ml-2 text-gray-500">
+                          Google Maps Embed Placeholder
+                        </span>
+                      </div>
+
+                      <Button type="submit">Create Event</Button>
+                    </form>
+                  </Form>
+                </CardContent>
+                <Button type="submit">Submit Listing</Button>
                 </div>
-              </div>
-
-              <div ref={sectionRefs.amenities} className="space-y-4">
-                <h2 className="text-2xl font-bold">Amenities</h2>
-                <FormField
-                  control={form.control}
-                  name="amenities"
-                  render={() => (
-                    <FormItem>
-                      <div className="mb-4">
-                        <FormLabel className="text-base">Amenities</FormLabel>
-                        <FormDescription>
-                          Select the amenities available in your property.
-                        </FormDescription>
-                      </div>
-                      {["WiFi", "Parking", "Kitchen", "Laundry", "AC"].map(
-                        (item) => (
-                          <FormField
-                            key={item}
-                            control={form.control}
-                            name="amenities"
-                            render={({ field }) => {
-                              return (
-                                <FormItem
-                                  key={item}
-                                  className="flex flex-row items-start space-x-3 space-y-0"
-                                >
-                                  <FormControl>
-                                    <Checkbox
-                                      checked={field.value?.includes(item)}
-                                      onCheckedChange={(checked) => {
-                                        return checked
-                                          ? field.onChange([
-                                              ...field.value,
-                                              item,
-                                            ])
-                                          : field.onChange(
-                                              field.value?.filter(
-                                                (value) => value !== item
-                                              )
-                                            );
-                                      }}
-                                    />
-                                  </FormControl>
-                                  <FormLabel className="font-normal">
-                                    {item}
-                                  </FormLabel>
-                                </FormItem>
-                              );
-                            }}
-                          />
-                        )
-                      )}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div ref={sectionRefs.preferences} className="space-y-4">
-                <h2 className="text-2xl font-bold">Preferences</h2>
-                <FormField
-                  control={form.control}
-                  name="preferences.gender"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Preferred Gender</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select preferred gender" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="male">Male</SelectItem>
-                          <SelectItem value="female">Female</SelectItem>
-                          <SelectItem value="any">Any</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="preferences.smoking"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Smoking Allowed</FormLabel>
-                        <FormDescription>
-                          Check this box if smoking is allowed in the property.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="preferences.pets"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Pets Allowed</FormLabel>
-                        <FormDescription>
-                          Check this box if pets are allowed in the property.
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div ref={sectionRefs.photos} className="space-y-4">
-                <h2 className="text-2xl font-bold">Photos</h2>
-                <FormField
-                  control={form.control}
-                  name="photos"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Upload Photos</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="file"
-                          accept="image/*"
-                          multiple
-                          onChange={(e) => {
-                            const files = Array.from(e.target.files || []);
-                            field.onChange(
-                              files.map((file) => URL.createObjectURL(file))
-                            );
-                          }}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Upload photos of your property (max 5 photos).
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div ref={sectionRefs.contact} className="space-y-4">
-                <h2 className="text-2xl font-bold">Contact Details</h2>
-                <FormField
-                  control={form.control}
-                  name="contactName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Contact Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="contactEmail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Contact Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="Enter your email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="contactPhone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Contact Phone</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your phone number"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-            <Button type="submit">Submit Listing</Button>
           </form>
         </Form>
       </main>
