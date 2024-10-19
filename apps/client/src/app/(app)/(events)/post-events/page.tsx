@@ -138,255 +138,309 @@ export default function EventForm() {
       <main className="flex-1 p-6 overflow-y-auto">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="space-y-8">
-              <div ref={sectionRefs["basic-info"]} className="space-y-4">
-                <h2 className="text-2xl font-bold">Basic Information</h2>
+            <div ref={sectionRefs["basic-info"]} className="space-y-4">
+              <h2 className="text-2xl font-bold">Basic Information</h2>
 
-                <CardContent>
-                  <Form {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(onSubmit)}
-                      className="space-y-6"
-                    >
+              <CardContent>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
+                  >
+                    <FormField
+                      control={form.control}
+                      name="eventTitle"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Event Title *</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Event name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <FormField
                         control={form.control}
-                        name="eventTitle"
+                        name="startDate"
                         render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Event Title *</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Event name" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="startDate"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Start date</FormLabel>
-                              <FormControl>
-                                <div className="relative">
-                                  <Input type="date" {...field} />
-                                  <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                </div>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="startTime"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Start time</FormLabel>
-                              <FormControl>
-                                <div className="relative">
-                                  <Input type="time" {...field} />
-                                  <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                </div>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="timeZone"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Time zone</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
+                          <FormItem className="flex flex-col">
+                            <FormLabel>Start date</FormLabel>
+                            <Popover>
+                              <PopoverTrigger asChild>
                                 <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Select time zone" />
-                                  </SelectTrigger>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "w-[240px] pl-3 text-left font-normal",
+                                      !field.value && "text-muted-foreground"
+                                    )}
+                                  >
+                                    {field.value ? (
+                                      format(field.value, "PPP")
+                                    ) : (
+                                      <span>Pick a date</span>
+                                    )}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                  </Button>
                                 </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="PDT">PDT</SelectItem>
-                                  {/* Add more time zones as needed */}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="endDate"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>End date</FormLabel>
-                              <FormControl>
-                                <div className="relative">
-                                  <Input type="date" {...field} />
-                                  <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                </div>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="endTime"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>End time</FormLabel>
-                              <FormControl>
-                                <div className="relative">
-                                  <Input type="time" {...field} />
-                                  <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                                </div>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-
+                              </PopoverTrigger>
+                              <PopoverContent
+                                className="w-auto p-0"
+                                align="start"
+                              >
+                                <Calendar
+                                  mode="single"
+                                  // selected={field.value}
+                                  onSelect={field.onChange}
+                                  disabled={(date) =>
+                                    date < new Date() ||
+                                    date < new Date("1900-01-01")
+                                  }
+                                  initialFocus
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                       <FormField
                         control={form.control}
-                        name="repeatEvent"
+                        name="startTime"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Repeat event</FormLabel>
+                            <FormLabel>Start time</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <Input type="time" {...field} />
+                                <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="timeZone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Time zone</FormLabel>
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
                             >
                               <FormControl>
                                 <SelectTrigger>
-                                  <Repeat className="h-4 w-4 text-gray-400 mr-2" />
-                                  <SelectValue placeholder="Select repeat frequency" />
+                                  <SelectValue placeholder="Select time zone" />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="never">Never</SelectItem>
-                                <SelectItem value="daily">Daily</SelectItem>
-                                <SelectItem value="weekly">Weekly</SelectItem>
-                                <SelectItem value="monthly">Monthly</SelectItem>
-                                <SelectItem value="custom">Custom</SelectItem>
+                                <SelectItem value="PDT">PDT</SelectItem>
+                                {/* Add more time zones as needed */}
                               </SelectContent>
                             </Select>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+                    </div>
 
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <FormField
                         control={form.control}
-                        name="venueName"
+                        name="endDate"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col">
+                            <FormLabel>End date</FormLabel>
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "w-[240px] pl-3 text-left font-normal",
+                                      !field.value && "text-muted-foreground"
+                                    )}
+                                  >
+                                    {field.value ? (
+                                      format(field.value, "PPP")
+                                    ) : (
+                                      <span>Pick a date</span>
+                                    )}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent
+                                className="w-auto p-0"
+                                align="start"
+                              >
+                                <Calendar
+                                  mode="single"
+                                  onSelect={field.onChange}
+                                  disabled={(date) =>
+                                    date < new Date() ||
+                                    date < new Date("1900-01-01")
+                                  }
+                                  initialFocus
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="endTime"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>
-                              Enter a new Venue / select from existing venue
-                            </FormLabel>
+                            <FormLabel>End time</FormLabel>
                             <FormControl>
-                              <Input
-                                placeholder="Enter the venue's name"
-                                {...field}
-                              />
+                              <div className="relative">
+                                <Input type="time" {...field} />
+                                <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+                    </div>
 
+                    <FormField
+                      control={form.control}
+                      name="repeatEvent"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Repeat event</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <Repeat className="h-4 w-4 text-gray-400 mr-2" />
+                                <SelectValue placeholder="Select repeat frequency" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="never">Never</SelectItem>
+                              <SelectItem value="daily">Daily</SelectItem>
+                              <SelectItem value="weekly">Weekly</SelectItem>
+                              <SelectItem value="monthly">Monthly</SelectItem>
+                              <SelectItem value="custom">Custom</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="venueName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Enter a new Venue / select from existing venue
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter the venue's name"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="address"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Address *</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter address" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="grid grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
-                        name="address"
+                        name="city"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Address *</FormLabel>
+                            <FormLabel>City</FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter address" {...field} />
+                              <Input {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="city"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>City</FormLabel>
-                              <FormControl>
-                                <Input {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="zipCode"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>ZIP/POSTAL *</FormLabel>
-                              <FormControl>
-                                <Input {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-
                       <FormField
                         control={form.control}
-                        name="country"
+                        name="zipCode"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Country *</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select country" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="US">
-                                  United States
-                                </SelectItem>
-                                {/* Add more countries as needed */}
-                              </SelectContent>
-                            </Select>
+                            <FormLabel>ZIP/POSTAL *</FormLabel>
+                            <FormControl>
+                              <Input {...field} />
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+                    </div>
 
-                      <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center">
-                        <MapPin className="h-8 w-8 text-gray-400" />
-                        <span className="ml-2 text-gray-500">
-                          Google Maps Embed Placeholder
-                        </span>
-                      </div>
+                    <FormField
+                      control={form.control}
+                      name="country"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Country *</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select country" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="US">United States</SelectItem>
+                              {/* Add more countries as needed */}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                      <Button type="submit">Create Event</Button>
-                    </form>
-                  </Form>
-                </CardContent>
-                <Button type="submit">Submit Listing</Button>
-                </div>
+                    <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center">
+                      <MapPin className="h-8 w-8 text-gray-400" />
+                      <span className="ml-2 text-gray-500">
+                        Google Maps Embed Placeholder
+                      </span>
+                    </div>
+
+                    <Button type="submit">Create Event</Button>
+                  </form>
+                </Form>
+              </CardContent>
+              <Button type="submit">Submit Listing</Button>
+            </div>
           </form>
         </Form>
       </main>
