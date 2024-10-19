@@ -18,21 +18,32 @@ export class phoneverify {
   }
   async SendOtp(phone_number: string): Promise<void> {
     const otpcode = this.generateOtp();
-    const user = await this.userModel.findByIdAndUpdate(
-      { phone_number },
-      { otp: otpcode, otpExpires: Date.now() + 10 * 60 * 1000 },
-      { new: true },
-    );
+    let user = await this.userModel.findOne({ phone_number });
 
+    // If user does not exist, create a new user
     if (!user) {
-      throw new Error('user not found');
+      user = new this.userModel({
+        phone_number,
+        otp: otpcode,
+        otpExpires: Date.now() + 10 * 60 * 1000, // OTP expiration time
+        IsPhoneNumberVerified: false, // Set phone number as not verified initially
+      });
+
+      await user.save();
+    } else {
+      // If user exists, update the OTP and expiration
+      user.otp = otpcode;
+      user.otpExpires = Date.now() + 10 * 60 * 1000;
+      await user.save();
     }
     try {
-      await this.twilioClient.messages.create({
-        body: `Your OTP code is ${otpcode}`,
-        from: process.env.TWILIO_MESSAGING_SERVICE_SID,
-        to: phone_number,
-      });
+      const response = await this.twilioClient.verify
+        .services(process.env.TWILIO_VERIFY_SERVICE_SID)
+        .verifications.create({
+          to: phone_number,
+          channel: 'sms', // Can also use 'call' for voice OTP
+        });
+
       console.log(`OTP sent to ${phone_number}`);
     } catch (error) {
       console.error('Error sending OTP via SMS', error);
@@ -41,21 +52,29 @@ export class phoneverify {
   }
 
   async verifyOtp(phone_number: string, otp: string): Promise<boolean> {
-    const user = await this.userModel.findOne({ phone_number });
+    try {
+      // Verify OTP using Twilio Verify API
+      const response = await this.twilioClient.verify
+        .services(process.env.TWILIO_VERIFY_SERVICE_SID)
+        .verificationChecks.create({
+          to: phone_number,
+          code: otp,
+        });
 
-    if (!user || user.otpExpires < Date.now()) {
-      throw new Error('OTP expired or invalid');
+      if (response.status === 'approved') {
+        // OTP is correct
+        const user = await this.userModel.findOne({ phone_number });
+        if (user) {
+          user.IsPhoneNumberVerified = true; // Mark as verified
+          await user.save();
+        }
+        return true;
+      }
+
+      return false; // OTP mismatch or expired
+    } catch (error) {
+      console.error('Error verifying OTP', error);
+      throw new Error('Failed to verify OTP');
     }
-
-    if (user.otp === otp) {
-      // OTP matches, so you can verify the user
-      user.otp = undefined; // Clear OTP
-      user.otpExpires = undefined; // Clear OTP expiry
-      user.IsPhoneNumberVerified = true;
-      await user.save(); // Save changes
-      return true; // Success
-    }
-
-    return false; // OTP mismatch
   }
 }
