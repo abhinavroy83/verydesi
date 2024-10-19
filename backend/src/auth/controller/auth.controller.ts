@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -20,6 +21,7 @@ import {
 import {
   AuthEmailVerify,
   ForgotPasswordService,
+  phoneverify,
   UniqueEmailVerify,
 } from '../service';
 import { JwtGuard } from '../guard';
@@ -31,6 +33,7 @@ export class AuthController {
     private authEmailVerify: AuthEmailVerify,
     private forgotPasswordService: ForgotPasswordService,
     private uniqueEmailVerify: UniqueEmailVerify,
+    private phoneverifcation: phoneverify,
   ) {}
 
   @Post('signup')
@@ -51,6 +54,22 @@ export class AuthController {
   @Post('forgot-password')
   sendPasswordResetEmail(@Body() email: AuthValidEmail) {
     return this.forgotPasswordService.sendPasswordResetEmail(email);
+  }
+
+  @Post('send-otp')
+  async sendotp(@Body('phone_number') phone_number: string) {
+    return this.phoneverifcation.SendOtp(phone_number);
+  }
+
+  @Post('verify-otp')
+  async verifyotp(
+    @Body('phone_number') phone_number: string,
+    @Body('otp') otp: string,
+  ) {
+    if (!phone_number || !otp) {
+      throw new BadRequestException('Phone number and OTP are required');
+    }
+    return this.phoneverifcation.verifyOtp(phone_number, otp);
   }
 
   @Post('reset-password/:token')

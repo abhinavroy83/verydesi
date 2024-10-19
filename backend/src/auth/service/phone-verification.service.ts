@@ -30,7 +30,7 @@ export class phoneverify {
     try {
       await this.twilioClient.messages.create({
         body: `Your OTP code is ${otpcode}`,
-        from: process.env.TWILIO_PHONE_NUMBER,
+        from: process.env.TWILIO_MESSAGING_SERVICE_SID,
         to: phone_number,
       });
       console.log(`OTP sent to ${phone_number}`);
