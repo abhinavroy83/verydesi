@@ -20,7 +20,7 @@ import {
   AmenityType,
   utilityIcons,
   UtilityType,
-} from "@/constants";
+} from "@/constants"; 
 import { FaRegBuilding } from "react-icons/fa";
 import { Heart, Home, Hotel, LucideMapPin } from "lucide-react";
 import { FiClock } from "react-icons/fi";
