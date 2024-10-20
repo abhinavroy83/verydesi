@@ -20,7 +20,7 @@ export default function LogoutComponent() {
   const router = useRouter();
   const handleLogout = async () => {
     // Simulate logout action
-    signOut({ callbackUrl: "/signin" });
+    signOut({ callbackUrl: "/sign-in" });
     logout();
     console.log("Logging out...");
     // Here you would typically call your logout API or clear session data

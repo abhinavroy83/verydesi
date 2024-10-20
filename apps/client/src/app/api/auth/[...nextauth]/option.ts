@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
           });
 
           const user = await res.json();
-
+          console.log(user);
           if (res.ok && user) {
             return user; // Return user data if login is successful
           }
@@ -58,12 +58,12 @@ export const authOptions: NextAuthOptions = {
             }
           );
 
-          const data = await response.json();
-
-          if (response.ok && data.access_token) {
-            user.access_token = data.access_token;
-            return true;
+          const user = await response.json();
+          console.log(user);
+          if (response.ok && user) {
+            return user; // Return user data if login is successful
           }
+          return null;
         } catch (error) {
           console.error("Error during Google authentication", error);
         }

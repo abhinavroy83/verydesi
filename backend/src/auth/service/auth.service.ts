@@ -87,10 +87,10 @@ export class AuthService {
       let user = await this.userModel.findOne({ email });
       if (!user) {
         user = new this.userModel({ email, firstName });
-        await user.save()
+        await user.save();
       }
-      const jwttoken = await this.signToken(user._id.toString(), user.email);
-      return { access_token: jwttoken };
+      // const jwttoken = await this.signToken(user._id.toString(), user.email);
+      return this.signToken(user._id.toString(), user.email);
     } catch (error) {
       console.error('Error verifying Google token', error);
       throw new UnauthorizedException('Invalid Google token');
