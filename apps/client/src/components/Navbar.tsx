@@ -106,16 +106,16 @@ export default function Navbar() {
               onClick={() => {
                 window.open("https://lifepointlactation.com/", "_blank");
               }}
-              className="w-[37rem] mt-4 bg-purple-900 px-1 shadow-lg overflow-hidden relative cursor-pointer"
+              className="w-[37rem] mt-4 bg-[#F59583] px-1 shadow-lg overflow-hidden relative cursor-pointer hidden lg:flex"
             >
               <div className="flex items-center">
                 <img
                   src="https://res.cloudinary.com/druohnmyv/image/upload/v1726470942/finallogo_oamxsn.png"
-                  className="w-[6rem] h-[5rem] drop-shadow-[0_0_0.95rem_rgb(259,227,0)]"
+                  className="w-[6rem] h-[5rem]"
                 />
                 <div className="ml-3">
                   <span className="text-white"> Healthy Baby</span>
-                  <h2 className="text-[18px] font-bold text-yellow-300 mt-0">
+                  <h2 className="text-[18px] font-bold text-[#426476] mt-0">
                     Lifepoint Lactation
                   </h2>
                 </div>
@@ -124,7 +124,7 @@ export default function Navbar() {
                   src="https://res.cloudinary.com/druohnmyv/image/upload/v1727429131/img1_b7arix.png"
                 />
               </div>
-              <Badge className="absolute top-4 right-2 bg-pink-500 text-white px-3 py-1">
+              <Badge className="absolute top-4 right-2 bg-[#426476] text-white px-3 py-1">
                 Talk to Breastfeeding Educator
               </Badge>
               <span className="absolute top-11 right-12 text-[18px] font-bold text-white">
@@ -133,7 +133,7 @@ export default function Navbar() {
               </span>
 
               {/* <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-white rounded-full opacity-10"></div> */}
-              <div className="absolute -right-8 -top-8 w-24 h-24 bg-pink-300 rounded-full opacity-20"></div>
+              <div className="absolute -right-8 -top-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div>
             </div>
 
             <div className="hidden sm:flex items-center space-x-6 mt-3">
@@ -149,7 +149,7 @@ export default function Navbar() {
                   </div>
                   <Link href="/dashboard/favorite" className="relative">
                     <Heart className="h-6 w-6 text-gray-600 hover:text-gray-900 cursor-pointer" />
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
                       {cartcount}
                     </span>
                   </Link>
@@ -181,34 +181,33 @@ export default function Navbar() {
                           aria-orientation="vertical"
                           aria-labelledby="options-menu"
                         >
-                          <Link
-                            href=""
-                            className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                          <div
+                            className="px-4 py-2 text-[16px] text-white flex items-center bg-[#232f3e]"
                             role="menuitem"
                           >
-                            <User className="mr-2 h-4 w-4" />
+                            <User className="mr-2  h-5 w-5" />
                             Welcome, {firstname}
-                          </Link>
+                          </div>
                           <Link
                             href="/dashboard"
-                            className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                            className="px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
-                            <Home className="mr-2 h-4 w-4" /> Dashboard
+                            <Home className="mr-2  h-5 w-5" /> Dashboard
                           </Link>
                           <Link
                             href="/dashboard/user"
-                            className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                            className="px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
-                            <Settings className="mr-2 h-4 w-4" /> Settings
+                            <Settings className="mr-2  h-5 w-5" /> Settings
                           </Link>
                           <Link
                             href="#"
-                            className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                            className="px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
-                            <HelpCircle className="mr-2 h-4 w-4" /> Help
+                            <HelpCircle className="mr-2  h-5 w-5" /> Help
                           </Link>
                           <LogoutComponent />
                           {/* <a
@@ -221,7 +220,7 @@ export default function Navbar() {
                               })
                             }
                           >
-                            <LogOut className="mr-2 h-4 w-4" /> Log out
+                            <LogOut className="mr-2  h-5 w-5" /> Log out
                           </a> */}
                         </div>
                       </div>
@@ -328,14 +327,14 @@ export default function Navbar() {
               variant="ghost"
               className="w-full text-left text-gray-700 hover:text-gray-900 hover:bg-gray-100"
             >
-              Portland <ChevronDown className="ml-1 h-4 w-4" />
+              Portland <ChevronDown className="ml-1  h-5 w-5" />
             </Button>
             {session ? (
               <div className="flex items-center space-x-6 px-3 py-2 ">
                 <Bell className="h-6 w-6 text-gray-600" />
                 <div className="relative">
                   <Heart className="h-6 w-6 text-gray-600" />
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
                     1
                   </span>
                 </div>

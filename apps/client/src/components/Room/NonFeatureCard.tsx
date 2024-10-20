@@ -152,7 +152,7 @@ export default function Component({ room }: FeaturedCard2Props) {
         );
       }}
     >
-      <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[270px] lg:h-[80px]">
+      <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[300px] lg:h-[80px]">
         <CardContent className="py-1 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <div className="flex-shrink-0">

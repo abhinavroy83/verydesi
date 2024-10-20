@@ -20,7 +20,7 @@ import {
   AmenityType,
   utilityIcons,
   UtilityType,
-} from "@/constants"; 
+} from "@/constants";
 import { FaRegBuilding } from "react-icons/fa";
 import { Heart, Home, Hotel, LucideMapPin } from "lucide-react";
 import { FiClock } from "react-icons/fi";
@@ -234,14 +234,14 @@ export default function RoomDetails({
   return (
     <>
       <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 pb-0 mx-auto py-8 mt-[7rem]">
-        <div className="flex space-x-2 w-full justify-between">
-          <div>
+        <div className="flex space-x-2 w-full justify-between items-center">
+          <div className="">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink
                     href="/"
-                    className="flex items-center text-primary hover:text-primary-dark transition-colors"
+                    className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
                   >
                     <Home className="w-4 h-4 mr-2" />
                     <span className="font-medium">Home</span>
@@ -253,7 +253,7 @@ export default function RoomDetails({
                 <BreadcrumbItem>
                   <BreadcrumbLink
                     href="/rooms"
-                    className="flex items-center text-primary hover:text-primary-dark transition-colors"
+                    className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
                   >
                     <Hotel className="w-4 h-4 mr-2" />
                     <span className="font-medium">Rooms</span>
@@ -331,22 +331,30 @@ export default function RoomDetails({
           </div>
         </div>
         <div className="flex justify-between items-start">
-          <div className="flex w-full justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-900 w-[82rem]">
-              {roomData?.Title}
-            </h1>
-            <h1 className="text-xl font-bold p-2 text-gray-900 whitespace-nowrap">
-              Posted By: {roomData?.user_name}{" "}
-            </h1>
+          <div className="flex w-full justify-between">
+            <div className="flex gap-2 font-bold">
+              <h1 className="text-3xl font-bold text-gray-900">
+                {roomData?.Title}
+              </h1>
+             <p className="lg:mt-1"> |</p>
+              <p className="text-2xl text-green-600">
+                ${roomData?.Expected_Rooms}
+              </p>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold p-1 text-gray-900 whitespace-nowrap">
+                Posted By: {roomData?.user_name}{" "}
+              </h1>
+            </div>
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-3">
             <div className="flex items-center gap-2 text-xl font-bold">
-              <p className="text-gray-600">{roomData?.postingincity}, OR</p>|
-              <p className="text-xl  text-green-600">
+              <p className="text-gray-600">{roomData?.postingincity}, OR</p>
+              {/* <p className="text-xl text-green-600">
                 ${roomData?.Expected_Rooms}
-              </p>
+              </p> */}
             </div>
             <Card>
               <CardContent className="p-0">
@@ -645,7 +653,9 @@ export default function RoomDetails({
                         className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
                       />
                     </div>
-                    <Button className="w-full">Send Message</Button>
+                    <Button className="w-full bg-green-800">
+                      Send Message
+                    </Button>
                   </form>
                 </CardContent>
               )}
@@ -653,9 +663,9 @@ export default function RoomDetails({
           </div>
         </div>
       </div>
-      <section className="container mx-auto px-4">
+      <section className="container mx-auto px-4 lg:mt-0 mt-5">
         <h2 className="text-2xl font-bold mb-6">Similar Rooms</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {allRooms.slice(0, 3).map((room) => (
             <Similarroomcard key={room._id} room={room} />
           ))}
