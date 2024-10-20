@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
           });
 
           const user = await res.json();
-          console.log(user);
+          // console.log(user);
           if (res.ok && user) {
             return user; // Return user data if login is successful
           }
@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account, profile }) {
       if (account?.provider === "google") {
         try {
           const response = await fetch(
@@ -58,22 +58,23 @@ export const authOptions: NextAuthOptions = {
             }
           );
 
-          const user = await response.json();
-          console.log(user);
-          if (response.ok && user) {
-            return user; // Return user data if login is successful
+          const data = await response.json();
+          // console.log("Google auth response:", data);
+
+          if (response.ok && data.access_token) {
+            user.access_token = data.access_token;
+            return true;
           }
-          return null;
+          return false;
         } catch (error) {
           console.error("Error during Google authentication", error);
+          return false;
         }
-        return false;
       }
       return true;
     },
-    async jwt({ token, user }) {
-      // If user exists (successful login), add JWT token to session
-      if (user) {
+    async jwt({ token, user, account }) {
+      if (account?.provider === "google" && user?.access_token) {
         token.accessToken = user.access_token;
       }
       return token;
