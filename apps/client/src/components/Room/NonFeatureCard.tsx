@@ -142,13 +142,17 @@ export default function Component({ room }: FeaturedCard2Props) {
       return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
     }
   };
-
+  const formatTitle = (title: string) => {
+    // Replace spaces with underscores, but keep other characters
+    return title.replace(/\s+/g, "_");
+  };
   return (
     <div
       className=" cursor-pointer"
       onClick={() => {
+        const formattedTitle = formatTitle(room?.Title);
         router.push(
-          `/room?id=${room?._id}&title=${encodeURIComponent(room?.Title)}`
+          `/room?id=${room?._id}&title=${encodeURIComponent(formattedTitle)}`
         );
       }}
     >

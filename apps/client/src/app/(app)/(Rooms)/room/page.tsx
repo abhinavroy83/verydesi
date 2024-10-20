@@ -130,8 +130,9 @@ export default function RoomDetails({
     const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1;
     if (newIndex >= 0 && newIndex < allRooms.length) {
       const newRoom = allRooms[newIndex];
+      const formatTitle = newRoom?.Title.replace(/\s+/g, "_");
       router.push(
-        `/room?id=${newRoom._id}&title=${encodeURIComponent(newRoom?.Title)}`
+        `/room?id=${newRoom._id}&title=${encodeURIComponent(formatTitle)}`
       );
     }
   };
@@ -336,7 +337,7 @@ export default function RoomDetails({
               <h1 className="text-3xl font-bold text-gray-900">
                 {roomData?.Title}
               </h1>
-             <p className="lg:mt-1"> |</p>
+              <p className="lg:mt-1"> |</p>
               <p className="text-2xl text-green-600">
                 ${roomData?.Expected_Rooms}
               </p>

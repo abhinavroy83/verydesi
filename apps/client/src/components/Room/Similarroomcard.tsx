@@ -140,10 +140,19 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
       return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
     }
   };
+  const formatTitle = (title: string) => {
+    // Replace spaces with underscores, but keep other characters
+    return title.replace(/\s+/g, "_");
+  };
 
   return (
-    <Link
-      href={`/room/${room?._id}`}
+    <div
+      onClick={() => {
+        const formattedTitle = formatTitle(room?.Title);
+        router.push(
+          `/room?id=${room?._id}&title=${encodeURIComponent(formattedTitle)}`
+        );
+      }}
       className={`flex relative w-full max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[320px] lg:h-[155px]`}
     >
       <div className="relative w-full lg:w-72 lg:h-[100%] max-w-4xl overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
@@ -206,7 +215,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
           {room?.Title && truncateCharacters(room?.Title, 41)}
         </p>
         <p className="flex gap-1 text-[14px] text-gray-600 mt-1 items-center">
-          <GrLocation  />
+          <GrLocation />
           {room?.postingincity},
           {room?.state &&
             (room.state.length > 2
@@ -230,6 +239,6 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
           </p>
         </p>
       </div>
-    </Link>
+    </div>
   );
 }
