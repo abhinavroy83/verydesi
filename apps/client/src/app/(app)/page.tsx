@@ -40,6 +40,7 @@ const Page = () => {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
   const fetchrooms = async () => {
     try {
       setLoading(true);

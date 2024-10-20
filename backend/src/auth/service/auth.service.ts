@@ -10,13 +10,18 @@ import { Model } from 'mongoose';
 import { User } from '../schemas';
 import { JwtService } from '@nestjs/jwt';
 import * as nodemailer from 'nodemailer';
+import { OAuth2Client } from 'google-auth-library';
 
 @Injectable()
 export class AuthService {
+  private client: OAuth2Client;
+
   constructor(
     @Inject('USER_MODEL') private userModel: Model<User>,
     private jwt: JwtService,
-  ) {}
+  ) {
+    this.client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  }
   async signup(dto: Authsignupdto) {
     try {
       //check for existinguser
@@ -67,6 +72,28 @@ export class AuthService {
       return this.signToken(user._id.toString(), user.email);
     } catch (error) {
       throw error;
+    }
+  }
+
+  async googlelogin(token: string) {
+    try {
+      const ticket = await this.client.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+      const email = payload?.email;
+      const firstName = payload?.name;
+      let user = await this.userModel.findOne({ email });
+      if (!user) {
+        user = new this.userModel({ email, firstName });
+        await user.save();
+      }
+      // const jwttoken = await this.signToken(user._id.toString(), user.email);
+      return this.signToken(user._id.toString(), user.email);
+    } catch (error) {
+      console.error('Error verifying Google token', error);
+      throw new UnauthorizedException('Invalid Google token');
     }
   }
 

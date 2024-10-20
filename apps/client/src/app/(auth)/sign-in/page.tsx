@@ -89,7 +89,15 @@ export default function SignIn() {
                   variant="outline"
                   className="w-full flex items-center justify-center space-x-2"
                   onClick={() => {
-                    /* Handle Google sign-in */
+                    signIn("google", { callbackUrl: "/" });
+                    const city = "Portland";
+                    login(city);
+                    toast({
+                      title: "Success",
+                      description: "Loggedin successfully!",
+                      duration: 5000,
+                    });
+                    router.push("/");
                   }}
                 >
                   <svg

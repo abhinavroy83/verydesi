@@ -45,6 +45,10 @@ export class AuthController {
   signin(@Body() dto: Authsignindto) {
     return this.authService.signin(dto);
   }
+  @Post('google')
+  async googlelogin(@Body('token') token: string) {
+    return this.authService.googlelogin(token);
+  }
 
   @Get('verifyemail/:token')
   AuthEmailVerify(@Param('token') token: string) {
