@@ -9,8 +9,9 @@ import { Model } from 'mongoose';
 import { IRoom } from '../schemas';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
-import { CreateRoomDto, UpdateRoomDto } from '../dto';
+import { CreateRoomDto, sendEmailDto, UpdateRoomDto } from '../dto';
 import * as cron from 'node-cron';
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class RoomService {
@@ -121,8 +122,6 @@ export class RoomService {
     }
   }
 
-
-  
   //check below later
 
   async getVisibleRoomsByArea(area: string) {
@@ -224,6 +223,51 @@ export class RoomService {
       return updatedRoom;
     } catch (error) {
       throw new Error(`Error while updating room: ${error.message}`);
+    }
+  }
+
+  //send email to owner
+  async sendEmail(sendemaildto: sendEmailDto) {
+    try {
+      const redisKey = `${sendemaildto.userEmail}:${sendemaildto.ownerEmail}`;
+      const emailSent = await this.cacheManager.get(redisKey);
+      if (emailSent) {
+        throw new Error('You have already sent a message to this room owner.');
+      }
+      const transport = nodemailer.createTransport({
+        host: 'sandbox.smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+          user: 'f8220dd13ab2b9',
+          pass: '64e618e922d9bd',
+        },
+      });
+      await transport.sendMail({
+        from: `"VeryDesi" <no-reply@verydesi.com>`,
+        to: sendemaildto.ownerEmail,
+        subject: 'New Message from a VeryDesi User',
+        html: `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <h1 style="background-color: #f8f8f8; padding: 10px 20px; border-bottom: 2px solid #e2e2e2; text-align: center; color: #ff5722;">
+              Verydesi.com - New Message
+            </h1>
+            <p>Hello,</p>
+            <p><strong>${sendemaildto.userName}</strong> (${sendemaildto.userEmail}) has sent you a message regarding your room listing on VeryDesi:</p>
+            <p style="padding: 10px; border-left: 4px solid #ff5722; background-color: #f8f8f8;">
+              ${sendemaildto.message}
+            </p>
+            <p>Room Link: <a href="${sendemaildto.RoomLink}" target="_blank">${sendemaildto.RoomLink}</a></p>
+
+            <p>Please feel free to respond directly to the user via their email address.</p>
+            <p style="color: #999; font-size: 12px; text-align: center;">
+              &copy; ${new Date().getFullYear()} VeryDesi. All rights reserved.
+            </p>
+          </div>`,
+      });
+
+      await this.cacheManager.set(redisKey, true, 60 * 60 * 24); // 24 hours expiration
+    } catch (error) {
+      throw new Error('Error sending email.');
     }
   }
 }

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -10,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { RoomService } from '../service/room.service';
-import { CreateRoomDto, UpdateRoomDto } from '../dto';
+import { CreateRoomDto, sendEmailDto, UpdateRoomDto } from '../dto';
 import { JwtGuard } from 'src/auth/guard';
 
 @Controller('room')
@@ -65,5 +66,17 @@ export class RoomController {
   @Delete('delete-room/:roomId')
   async deleteroom(@Param('roomId') roomId: string) {
     return this.roomService.DeleteRoom(roomId);
+  }
+
+  // send email to user on room request
+
+  @Post('send-email-user')
+  async sendEmailtouser(@Body() sendemaildto: sendEmailDto) {
+    try {
+      await this.roomService.sendEmail(sendemaildto);
+      return { success: true };
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }
