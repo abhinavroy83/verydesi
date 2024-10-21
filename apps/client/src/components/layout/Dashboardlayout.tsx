@@ -121,7 +121,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       .slice(0, 2);
   };
   return (
-    <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 mt-[10rem]">
+    <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 mt-[10rem] font-sans">
       {!isverified && (
         <div className="">
           <div
@@ -197,7 +197,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               </AvatarFallback>
             </Avatar>
             <h2 className="text-xl font-semibold mb-1">{firstname}</h2>
-            <p className="text-sm text-muted-foreground mb-4">Since 2024</p>
+            <p className="text-[15px] text-muted-foreground mb-4 font-sans">
+              Since 2024
+            </p>
             <div className="flex justify-center space-x-2">
               <input
                 type="file"

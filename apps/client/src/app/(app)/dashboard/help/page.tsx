@@ -13,8 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { HelpCircle, Send, User, Mail, Phone } from "lucide-react";
+import { HelpCircle, Send, User, Mail, Phone, ChevronRight } from "lucide-react";
 import { DashboardLayout } from "@/components/layout";
+import Link from "next/link";
 
 export default function Component() {
   const [formData, setFormData] = useState({
@@ -48,7 +49,33 @@ export default function Component() {
             <HelpCircle className="mr-2" /> Help
           </h1>
         </header>
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto lg:px-4">
+          <nav
+            className="flex text-sm text-gray-500 p-2 items-center"
+            aria-label="Breadcrumb"
+          >
+            <ol className="inline-flex items-center space-x-1 md:space-x-3 mt-4">
+              <li className="inline-flex items-center">
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center hover:text-gray-700"
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <div className="flex items-center">
+                  <ChevronRight className="w-4 h-4 mx-1" />
+                  <Link
+                    href="/dashboard/help"
+                    className="ml-1 hover:text-gray-700"
+                  >
+                    Help
+                  </Link>
+                </div>
+              </li>
+            </ol>
+          </nav>
           <form className="bg-white shadow-md rounded-xl px-8 pt-6 pb-8 mb-4 border">
             <div className="mb-4">
               <label
@@ -91,7 +118,7 @@ export default function Component() {
               />
             </div>
             <div className="flex items-center justify-between">
-              <Button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              <Button className="bg-green-800 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Send response
               </Button>
             </div>

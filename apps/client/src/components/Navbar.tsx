@@ -110,7 +110,7 @@ export default function Navbar() {
               <div className="flex items-center">
                 <img
                   src="https://res.cloudinary.com/druohnmyv/image/upload/v1726470942/finallogo_oamxsn.png"
-                  className="w-[6rem] h-[5rem] drop-shadow(0 0 0.75rem rgb(255, 217, 0))"
+                  className="w-[6rem] h-[5rem]"
                 />
                 <div className="ml-3">
                   <span className="text-white"> Healthy Baby</span>
@@ -189,21 +189,21 @@ export default function Navbar() {
                           </div>
                           <Link
                             href="/dashboard"
-                            className="px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 flex items-center"
+                            className="px-4 py-2 text-[16px] text-white lg:text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
                             <Home className="mr-2  h-5 w-5" /> Dashboard
                           </Link>
                           <Link
                             href="/dashboard/user"
-                            className="px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 flex items-center"
+                            className="px-4 py-2 text-[16px] text-white lg:text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
                             <Settings className="mr-2  h-5 w-5" /> Settings
                           </Link>
                           <Link
                             href="#"
-                            className="px-4 py-2 text-[16px] text-gray-700 hover:bg-gray-100 flex items-center"
+                            className="px-4 py-2 text-[16px] text-white lg:text-gray-700 hover:bg-gray-100 flex items-center"
                             role="menuitem"
                           >
                             <HelpCircle className="mr-2  h-5 w-5" /> Help
@@ -211,7 +211,7 @@ export default function Navbar() {
                           <LogoutComponent />
                           {/* <a
                             href="#"
-                            className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                            className="px-4 py-2 text-sm text-white hover:bg-gray-100 flex items-center"
                             role="menuitem"
                             onClick={() =>
                               signOut({
@@ -229,7 +229,7 @@ export default function Navbar() {
               ) : (
                 <div
                   onClick={() => router.push("/sign-in")}
-                  className="leading-4 flex items-center gap-2 mr-0 lg:mr-3 text-gray-700 hover:text-gray-900"
+                  className="leading-4 flex items-center gap-2 mr-0 lg:mr-3 text-white hover:text-gray-900"
                 >
                   <User />
                   <p
@@ -242,7 +242,7 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-            <div className="md:hidden">
+            <div className="md:hidden mt-2">
               <Button
                 variant="ghost"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -285,7 +285,6 @@ export default function Navbar() {
             </div>
 
             <div className="hidden md:flex items-center space-x-2 text-white">
-              {/* <MapPin className="h-5 w-5 text-gray-400" /> */}
               <span className="font-medium">{weatherData?.name}</span>
               <div>
                 {weatherData?.main && (
@@ -320,51 +319,71 @@ export default function Navbar() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden  bg-white border-b border-gray-200">
+        <div className="md:hidden bg-[#232f3e] lg:bg-white border-b border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Button
-              variant="ghost"
-              className="w-full text-left text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-            >
-              Portland <ChevronDown className="ml-1  h-5 w-5" />
-            </Button>
             {session ? (
-              <div className="flex items-center space-x-6 px-3 py-2 ">
-                <Bell className="h-6 w-6 text-gray-600" />
-                <div className="relative">
-                  <Heart className="h-6 w-6 text-gray-600" />
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
-                    1
-                  </span>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-6 px-3">
+                  <Bell className="h-6 w-6 text-white" />
+                  <div className="relative">
+                    <Heart className="h-6 w-6 text-white" />
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
+                      1
+                    </span>
+                  </div>
+                  <Avatar className="h-8 w-8 ring-2 ring-gray-300">
+                    <AvatarImage
+                      src="/placeholder.svg?height=32&width=32"
+                      alt="User"
+                    />
+                    <AvatarFallback>U</AvatarFallback>
+                  </Avatar>
+                  <div className="flex items-center space-x-2 text-white py-2">
+                    <MapPin className="h-5 w-5 text-gray-400" />
+                    {weatherData?.weather &&
+                      weatherData?.weather.length > 0 && (
+                        <img
+                          className="w-16 h-14 items-center justify-center border-full border-white"
+                          src={`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`}
+                          alt="logo"
+                        />
+                      )}
+                    <span className="font-medium">76.1°F</span>
+                  </div>
                 </div>
-                <Avatar className="h-8 w-8 ring-2 ring-gray-300">
-                  <AvatarImage
-                    src="/placeholder.svg?height=32&width=32"
-                    alt="User"
-                  />
-                  <AvatarFallback>U</AvatarFallback>
-                </Avatar>
+
+                <div className="space-y-1">
+                  <Link
+                    href="/dashboard"
+                    className="block px-4 py-2 text-sm text-white lg:text-gray-700 rounded-md"
+                  >
+                    <Home className="inline-block mr-2 h-5 w-5" /> Dashboard
+                  </Link>
+                  <Link
+                    href="/dashboard/user"
+                    className="block px-4 py-2 text-sm text-white rounded-md"
+                  >
+                    <Settings className="inline-block mr-2 h-5 w-5" /> Settings
+                  </Link>
+                  <Link
+                    href="#"
+                    className="block px-4 py-2 text-sm text-white rounded-md"
+                  >
+                    <HelpCircle className="inline-block mr-2 h-5 w-5" /> Help
+                  </Link>
+                  <LogoutComponent />
+                </div>
               </div>
             ) : (
               <Button
                 variant="ghost"
-                className="w-full text-left text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                onClick={() => setIsLoggedIn(true)}
+                className="w-full text-left text-white hover:text-gray-900 hover:bg-gray-100"
+                onClick={() => router.push("/sign-in")}
               >
+                <User className="inline-block mr-2 h-5 w-5" />
                 Hello, Sign in Or Sign up
               </Button>
             )}
-            <div className="flex items-center space-x-2 text-gray-700 px-3 py-2">
-              <MapPin className="h-5 w-5 text-gray-400" />
-              {weatherData?.weather && weatherData?.weather.length > 0 && (
-                <img
-                  className="w-16 h-14 items-center justify-center border-full border-white"
-                  src={`https://openweathermap.org/img/w/${weatherData?.weather[0].icon}.png`}
-                  alt="logo"
-                />
-              )}
-              <span className="font-medium">76.1°F</span>
-            </div>
           </div>
         </div>
       )}

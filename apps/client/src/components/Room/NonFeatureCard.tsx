@@ -156,14 +156,14 @@ export default function Component({ room }: FeaturedCard2Props) {
         );
       }}
     >
-      <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[300px] lg:h-[80px]">
+      <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[80px]">
         <CardContent className="py-1 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <div className="flex-shrink-0">
+            <div className="lg:flex-shrink-0 hidden lg:flex">
               {room?.Preferred_gender === "Male only" ? (
                 <>
                   <img
-                    className="h-10 w-10  text-gray-400"
+                    className="h-10 w-10 text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
                     alt="male"
                   />
@@ -219,11 +219,40 @@ export default function Component({ room }: FeaturedCard2Props) {
                   <User className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>Posted by: {room?.user_name}</span>
                 </div>
+                <div className="flex-shrink-0 lg:hidden">
+                  {room?.Preferred_gender === "Male only" ? (
+                    <>
+                      <img
+                        className="h-8 w-8 text-gray-400"
+                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
+                        alt="male"
+                      />
+                      {/* <IoIosMale className="h-12 w-12  text-gray-400" /> */}
+                    </>
+                  ) : room?.Preferred_gender === "Female only" ? (
+                    <>
+                      <img
+                        className="h-8 w-8  text-gray-400"
+                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
+                        alt="female"
+                      />
+                      {/* <IoIosFemale className="h-12 w-12  text-gray-400" /> */}
+                    </>
+                  ) : (
+                    <>
+                      <img
+                        className="h-8 w-8  text-gray-400"
+                        src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
+                        alt="any"
+                      />
+                    </>
+                  )}{" "}
+                </div>
               </div>
             </div>
             <div className="flex">
               <div className="flex w-full sm:w-auto text-left sm:text-right">
-                <div className="flex items-center gap-2 absolute lg:bottom-[1.5rem] bottom-[0.9rem] right-[2.2rem] lg:right-[4rem]">
+                <div className="flex items-center gap-2 absolute lg:bottom-[1.5rem] bottom-[1rem] right-[2rem] lg:right-[4rem]">
                   {!status && (
                     <div
                       onClick={(e) => {
