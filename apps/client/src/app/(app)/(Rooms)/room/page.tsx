@@ -240,7 +240,7 @@ export default function RoomDetails({
   return (
     <>
       <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 pb-0 mx-auto py-8 mt-[7rem]">
-        <div className="flex space-x-2 w-full justify-between items-center">
+        <div className="flex flex-col lg:flex-row space-x-2 w-full justify-between lg:items-center">
           <div className="">
             <Breadcrumb>
               <BreadcrumbList>
@@ -268,7 +268,7 @@ export default function RoomDetails({
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 py-2 lg:py-0">
             <div className="flex items-center gap-2">
               {!status && (
                 <div
@@ -317,7 +317,7 @@ export default function RoomDetails({
                 <button
                   onClick={() => navigateRoom("prev")}
                   disabled={currentIndex === 0}
-                  className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
+                  className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors flex flex-row"
                   aria-label="Previous listing"
                 >
                   <ChevronLeft className="w-5 h-5 inline-block mr-1" />
@@ -326,7 +326,7 @@ export default function RoomDetails({
                 <button
                   onClick={() => navigateRoom("next")}
                   disabled={currentIndex === allRooms.length - 1}
-                  className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors"
+                  className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors flex flex-row"
                   aria-label="Next listing"
                 >
                   NEXT
@@ -336,19 +336,18 @@ export default function RoomDetails({
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-start">
-          <div className="flex w-full justify-between">
-            <div className="flex gap-2 font-bold">
+        <div className="flex justify-between items-start  flex-col lg:flex-row">
+          <div className="flex w-full justify-between  flex-col lg:flex-row">
+            <div className="flex flex-col lg:flex-row gap-2 font-bold lg:items-center">
               <h1 className="text-3xl font-bold text-gray-900">
-                {roomData?.Title}
+                {roomData?.Title}|
               </h1>
-              <p className="lg:mt-1"> |</p>
               <p className="text-2xl text-green-600">
                 ${roomData?.Expected_Rooms}
               </p>
             </div>
             <div>
-              <h1 className="text-xl font-bold p-1 text-gray-900 whitespace-nowrap">
+              <h1 className="text-xl font-bold text-gray-900 whitespace-nowrap lg:p-1">
                 Posted By: {roomData?.user_name}{" "}
               </h1>
             </div>

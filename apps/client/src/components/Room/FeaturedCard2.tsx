@@ -160,9 +160,9 @@ export default function Component({ room }: FeaturedCard2Props) {
           `/room?id=${room?._id}&title=${encodeURIComponent(formattedTitle)}`
         );
       }}
-      className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[450px] lg:h-[152px]`}
+      className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[152px]`}
     >
-      <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] h-[300px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
+      <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] lg:h-[152px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
         <img
           src={
             room && room.Imgurl && room.Imgurl.length > 0
@@ -257,7 +257,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               )}
             </div>
           </div>
-          <div className="flex lg:flex-col flex-wrap text-[19px] text-gray-500  transition-colors duration-300">
+          <div className="flex flex-col flex-wrap text-[19px] text-gray-500  transition-colors duration-300">
             <div className="flex items-center mr-2 sm:mb-0">
               <User className="h-5 w-5 mr-1 text-[#054687]" />
               <span className="text-blue-800">

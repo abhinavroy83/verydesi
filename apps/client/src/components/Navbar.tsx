@@ -106,12 +106,12 @@ export default function Navbar() {
               onClick={() => {
                 window.open("https://lifepointlactation.com/", "_blank");
               }}
-              className="w-[37rem] mt-4 bg-[#F59583] px-1 shadow-lg overflow-hidden relative cursor-pointer hidden lg:flex"
+              className="w-[37rem] mt-4 bg-[#F59583] px-1 shadow-lg overflow-hidden relative cursor-pointer hidden lg:flex "
             >
               <div className="flex items-center">
                 <img
                   src="https://res.cloudinary.com/druohnmyv/image/upload/v1726470942/finallogo_oamxsn.png"
-                  className="w-[6rem] h-[5rem]"
+                  className="w-[6rem] h-[5rem] drop-shadow(0 0 0.75rem rgb(255, 217, 0))"
                 />
                 <div className="ml-3">
                   <span className="text-white"> Healthy Baby</span>
