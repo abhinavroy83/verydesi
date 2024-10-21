@@ -96,7 +96,6 @@ export default function Navbar() {
                 onMouseEnter={() => setIslocationOpen(true)}
                 onMouseLeave={() => setIslocationOpen(false)}
               >
-                {" "}
                 <div className="flex items-center">
                   <Area />
                 </div>

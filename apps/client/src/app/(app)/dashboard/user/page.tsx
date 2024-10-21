@@ -128,7 +128,6 @@ export default function DashboardUserSettings() {
         <div className="flex justify-between items-center">
           <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2 mb- flex justify-between w-full">
             <h2 className="text-2xl font-bold flex gap-1 items-center">
-              {" "}
               <Settings className="mr-2" /> Settings
             </h2>
             <Button
