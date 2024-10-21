@@ -51,6 +51,7 @@ import { Slash } from "lucide-react";
 import { useUserData } from "@/hooks/use-userData";
 import Similarroomcard from "@/components/Room/Similarroomcard";
 import { notFound, useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 const isValidAmenityIcon = (iconName: string): iconName is AmenityType => {
   return iconName in AmenityIcon;
@@ -80,11 +81,15 @@ export default function RoomDetails({
   const [wishliststatys, setWishlistStatus] = useState(false);
   const [loading, setLoading] = useState(true);
   const [allRooms, setAllRooms] = useState<RoomInterface[]>([]);
-
   const { currentCity, status } = useAuthStore();
   const { openLogin } = useloginstore();
-
   const { userData } = useUserData();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const fetchRoom = async () => {
     try {
       setLoading(true);

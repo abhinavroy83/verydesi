@@ -227,10 +227,17 @@ export class RoomService {
   }
 
   //send email to owner
+  async checkEmailStatus(userEmail: string, ownerEmail: string) {
+    const redisKey = `${userEmail}:${ownerEmail}`;
+    const emailSent = await this.cacheManager.get(redisKey);
+    return emailSent ? { alreadySent: true } : { alreadySent: false };
+  }
+
   async sendEmail(sendemaildto: sendEmailDto) {
     try {
       const redisKey = `${sendemaildto.userEmail}:${sendemaildto.ownerEmail}`;
       const emailSent = await this.cacheManager.get(redisKey);
+
       if (emailSent) {
         throw new Error('You have already sent a message to this room owner.');
       }
