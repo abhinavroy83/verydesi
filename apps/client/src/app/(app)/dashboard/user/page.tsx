@@ -17,7 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarIcon, Pencil, Settings } from "lucide-react";
+import { CalendarIcon, ChevronRight, Pencil, Settings } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DashboardLayout } from "@/components/layout";
@@ -29,6 +29,7 @@ import { UserData } from "@myrepo/types";
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 import { useCityData } from "@/hooks/use-city-hooks";
 import useAuthStore from "@/store/useAuthStore";
+import Link from "next/link";
 
 export default function DashboardUserSettings() {
   const [isEditing, setIsEditing] = useState(false);
@@ -148,7 +149,33 @@ export default function DashboardUserSettings() {
           </div>
         </div>
         <div className="overflow-y-auto flex-grow pr-4 -mr-4">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ">
+          <nav
+            className="flex  mb-4 text-sm text-gray-500 px-4"
+            aria-label="Breadcrumb"
+          >
+            <ol className="inline-flex items-center space-x-1 md:space-x-3 mt-4">
+              <li className="inline-flex items-center">
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center hover:text-gray-700"
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <div className="flex items-center">
+                  <ChevronRight className="w-4 h-4 mx-1" />
+                  <Link
+                    href="/dashboard/user"
+                    className="ml-1 hover:text-gray-700"
+                  >
+                    Settings
+                  </Link>
+                </div>
+              </li>
+            </ol>
+          </nav>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 px-4">
               <div className="col-span-full">
                 <Label htmlFor="belongcity">Your Account belong to</Label>
@@ -181,7 +208,11 @@ export default function DashboardUserSettings() {
                   name="firstName"
                   control={control}
                   render={({ field }) => (
-                    <Input {...field} disabled={!isEditing} />
+                    <Input
+                      className={`${!isEditing ? "text-black" : "text-black"}`}
+                      {...field}
+                      disabled={!isEditing}
+                    />
                   )}
                 />
               </div>

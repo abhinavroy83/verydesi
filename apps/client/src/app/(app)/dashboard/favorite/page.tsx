@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, ExternalLink, Trash2 } from "lucide-react";
+import { Heart, ExternalLink, Trash2, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -27,6 +27,7 @@ import { RoomInterface } from "@myrepo/types";
 import toast from "react-hot-toast";
 import useCartStore from "@/store/useCartStore";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function FavoritesPage() {
   const [loading, setLoading] = useState(true);
@@ -148,10 +149,36 @@ export default function FavoritesPage() {
   return (
     <DashboardLayout>
       <div className="container mx-auto bg-white text-black rounded-lg">
-        <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2 mb-4">
+        <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2">
           <Heart className="w-6 h-6 text-black" />
           <h1 className="text-2xl font-bold">Favorites</h1>
         </div>
+        <nav
+          className="flex text-sm text-gray-500 px-2"
+          aria-label="Breadcrumb"
+        >
+          <ol className="inline-flex items-center space-x-1 md:space-x-3 mt-4">
+            <li className="inline-flex items-center">
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center hover:text-gray-700"
+              >
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <div className="flex items-center">
+                <ChevronRight className="w-4 h-4 mx-1" />
+                <Link
+                  href="/dashboard/favorite"
+                  className="ml-1 hover:text-gray-700"
+                >
+                  Favorites
+                </Link>
+              </div>
+            </li>
+          </ol>
+        </nav>
         <Table>
           <TableHeader>
             <TableRow>
