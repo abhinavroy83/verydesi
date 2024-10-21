@@ -108,17 +108,16 @@ export default function EventForm() {
 
   const sections = [
     { id: "basic-info", label: "Basic Information" },
-    { id: "pricing", label: "Date and time" },
+    { id: "datetime", label: "Date and time" },
     { id: "availability", label: "Category & Language" },
     { id: "amenities", label: "Organizer & Artist details" },
     { id: "preferences", label: "Description" },
     { id: "photos", label: "Upload banners" },
-    { id: "contact", label: "Contact Details" },
   ];
 
   const sectionRefs = {
     "basic-info": useRef<HTMLDivElement>(null),
-    pricing: useRef<HTMLDivElement>(null),
+    datetime: useRef<HTMLDivElement>(null),
     availability: useRef<HTMLDivElement>(null),
     amenities: useRef<HTMLDivElement>(null),
     preferences: useRef<HTMLDivElement>(null),
@@ -166,316 +165,367 @@ export default function EventForm() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div ref={sectionRefs["basic-info"]} className="space-y-4">
               <h2 className="text-2xl font-bold">Basic Information</h2>
-
               <CardContent>
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-6"
                   >
-                    <FormField
-                      control={form.control}
-                      name="eventTitle"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Event Title *</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Event name" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="startDate"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-col w-full">
-                            <FormLabel>Start date</FormLabel>
-                            <Popover>
-                              <PopoverTrigger asChild>
+                    <div ref={sectionRefs["basic-info"]}>
+                      <Card>
+                        <CardContent className="pt-6">
+                          <FormField
+                            control={form.control}
+                            name="eventTitle"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Event Title *</FormLabel>
                                 <FormControl>
-                                  <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                      "w-[240px] pl-3 text-left font-normal",
-                                      !field.value && "text-muted-foreground"
-                                    )}
-                                  >
-                                    {field.value ? (
-                                      format(field.value, "PPP")
-                                    ) : (
-                                      <span>Pick a date</span>
-                                    )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                  </Button>
+                                  <Input placeholder="Event name" {...field} />
                                 </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent
-                                className="w-auto p-0"
-                                align="start"
-                              >
-                                <Calendar
-                                  mode="single"
-                                  // selected={field.value}
-                                  onSelect={field.onChange}
-                                  disabled={(date) =>
-                                    date < new Date() ||
-                                    date < new Date("1900-01-01")
-                                  }
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="startTime"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Start time</FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <Input type="time" {...field} />
-                                <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="timeZone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Time zone</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select time zone" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="PDT">PDT</SelectItem>
-                                {/* Add more time zones as needed */}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="timeZone"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>
+                                  Is it in person or virtual?
+                                </FormLabel>
+                                <Select
+                                  onValueChange={field.onChange}
+                                  defaultValue={field.value}
+                                >
+                                  <FormControl>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select Event" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    <SelectItem value="person">
+                                      In Person
+                                    </SelectItem>
+                                    <SelectItem value="virtual">
+                                      In Virtual
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </CardContent>
+                      </Card>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="endDate"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-col">
-                            <FormLabel>End date</FormLabel>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                      "w-[240px] pl-3 text-left font-normal",
-                                      !field.value && "text-muted-foreground"
-                                    )}
+                    <div ref={sectionRefs["datetime"]}>
+                      <Card>
+                        <CardContent className="pt-6">
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <FormField
+                              control={form.control}
+                              name="startDate"
+                              render={({ field }) => (
+                                <FormItem className="flex flex-col w-full">
+                                  <FormLabel>Start date</FormLabel>
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <FormControl>
+                                        <Button
+                                          variant={"outline"}
+                                          className={cn(
+                                            "w-[240px] pl-3 text-left font-normal",
+                                            !field.value &&
+                                              "text-muted-foreground"
+                                          )}
+                                        >
+                                          {field.value ? (
+                                            format(field.value, "PPP")
+                                          ) : (
+                                            <span>Pick a date</span>
+                                          )}
+                                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                        </Button>
+                                      </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent
+                                      className="w-auto p-0"
+                                      align="start"
+                                    >
+                                      <Calendar
+                                        mode="single"
+                                        // selected={field.value}
+                                        onSelect={field.onChange}
+                                        disabled={(date) =>
+                                          date < new Date() ||
+                                          date < new Date("1900-01-01")
+                                        }
+                                        initialFocus
+                                      />
+                                    </PopoverContent>
+                                  </Popover>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="startTime"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Start time</FormLabel>
+                                  <FormControl>
+                                    <div className="relative">
+                                      <Input type="time" {...field} />
+                                      <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    </div>
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="timeZone"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Time zone</FormLabel>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
                                   >
-                                    {field.value ? (
-                                      format(field.value, "PPP")
-                                    ) : (
-                                      <span>Pick a date</span>
-                                    )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent
-                                className="w-auto p-0"
-                                align="start"
-                              >
-                                <Calendar
-                                  mode="single"
-                                  onSelect={field.onChange}
-                                  disabled={(date) =>
-                                    date < new Date() ||
-                                    date < new Date("1900-01-01")
-                                  }
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="endTime"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>End time</FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <Input type="time" {...field} />
-                                <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="timeZone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Time zone</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select time zone" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="PDT">PDT</SelectItem>
-                                {/* Add more time zones as needed */}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select time zone" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="PDT">PDT</SelectItem>
+                                      {/* Add more time zones as needed */}
+                                    </SelectContent>
+                                  </Select>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <FormField
+                              control={form.control}
+                              name="endDate"
+                              render={({ field }) => (
+                                <FormItem className="flex flex-col">
+                                  <FormLabel>End date</FormLabel>
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <FormControl>
+                                        <Button
+                                          variant={"outline"}
+                                          className={cn(
+                                            "w-[240px] pl-3 text-left font-normal",
+                                            !field.value &&
+                                              "text-muted-foreground"
+                                          )}
+                                        >
+                                          {field.value ? (
+                                            format(field.value, "PPP")
+                                          ) : (
+                                            <span>Pick a date</span>
+                                          )}
+                                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                        </Button>
+                                      </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent
+                                      className="w-auto p-0"
+                                      align="start"
+                                    >
+                                      <Calendar
+                                        mode="single"
+                                        onSelect={field.onChange}
+                                        disabled={(date) =>
+                                          date < new Date() ||
+                                          date < new Date("1900-01-01")
+                                        }
+                                        initialFocus
+                                      />
+                                    </PopoverContent>
+                                  </Popover>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="endTime"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>End time</FormLabel>
+                                  <FormControl>
+                                    <div className="relative">
+                                      <Input type="time" {...field} />
+                                      <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    </div>
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="timeZone"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Time zone</FormLabel>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select time zone" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="PDT">PDT</SelectItem>
+                                      {/* Add more time zones as needed */}
+                                    </SelectContent>
+                                  </Select>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          <FormField
+                            control={form.control}
+                            name="repeatEvent"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Repeat event</FormLabel>
+                                <Select
+                                  onValueChange={field.onChange}
+                                  defaultValue={field.value}
+                                >
+                                  <FormControl>
+                                    <SelectTrigger>
+                                      <Repeat className="h-4 w-4 text-gray-400 mr-2" />
+                                      <SelectValue placeholder="Select repeat frequency" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    <SelectItem value="never">Never</SelectItem>
+                                    <SelectItem value="daily">Daily</SelectItem>
+                                    <SelectItem value="weekly">
+                                      Weekly
+                                    </SelectItem>
+                                    <SelectItem value="monthly">
+                                      Monthly
+                                    </SelectItem>
+                                    <SelectItem value="custom">
+                                      Custom
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <FormField
+                              control={form.control}
+                              name="endDate"
+                              render={({ field }) => (
+                                <FormItem className="flex flex-col">
+                                  <FormLabel>End date</FormLabel>
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <FormControl>
+                                        <Button
+                                          variant={"outline"}
+                                          className={cn(
+                                            "w-[240px] pl-3 text-left font-normal",
+                                            !field.value &&
+                                              "text-muted-foreground"
+                                          )}
+                                        >
+                                          {field.value ? (
+                                            format(field.value, "PPP")
+                                          ) : (
+                                            <span>Pick a date</span>
+                                          )}
+                                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                        </Button>
+                                      </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent
+                                      className="w-auto p-0"
+                                      align="start"
+                                    >
+                                      <Calendar
+                                        mode="single"
+                                        onSelect={field.onChange}
+                                        disabled={(date) =>
+                                          date < new Date() ||
+                                          date < new Date("1900-01-01")
+                                        }
+                                        initialFocus
+                                      />
+                                    </PopoverContent>
+                                  </Popover>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="endTime"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>End time</FormLabel>
+                                  <FormControl>
+                                    <div className="relative">
+                                      <Input type="time" {...field} />
+                                      <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    </div>
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="timeZone"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Time zone</FormLabel>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select time zone" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="PDT">PDT</SelectItem>
+                                      {/* Add more time zones as needed */}
+                                    </SelectContent>
+                                  </Select>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </CardContent>
+                      </Card>
                     </div>
 
-                    <FormField
-                      control={form.control}
-                      name="repeatEvent"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Repeat event</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <Repeat className="h-4 w-4 text-gray-400 mr-2" />
-                                <SelectValue placeholder="Select repeat frequency" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="never">Never</SelectItem>
-                              <SelectItem value="daily">Daily</SelectItem>
-                              <SelectItem value="weekly">Weekly</SelectItem>
-                              <SelectItem value="monthly">Monthly</SelectItem>
-                              <SelectItem value="custom">Custom</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="endDate"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-col">
-                            <FormLabel>End date</FormLabel>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                      "w-[240px] pl-3 text-left font-normal",
-                                      !field.value && "text-muted-foreground"
-                                    )}
-                                  >
-                                    {field.value ? (
-                                      format(field.value, "PPP")
-                                    ) : (
-                                      <span>Pick a date</span>
-                                    )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent
-                                className="w-auto p-0"
-                                align="start"
-                              >
-                                <Calendar
-                                  mode="single"
-                                  onSelect={field.onChange}
-                                  disabled={(date) =>
-                                    date < new Date() ||
-                                    date < new Date("1900-01-01")
-                                  }
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="endTime"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>End time</FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <Input type="time" {...field} />
-                                <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="timeZone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Time zone</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select time zone" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="PDT">PDT</SelectItem>
-                                {/* Add more time zones as needed */}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
                     <div className="grid grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
