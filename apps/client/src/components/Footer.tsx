@@ -15,17 +15,17 @@ export default function Footer() {
           }}
           className="flex flex-col justify-center items-center mb-2 cursor-pointer"
         >
-          <div className="font-[arial] lg:w-[728px] w-[350px] lg:h-[90px] h-[250px] bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between overflow-hidden">
-            <div className="flex flex-col justify-center h-full pl-6">
-              <h1 className="text-white text-xl font-bold">RED LETTER WEB </h1>
-              <p className="text-white text-lg font-semibold">
+          <div className="font-[arial] lg:w-[728px] w-[350px] lg:h-[90px] h-[150px] bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between overflow-hidden">
+            <div className="flex flex-col justify-center h-full lg:pl-6 pl-2">
+              <h1 className="text-white lg:text-xl text-[16px] font-bold">RED LETTER WEB </h1>
+              <p className="text-white lg:text-lg text-[14px] font-semibold">
                 Cheapest domain names in the USA{" "}
               </p>
-              <p className="text-yellow-200 text-sm">
+              <p className="text-yellow-200 lg:text-sm text-[12px]">
                 Get your own .com, .org, & .net{" "}
               </p>
             </div>
-            <div className="flex items-center justify-end h-full pr-6">
+            <div className="flex items-center justify-end h-full lg:pr-6">
               <button className="bg-yellow-400 hover:bg-yellow-500 text-red-700 font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
                 Start Now
               </button>
