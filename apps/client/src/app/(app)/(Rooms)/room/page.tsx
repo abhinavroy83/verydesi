@@ -64,6 +64,13 @@ interface Location {
   lat: number;
   lng: number;
 }
+interface FormData {
+  userName: string;
+  userEmail: string;
+  message: string;
+  ownerEmail: string;
+  RoomLink: any;
+}
 export default function RoomDetails({
   searchParams,
 }: {
@@ -87,9 +94,55 @@ export default function RoomDetails({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
+  const [emailStatus, setEmailStatus] = useState<boolean>(false);
 
+  //check status of email or send email
+  useEffect(() => {
+    const checkEmailSentStatus = async () => {
+      try {
+        const response = await axios.get(
+          `http://apiv2.verydesi.com/room/status?userEmail=${userData?.email}&ownerEmail=${roomData?.email}`
+        );
+        console.log(response)
+        setEmailStatus(response.data.alreadySent);
+      } catch (error) {
+        console.error("Error fetching email status:", error);
+      }
+    };
+
+    checkEmailSentStatus();
+  }, [userData?.email, roomData?.email]);
+
+  // Handle form submission
+  const onSubmit = async (data: FormData) => {
+    try {
+      const roomId = roomData?._id || ""; // Provide a default empty string if undefined
+      const roomTitle = encodeURIComponent(roomData?.Title || "");
+      setLoading(true);
+      const response = await axios.post(
+        "http://apiv2.verydesi.com/room/send-email-user",
+        {
+          ...data,
+          RoomLink: `http://localhost:3000/room?id=${roomId}&title=${roomTitle}`,
+          ownerEmail: roomData?.email,
+        }
+      );
+      if (response.status === 200) {
+        toast.success("Message send succesfully");
+        setEmailStatus(true);
+        reset();
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //room
   const fetchRoom = async () => {
     try {
       setLoading(true);
@@ -632,36 +685,67 @@ export default function RoomDetails({
 
               {status && (
                 <CardContent className="p-3">
-                  <form className="space-y-4">
-                    <div>
-                      <Label htmlFor="name">Name</Label>
-                      <Input
-                        defaultValue={userData?.firstName}
-                        id="name"
-                        placeholder="Your name"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        defaultValue={userData?.email}
-                        id="email"
-                        type="email"
-                        placeholder="Your email"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="message">Message</Label>
-                      <textarea
-                        id="message"
-                        placeholder="Your message"
-                        className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
-                      />
-                    </div>
-                    <Button className="w-full bg-green-800">
-                      Send Message
-                    </Button>
-                  </form>
+                  {!emailStatus ? (
+                    <form
+                      onSubmit={handleSubmit(onSubmit)}
+                      className="space-y-4"
+                    >
+                      <div>
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                          defaultValue={userData?.firstName}
+                          id="name"
+                          {...register("userName", {
+                            required: "Name is required",
+                          })}
+                          placeholder="Your name"
+                        />
+                        {errors.userName && (
+                          <p className="text-red-500">
+                            {errors.userName.message}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          defaultValue={userData?.email}
+                          id="email"
+                          {...register("userEmail", {
+                            required: "Email is required",
+                          })}
+                          type="email"
+                          placeholder="Your email"
+                        />
+                        {errors.userEmail && (
+                          <p className="text-red-500">
+                            {errors.userEmail.message}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <Label htmlFor="message">Message</Label>
+                        <textarea
+                          {...register("message", {
+                            required: "Message is required",
+                          })}
+                          id="message"
+                          placeholder="Your message"
+                          className="w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background"
+                        />
+                        {errors.message && (
+                          <p className="text-red-500">
+                            {errors.message.message}
+                          </p>
+                        )}
+                      </div>
+                      <Button type="submit" className="w-full bg-green-800">
+                        Send Message
+                      </Button>
+                    </form>
+                  ) : (
+                    <p>You have already sent an email to this room owner.</p>
+                  )}
                 </CardContent>
               )}
             </Card>

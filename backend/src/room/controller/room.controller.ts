@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -69,6 +70,14 @@ export class RoomController {
   }
 
   // send email to user on room request
+
+  @Get('status')
+  async checkEmailStatus(
+    @Query('userEmail') userEmail: string,
+    @Query('ownerEmail') ownerEmail: string,
+  ) {
+    return await this.roomService.checkEmailStatus(userEmail, ownerEmail);
+  }
 
   @Post('send-email-user')
   async sendEmailtouser(@Body() sendemaildto: sendEmailDto) {
