@@ -106,7 +106,7 @@ export default function RoomDetails({
         const response = await axios.get(
           `http://apiv2.verydesi.com/room/status?userEmail=${userData?.email}&ownerEmail=${roomData?.email}`
         );
-        console.log(response)
+
         setEmailStatus(response.data.alreadySent);
       } catch (error) {
         console.error("Error fetching email status:", error);
@@ -115,9 +115,8 @@ export default function RoomDetails({
 
     checkEmailSentStatus();
   }, [userData?.email, roomData?.email]);
-
   // Handle form submission
-  const onSubmit = async (data: FormData) => {
+  const onsubmit = async (data: FormData) => {
     try {
       const roomId = roomData?._id || ""; // Provide a default empty string if undefined
       const roomTitle = encodeURIComponent(roomData?.Title || "");
@@ -130,6 +129,7 @@ export default function RoomDetails({
           ownerEmail: roomData?.email,
         }
       );
+      console.log(response);
       if (response.status === 200) {
         toast.success("Message send succesfully");
         setEmailStatus(true);
@@ -687,13 +687,13 @@ export default function RoomDetails({
                 <CardContent className="p-3">
                   {!emailStatus ? (
                     <form
-                      onSubmit={handleSubmit(onSubmit)}
+                      onSubmit={handleSubmit(onsubmit)}
                       className="space-y-4"
                     >
                       <div>
                         <Label htmlFor="name">Name</Label>
                         <Input
-                          defaultValue={userData?.firstName}
+                          defaultValue={userData?.firstName || ""}
                           id="name"
                           {...register("userName", {
                             required: "Name is required",
@@ -709,7 +709,7 @@ export default function RoomDetails({
                       <div>
                         <Label htmlFor="email">Email</Label>
                         <Input
-                          defaultValue={userData?.email}
+                          defaultValue={userData?.email || ""}
                           id="email"
                           {...register("userEmail", {
                             required: "Email is required",
@@ -739,9 +739,12 @@ export default function RoomDetails({
                           </p>
                         )}
                       </div>
-                      <Button type="submit" className="w-full bg-green-800">
+                      <button
+                        type="submit"
+                        className="w-full mx-auto px-9 bg-green-800 rounded-md text-white "
+                      >
                         Send Message
-                      </Button>
+                      </button>
                     </form>
                   ) : (
                     <p>You have already sent an email to this room owner.</p>

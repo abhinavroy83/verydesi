@@ -259,7 +259,7 @@ export class RoomService {
               Verydesi.com - New Message
             </h1>
             <p>Hello,</p>
-            <p><strong>${sendemaildto.userName}</strong> (${sendemaildto.userEmail}) has sent you a message regarding your room listing on VeryDesi:</p>
+            <p><strong>sir/mam</strong> (${sendemaildto.userEmail}) has sent you a message regarding your room listing on VeryDesi:</p>
             <p style="padding: 10px; border-left: 4px solid #ff5722; background-color: #f8f8f8;">
               ${sendemaildto.message}
             </p>
