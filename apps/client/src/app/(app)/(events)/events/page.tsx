@@ -110,7 +110,7 @@ export default function Component() {
             <CarouselContent>
               {Array.from({ length: 5 }).map((_, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
-                  <div className="px-2 w-full ">
+                  <div className="w-full ">
                     <Featuredeventscard key={index} />
                   </div>
                 </CarouselItem>

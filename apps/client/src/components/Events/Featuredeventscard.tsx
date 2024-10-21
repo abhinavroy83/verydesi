@@ -14,10 +14,10 @@ import { Badge } from "@/components/ui/badge";
 export default function Eventcard() {
   return (
     <Link href={`/event`}>
-      <Card className="h-full transition-shadow hover:shadow-md w-full sm:w-[18.8rem] max-w-sm mx-auto">
+      <Card className="h-full transition-shadow hover:shadow-md w-full sm:w-[100%] max-w-sm mx-auto">
         <CardHeader className="p-0">
           <img
-            src="https://assets-global.website-files.com/651d6fae3d3620e76a6d24d1/6526d85fb10bd7ab65ea72de_Releventful-Successful-Event-Banner.webp"
+            src="https://i.pinimg.com/originals/48/89/38/488938d6eec996de2365b072357aac16.jpg"
             alt="Event banner"
             className="w-full h-44 object-cover rounded-t-lg transition duration-300 ease-in-out hover:opacity-80"
           />
