@@ -229,7 +229,7 @@ export default function Navbar() {
               ) : (
                 <div
                   onClick={() => router.push("/sign-in")}
-                  className="leading-4 flex items-center gap-2 mr-0 lg:mr-3 text-white hover:text-gray-900"
+                  className="leading-4 flex items-center gap-2 mr-0 lg:mr-3 text-gray-900"
                 >
                   <User />
                   <p
@@ -257,7 +257,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
       <div className="bg-gray-800">
         <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto sm:px-6 lg:px-2">
           <div className="flex items-center justify-between h-12">

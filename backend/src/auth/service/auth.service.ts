@@ -11,6 +11,7 @@ import { User } from '../schemas';
 import { JwtService } from '@nestjs/jwt';
 import * as nodemailer from 'nodemailer';
 import { OAuth2Client } from 'google-auth-library';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
         throw new BadRequestException('User Already exists');
       }
 
-      const hash = await argon.hash(dto.password);
+      const hash = await bcrypt.hash(dto.password, 10);
       const newUser = new this.userModel({
         ...dto,
         password: hash,
@@ -64,7 +65,7 @@ export class AuthService {
       }
 
       //compare passs
-      const passwordMatch = await argon.verify(user.password, dto.password);
+      const passwordMatch = await bcrypt.compare(user.password, dto.password);
 
       if (!passwordMatch) {
         throw new UnauthorizedException('Invalid credentials');
@@ -87,6 +88,7 @@ export class AuthService {
       let user = await this.userModel.findOne({ email });
       if (!user) {
         user = new this.userModel({ email, firstName });
+        user.IsEmailVerified = true;
         await user.save();
       }
       // const jwttoken = await this.signToken(user._id.toString(), user.email);

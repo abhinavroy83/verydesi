@@ -30,10 +30,10 @@ export default function Component() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Forgot Password
+            Reset Password
           </CardTitle>
           <CardDescription className="text-center">
-            Don't worry. We'll send you reset instructions.
+            Don't worry. You can update your password here.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

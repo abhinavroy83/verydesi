@@ -116,7 +116,7 @@ const Page = () => {
   const fetchuser = async () => {
     try {
       if (!token) {
-        throw new Error("token not found");
+        return "token not found, please sign in!!";
       }
       const res = await axios.get(
         `http://apiv2.verydesi.com/user/userprofile`,

@@ -10,7 +10,7 @@ import { Model } from 'mongoose';
 import { User } from '../schemas';
 import { JwtService } from '@nestjs/jwt';
 import * as nodemailer from 'nodemailer';
-import * as argon from 'argon2';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class ForgotPasswordService {
@@ -52,7 +52,7 @@ export class ForgotPasswordService {
       if (!user) {
         throw new BadRequestException('Invalid token or user does not exist');
       }
-      const hash = await argon.hash(password.password);
+      const hash = await bcrypt.hash(password.password, 10);
       user.password = hash;
       await user.save();
       //sending confirmation email to user after password chnage
@@ -70,14 +70,14 @@ export class ForgotPasswordService {
       if (!user) {
         throw new UnauthorizedException('User not found');
       }
-      const isPasswordCorrect = await argon.verify(
+      const isPasswordCorrect = await bcrypt.compare(
         user.password,
         password.oldpassword,
       );
       if (!isPasswordCorrect) {
         throw new UnauthorizedException('Incorrect current password');
       }
-      const hashpassword = await argon.hash(password.newpassword);
+      const hashpassword = await bcrypt.hash(password.newpassword, 10);
 
       await this.userModel.findByIdAndUpdate(
         { _id: userId },
@@ -100,7 +100,7 @@ export class ForgotPasswordService {
       if (!user) {
         throw new NotFoundException('User not found');
       }
-      const isPasswordCorrect = await argon.verify(
+      const isPasswordCorrect = await bcrypt.compare(
         user.password,
         password.password,
       );
