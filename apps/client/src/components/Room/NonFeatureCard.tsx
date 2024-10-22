@@ -100,6 +100,9 @@ export default function Component({ room }: FeaturedCard2Props) {
   useEffect(() => {
     const fetchWishStatus = async () => {
       try {
+        if (!token) {
+          return "token not found, please sign in!!";
+        }
         const res = await axios.get(
           `http://apiv2.verydesi.com/favorite/findfavoritebyId/${room?._id}`,
           {

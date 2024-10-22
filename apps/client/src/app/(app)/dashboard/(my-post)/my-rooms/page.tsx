@@ -43,6 +43,9 @@ export default function roomsPage() {
     let isMounted = true;
     const fetchAllList = async () => {
       try {
+        if (!token) {
+          return "token not found, please sign in!!";
+        }
         const listResponse = await axios.get(
           `http://apiv2.verydesi.com/room/listmyroom`,
           {
@@ -72,11 +75,14 @@ export default function roomsPage() {
 
   const deleteRoom = async (roomId: string) => {
     try {
-      await axios.delete(`http://apiv2.verydesi.com/room/delete-room/${roomId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `http://apiv2.verydesi.com/room/delete-room/${roomId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setrooms((prevRooms) => prevRooms.filter((room) => room._id !== roomId));
       toast.success("Room deleted successfully");
     } catch (error) {

@@ -102,7 +102,10 @@ export default function Component({ room }: FeaturedCard2Props) {
   useEffect(() => {
     const fetchWishStatus = async () => {
       try {
-        if (status) {
+        if (!token) {
+          return "token not found, please sign in!!"
+        }
+        if (token) {
           const res = await axios.get(
             `http://apiv2.verydesi.com/favorite/findfavoritebyId/${room?._id}`,
             {
@@ -123,7 +126,7 @@ export default function Component({ room }: FeaturedCard2Props) {
     };
 
     fetchWishStatus();
-  }, [room?._id, token]);
+  }, [room?._id, token, status]);
 
   const calculateTimeDifference = (dateStr: Date) => {
     const date = new Date(dateStr);

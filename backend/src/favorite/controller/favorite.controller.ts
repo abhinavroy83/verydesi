@@ -8,6 +8,7 @@ import {
   UseGuards,
   Get,
   Param,
+  NotFoundException,
 } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guard';
 
@@ -38,6 +39,9 @@ export class FavoriteController {
   @Get('findfavoritebyId/:roomId')
   async findfavoritebyid(@Param('roomId') roomId: string, @Request() req) {
     const UserId = req.user.userId;
+    if (!UserId) {
+      throw new NotFoundException('user id not found');
+    }
     return await this.favoriteService.findfavoritebyid(UserId, roomId);
   }
 }
