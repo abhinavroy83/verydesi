@@ -82,6 +82,7 @@ const formSchema = z.object({
 });
 export default function EventForm() {
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -105,31 +106,24 @@ export default function EventForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
+  const scrollToSection = (sectionId: string, offset = 130) => {
+    const section = sectionRefs.current[sectionId];
+    if (section) {
+      const yOffset = offset; // Custom height to add
+      const y =
+        section.getBoundingClientRect().top + window.pageYOffset - yOffset;
 
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
   const sections = [
     { id: "basic-info", label: "Basic Information" },
     { id: "datetime", label: "Date and time" },
     { id: "availability", label: "Category & Language" },
-    { id: "amenities", label: "Organizer & Artist details" },
-    { id: "preferences", label: "Description" },
+    { id: "Artist", label: "Organizer & Artist details" },
+    { id: "Description", label: "Description" },
     { id: "photos", label: "Upload banners" },
   ];
-
-  const sectionRefs = {
-    "basic-info": useRef<HTMLDivElement>(null),
-    datetime: useRef<HTMLDivElement>(null),
-    availability: useRef<HTMLDivElement>(null),
-    amenities: useRef<HTMLDivElement>(null),
-    preferences: useRef<HTMLDivElement>(null),
-    photos: useRef<HTMLDivElement>(null),
-    contact: useRef<HTMLDivElement>(null),
-  };
-
-  const scrollToSection = (sectionId: string) => {
-    sectionRefs[sectionId as keyof typeof sectionRefs].current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
 
   const toggleLanguage = (code: string) => {
     setSelectedLanguages((prev: any) =>
@@ -143,7 +137,7 @@ export default function EventForm() {
     <div className="flex max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-[8rem]">
       <aside className="w-64 bg-[#232f3e] p-4 text-white ">
         <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
-          <ul className="space-y-2">
+          <ul className="space-y-2 text-gray-500">
             {sections.map((section) => (
               <li key={section.id}>
                 <button
@@ -163,15 +157,24 @@ export default function EventForm() {
       <main className="flex-1 p-6 overflow-y-auto">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div ref={sectionRefs["basic-info"]} className="space-y-4">
-              <h2 className="text-2xl font-bold">Basic Information</h2>
+            <div
+              ref={(el) => {
+                sectionRefs.current["basic-info"] = el;
+              }}
+              className="space-y-2"
+            >
+              <h2 className="text-2xl font-bold lg:px-6">Basic Information</h2>
               <CardContent>
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-6"
                   >
-                    <div ref={sectionRefs["basic-info"]}>
+                    <div
+                      ref={(el) => {
+                        sectionRefs.current["basic-info"] = el;
+                      }}
+                    >
                       <Card>
                         <CardContent className="pt-6">
                           <FormField
@@ -221,7 +224,12 @@ export default function EventForm() {
                       </Card>
                     </div>
 
-                    <div ref={sectionRefs["datetime"]}>
+                    <div
+                      ref={(el) => {
+                        sectionRefs.current["datetime"] = el;
+                      }}
+                    >
+                      <h2 className="text-2xl font-bold mb-4">Date and time</h2>
                       <Card>
                         <CardContent className="pt-6">
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -635,16 +643,8 @@ export default function EventForm() {
                         Google Maps Embed Placeholder
                       </span>
                     </div>
-                    <div className=" space-y-3">
-                      <div className="space-y-2">
-                        <Label htmlFor="description">Enter description</Label>
-                        <Textarea
-                          id="description"
-                          placeholder="Enter description"
-                          className="min-h-[100px]"
-                        />
-                      </div>
 
+                    <div className=" space-y-3">
                       <div className="space-y-2">
                         <Label>Language</Label>
                         <div className="flex flex-wrap gap-2">
@@ -664,39 +664,61 @@ export default function EventForm() {
                           ))}
                         </div>
                       </div>
-
-                      <Card>
-                        <CardContent className="pt-6">
-                          <h3 className="text-lg font-semibold mb-4">
-                            Organizer
-                          </h3>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="space-y-2">
-                              <Label htmlFor="organization">
-                                Organization name *
-                              </Label>
+                      <div
+                        ref={(el) => {
+                          sectionRefs.current["Artist"] = el;
+                        }}
+                        className="flex lg:flex-col gap-3"
+                      >
+                        <h2 className="text-2xl font-bold mb-2">
+                          Organizer & Artist details{" "}
+                        </h2>
+                        <Card>
+                          <CardContent className="pt-6">
+                            <h3 className="text-lg font-semibold mb-4">
+                              Organizer
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div className="space-y-2">
+                                <Label htmlFor="organization">
+                                  Organization name *
+                                </Label>
+                                <Input
+                                  id="organization"
+                                  placeholder="Buckhead Baptist Church"
+                                />
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="hostedBy">Hosted By *</Label>
+                                <Input id="hostedBy" />
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="contactNumber">
+                                  Contact Number
+                                </Label>
+                                <Input
+                                  id="contactNumber"
+                                  placeholder="404-255-5112"
+                                />
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                        <Card>
+                          <CardContent className="pt-6">
+                            <h3 className="text-lg font-semibold mb-4">
+                              Artist details
+                            </h3>
+                            <div className="flex space-x-2">
                               <Input
-                                id="organization"
-                                placeholder="Buckhead Baptist Church"
+                                placeholder="Tag your artist"
+                                className="flex-grow"
                               />
+                              <Button>Add</Button>
                             </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="hostedBy">Hosted By *</Label>
-                              <Input id="hostedBy" />
-                            </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="contactNumber">
-                                Contact Number
-                              </Label>
-                              <Input
-                                id="contactNumber"
-                                placeholder="404-255-5112"
-                              />
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-
+                          </CardContent>
+                        </Card>
+                      </div>
                       <Card>
                         <CardContent className="pt-6">
                           <h3 className="text-lg font-semibold mb-4">
@@ -746,38 +768,53 @@ export default function EventForm() {
                         </CardContent>
                       </Card>
 
-                      <Card>
-                        <CardContent className="pt-6">
-                          <h3 className="text-lg font-semibold mb-4">
-                            Artist details
-                          </h3>
-                          <div className="flex space-x-2">
-                            <Input
-                              placeholder="Tag your artist"
-                              className="flex-grow"
+                      <div
+                        ref={(el) => {
+                          sectionRefs.current["Description"] = el;
+                        }}
+                      >
+                        <h2 className="text-2xl font-bold mb-4">Description</h2>
+                        <Card>
+                          <div className="space-y-2">
+                            {/* <Label htmlFor="description">
+                              Enter description
+                            </Label> */}
+                            <Textarea
+                              id="description"
+                              placeholder="Enter description"
+                              className="min-h-[100px]"
                             />
-                            <Button>Add</Button>
                           </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardContent className="pt-6">
-                          <h3 className="text-lg font-semibold mb-4">Photos</h3>
-                          <p className="text-sm text-gray-500 mb-2">
-                            Add your photos (up to 5)
-                          </p>
-                          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                            <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                            <p className="mt-2 text-sm text-gray-500">
-                              Click to upload or drag and drop
+                        </Card>
+                      </div>
+                      <div
+                        ref={(el) => {
+                          sectionRefs.current["photos"] = el;
+                        }}
+                      >
+                        <h2 className="text-2xl font-bold mb-4">
+                          Upload banners{" "}
+                        </h2>
+                        <Card>
+                          <CardContent className="pt-6">
+                            <h3 className="text-lg font-semibold mb-4">
+                              Photos
+                            </h3>
+                            <p className="text-sm text-gray-500 mb-2">
+                              Add your photos (up to 5)
                             </p>
-                            <p className="text-xs text-gray-500">
-                              PNG, JPG, GIF up to 10MB
-                            </p>
-                          </div>
-                        </CardContent>
-                      </Card>
+                            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                              <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                              <p className="mt-2 text-sm text-gray-500">
+                                Click to upload or drag and drop
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                PNG, JPG, GIF up to 10MB
+                              </p>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
                     </div>
 
                     <Button type="submit">Create Event</Button>
