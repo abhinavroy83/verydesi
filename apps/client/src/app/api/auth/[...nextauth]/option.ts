@@ -32,8 +32,9 @@ export const authOptions: NextAuthOptions = {
 
           const user = await res.json();
           // console.log(user);
-          if (res.ok && user) {
-            return user; // Return user data if login is successful
+          if (res.ok && user && user.access_token) {
+            // Ensure we return the user object with the access_token
+            return { ...user, access_token: user.access_token };
           }
           return null;
         } catch (error) {
@@ -74,7 +75,8 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async jwt({ token, user, account }) {
-      if (account?.provider === "google" && user?.access_token) {
+      if (user) {
+        // This will be hit on initial sign in for both providers
         token.accessToken = user.access_token;
       }
       return token;

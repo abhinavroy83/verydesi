@@ -101,4 +101,11 @@ export class AuthController {
     const userId = req.user.userId;
     return this.forgotPasswordService.deleteAccount(userId, password);
   }
+
+  //send email again
+  @Post('send-email-verification')
+  async sendverifiacationemailagaain(@Request() req, useremail: string) {
+    const userId = req.user.userId;
+    return this.authService.sendemailagain(userId, useremail);
+  }
 }

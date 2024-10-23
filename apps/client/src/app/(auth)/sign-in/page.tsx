@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +13,6 @@ import {
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Separator } from "@radix-ui/react-separator";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
@@ -37,7 +35,7 @@ export default function SignIn() {
       email,
       password,
     });
-
+    // console.log(result);
     if (result?.error) {
       setError(result.error);
     } else {
@@ -52,6 +50,8 @@ export default function SignIn() {
       router.push("/");
     }
   };
+
+  console.log(error);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 no-scrollbar overflow-auto">

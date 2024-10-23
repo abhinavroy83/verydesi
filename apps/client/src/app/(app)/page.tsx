@@ -110,7 +110,7 @@ const Page = () => {
   useEffect(() => {
     fetchrooms();
   }, [currentCity]);
-
+  // console.log(session);
   const token = session?.accessToken;
   const { updateCity, setVerified, setname, setUserImgae } = useAuthStore();
   const fetchuser = async () => {

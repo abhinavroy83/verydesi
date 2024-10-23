@@ -47,11 +47,7 @@ export class AuthService {
         verificationToken.Email_token,
       );
 
-      const jwttoken = await this.signToken(
-        newUser._id.toString(),
-        newUser.email,
-      );
-      return { message: 'User created. Please verify your email.', jwttoken };
+      return this.signToken(newUser._id.toString(), newUser.email);
     } catch (error) {
       throw error;
     }
@@ -113,6 +109,21 @@ export class AuthService {
       secret: process.env.JWTSECETCODE,
     });
     return { access_token: token };
+  }
+
+  //send email verification again
+  async sendemailagain(userId: string, useremail: string) {
+    try {
+      const verificationToken = await this.createVerificationToken(
+        userId.toString(),
+      );
+      await this.sendVerificationEmail(
+        useremail,
+        verificationToken.Email_token,
+      );
+    } catch (error) {
+      throw new UnauthorizedException('Error at sendemail');
+    }
   }
 
   //verification token
