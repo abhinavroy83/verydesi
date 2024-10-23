@@ -71,8 +71,8 @@ export class ForgotPasswordService {
         throw new UnauthorizedException('User not found');
       }
       const isPasswordCorrect = await bcrypt.compare(
-        user.password,
         password.oldpassword,
+        user.password,
       );
       if (!isPasswordCorrect) {
         throw new UnauthorizedException('Incorrect current password');
@@ -101,8 +101,8 @@ export class ForgotPasswordService {
         throw new NotFoundException('User not found');
       }
       const isPasswordCorrect = await bcrypt.compare(
-        user.password,
         password.password,
+        user.password,
       );
       if (!isPasswordCorrect) {
         throw new UnauthorizedException('Incorrect password');

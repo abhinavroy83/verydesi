@@ -86,6 +86,7 @@ export default function SignIn() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <Button
+                  type="button"
                   variant="outline"
                   className="w-full flex items-center justify-center space-x-2"
                   onClick={() => {
