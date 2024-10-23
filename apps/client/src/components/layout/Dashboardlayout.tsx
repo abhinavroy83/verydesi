@@ -70,7 +70,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     console.log(formData);
     try {
       const response = await fetch(
-        "http://apiv2.verydesi.com/img/uploadSingleImage",
+        "https://apiv2.verydesi.com/img/uploadSingleImage",
         {
           method: "POST",
           body: formData,
@@ -89,7 +89,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       }
 
       await axios.patch(
-        "http://apiv2.verydesi.com/user/updateUser",
+        "https://apiv2.verydesi.com/user/updateUser",
         { userimg: data.url },
         {
           headers: {

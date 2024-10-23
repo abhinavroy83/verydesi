@@ -41,7 +41,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
       try {
         const dat = { roomId: _id, status: true };
         const res = await axios.post(
-          `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
+          `https://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
           dat,
           {
             headers: {
@@ -70,7 +70,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
     try {
       const dat = { roomId: _id, status: false };
       const res = await axios.post(
-        `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
+        `https://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
         dat,
         {
           headers: {
@@ -100,7 +100,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
         }
         if (status) {
           const res = await axios.get(
-            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${room?._id}`,
+            `https://apiv2.verydesi.com/favorite/findfavoritebyId/${room?._id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

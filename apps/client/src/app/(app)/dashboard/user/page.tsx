@@ -79,7 +79,7 @@ export default function DashboardUserSettings() {
       const toastId = toast.loading("Updating data...");
 
       const response = await axios.patch(
-        "http://apiv2.verydesi.com/user/updateUser",
+        "https://apiv2.verydesi.com/user/updateUser",
         data,
         {
           headers: {
@@ -103,7 +103,7 @@ export default function DashboardUserSettings() {
         throw new Error("token not found");
       }
       const res = await axios.get(
-        `http://apiv2.verydesi.com/user/userprofile`,
+        `https://apiv2.verydesi.com/user/userprofile`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

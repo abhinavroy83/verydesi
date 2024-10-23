@@ -149,14 +149,14 @@ export class AuthService {
           <p>Dear <strong>username</strong>,</p>
           <p>Thank you for registering up on VeryDesi.com! To activate your account and start exploring, please click the verification link below:</p>
           <p style="text-align: center;">
-            <a href="http://apiv2.verydesi.com/auth/verifyemail/${token}" style="display: inline-block; padding: 10px 20px; background-color: #ff5722; color: #fff; text-decoration: none; border-radius: 5px;">
+            <a href="https://apiv2.verydesi.com/auth/verifyemail/${token}" style="display: inline-block; padding: 10px 20px; background-color: #ff5722; color: #fff; text-decoration: none; border-radius: 5px;">
               verify email
             </a>
           </p>
           <p>If the button above doesn't work, you can copy and paste the following link into your browser:</p>
           <p style="word-wrap: break-word;">
-            <a href="http://apiv2.verydesi.com/auth/verifyemail/${token}">
-              http://apiv2.verydesi.com/auth/verifyemail/${token}
+            <a href="https://apiv2.verydesi.com/auth/verifyemail/${token}">
+              https://apiv2.verydesi.com/auth/verifyemail/${token}
             </a>
           </p>
           <p><strong>Note:</strong> This link will expire in 10 minutes.</p>

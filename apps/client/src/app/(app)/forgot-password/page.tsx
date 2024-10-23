@@ -34,7 +34,7 @@ export default function Component() {
     console.log(data.email); // logs the email from the form
     try {
       const res = await axios.post(
-        "http://apiv2.verydesi.com/auth/forgot-password",
+        "https://apiv2.verydesi.com/auth/forgot-password",
         data
       );
 

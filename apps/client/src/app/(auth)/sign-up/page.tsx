@@ -78,7 +78,7 @@ export default function SignUp() {
 
       try {
         const response = await axios.get(
-          `http://apiv2.verydesi.com/auth/check-unique-email/${useremail}`
+          `https://apiv2.verydesi.com/auth/check-unique-email/${useremail}`
         );
         setUseremailMessage(response.data.message);
       } catch (error) {
@@ -94,7 +94,7 @@ export default function SignUp() {
     try {
       const { cnf_password, terms, ...submitData } = data;
       const fullPhoneNumber = `${data.countryCode}${data.phoneNumber}`;
-      const res = await fetch("http://apiv2.verydesi.com/auth/signup", {
+      const res = await fetch("https://apiv2.verydesi.com/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

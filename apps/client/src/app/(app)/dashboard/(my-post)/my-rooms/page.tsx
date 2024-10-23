@@ -47,7 +47,7 @@ export default function roomsPage() {
           return "token not found, please sign in!!";
         }
         const listResponse = await axios.get(
-          `http://apiv2.verydesi.com/room/listmyroom`,
+          `https://apiv2.verydesi.com/room/listmyroom`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ export default function roomsPage() {
   const deleteRoom = async (roomId: string) => {
     try {
       await axios.delete(
-        `http://apiv2.verydesi.com/room/delete-room/${roomId}`,
+        `https://apiv2.verydesi.com/room/delete-room/${roomId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

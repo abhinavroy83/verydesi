@@ -153,7 +153,7 @@ export default function RoomPostingForm() {
         data.append("my_files", file);
       });
       const res = await axios.post(
-        "http://apiv2.verydesi.com/img/upload",
+        "https://apiv2.verydesi.com/img/upload",
         data
       );
       console.log(res.data.urls);
@@ -239,7 +239,7 @@ export default function RoomPostingForm() {
           throw new Error("token not found");
         }
         const res = await axios.post(
-          "http://apiv2.verydesi.com/room/post-room",
+          "https://apiv2.verydesi.com/room/post-room",
           roomdata,
           {
             headers: {

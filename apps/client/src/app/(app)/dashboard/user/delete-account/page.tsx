@@ -40,7 +40,7 @@ export default function Component() {
     try {
       const res = await axios({
         method: "delete",
-        url: "http://apiv2.verydesi.com/auth/delete-account",
+        url: "https://apiv2.verydesi.com/auth/delete-account",
         data: { password },
         headers: {
           Authorization: `Bearer ${token}`,

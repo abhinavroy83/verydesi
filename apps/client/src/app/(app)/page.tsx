@@ -46,7 +46,7 @@ const Page = () => {
       setLoading(true);
       setError(null);
       const res = await axios.get(
-        `http://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity || "Portland"}`,
+        `https://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity || "Portland"}`,
         {
           withCredentials: true,
         }
@@ -119,7 +119,7 @@ const Page = () => {
         return "token not found, please sign in!!";
       }
       const res = await axios.get(
-        `http://apiv2.verydesi.com/user/userprofile`,
+        `https://apiv2.verydesi.com/user/userprofile`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

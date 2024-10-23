@@ -43,7 +43,7 @@ export default function FavoritesPage() {
   const handleRemoveFavorite = async (roomId: string) => {
     try {
       await axios.post(
-        `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
+        `https://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
         {
           roomId,
           status: false,
@@ -69,7 +69,7 @@ export default function FavoritesPage() {
     const fetchAllList = async () => {
       try {
         const listResponse = await axios.get(
-          `http://apiv2.verydesi.com/favorite/AlluserFavorite`,
+          `https://apiv2.verydesi.com/favorite/AlluserFavorite`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ export default function FavoritesPage() {
 
         const roomResponse = await Promise.all(
           list.map((roomId: any) =>
-            axios.get(`http://apiv2.verydesi.com/room/findsingleRoom/${roomId}`)
+            axios.get(`https://apiv2.verydesi.com/room/findsingleRoom/${roomId}`)
           )
         );
         // console.log(roomResponse);

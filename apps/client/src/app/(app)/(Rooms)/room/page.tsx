@@ -104,7 +104,7 @@ export default function RoomDetails({
     const checkEmailSentStatus = async () => {
       try {
         const response = await axios.get(
-          `http://apiv2.verydesi.com/room/status?userEmail=${userData?.email}&ownerEmail=${roomData?.email}`
+          `https://apiv2.verydesi.com/room/status?userEmail=${userData?.email}&ownerEmail=${roomData?.email}`
         );
 
         setEmailStatus(response.data.alreadySent);
@@ -122,7 +122,7 @@ export default function RoomDetails({
       const roomTitle = encodeURIComponent(roomData?.Title || "");
       setLoading(true);
       const response = await axios.post(
-        "http://apiv2.verydesi.com/room/send-email-user",
+        "https://apiv2.verydesi.com/room/send-email-user",
         {
           ...data,
           RoomLink: `http://localhost:3000/room?id=${roomId}&title=${roomTitle}`,
@@ -147,7 +147,7 @@ export default function RoomDetails({
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://apiv2.verydesi.com/room/findsingleRoom/${id}`
+        `https://apiv2.verydesi.com/room/findsingleRoom/${id}`
       );
       // console.log(res.data.rooms);
       // console.log(res.data);
@@ -161,7 +161,7 @@ export default function RoomDetails({
         setLoading(false);
       }
       const allRoomsResponse = await axios.get(
-        `http://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`,
+        `https://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`,
         {
           withCredentials: true,
         }
@@ -203,7 +203,7 @@ export default function RoomDetails({
       try {
         const dat = { roomId: id, status: true };
         const res = await axios.post(
-          `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
+          `https://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
           dat,
           {
             headers: {
@@ -231,7 +231,7 @@ export default function RoomDetails({
     try {
       const dat = { roomId: id, status: false };
       const res = await axios.post(
-        `http://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
+        `https://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
         dat,
         {
           headers: {
@@ -261,7 +261,7 @@ export default function RoomDetails({
         }
         if (status) {
           const res = await axios.get(
-            `http://apiv2.verydesi.com/favorite/findfavoritebyId/${id}`,
+            `https://apiv2.verydesi.com/favorite/findfavoritebyId/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

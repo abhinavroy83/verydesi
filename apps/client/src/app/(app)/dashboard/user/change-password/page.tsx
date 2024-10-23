@@ -63,7 +63,7 @@ export default function Component() {
     if (passwordsMatch) {
       try {
         const res = await axios.patch(
-          "http://apiv2.verydesi.com/auth/update-password",
+          "https://apiv2.verydesi.com/auth/update-password",
           data,
           {
             headers: {

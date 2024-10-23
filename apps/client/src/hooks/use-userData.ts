@@ -6,7 +6,7 @@ import useAuthStore from "@/store/useAuthStore";
 
 const fetchUserData = async (token: string): Promise<UserData> => {
   const response = await axios.get(
-    "http://apiv2.verydesi.com/user/userprofile",
+    "https://apiv2.verydesi.com/user/userprofile",
     {
       headers: {
         Authorization: `Bearer ${token}`,

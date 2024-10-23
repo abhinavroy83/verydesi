@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await fetch("http://apiv2.verydesi.com/auth/signin", {
+          const res = await fetch("https://apiv2.verydesi.com/auth/signin", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider === "google") {
         try {
           const response = await fetch(
-            "http://apiv2.verydesi.com/auth/google",
+            "https://apiv2.verydesi.com/auth/google",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
