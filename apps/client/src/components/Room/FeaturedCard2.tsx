@@ -260,7 +260,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               )}
             </div>
           </div>
-          <div className="flex  font-sans flex-col flex-wrap text-[19px] text-gray-500  transition-colors duration-300">
+          <div className="flex  font-sans flex-col flex-wrap text-[18px] text-gray-500  transition-colors duration-300">
             <div className="flex font-sans items-center mr-2 sm:mb-0">
               <User className="h-5 w-5 mr-1 text-[#054687]" />
               <span className="text-blue-800">
