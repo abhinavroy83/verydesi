@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 const menuItems = [
   { name: "Dashboard", icon: "🏠", to: "/admin/dashboard" },
-  { name: "Basic Users", icon: "👥", to: "/admin/alluser" },
+  { name: "Basic Users", icon: "👥", to: "/Basic-user" },
   { name: "Admin Users", icon: "👤", to: "/admin/getalladminsuser" },
   { name: "Pending Requests", icon: "📋", to: "/admin/getapproval" },
   { name: "Area", icon: "🗺️", to: "/admin/allarea" },
@@ -13,10 +13,10 @@ const menuItems = [
 ];
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className="mt-[6rem]">
       <div className="flex">
         <aside
-          className={` md:flex md:flex-col  bg-white border-r overflow-y-none lg:w-[16%] w-auto`}
+          className={` md:flex md:flex-col  bg-white border overflow-y-none lg:w-[16%] w-auto`}
         >
           <nav className="flex-1 px-2 py-4 space-y-2">
             {menuItems.map((item) => (
