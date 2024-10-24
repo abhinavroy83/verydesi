@@ -6,6 +6,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
+      'http://localhost:3001',
       'http://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
       'https://ec2-18-237-230-139.us-west-2.compute.amazonaws.com',
       'http://apiv2.verydesi.com',
