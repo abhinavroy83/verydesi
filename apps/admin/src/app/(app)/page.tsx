@@ -2,9 +2,11 @@
 
 import Dashboardlayout from "@/Components/Layout/Dashboardlayout";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+
+
 const menuItems = [
-  { name: "Basic Users", icon: "👥", to: "/admin/alluser" },
+  { name: "Basic Users", icon: "👥", to: "/Basic-user" },
   { name: "Admin Users", icon: "👤", to: "/admin/getalladminsuser" },
   { name: "Pending Requests", icon: "📋", to: "/admin/getapproval" },
   { name: "Area", icon: "🗺️", to: "/admin/allarea" },
@@ -12,6 +14,7 @@ const menuItems = [
   { name: "Customer Message", icon: "💬", to: "/admin/getHelp" },
 ];
 function page() {
+
   return (
     <div className="mt-[4rem]">
       <Dashboardlayout>

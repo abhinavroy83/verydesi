@@ -2,9 +2,9 @@
 import Dashboardlayout from "@/Components/Layout/Dashboardlayout";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { UserData } from "@myrepo/types";
 function page() {
-  const [userData, setuserData] = useState<any[]>([]);
+  const [userData, setuserData] = useState<UserData[]>([]);
   const fetchusers = async () => {
     try {
       const res = await axios.get(
