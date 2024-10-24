@@ -6,6 +6,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { authProviders } from 'src/auth/Provider/auth.provider';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisModule } from '@nestjs-modules/ioredis';
+import { AdminUserController } from './Controller/adminUser.controller';
+import { AdiminUserService } from './Service/adminuser.service';
 
 @Module({
   imports: [
@@ -15,7 +17,7 @@ import { RedisModule } from '@nestjs-modules/ioredis';
     RedisModule,
   ],
 
-  controllers: [UserController],
-  providers: [UserService, ...authProviders],
+  controllers: [UserController, AdminUserController],
+  providers: [UserService, ...authProviders, AdiminUserService],
 })
 export class UserModule {}

@@ -9,7 +9,6 @@ import { User } from 'src/auth/schemas';
 
 export class AdiminUserService {
   constructor(
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @Inject('USER_MODEL') private userModel: Model<User>,
   ) {}
 
