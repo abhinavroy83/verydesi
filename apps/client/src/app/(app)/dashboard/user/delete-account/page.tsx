@@ -24,6 +24,7 @@ import { DashboardLayout } from "@/components/layout";
 import Link from "next/link";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import ConfirmationPopup from "@/components/Popups/confirmpopups";
 
 export default function Component() {
   const [password, setPassword] = useState("");
@@ -31,8 +32,7 @@ export default function Component() {
   const [customReason, setCustomReason] = useState("");
   const { data: session, status } = useSession();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const token = session?.accessToken;
     if (!token) {
       throw new Error("token not found");
@@ -109,7 +109,7 @@ export default function Component() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="password">Confirm your password</Label>
                 <Input
@@ -169,14 +169,18 @@ export default function Component() {
                 be undone. All your data will be permanently deleted.
               </div>
             </div>
-            <Button
-              type="submit"
+            <ConfirmationPopup
+              buttonText={
+                <span className="flex items-center">
+                  <Trash2Icon className="w-4 h-4 mr-2" />
+                  Permanently Delete Account
+                </span>
+              }
+              title="Confirm Account Deletion"
+              description="Are you sure you want to delete your account? This action cannot be undone."
+              onConfirm={handleSubmit}
               variant="destructive"
-              className=" w-full sm:w-auto"
-            >
-              <Trash2Icon className="w-4 h-4 mr-2" />
-              Permanently Delete Account
-            </Button>
+            />
           </CardFooter>
         </Card>
       </div>

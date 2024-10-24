@@ -121,6 +121,7 @@ export class AuthService {
         useremail,
         verificationToken.Email_token,
       );
+      return { msg: 'email send successfully' };
     } catch (error) {
       throw new UnauthorizedException('Error at sendemail');
     }

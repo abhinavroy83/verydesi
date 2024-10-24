@@ -103,9 +103,14 @@ export class AuthController {
   }
 
   //send email again
+  @UseGuards(JwtGuard)
   @Post('send-email-verification')
-  async sendverifiacationemailagaain(@Request() req, useremail: string) {
+  async sendverifiacationemailagaain(
+    @Request() req,
+    @Body('useremail') useremail: string,
+  ) {
     const userId = req.user.userId;
+
     return this.authService.sendemailagain(userId, useremail);
   }
 }

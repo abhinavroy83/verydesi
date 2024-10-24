@@ -112,6 +112,30 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       setIsUploading(false);
     }
   };
+
+  const sendemail = async () => {
+    const token = session?.accessToken;
+    if (!token) {
+      throw new Error("token not found");
+    }
+    try {
+      const response = await axios.post(
+        "https://apiv2.verydesi.com/auth/send-email-verification",
+        { Useremail: userData?.email },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "success",
+        description: "Email send Successfully!!",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -148,10 +172,13 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   Verify your email.
                 </strong> */}
                 <p className=" text-[16px] text-gray-700">
-                  {" "}
                   You must confirm your email address to post to Very Desi.
                   Check your inbox and spam folders for a confirmation email, or{" "}
-                  <button className="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                  <button
+                    type="button"
+                    onClick={sendemail}
+                    className="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  >
                     click here to resend
                   </button>
                 </p>
