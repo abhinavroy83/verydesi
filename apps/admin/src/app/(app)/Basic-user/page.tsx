@@ -1,5 +1,5 @@
 "use client";
-import Dashboardlayout from "@/Components/Layout/Dashboardlayout";
+import Dashboardlayout from "@/components/Layout/Dashboardlayout";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
@@ -20,18 +20,23 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { ChevronRight, ExternalLink, Heart } from "lucide-react";
+import { ChevronRight, Edit, ExternalLink, Heart, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 function page() {
-  const [userData, setuserData] = useState<UserData[]>([]);
+  const [userData, setUserData] = useState<UserData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const fetchusers = async () => {
     try {
       const res = await axios.get(
         "https://apiv2.verydesi.com/admin/user/getalluser"
       );
-      console.log(res.data);
-      setuserData(res.data);
+      // console.log(res.data);
+      setUserData(res.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -39,13 +44,41 @@ function page() {
   useEffect(() => {
     fetchusers();
   });
+  const totalPages = Math.ceil(userData.length / itemsPerPage);
+  const paginatedFavorites = userData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const SkeletonRow = () => (
+    <TableRow>
+      <TableCell>
+        <div className="flex items-center space-x-3">
+          <Skeleton className="h-10 w-10 rounded-full" />
+          <Skeleton className="h-4 w-[200px]" />
+        </div>
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-4 w-20" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-4 w-16" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-8 w-24" />
+      </TableCell>
+      <TableCell>
+        <Skeleton className="h-8 w-8" />
+      </TableCell>
+    </TableRow>
+  );
 
   return (
     <Dashboardlayout>
       <div className="container mx-auto bg-white text-black rounded-lg">
         <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2">
           <Heart className="w-6 h-6 text-black" />
-          <h1 className="text-2xl font-bold">Favorites</h1>
+          <h1 className="text-2xl font-bold">Basic user</h1>
         </div>
         <nav
           className="flex text-sm text-gray-500 px-2"
@@ -76,11 +109,12 @@ function page() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[300px]">Room</TableHead>
-              <TableHead>City</TableHead>
-              <TableHead>Rent</TableHead>
-              <TableHead>Visit Page</TableHead>
-              <TableHead>Remove</TableHead>
+              <TableHead className="w-[300px]">First Name</TableHead>
+              <TableHead>Last Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Email Status</TableHead>
+              <TableHead>Edit</TableHead>
+              <TableHead>Delete</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -88,46 +122,21 @@ function page() {
               Array.from({ length: itemsPerPage }).map((_, index) => (
                 <SkeletonRow key={index} />
               ))
-            ) : favorites.length > 0 ? (
-              paginatedFavorites.map((favorite) => (
-                <TableRow key={favorite._id}>
-                  <TableCell className="font-medium">
-                    <div className="flex items-center space-x-3">
-                      <img
-                        src={
-                          favorite?.Imgurl?.[0] ||
-                          "https://placeholder.pics/svg/300"
-                        }
-                        alt={favorite.Title}
-                        className="w-10 h-10 rounded-full"
-                      />
-                      <span className="truncate max-w-[230px]">
-                        {favorite.Title}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{favorite.city}</TableCell>
-                  <TableCell>${favorite.Expected_Rooms}</TableCell>
+            ) : userData.length > 0 ? (
+              paginatedFavorites.map((user) => (
+                <TableRow key={user?.email}>
+                  <TableCell>{user.firstName}</TableCell>
+                  <TableCell>{user.lastName}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.IsEmailVerified}</TableCell>
+
                   <TableCell>
-                    <Button
-                      onClick={() => {
-                        router.push(
-                          `/room?id=${favorite?._id}&title=${encodeURIComponent(favorite?.Title)}`
-                        );
-                      }}
-                      variant="outline"
-                      size="sm"
-                    >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Click here
+                    <Button variant="ghost" size="sm">
+                      <Edit className="w-4 h-4 text-red-500" />
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveFavorite(favorite._id)}
-                    >
+                    <Button variant="ghost" size="sm">
                       <Trash2 className="w-4 h-4 text-red-500" />
                     </Button>
                   </TableCell>
@@ -142,7 +151,7 @@ function page() {
             )}
           </TableBody>
         </Table>
-        {!loading && favorites.length > 0 && (
+        {!loading && userData.length > 0 && (
           <div className="mt-4">
             <Pagination>
               <PaginationContent>

@@ -1,6 +1,6 @@
 "use client";
 
-import Dashboardlayout from "@/Components/Layout/Dashboardlayout";
+import Dashboardlayout from "@/components/Layout/Dashboardlayout";
 import Link from "next/link";
 import React, { useState } from "react";
 
