@@ -61,7 +61,7 @@ export default function Component() {
       <div className="flex flex-col w-full">
         <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2  flex justify-between w-full">
           <h2 className="text-2xl font-bold flex gap-1 items-center">
-            <Trash2Icon className="mr-2" /> Update Password
+            <Trash2Icon className="mr-2" /> Delete Account
           </h2>
         </div>
         <nav
@@ -92,7 +92,7 @@ export default function Component() {
               <div className="flex items-center">
                 <ChevronRight className="w-4 h-4 mx-1" />
                 <span className="ml-1 font-medium text-gray-700">
-                  Update Password
+                  Delete Account
                 </span>
               </div>
             </li>
