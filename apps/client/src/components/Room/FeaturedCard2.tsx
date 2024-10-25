@@ -163,7 +163,7 @@ export default function Component({ room }: FeaturedCard2Props) {
           `/room?id=${room?._id}&title=${encodeURIComponent(formattedTitle)}`
         );
       }}
-      className={`flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[152px]`}
+      className={`font-sans flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[152px]`}
     >
       <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] lg:h-[152px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
         <img

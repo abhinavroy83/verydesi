@@ -91,7 +91,9 @@ export default function FavoritesPage() {
 
         const roomResponse = await Promise.all(
           list.map((roomId: any) =>
-            axios.get(`https://apiv2.verydesi.com/room/findsingleRoom/${roomId}`)
+            axios.get(
+              `https://apiv2.verydesi.com/room/findsingleRoom/${roomId}`
+            )
           )
         );
         // console.log(roomResponse);
@@ -148,7 +150,7 @@ export default function FavoritesPage() {
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto bg-white text-black rounded-lg">
+      <div className="container mx-auto bg-white text-black rounded-lg font-sans">
         <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2">
           <Heart className="w-6 h-6 text-black" />
           <h1 className="text-2xl font-bold">Favorites</h1>

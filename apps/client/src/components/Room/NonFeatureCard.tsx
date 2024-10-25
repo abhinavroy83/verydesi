@@ -151,7 +151,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
   return (
     <div
-      className=" cursor-pointer"
+      className="font-sans cursor-pointer"
       onClick={() => {
         const formattedTitle = formatTitle(room?.Title);
         router.push(
