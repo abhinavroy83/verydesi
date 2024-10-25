@@ -97,7 +97,7 @@ export default function Navbar() {
                 onMouseLeave={() => setIslocationOpen(false)}
               >
                 <div className="flex items-center">
-                  <Area />
+                  <Area bgcolour="bg-white" textcolour="" />
                 </div>
               </div>
             </div>

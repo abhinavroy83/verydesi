@@ -14,7 +14,11 @@ interface CityResponse {
   city: { area: string }[];
 }
 
-function Avalableloc() {
+interface AvailableLocProps {
+  bgcolour: string;
+  textcolour: string;
+}
+function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
   const [cty, setCty] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("Portland");
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +39,7 @@ function Avalableloc() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 "
+            className={`${textcolour} hover:text-gray-900  ${bgcolour} border-white border-2 rounded-md`}
           >
             <MapPin className="h-5 w-5 " />
             <span className="font-medium px-1">

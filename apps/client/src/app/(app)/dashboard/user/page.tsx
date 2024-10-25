@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CalendarIcon, ChevronRight, Pencil, Settings } from "lucide-react";
-import { format } from "date-fns";
+import { format, subYears } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DashboardLayout } from "@/components/layout";
 import { useSession } from "next-auth/react";
@@ -304,7 +304,9 @@ export default function DashboardUserSettings() {
                           selected={field.value}
                           onSelect={field.onChange}
                           disabled={(date) =>
-                            date > new Date() || date < new Date(1900, 0, 1)
+                            date > new Date() ||
+                            date < subYears(new Date(), 124) ||
+                            date > subYears(new Date(), 16)
                           }
                           initialFocus
                         />

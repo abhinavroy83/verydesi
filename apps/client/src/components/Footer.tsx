@@ -17,7 +17,9 @@ export default function Footer() {
         >
           <div className="font-[arial] lg:w-[728px] w-[350px] lg:h-[90px] h-[150px] bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between overflow-hidden">
             <div className="flex flex-col justify-center h-full lg:pl-6 pl-2">
-              <h1 className="text-white lg:text-xl text-[16px] font-bold">RED LETTER WEB </h1>
+              <h1 className="text-white lg:text-xl text-[16px] font-bold">
+                RED LETTER WEB{" "}
+              </h1>
               <p className="text-white lg:text-lg text-[14px] font-semibold">
                 Cheapest domain names in the USA{" "}
               </p>
@@ -82,7 +84,7 @@ export default function Footer() {
                     </Link>
                     <div className=" relative text-white">
                       <div className="flex items-center text-white">
-                        <Area />
+                        <Area bgcolour="bg-[#131A22]" textcolour="" />
                       </div>
                     </div>
                   </div>
