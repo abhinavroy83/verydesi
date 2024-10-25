@@ -115,23 +115,26 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   const sendemail = async () => {
     const token = session?.accessToken;
+    
     if (!token) {
       throw new Error("token not found");
     }
     try {
       const response = await axios.post(
         "https://apiv2.verydesi.com/auth/send-email-verification",
-        { Useremail: userData?.email },
+        { useremail: userData?.email },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      toast({
-        title: "success",
-        description: "Email send Successfully!!",
-      });
+      if (response) {
+        toast({
+          title: "success",
+          description: "Email send Successfully!!",
+        });
+      }
     } catch (error) {
       console.log(error);
     }
