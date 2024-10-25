@@ -14,6 +14,7 @@ import {
   LogOut,
   User,
   Calendar,
+  Newspaper,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -235,7 +236,8 @@ export default function Navbar() {
                 variant="ghost"
                 className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <Home className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " /> HOME
+                <Home className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                HOME
               </Button>
               <Button
                 onClick={() => {
@@ -244,7 +246,8 @@ export default function Navbar() {
                 variant="ghost"
                 className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <Users className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " /> ROOMMATES
+                <Users className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                ROOMMATES
               </Button>
               <Button
                 onClick={() => {
@@ -263,7 +266,18 @@ export default function Navbar() {
                 variant="ghost"
                 className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <Calendar className="mr-2 h-4 w-4 group-hover:rotate-[360deg] transition-transform duration-300 " /> EVENTS
+                <Calendar className="mr-2 h-4 w-4 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                EVENTS
+              </Button>
+              <Button
+                onClick={() => {
+                  router.push("/News");
+                }}
+                variant="ghost"
+                className="text-white hover:bg-white transition duration-300 ease-in-out group"
+              >
+                <Newspaper className="mr-2 h-4 w-4 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                NEWS
               </Button>
             </div>
             <div className="hidden md:flex items-center space-x-2 text-white">
