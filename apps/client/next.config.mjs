@@ -9,7 +9,7 @@ const nextConfig = {
       "d1be4virimwdjl.cloudfront.net",
       "images.unsplash.com",
     ],
-  },
+  }
 };
 
 export default nextConfig;
