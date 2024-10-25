@@ -30,6 +30,7 @@ import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 import { useCityData } from "@/hooks/use-city-hooks";
 import useAuthStore from "@/store/useAuthStore";
 import Link from "next/link";
+import { stateAbbreviations } from "@/constants";
 
 export default function DashboardUserSettings() {
   const [isEditing, setIsEditing] = useState(false);
@@ -207,11 +208,7 @@ export default function DashboardUserSettings() {
                   name="firstName"
                   control={control}
                   render={({ field }) => (
-                    <Input
-                      className={`${!isEditing ? "text-black" : "text-black"}`}
-                      {...field}
-                      disabled={!isEditing}
-                    />
+                    <Input {...field} readOnly={!isEditing} />
                   )}
                 />
               </div>
@@ -221,7 +218,7 @@ export default function DashboardUserSettings() {
                   name="lastName"
                   control={control}
                   render={({ field }) => (
-                    <Input {...field} disabled={!isEditing} />
+                    <Input {...field} readOnly={!isEditing} />
                   )}
                 />
               </div>
@@ -250,7 +247,7 @@ export default function DashboardUserSettings() {
                   name="phone_number"
                   control={control}
                   render={({ field }) => (
-                    <Input {...field} disabled={!isEditing} type="tel" />
+                    <Input {...field} readOnly={!isEditing} type="tel" />
                   )}
                 />
               </div>
@@ -325,7 +322,7 @@ export default function DashboardUserSettings() {
                     <Input
                       {...field}
                       id="address"
-                      disabled={!isEditing}
+                      readOnly={!isEditing}
                       value={addressComponents.street || field.value}
                       onChange={field.onChange}
                     />
@@ -338,7 +335,7 @@ export default function DashboardUserSettings() {
                   name="city"
                   control={control}
                   render={({ field }) => (
-                    <Input {...field} disabled={!isEditing} />
+                    <Input {...field} readOnly={!isEditing} />
                   )}
                 />
               </div>
@@ -357,16 +354,16 @@ export default function DashboardUserSettings() {
                         <SelectValue placeholder="Select state" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Missouri (MO)">
-                          Missouri (MO)
-                        </SelectItem>
-                        <SelectItem value="New York (NY)">
-                          New York (NY)
-                        </SelectItem>
-                        <SelectItem value="California (CA)">
-                          California (CA)
-                        </SelectItem>
-                        <SelectItem value="Texas (TX)">Texas (TX)</SelectItem>
+                        {Object.entries(stateAbbreviations).map(
+                          ([state, abbreviation]) => (
+                            <SelectItem
+                              key={abbreviation}
+                              value={`${state} (${abbreviation})`}
+                            >
+                              {state} ({abbreviation})
+                            </SelectItem>
+                          )
+                        )}
                       </SelectContent>
                     </Select>
                   )}
@@ -388,9 +385,6 @@ export default function DashboardUserSettings() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="USA">USA</SelectItem>
-                        <SelectItem value="Canada">Canada</SelectItem>
-                        <SelectItem value="UK">UK</SelectItem>
-                        <SelectItem value="Australia">Australia</SelectItem>
                       </SelectContent>
                     </Select>
                   )}

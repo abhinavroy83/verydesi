@@ -195,12 +195,12 @@ export default function Navbar() {
               {session ? (
                 <>
                   <div
-                    className=" relative text-black "
+                    className="relative text-black"
                     onMouseEnter={() => setIsNotificationOpen(true)}
                     onMouseLeave={() => setIsNotificationOpen(false)}
                   >
-                    <Bell className="h-6 w-6  text-gray-600 hover:text-gray-900 cursor-pointer" />
-                    {IsNotificationOpen && <Notification />}
+                    <Bell className="cursor-pointer" />
+                    <Notification isOpen={IsNotificationOpen} />
                   </div>
                   <Link href="/dashboard/favorite" className="relative">
                     <Heart className="h-6 w-6 text-gray-600 hover:text-gray-900 cursor-pointer" />

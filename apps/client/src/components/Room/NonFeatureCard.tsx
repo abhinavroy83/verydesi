@@ -199,7 +199,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                 <div className="flex items-center">
                   <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>
-                    {room?.postingincity},{" "}
+                    {room?.city},{" "}
                     {room?.state &&
                       (room.state.length > 2
                         ? stateAbbreviations[room.state]

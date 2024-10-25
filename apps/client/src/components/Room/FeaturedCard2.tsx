@@ -103,7 +103,7 @@ export default function Component({ room }: FeaturedCard2Props) {
     const fetchWishStatus = async () => {
       try {
         if (!token) {
-          return "token not found, please sign in!!"
+          return "token not found, please sign in!!";
         }
         if (token) {
           const res = await axios.get(
@@ -222,7 +222,7 @@ export default function Component({ room }: FeaturedCard2Props) {
             <div className="flex font-sans items-center mr-2 sm:mb-0">
               <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
               <span>
-                {room?.postingincity},{" "}
+                {room?.city},{" "}
                 {room?.state &&
                   (room.state.length > 2
                     ? stateAbbreviations[room.state]

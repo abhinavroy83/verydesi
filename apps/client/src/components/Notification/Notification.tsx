@@ -1,16 +1,9 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Bell,
-  MessageSquare,
-  Heart,
-  UserPlus,
-  X,
-  Megaphone,
-  LucideIcon,
-} from "lucide-react";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Bell, Megaphone, X, LucideIcon } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import useAuthStore from "@/store/useAuthStore";
 import axios from "axios";
 
@@ -21,15 +14,18 @@ interface NotificationData {
   icon: LucideIcon;
   color: string;
 }
-
-export default function Notification() {
+interface NotificationProps {
+  isOpen: boolean;
+}
+export default function Component(
+  { isOpen }: NotificationProps = { isOpen: false }
+) {
   const { currentCity } = useAuthStore();
   const [visibleNotifications, setVisibleNotifications] = useState<
     NotificationData[]
   >([]);
   const [isNotification, setIsNotification] = useState<boolean>(false);
 
-  // Fetch notifications based on new rooms added in the last 24 hours
   const fetchNotifications = async (): Promise<void> => {
     try {
       const res = await axios.get<{
@@ -39,7 +35,6 @@ export default function Notification() {
         `https://apiv2.verydesi.com/room/room-addedIn-last-24hours/${currentCity}`
       );
 
-      // Add general message notification
       setVisibleNotifications([
         {
           id: Date.now(),
@@ -48,7 +43,6 @@ export default function Notification() {
           icon: Megaphone,
           color: "bg-purple-500",
         },
-        // Add area-specific message if available
         {
           id: Date.now() + 1,
           content: res.data.areaMessage,
@@ -68,9 +62,8 @@ export default function Notification() {
     fetchNotifications();
   }, [currentCity]);
 
-
-  return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden mt-[20rem] font-sans">
+  return isOpen ? (
+    <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden font-sans mt-44">
       <div className="bg-gray-200 text-black p-4 flex justify-between items-center">
         <h2 className="text-2xl font-bold text-black flex items-center">
           <Bell className="mr-2" />
@@ -115,7 +108,7 @@ export default function Notification() {
           </>
         ) : (
           <Card className="w-full max-w-sm mx-auto">
-            <CardHeader></CardHeader>
+            <CardHeader />
             <CardContent className="flex flex-col items-center text-center">
               <div className="relative w-16 h-16 mb-4">
                 <Megaphone className="w-16 h-16 text-gray-300" />
@@ -134,5 +127,5 @@ export default function Notification() {
         )}
       </AnimatePresence>
     </div>
-  );
+  ) : null;
 }
