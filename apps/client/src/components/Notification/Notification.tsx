@@ -70,7 +70,7 @@ export default function Notification() {
 
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden mt-20">
+    <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden mt-[20rem] font-sans">
       <div className="bg-gray-200 text-black p-4 flex justify-between items-center">
         <h2 className="text-2xl font-bold text-black flex items-center">
           <Bell className="mr-2" />
@@ -115,7 +115,7 @@ export default function Notification() {
           </>
         ) : (
           <Card className="w-full max-w-sm mx-auto">
-            <CardHeader />
+            <CardHeader></CardHeader>
             <CardContent className="flex flex-col items-center text-center">
               <div className="relative w-16 h-16 mb-4">
                 <Megaphone className="w-16 h-16 text-gray-300" />

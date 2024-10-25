@@ -54,7 +54,7 @@ export default function SignIn() {
   console.log(error);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 no-scrollbar overflow-auto">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 no-scrollbar overflow-auto font-sans mt-[7rem]">
       <div className="p-6">
         <Link href={"/"}>
           <img

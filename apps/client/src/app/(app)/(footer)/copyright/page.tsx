@@ -3,7 +3,7 @@ import React from "react";
 
 function page() {
   return (
-    <div className="mt-[7rem] bg-gray-100">
+    <div className="mt-[7rem] bg-gray-100 font-sans">
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-bold sm:text-4xl md:text-5xl lg:text-3xl text-center text-black">
           Copyright Policy for VeryDesi.com{" "}

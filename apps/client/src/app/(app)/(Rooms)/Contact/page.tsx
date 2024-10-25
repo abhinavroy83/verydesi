@@ -27,7 +27,7 @@ export default function Component() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4 font-sans">
       <AnimatePresence>
         {isOpen && (
           <motion.div

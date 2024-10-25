@@ -28,7 +28,7 @@ export default function LogoutComponent() {
   };
 
   return (
-    <div>
+    <div className="font-sans">
       <Button
         variant="outline"
         onClick={() => setShowLogoutDialog(true)}

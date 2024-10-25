@@ -54,7 +54,7 @@ export default function Component() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 font-sans">
       <button
         onClick={toggleMenu}
         className="px-6 py-3 bg-white text-purple-600 rounded-full hover:bg-purple-100 transition-colors duration-300 flex items-center space-x-2 shadow-lg"

@@ -295,7 +295,7 @@ export default function RoomDetails({
 
   return (
     <>
-      <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 pb-0 mx-auto py-8 mt-[7rem]">
+      <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 pb-0 mx-auto py-8 mt-[7rem] font-sans">
         <div className="flex flex-col lg:flex-row space-x-2 w-full justify-between lg:items-center">
           <div className="">
             <Breadcrumb>
@@ -744,7 +744,7 @@ export default function RoomDetails({
                       </div>
                       <button
                         type="submit"
-                        className="w-full mx-auto px-9 bg-green-800 rounded-md text-white "
+                        className="w-full mx-auto px-9 py-2 bg-green-800 rounded-md text-white "
                       >
                         Send Message
                       </button>
