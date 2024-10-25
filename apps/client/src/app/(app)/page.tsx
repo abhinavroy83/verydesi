@@ -146,7 +146,7 @@ const Page = () => {
     return (
       <HomeLayout>
         <LoginSlider />
-        <div className="w-full justify-between flex items-center">
+        <div className="w-full justify-between flex items-center font-sans">
           <Skeleton className="h-8 w-64" />
           <Skeleton className="h-10 w-28" />
         </div>
@@ -175,7 +175,7 @@ const Page = () => {
   return (
     <HomeLayout>
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="w-full justify-between flex items-center">
+      <div className="w-full justify-between flex items-center font-sans">
         <h1 className="text-2xl font-sans font-bold my-4">
           Featured Rooms In {currentCity}
         </h1>

@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 function page() {
   return (
-    <div className="mt-[7rem]">
+    <div className="mt-[7rem] font-sans">
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-30 bg-[#232f3f]">
         <div className="container px-4 md:px-6  mx-auto">
           <div className="flex flex-col items-center space-y-7 text-center">

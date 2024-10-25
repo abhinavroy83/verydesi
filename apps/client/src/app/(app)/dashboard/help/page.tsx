@@ -13,7 +13,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { HelpCircle, Send, User, Mail, Phone, ChevronRight } from "lucide-react";
+import {
+  HelpCircle,
+  Send,
+  User,
+  Mail,
+  Phone,
+  ChevronRight,
+} from "lucide-react";
 import { DashboardLayout } from "@/components/layout";
 import Link from "next/link";
 
@@ -43,7 +50,7 @@ export default function Component() {
 
   return (
     <DashboardLayout>
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto font-sans">
         <header className="bg-gray-100 text-black p-4">
           <h1 className="text-2xl font-semibold flex items-center">
             <HelpCircle className="mr-2" /> Help

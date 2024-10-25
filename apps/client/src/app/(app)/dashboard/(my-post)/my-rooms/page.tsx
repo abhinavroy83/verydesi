@@ -123,7 +123,7 @@ export default function roomsPage() {
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto bg-white text-black rounded-lg">
+      <div className="container mx-auto bg-white text-black rounded-lg font-sans">
         <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2 mb-4">
           <Heart className="w-6 h-6 text-black" />
           <h1 className="text-2xl font-bold">My Rooms</h1>

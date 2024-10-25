@@ -62,7 +62,7 @@ export default function ModernSharePopup() {
       <DialogTrigger asChild>
         <Share2 className="w-4 h-4 mr-2" />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md p-0 bg-transparent border-none shadow-none">
+      <DialogContent className="sm:max-w-md p-0 bg-transparent border-none shadow-none font-sans">
         <div className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg">
           <DialogHeader className="p-6 border-b border-gray-200 dark:border-gray-700">
             <DialogTitle className="text-2xl font-semibold">Share</DialogTitle>

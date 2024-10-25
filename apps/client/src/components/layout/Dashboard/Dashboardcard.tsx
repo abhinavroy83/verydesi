@@ -14,7 +14,7 @@ export function DashboardCard({
 }) {
   return (
     <Link href={url}>
-      <Card className="hover:shadow-md transition-shadow group items-center">
+      <Card className="hover:shadow-md transition-shadow group items-center font-sans">
         <CardContent className="lg:p-6 p-3 flex flex-col items-center justify-center text-center">
           <div className="bg-gray-200 group-hover:bg-gray-300 group-hover:translate-y-1 p-4 rounded-full mb-4">
             {icon}

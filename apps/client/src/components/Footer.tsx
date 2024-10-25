@@ -8,7 +8,7 @@ import Area from "./Area/Area";
 export default function Footer() {
   return (
     <div>
-      <div className="lg:mt-9 mt-6 w-full">
+      <div className="lg:mt-9 mt-6 w-full font-sans">
         <div
           onClick={() => {
             window.open("https://redletterweb.com/", "_blank");

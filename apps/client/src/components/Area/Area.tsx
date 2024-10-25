@@ -30,7 +30,7 @@ function Avalableloc() {
   };
 
   return (
-    <div className="relative text-[20px]">
+    <div className="relative text-[20px] font-sans">
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
           <Button
@@ -49,7 +49,7 @@ function Avalableloc() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-[370px] p-4 bg-white rounded-xl shadow-xl border-none "
+          className="w-[370px] p-4 bg-white rounded-xl shadow-xl border-none font-sans font-semibold"
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto">

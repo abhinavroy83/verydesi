@@ -12,10 +12,8 @@ interface MapPopupProps {
 }
 
 export default function MapPopup({ roomDetails }: MapPopupProps) {
-
-  
   return (
-    <div className="max-w-[200px] bg-white rounded-lg shadow-md overflow-hidden text-sm">
+    <div className="max-w-[200px] bg-white rounded-lg shadow-md overflow-hidden text-sm font-sans">
       <div className="relative w-full h-24">
         {/* Use Next.js Image for optimized image loading */}
         <Image
