@@ -228,36 +228,42 @@ export class RoomService {
 
   //get the number of room add in last 24 hour or room count
 
-  async countroompostedinlast24hours(area: string) {
-    const now = new Date();
-    const past24hours = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  async countRoomPostedInLast24Hours(area: string) {
+    const past24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
     try {
-      const roominspecficarea = await this.roomModel.find({
+      // Get total room count posted in the last 24 hours across all areas
+      const totalRoomsCount = await this.roomModel.countDocuments({
+        postedon: { $gte: past24Hours },
+      });
+
+      // General message for rooms added across all areas
+      const generalMessage =
+        totalRoomsCount > 0
+          ? `${totalRoomsCount} new room(s) added in the last 24 hours`
+          : `No new rooms added in the last 24 hours`;
+
+      // If no rooms were posted in the last 24 hours, return immediately
+      if (totalRoomsCount === 0) {
+        return {
+          generalMessage,
+          areaMessage: `No new rooms added in ${area} in the last 24 hours`,
+        };
+      }
+
+      // Count rooms in the specific area within the last 24 hours if rooms exist overall
+      const specificAreaCount = await this.roomModel.countDocuments({
         postingincity: area,
-        postedon: { $gte: past24hours },
+        postedon: { $gte: past24Hours },
       });
 
-      const allroom = await this.roomModel.find({
-        postedon: { $gte: past24hours },
-      });
+      // Prepare the message for the specific area
+      const areaMessage =
+        specificAreaCount > 0
+          ? `${specificAreaCount} new ${specificAreaCount > 1 ? 'rooms' : 'room'} added in ${area}`
+          : `No new rooms added in ${area} in the last 24 hours`;
 
-      if (allroom.length === 0) {
-        return {
-          status: true,
-          message: `No new rooms added in the last 24 hours`,
-        };
-      }
-      const msg = `${allroom.length} new room added in last 24 hours`;
-      if (roominspecficarea.length === 0) {
-        return {
-          status: true,
-          message: `No new rooms added in ${area} in the last 24 hours`,
-        };
-      }
-      const roomWord = roominspecficarea.length > 1 ? 'rooms' : 'room';
-      const message = `${roominspecficarea.length} new ${roomWord} added in ${area}`;
-      return { message, msg };
+      return { generalMessage, areaMessage };
     } catch (error) {
       throw new InternalServerErrorException(
         'Something went wrong while counting rooms posted in the last 24 hours',

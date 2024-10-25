@@ -14,6 +14,7 @@ import {
 import { RoomService } from '../service/room.service';
 import { CreateRoomDto, sendEmailDto, UpdateRoomDto } from '../dto';
 import { JwtGuard } from 'src/auth/guard';
+import { get } from 'mongoose';
 
 @Controller('room')
 export class RoomController {
@@ -87,5 +88,14 @@ export class RoomController {
     } catch (error) {
       throw new BadRequestException(error.message);
     }
+  }
+
+  //check if any new room added in last 24 hours
+  @Get('room-addedIn-last-24hours/:area')
+  async roomaddedinlast24hour(@Param('area') area: string) {
+    if (!area) {
+      return { msg: 'No area available' };
+    }
+    return this.roomService.countRoomPostedInLast24Hours(area);
   }
 }
