@@ -88,7 +88,6 @@ export class RoomService {
       );
     }
   }
-  
 
   async postroom(createroomdto: CreateRoomDto, userId: string) {
     try {
@@ -224,6 +223,45 @@ export class RoomService {
       return updatedRoom;
     } catch (error) {
       throw new Error(`Error while updating room: ${error.message}`);
+    }
+  }
+
+  //get the number of room add in last 24 hour or room count
+
+  async countroompostedinlast24hours(area: string) {
+    const now = new Date();
+    const past24hours = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+    try {
+      const roominspecficarea = await this.roomModel.find({
+        postingincity: area,
+        postedon: { $gte: past24hours },
+      });
+
+      const allroom = await this.roomModel.find({
+        postedon: { $gte: past24hours },
+      });
+
+      if (allroom.length === 0) {
+        return {
+          status: true,
+          message: `No new rooms added in the last 24 hours`,
+        };
+      }
+      const msg = `${allroom.length} new room added in last 24 hours`;
+      if (roominspecficarea.length === 0) {
+        return {
+          status: true,
+          message: `No new rooms added in ${area} in the last 24 hours`,
+        };
+      }
+      const roomWord = roominspecficarea.length > 1 ? 'rooms' : 'room';
+      const message = `${roominspecficarea.length} new ${roomWord} added in ${area}`;
+      return { message, msg };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Something went wrong while counting rooms posted in the last 24 hours',
+      );
     }
   }
 
