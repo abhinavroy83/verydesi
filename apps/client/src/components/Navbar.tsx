@@ -128,7 +128,7 @@ export default function Navbar() {
             </div> */}
             <div
               onClick={() => {
-                window.open("https://lifepointlactation.com/", "_blank");
+                window.open("https://www.rakuten.com/", "_blank");
               }}
               className="w-[27rem] mt-4 bg-yellow-400 px-1 shadow-lg overflow-hidden relative cursor-pointer hidden lg:flex "
             >
