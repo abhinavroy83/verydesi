@@ -215,7 +215,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
 
       <div className={`px-4 py-1 flex flex-col w-full`}>
         <p className="flex flex-col text-[19px] capitalize mt-3 lg:mt-1 font-bold">
-          {room?.Title && truncateCharacters(room?.Title, 41)}
+          {room?.Title && truncateCharacters(room?.Title, 33)}
         </p>
         <p className="flex gap-1 text-[14px] text-gray-600 mt-1 items-center">
           <GrLocation />

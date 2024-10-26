@@ -218,7 +218,7 @@ export default function Component({ room }: FeaturedCard2Props) {
             {room?.Title && truncateCharacters(room?.Title, 45)}
           </h2>
 
-          <div className="flex  flex-wrap items-center text-[19px] text-gray-600  transition-colors duration-300">
+          <div className="flex  flex-wrap items-center text-[18px] text-gray-600  transition-colors duration-300">
             <div className="flex font-sans items-center mr-2 sm:mb-0">
               <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
               <span>
