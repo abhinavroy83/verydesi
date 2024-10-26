@@ -203,8 +203,8 @@ export default function Navbar() {
                     <Notification isOpen={IsNotificationOpen} />
                   </div>
                   <Link href="/dashboard/favorite" className="relative">
-                    <Heart className="h-6 w-6 text-gray-600 hover:text-gray-900 cursor-pointer" />
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
+                    <Heart className="h-6 w-6 text-gray-900 hover:text-gray-900 cursor-pointer" />
+                    <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                       {cartcount}
                     </span>
                   </Link>
@@ -322,7 +322,7 @@ export default function Navbar() {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white group  transition duration-300 ease-in-out"
+                className="text-white hover:bg-white group text-[15px] transition duration-300 ease-in-out"
               >
                 <Home className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />
                 HOME
@@ -332,7 +332,7 @@ export default function Navbar() {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white group  transition duration-300 ease-in-out"
+                className="text-white hover:bg-white group text-[15px] transition duration-300 ease-in-out"
               >
                 <DoorOpen className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
                 ROOMMATES

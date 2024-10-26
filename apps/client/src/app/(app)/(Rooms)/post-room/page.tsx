@@ -293,14 +293,18 @@ export default function RoomPostingForm() {
           ))}
         </ul>
       </nav>
+
       <div className="lg:ml-64 w-full">
+        <h1 className="text-[24px] text-center font-bold mb-4">
+          Post Room In{" "}
+        </h1>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div
               ref={(el) => {
                 sectionRefs.current["basic-info"] = el;
               }}
-              className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200"
+              className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
             >
               <h2 className="text-2xl font-bold mb-4">Basic Information</h2>
               <div className="space-y-6">
@@ -335,7 +339,6 @@ export default function RoomPostingForm() {
                     </FormItem>
                   )}
                 />
-
                 <FormField
                   control={form.control}
                   name="postingType"
@@ -417,82 +420,85 @@ export default function RoomPostingForm() {
                     </FormItem>
                   )}
                 />
+                <div className="flex gap-4 lg:flex-row flex-col">
+                  <FormField
+                    control={form.control}
+                    name="propertyType"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                        <FormLabel className="md:w-1/4 text-md font-medium">
+                          Property Type
+                        </FormLabel>
+                        <div className="flex-grow lg:w-[30rem] w-[18rem]">
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select property type" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="Room">Room</SelectItem>
+                              <SelectItem value="Shared Room">
+                                Shared Room
+                              </SelectItem>
+                              <SelectItem value="Single Room">
+                                Single Room
+                              </SelectItem>
+                              <SelectItem value="Apartment">
+                                Apartment
+                              </SelectItem>
+                              <SelectItem value="Condo">Condo</SelectItem>
+                              <SelectItem value="Town House">
+                                Town House
+                              </SelectItem>
+                              <SelectItem value="Home">Home</SelectItem>
+                              <SelectItem value="House">House</SelectItem>
+                              <SelectItem value="Basement">Basement</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
 
-                <FormField
-                  control={form.control}
-                  name="propertyType"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Property Type
-                      </FormLabel>
-                      <div className="flex-grow">
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select property type" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="Room">Room</SelectItem>
-                            <SelectItem value="Shared Room">
-                              Shared Room
-                            </SelectItem>
-                            <SelectItem value="Single Room">
-                              Single Room
-                            </SelectItem>
-                            <SelectItem value="Apartment">Apartment</SelectItem>
-                            <SelectItem value="Condo">Condo</SelectItem>
-                            <SelectItem value="Town House">
-                              Town House
-                            </SelectItem>
-                            <SelectItem value="Home">Home</SelectItem>
-                            <SelectItem value="House">House</SelectItem>
-                            <SelectItem value="Basement">Basement</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="stayLength"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Stay Length
-                      </FormLabel>
-                      <div className="flex-grow">
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select stay length" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="short">
-                              Short term (1Day to 6 Month)
-                            </SelectItem>
-                            <SelectItem value="long">
-                              Long term (6+ Months)
-                            </SelectItem>
-                            <SelectItem value="both">Both</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                  <FormField
+                    control={form.control}
+                    name="stayLength"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                        <FormLabel className="md:w-1/4 text-md font-medium">
+                          Stay Length
+                        </FormLabel>
+                        <div className="flex-grow lg:w-[30rem] w-[18rem]">
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select stay length" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="short">
+                                Short term (1Day to 6 Month)
+                              </SelectItem>
+                              <SelectItem value="long">
+                                Long term (6+ Months)
+                              </SelectItem>
+                              <SelectItem value="both">Both</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
             </div>
 
@@ -500,7 +506,7 @@ export default function RoomPostingForm() {
               ref={(el) => {
                 sectionRefs.current["pricing"] = el;
               }}
-              className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200"
+              className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
             >
               <h2 className="text-2xl font-bold mb-4">Pricing</h2>
               <div className="space-y-6">
@@ -548,80 +554,80 @@ export default function RoomPostingForm() {
                     </FormItem>
                   )}
                 />
-
-                <FormField
-                  control={form.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Rent
-                      </FormLabel>
-                      <div className="flex-grow">
-                        <FormControl>
-                          <div className="flex items-center">
-                            <span className="inline-flex items-center p-[0.5rem] rounded-l-md border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
-                              $
-                            </span>
-                            <Input
-                              type="number"
-                              placeholder="Enter rent amount"
-                              {...field}
-                              onChange={(e) =>
-                                field.onChange(Number(e.target.value))
-                              }
-                              className="rounded-l-none"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-
-                <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                  <FormLabel className="md:w-1/4 text-md font-medium">
-                    Options
-                  </FormLabel>
-                  <div className="flex-grow flex space-x-4">
-                    <FormField
-                      control={form.control}
-                      name="negotiable"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="price"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                        <FormLabel className="md:w-2/4 text-md font-medium">
+                          Rent
+                        </FormLabel>
+                        <div className="flex-grow">
                           <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
+                            <div className="flex items-center">
+                              <span className="inline-flex items-center p-[0.5rem] rounded-l-md border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
+                                $
+                              </span>
+                              <Input
+                                type="number"
+                                placeholder="Enter rent amount"
+                                {...field}
+                                onChange={(e) =>
+                                  field.onChange(Number(e.target.value))
+                                }
+                                className="rounded-l-none"
+                              />
+                            </div>
                           </FormControl>
-                          <div className="space-y-1 leading-none">
-                            <FormLabel>Negotiable</FormLabel>
-                          </div>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="hideRent"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <div className="space-y-1 leading-none">
-                            <FormLabel>Hide Rent</FormLabel>
-                          </div>
-                        </FormItem>
-                      )}
-                    />
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                    {/* <FormLabel className="md:w-1/4 text-md font-medium">
+                      Options
+                    </FormLabel> */}
+                    <div className="flex-grow flex space-x-4">
+                      <FormField
+                        control={form.control}
+                        name="negotiable"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel>Negotiable</FormLabel>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="hideRent"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel>Hide Rent</FormLabel>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                   </div>
                 </div>
-
                 {watchpostingtype === "Rooms" && (
                   <FormField
                     control={form.control}
@@ -661,7 +667,7 @@ export default function RoomPostingForm() {
               ref={(el) => {
                 sectionRefs.current["availability"] = el;
               }}
-              className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200"
+              className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
             >
               <h2 className="text-2xl font-bold mb-4">Availability</h2>
               <div className="space-y-6">
@@ -765,9 +771,35 @@ export default function RoomPostingForm() {
                       )}
                     />
                   </div>
+                  <FormField
+                    control={form.control}
+                    name="immediate"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col space-y-2 md:space-y-0 md:space-x-4">
+                        <FormLabel className="md:w-4/4 text-md font-[12px]">
+                          Immediate
+                        </FormLabel>
+                        <div className="flex-grow">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={(checked) => {
+                                field.onChange(checked);
+                                if (checked) {
+                                  form.setValue("availableFrom", null);
+                                  form.setValue("availableTo", null);
+                                }
+                              }}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
                 </div>
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="immediate"
                   render={({ field }) => (
@@ -792,7 +824,7 @@ export default function RoomPostingForm() {
                       </div>
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <FormField
                   control={form.control}
@@ -847,7 +879,7 @@ export default function RoomPostingForm() {
               ref={(el) => {
                 sectionRefs.current["amenities"] = el;
               }}
-              className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200"
+              className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
             >
               <h2 className="text-2xl font-bold mb-4">Amenities</h2>
               <div className="space-y-6">
@@ -1130,7 +1162,7 @@ export default function RoomPostingForm() {
               ref={(el) => {
                 sectionRefs.current["preferences"] = el;
               }}
-              className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200"
+              className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
             >
               <h2 className="text-2xl font-bold mb-4">Preferences</h2>
               <div className="space-y-6">
@@ -1301,7 +1333,7 @@ export default function RoomPostingForm() {
               ref={(el) => {
                 sectionRefs.current["photos"] = el;
               }}
-              className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200"
+              className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
             >
               <h2 className="text-2xl font-bold mb-4">Photos</h2>
               <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-start">
@@ -1360,7 +1392,7 @@ export default function RoomPostingForm() {
               ref={(el) => {
                 sectionRefs.current["your-details"] = el;
               }}
-              className="bg-white lg:p-[4rem] p-6 rounded-xl shadow-md border border-gray-200"
+              className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
             >
               <h2 className="text-2xl font-bold mb-4">Your Details</h2>
               <div className="space-y-4">

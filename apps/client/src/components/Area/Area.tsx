@@ -42,7 +42,7 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
             className={`${textcolour} hover:text-gray-900  ${bgcolour} border-white border-2 rounded-md`}
           >
             <MapPin className="h-5 w-5 " />
-            <span className="font-medium px-1">
+            <span className="text-[16px] px-1 ">
               {currentCity || "Portland"}
             </span>
             <ChevronDown
@@ -53,7 +53,7 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-[370px] p-4 bg-white rounded-xl shadow-xl border-none font-sans font-semibold"
+          className="w-[370px] p-4 bg-white rounded-xl shadow-xl border-none font-sans"
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto">

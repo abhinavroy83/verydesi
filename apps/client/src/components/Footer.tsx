@@ -70,7 +70,7 @@ export default function Footer() {
               <div className="max-w-[1600px] w-full m-auto flex flex-col items-center pb-3 lg:flex-row py-2 justify-center"></div>
               <div className="lg:flex justify-center gap-10">
                 <div className="flex text-white items-center gap-5 px-3 lg:px-0">
-                  <div className="flex items-center mt-3">
+                  <div className="flex items-center mt-3 gap-2">
                     <Link href={"/"}>
                       <Image
                         src={

@@ -393,26 +393,32 @@ export default function RoomDetails({
           </div>
         </div>
         <div className="flex justify-between items-start  flex-col lg:flex-row">
-          <div className="flex w-full justify-between  flex-col lg:flex-row">
+          <div className="flex w-full justify-between  flex-col lg:flex-row mt-2">
             <div className="flex flex-col lg:flex-row gap-2 font-bold lg:items-center">
-              <h1 className="text-3xl font-bold text-gray-900">
-                {roomData?.Title}|
+              <h1 className="text-3xl font-bold text-gray-900 flex gap-2">
+                {roomData?.Title} |{" "}
+                <p className="text-3xl text-green-600">
+                  ${roomData?.Expected_Rooms}
+                </p>
               </h1>
-              <p className="text-2xl text-green-600">
+              {/* <p className="text-2xl text-green-600">
                 ${roomData?.Expected_Rooms}
-              </p>
+              </p> */}
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 whitespace-nowrap lg:p-1">
+              {/* <h1 className="text-xl font-bold text-gray-900 whitespace-nowrap lg:p-1">
                 Posted By: {roomData?.user_name}{" "}
-              </h1>
+              </h1> */}
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-2">
           <div className="lg:col-span-2 space-y-3">
-            <div className="flex items-center gap-2 text-xl font-bold">
-              <p className="text-gray-600">{roomData?.postingincity}, OR</p>
+            <div className="flex items-center gap-2 text-xl font-bold text-gray-600">
+              <p className="text-gray-600">{roomData?.postingincity}, OR</p>|
+              <h1 className="text-xl font-bold text-gray-600 whitespace-nowrap">
+                Posted By: {roomData?.user_name}{" "}
+              </h1>
               {/* <p className="text-xl text-green-600">
                 ${roomData?.Expected_Rooms}
               </p> */}
@@ -441,10 +447,10 @@ export default function RoomDetails({
                       <CarouselItem>
                         <div className="relative aspect-video">
                           <Image
-                            src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819322/assests/tss6j8gnbbccyxwgxzzx.png"
+                            src="https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
                             alt="Fallback room image"
                             layout="fill"
-                            objectFit="contain"
+                            objectFit="cover"
                           />
                         </div>
                       </CarouselItem>
