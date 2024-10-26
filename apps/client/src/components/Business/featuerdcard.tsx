@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export function FeaturedBusinessCard() {
   return (
-    <Card className="w-full max-w-3xl overflow-hidden shadow-md hover:shadow-lg ">
+    <Card className="w-full max-w-3xl overflow-hidden shadow-md hover:shadow-lg font-sans">
       <div className="relative flex flex-col sm:flex-row">
         <div className="sm:w-1/3">
           <img
@@ -16,7 +16,7 @@ export function FeaturedBusinessCard() {
         <CardContent className="p-3 sm:w-2/3">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-[22px] font-sans font-bold text-gray-800">
+              <h2 className="text-[21px] font-sans font-bold text-gray-800">
                 Modern Downtown Loft
               </h2>
               <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">

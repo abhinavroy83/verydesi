@@ -7,7 +7,7 @@ import { Heart } from "lucide-react";
 
 function EventNonfeaturedCard() {
   return (
-    <article className="flex flex-col sm:flex-row w-full sm:h-[80px] hover:cursor-pointer justify-start border shadow-md rounded-xl hover:shadow-lg relative">
+    <article className="font-sans flex flex-col sm:flex-row w-full sm:h-[80px] hover:cursor-pointer justify-start border shadow-md rounded-xl hover:shadow-lg relative">
       <div className="w-full sm:w-auto">
         <img
           src={`https://envira.es/wp-content/uploads/2019/10/ruido-nocturno.jpg`}
@@ -17,7 +17,7 @@ function EventNonfeaturedCard() {
       </div>
       <div className="p-3 sm:p-2 flex flex-col justify-between flex-grow">
         <div>
-          <h2 className="text-lg sm:text-[22px] font-bold line-clamp-1">
+          <h2 className="text-[21px] font-bold line-clamp-1">
             Music Bingo at Punch Bowl Social
           </h2>
           <div className="flex flex-col sm:flex-row gap-1 text-sm sm:text-[17px] text-gray-600 mt-1">

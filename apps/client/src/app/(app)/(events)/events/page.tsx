@@ -40,13 +40,13 @@ export default function Component() {
 
   return (
     <HomeLayout>
-      <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3">
+      <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3 font-sans">
         <div>
           <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-1">
             <h1 className="capitalize text-[23px] lg:text-[23px] font-bold">
               <p>Featured Events In </p>
             </h1>
-            <div className="flex  gap-3 items-center">
+            <div className="flex gap-3 items-center">
               <div className="relative inline-block text-left">
                 <Button
                   variant="outline"
@@ -100,7 +100,7 @@ export default function Component() {
             </div>
           </div>
         </div>
-        <div className="w-full max-w-[77rem] mt-3 mx-auto">
+        <div className="w-full max-w-[79rem] mt-3 mx-auto">
           <Carousel
             opts={{
               align: "start",

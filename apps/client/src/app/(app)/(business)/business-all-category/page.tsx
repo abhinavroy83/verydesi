@@ -46,7 +46,7 @@ function page() {
   return (
     <HomeLayout>
       {" "}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 font-sans">
         <h1 className="text-2xl font-bold mb-6">
           Top Local Service Categories in Dallas Fortworth Area
         </h1>

@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 export default function Eventcard() {
   return (
     <Link href={`/event`}>
-      <Card className="h-full transition-shadow hover:shadow-md w-full sm:w-[100%] max-w-sm mx-auto">
+      <Card className="h-full transition-shadow hover:shadow-md w-full sm:w-[100%] max-w-sm mx-auto font-sans">
         <CardHeader className="p-0">
           <img
             src="https://i.pinimg.com/originals/48/89/38/488938d6eec996de2365b072357aac16.jpg"
@@ -23,7 +23,7 @@ export default function Eventcard() {
           />
         </CardHeader>
         <CardContent className="p-4">
-          <h2 className="text-xl sm:text-[22px] font-bold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 mb-2">
+          <h2 className="text-xl sm:text-[21px] font-bold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 mb-2">
             Event Name
           </h2>
           <div className="text-sm sm:text-[17px] text-gray-600 space-y-1">
@@ -37,8 +37,7 @@ export default function Eventcard() {
             </p>
           </div>
           <p className="mt-2 text-sm sm:text-base text-gray-600">
-            Free Admission! Open daily June - August 11th from 10 am-5 pm. An
-            exciting event you won't want to miss!
+            Free Admission! Open daily June - August 11th from 10 am-5 pm.
           </p>
         </CardContent>
         <CardFooter className="flex justify-between items-center border-t p-4 text-sm sm:text-base text-gray-900">
