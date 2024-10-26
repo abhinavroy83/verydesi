@@ -46,7 +46,7 @@ const Page = () => {
       setLoading(true);
       setError(null);
       const res = await axios.get(
-        `https://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity || "Portland"}`,
+        `https://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`,
         {
           withCredentials: true,
         }

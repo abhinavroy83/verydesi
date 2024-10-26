@@ -25,7 +25,7 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
   const { status, currentCity, updateCity } = useAuthStore();
   // Fetch city data on component mount
   const { cities, isLoading, error } = useCityData();
-
+  console.log(currentCity);
   const handleLocation = (city: string) => {
     setSelectedCity(city);
     updateCity(city);
@@ -42,9 +42,7 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
             className={`${textcolour} hover:text-gray-900  ${bgcolour} border-white border-2 rounded-md`}
           >
             <MapPin className="h-5 w-5 " />
-            <span className="font-medium px-1">
-              {currentCity || "Portland"}
-            </span>
+            <span className="font-medium px-1">{currentCity}</span>
             <ChevronDown
               className={`h-4 w-4 transition-transform duration-200 ${
                 isOpen ? "rotate-180" : ""
