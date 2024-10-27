@@ -516,50 +516,60 @@ export default function RoomPostingForm() {
             >
               <h2 className="text-2xl font-bold mb-4">Pricing</h2>
               <div className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="priceModel"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Price Model
-                      </FormLabel>
-                      <div className="flex-grow">
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select price model" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {watchstaylength === "short" && (
-                              <>
-                                <SelectItem value="nightly">Nightly</SelectItem>
-                                <SelectItem value="monthly">Monthly</SelectItem>
-                                <SelectItem value="yearly">Yearly</SelectItem>
-                              </>
-                            )}
+                {watchstaylength && (
+                  <FormField
+                    control={form.control}
+                    name="priceModel"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                        <FormLabel className="md:w-1/4 text-md font-medium">
+                          Price Model
+                        </FormLabel>
+                        <div className="flex-grow">
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select price model" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {watchstaylength === "short" && (
+                                <>
+                                  <SelectItem value="nightly">
+                                    Nightly
+                                  </SelectItem>
+                                  <SelectItem value="monthly">
+                                    Monthly
+                                  </SelectItem>
+                                  <SelectItem value="yearly">Yearly</SelectItem>
+                                </>
+                              )}
 
-                            {watchstaylength === "long" && (
-                              <SelectItem value="monthly">Monthly</SelectItem>
-                            )}
-                            {watchstaylength === "both" && (
-                              <>
-                                <SelectItem value="nightly">Nightly</SelectItem>
+                              {watchstaylength === "long" && (
                                 <SelectItem value="monthly">Monthly</SelectItem>
-                                <SelectItem value="yearly">Yearly</SelectItem>
-                              </>
-                            )}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                              )}
+                              {watchstaylength === "both" && (
+                                <>
+                                  <SelectItem value="nightly">
+                                    Nightly
+                                  </SelectItem>
+                                  <SelectItem value="monthly">
+                                    Monthly
+                                  </SelectItem>
+                                  <SelectItem value="yearly">Yearly</SelectItem>
+                                </>
+                              )}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                )}
                 <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}

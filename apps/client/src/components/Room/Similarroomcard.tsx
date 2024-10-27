@@ -227,7 +227,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
         </p>
         <p className="text-blue-800 capitalize text-[14px] mt-1 flex gap-1 items-center ">
           <CgProfile />
-          Username
+          {room?.user_name}
         </p>
         <span className="flex gap-1 items-center">
           <p className="text-blue-800 text-[14px] flex gap-1 mt-1 items-center ">
@@ -235,7 +235,6 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
             <p>{calculateTimeDifference(room?.postedon)}</p>
           </p>
         </span>
-        <article className="flex gap-2 mt-1"></article>
         <p className="absolute  bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
           <p className="left-5 top-2 text-[22px] text-green-700 text-right font-bold">
             ${room?.Expected_Rooms}

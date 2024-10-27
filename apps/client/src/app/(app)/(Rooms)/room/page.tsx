@@ -52,6 +52,7 @@ import { useUserData } from "@/hooks/use-userData";
 import Similarroomcard from "@/components/Room/Similarroomcard";
 import { notFound, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { format } from "path";
 
 const isValidAmenityIcon = (iconName: string): iconName is AmenityType => {
   return iconName in AmenityIcon;
@@ -506,7 +507,11 @@ export default function RoomDetails({
                         Available From
                       </p>
                       <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Avaliblity_from}
+                        {roomData?.Avaliblity_from
+                          ? new Date(
+                              roomData.Avaliblity_from
+                            ).toLocaleDateString()
+                          : "N/A"}
                       </p>
                     </div>
                   </div>
@@ -550,7 +555,7 @@ export default function RoomDetails({
                         Deposit
                       </p>
                       <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Desposite}
+                        ${roomData?.Desposite}
                       </p>
                     </div>
                   </div>
@@ -583,57 +588,61 @@ export default function RoomDetails({
               </CardContent>
             </Card>
 
-            <Card className="">
-              <CardHeader className="p-3">
-                <CardTitle>Amenities Included</CardTitle>
-              </CardHeader>
-              <CardContent className="p-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {roomData?.Amenities_include?.map((amenity) => {
-                    if (isValidAmenityIcon(amenity)) {
-                      const IconComponent = AmenityIcon[amenity];
-                      return (
-                        <div key={amenity} className="flex items-center">
-                          {IconComponent && (
-                            <IconComponent className="h-5 w-5 text-[#054687] mr-2" />
-                          )}
-                          <span className="text-sm text-gray-700">
-                            {amenity}
-                          </span>
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
-                </div>
-              </CardContent>
-            </Card>
+            {roomData?.Amenities_include && (
+              <Card className="">
+                <CardHeader className="p-3">
+                  <CardTitle>Amenities Included</CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {roomData?.Amenities_include?.map((amenity) => {
+                      if (isValidAmenityIcon(amenity)) {
+                        const IconComponent = AmenityIcon[amenity];
+                        return (
+                          <div key={amenity} className="flex items-center">
+                            {IconComponent && (
+                              <IconComponent className="h-5 w-5 text-[#054687] mr-2" />
+                            )}
+                            <span className="text-sm text-gray-700">
+                              {amenity}
+                            </span>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
-            <Card>
-              <CardHeader className="p-3">
-                <CardTitle>Utilities</CardTitle>
-              </CardHeader>
-              <CardContent className="p-3">
-                <div className="grid grid-cols-2 gap-4">
-                  {roomData?.Utility_include?.map((utility) => {
-                    if (isValidIcon(utility)) {
-                      const IconComponent = utilityIcons[utility];
-                      return (
-                        <div key={utility} className="flex  items-center">
-                          {IconComponent && (
-                            <IconComponent className="h-5 w-5 text-[#054687] mr-2" />
-                          )}
-                          <span className="text-sm text-gray-700">
-                            {utility}
-                          </span>
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
-                </div>
-              </CardContent>
-            </Card>
+            {roomData?.Utility_include && (
+              <Card>
+                <CardHeader className="p-3">
+                  <CardTitle>Utilities</CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <div className="grid grid-cols-2 gap-4">
+                    {roomData?.Utility_include?.map((utility) => {
+                      if (isValidIcon(utility)) {
+                        const IconComponent = utilityIcons[utility];
+                        return (
+                          <div key={utility} className="flex  items-center">
+                            {IconComponent && (
+                              <IconComponent className="h-5 w-5 text-[#054687] mr-2" />
+                            )}
+                            <span className="text-sm text-gray-700">
+                              {utility}
+                            </span>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             <Card>
               <CardHeader className="p-3">
@@ -641,39 +650,45 @@ export default function RoomDetails({
               </CardHeader>
               <CardContent className="p-3">
                 <div className="flex flex-col gap-3">
-                  <div className="flex items-center">
-                    <BiFoodTag className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">
-                        Dietary Preference
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Vegeterian_prefernce}
-                      </p>
+                  {roomData?.Vegeterian_prefernce && (
+                    <div className="flex items-center">
+                      <BiFoodTag className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          Dietary Preference
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.Vegeterian_prefernce}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <FaSmoking className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">
-                        Smoking Policy{" "}
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Smoking_policy}
-                      </p>
+                  )}
+                  {roomData?.Smoking_policy && (
+                    <div className="flex items-center">
+                      <FaSmoking className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          Smoking Policy{" "}
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.Smoking_policy}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <MdOutlinePets className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">
-                        Pet Friendly{" "}
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Pet_friendly}
-                      </p>
+                  )}
+                  {roomData?.Pet_friendly && (
+                    <div className="flex items-center">
+                      <MdOutlinePets className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          Pet Friendly{" "}
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.Pet_friendly}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
