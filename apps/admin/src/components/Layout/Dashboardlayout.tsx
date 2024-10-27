@@ -5,7 +5,7 @@ import React from "react";
 const menuItems = [
   { name: "Dashboard", icon: "🏠", to: "/admin/dashboard" },
   { name: "Basic Users", icon: "👥", to: "/Basic-user" },
-  { name: "Admin Users", icon: "👤", to: "/admin/getalladminsuser" },
+  { name: "Admin Users", icon: "👤", to: "/All-rooms" },
   { name: "Pending Requests", icon: "📋", to: "/admin/getapproval" },
   { name: "Area", icon: "🗺️", to: "/admin/allarea" },
   { name: "Rooms", icon: "🛏️", to: "/admin/allroom" },
@@ -13,7 +13,7 @@ const menuItems = [
 ];
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="mt-[6rem]">
+    <div className="mt-[4.4rem]">
       <div className="flex">
         <aside
           className={` md:flex md:flex-col  bg-white border overflow-y-none lg:w-[16%] w-auto`}
