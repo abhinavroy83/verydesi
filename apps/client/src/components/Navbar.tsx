@@ -32,8 +32,10 @@ import LogoutComponent from "./Popups/Logoutpop";
 import useCartStore from "@/store/useCartStore";
 import useAuthStore from "@/store/useAuthStore";
 import { Badge } from "@/components/ui/badge";
+import { useUserData } from "@/hooks/use-userData";
 
 export default function Navbar() {
+  const { userData } = useUserData();
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const { data: session, status } = useSession();
 
@@ -73,7 +75,14 @@ export default function Navbar() {
   const tempInFahrenheit = convertKelvinToFahrenheit(
     weatherData?.main?.temp
   ).toFixed(1);
-
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
   return (
     <nav className="flex flex-col shadow-md fixed top-0 left-0 right-0 z-10 font-sans">
       <div className="bg-white border-b border-gray-200 items-center">
@@ -221,11 +230,15 @@ export default function Navbar() {
                       <Avatar className="h-8 w-8">
                         <AvatarImage
                           src={
-                            userimage || "/placeholder.svg?height=32&width=32"
+                            userimage ||
+                            userData?.userimg ||
+                            "/placeholder.svg?height=32&width=32"
                           }
-                          alt="User"
+                          alt={userData?.firstName || "User"}
                         />
-                        <AvatarFallback>AB</AvatarFallback>
+                        <AvatarFallback>
+                          {getInitials(userData?.firstName || "User")}
+                        </AvatarFallback>{" "}
                       </Avatar>
                     </Button>
                     {isDropdownOpen && (
@@ -339,20 +352,20 @@ export default function Navbar() {
               </Button>
             </div>
 
-            <div className="hidden md:flex items-center space-x-2 text-white">
+            <div
+              onMouseEnter={() => {
+                setIsHovered(true);
+              }}
+              onMouseLeave={() => {
+                setIsHovered(false);
+              }}
+              className="hidden md:flex cursor-pointer items-center space-x-2 text-white"
+            >
               <span className="font-medium">{weatherData?.name}</span>
               <div>
                 {weatherData?.main && (
                   <div className="">
-                    <p
-                      onMouseEnter={() => {
-                        setIsHovered(true);
-                      }}
-                      onMouseLeave={() => {
-                        setIsHovered(false);
-                      }}
-                      className="font-medium cursor-pointer"
-                    >
+                    <p className="font-medium cursor-pointer">
                       {isHovered
                         ? `${tempInCelsius}°C`
                         : `${tempInFahrenheit}°F`}

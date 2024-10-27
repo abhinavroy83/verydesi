@@ -45,6 +45,7 @@ import { useSession } from "next-auth/react";
 import { stateAbbreviations } from "@/constants";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useUserData } from "@/hooks/use-userData";
 
 const sections = [
   { id: "basic-info", title: "Basic Information" },
@@ -58,6 +59,7 @@ const sections = [
 ];
 
 export default function RoomPostingForm() {
+  const { userData } = useUserData();
   const form = useForm<FormData>({
     resolver: zodResolver(postroomschema),
     mode: "onChange",
@@ -85,9 +87,9 @@ export default function RoomPostingForm() {
       smokingPolicy: undefined,
       petPolicy: undefined,
       openHouseDate: undefined,
-      name: "",
-      email: "",
-      phoneNumber: "",
+      name: userData?.firstName || "",
+      email: userData?.email || "",
+      phoneNumber: userData?.phone_number || "",
       address: "",
       city: "",
       state: "",
@@ -96,6 +98,13 @@ export default function RoomPostingForm() {
     },
   });
 
+  useEffect(() => {
+    if (userData) {
+      form.setValue("name", userData.firstName || "");
+      form.setValue("email", userData.email || "");
+      form.setValue("phoneNumber", userData.phone_number || "");
+    }
+  }, [userData, form]);
   const [images, setImages] = useState<File[]>([]);
   const [imageurl, setimageurls] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -126,7 +135,7 @@ export default function RoomPostingForm() {
 
   useEffect(() => {
     form.trigger();
-  }, [form]);
+  }, [form, userData]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -223,8 +232,8 @@ export default function RoomPostingForm() {
         Pet_friendly: data.petPolicy,
         Open_house_schedule: data.openHouseDate,
         Imgurl: imageurl,
-        user_name: data.name,
-        email: data.email,
+        user_name: userData?.firstName,
+        email: userData?.email,
         city: data.city,
         state: data.state,
         zip_code: data.zipCode,
@@ -420,85 +429,82 @@ export default function RoomPostingForm() {
                     </FormItem>
                   )}
                 />
-                <div className="flex gap-4 lg:flex-row flex-col">
-                  <FormField
-                    control={form.control}
-                    name="propertyType"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                        <FormLabel className="md:w-1/4 text-md font-medium">
-                          Property Type
-                        </FormLabel>
-                        <div className="flex-grow lg:w-[30rem] w-[18rem]">
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select property type" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="Room">Room</SelectItem>
-                              <SelectItem value="Shared Room">
-                                Shared Room
-                              </SelectItem>
-                              <SelectItem value="Single Room">
-                                Single Room
-                              </SelectItem>
-                              <SelectItem value="Apartment">
-                                Apartment
-                              </SelectItem>
-                              <SelectItem value="Condo">Condo</SelectItem>
-                              <SelectItem value="Town House">
-                                Town House
-                              </SelectItem>
-                              <SelectItem value="Home">Home</SelectItem>
-                              <SelectItem value="House">House</SelectItem>
-                              <SelectItem value="Basement">Basement</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </div>
-                      </FormItem>
-                    )}
-                  />
 
-                  <FormField
-                    control={form.control}
-                    name="stayLength"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                        <FormLabel className="md:w-1/4 text-md font-medium">
-                          Stay Length
-                        </FormLabel>
-                        <div className="flex-grow lg:w-[30rem] w-[18rem]">
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select stay length" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="short">
-                                Short term (1Day to 6 Month)
-                              </SelectItem>
-                              <SelectItem value="long">
-                                Long term (6+ Months)
-                              </SelectItem>
-                              <SelectItem value="both">Both</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  control={form.control}
+                  name="propertyType"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Property Type
+                      </FormLabel>
+                      <div className="flex-grow lg:w-[30rem] w-[18rem]">
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select property type" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Room">Room</SelectItem>
+                            <SelectItem value="Shared Room">
+                              Shared Room
+                            </SelectItem>
+                            <SelectItem value="Single Room">
+                              Single Room
+                            </SelectItem>
+                            <SelectItem value="Apartment">Apartment</SelectItem>
+                            <SelectItem value="Condo">Condo</SelectItem>
+                            <SelectItem value="Town House">
+                              Town House
+                            </SelectItem>
+                            <SelectItem value="Home">Home</SelectItem>
+                            <SelectItem value="House">House</SelectItem>
+                            <SelectItem value="Basement">Basement</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="stayLength"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Stay Length
+                      </FormLabel>
+                      <div className="flex-grow lg:w-[30rem] w-[18rem]">
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select stay length" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="short">
+                              Short term (1Day to 6 Month)
+                            </SelectItem>
+                            <SelectItem value="long">
+                              Long term (6+ Months)
+                            </SelectItem>
+                            <SelectItem value="both">Both</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
 
@@ -681,7 +687,6 @@ export default function RoomPostingForm() {
                       name="availableFrom"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <FormLabel>Available From</FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
                               <FormControl>
@@ -697,7 +702,7 @@ export default function RoomPostingForm() {
                                   {field.value ? (
                                     format(field.value, "PPP")
                                   ) : (
-                                    <span>Pick a date</span>
+                                    <span>Available From</span>
                                   )}
                                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                 </Button>
@@ -728,7 +733,6 @@ export default function RoomPostingForm() {
                       name="availableTo"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <FormLabel>Available To</FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
                               <FormControl>
@@ -744,7 +748,7 @@ export default function RoomPostingForm() {
                                   {field.value ? (
                                     format(field.value, "PPP")
                                   ) : (
-                                    <span>Pick a date</span>
+                                    <span>Available To</span>
                                   )}
                                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                 </Button>
@@ -775,8 +779,8 @@ export default function RoomPostingForm() {
                     control={form.control}
                     name="immediate"
                     render={({ field }) => (
-                      <FormItem className="flex flex-col space-y-2 md:space-y-0 md:space-x-4">
-                        <FormLabel className="md:w-4/4 text-md font-[12px]">
+                      <FormItem className="flex justify-center items-center space-y-2 md:space-y-0 md:space-x-4">
+                        <FormLabel className="md:w-4/4  font-[12px]">
                           Immediate
                         </FormLabel>
                         <div className="flex-grow">
@@ -1414,11 +1418,14 @@ export default function RoomPostingForm() {
                         <div className="flex-grow">
                           <FormControl>
                             <Input
-                              className=""
                               type={fieldInfo.type}
                               id={fieldInfo.name}
                               {...field}
                               value={field.value as string}
+                              disabled={fieldInfo.name === "email"}
+                              className={
+                                fieldInfo.name === "email" ? "bg-gray-100" : ""
+                              }
                             />
                           </FormControl>
                           <FormMessage />

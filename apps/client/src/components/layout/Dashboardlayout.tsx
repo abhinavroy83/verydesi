@@ -115,7 +115,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   const sendemail = async () => {
     const token = session?.accessToken;
-    
+
     if (!token) {
       throw new Error("token not found");
     }
@@ -253,11 +253,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               >
                 <Edit className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="icon" className="rounded-full ">
-                <UserPlus className="h-4 w-4" />
-              </Button>
+
               <Button variant="outline" size="icon" className="rounded-full">
-                <ShareButton />
+                <ShareButton shareLink={"https://verydesi.com/"} />
               </Button>
             </div>
           </div>

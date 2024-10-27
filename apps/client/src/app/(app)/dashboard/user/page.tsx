@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -120,6 +120,40 @@ export default function DashboardUserSettings() {
     }
   };
 
+  //date
+  const [date, setDate] = useState<Date>();
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [month, setMonth] = useState<number>(new Date().getMonth());
+
+  const years = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    return Array.from({ length: 109 }, (_, i) => currentYear - i - 16);
+  }, []);
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const handleYearChange = (value: string) => {
+    setYear(parseInt(value));
+    setDate(new Date(parseInt(value), month, 1));
+  };
+
+  const handleMonthChange = (value: string) => {
+    setMonth(parseInt(value));
+    setDate(new Date(year, parseInt(value), 1));
+  };
   useEffect(() => {
     fetchuser();
   }, [token]);
@@ -185,7 +219,7 @@ export default function DashboardUserSettings() {
                   render={({ field }) => (
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       disabled={!isEditing}
                     >
                       <SelectTrigger>
@@ -259,7 +293,7 @@ export default function DashboardUserSettings() {
                   render={({ field }) => (
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       disabled={!isEditing}
                     >
                       <SelectTrigger>
@@ -274,7 +308,7 @@ export default function DashboardUserSettings() {
                   )}
                 />
               </div>
-              <div>
+              <div className="w-full max-w-sm space-y-4">
                 <Label htmlFor="dob">Date of Birth</Label>
                 <Controller
                   name="dob"
@@ -283,6 +317,7 @@ export default function DashboardUserSettings() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
+                          id="dob"
                           variant={"outline"}
                           className={cn(
                             "w-full justify-start text-left font-normal",
@@ -299,10 +334,44 @@ export default function DashboardUserSettings() {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
+                        <div className="flex gap-2 p-3">
+                          <Select onValueChange={handleYearChange}>
+                            <SelectTrigger className="w-[110px]">
+                              <SelectValue placeholder="Year" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {years.map((year) => (
+                                <SelectItem key={year} value={year.toString()}>
+                                  {year}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <Select onValueChange={handleMonthChange}>
+                            <SelectTrigger className="w-[110px]">
+                              <SelectValue placeholder="Month" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {months.map((month, index) => (
+                                <SelectItem
+                                  key={month}
+                                  value={index.toString()}
+                                >
+                                  {month}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                         <Calendar
                           mode="single"
                           selected={field.value}
-                          onSelect={field.onChange}
+                          onSelect={(newDate) => {
+                            field.onChange(newDate);
+                            setDate(newDate);
+                          }}
+                          month={date || new Date(year, month)}
+                          onMonthChange={setDate}
                           disabled={(date) =>
                             date > new Date() ||
                             date < subYears(new Date(), 124) ||
@@ -349,7 +418,7 @@ export default function DashboardUserSettings() {
                   render={({ field }) => (
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       disabled={!isEditing}
                     >
                       <SelectTrigger>
@@ -379,7 +448,7 @@ export default function DashboardUserSettings() {
                   render={({ field }) => (
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       disabled={!isEditing}
                     >
                       <SelectTrigger>

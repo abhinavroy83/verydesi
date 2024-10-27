@@ -364,7 +364,9 @@ export default function RoomDetails({
                 variant="outline"
                 className="rounded-full flex items-center"
               >
-                <ShareButton />
+                <ShareButton
+                  shareLink={`https://verydesi.com/room?id=${roomData?._id ?? ""}&title=${encodeURIComponent(roomData?.Title ?? "")}`}
+                />
                 <p>Share</p>
               </Button>
             </div>

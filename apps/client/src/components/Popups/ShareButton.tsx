@@ -12,11 +12,15 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 
-export default function ModernSharePopup() {
+interface ModernSharePopupProps {
+  shareLink: string;
+}
+
+export default function ModernSharePopup({ shareLink }: ModernSharePopupProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const shareLink = "http://localhost:3000";
+  // const shareLink = "https://verydesi.com";
 
   const shareOptions = [
     { name: "Copy Link", icon: Copy, color: "bg-gray-500", action: copyLink },
