@@ -79,7 +79,7 @@ function page() {
       <div className="container mx-auto bg-white text-black rounded-lg">
         <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2">
           <FaUser className="w-6 h-6 text-black" />
-          <h1 className="text-2xl font-bold">Basic user</h1>
+          <h1 className="text-2xl font-bold">All Rooms</h1>
         </div>
         <nav
           className="flex text-sm text-gray-500 px-2"
@@ -110,10 +110,10 @@ function page() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[300px]">First Name</TableHead>
-              <TableHead>Last Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Email Status</TableHead>
+              <TableHead className="w-[300px]">Room</TableHead>
+              <TableHead> City, State</TableHead>
+              <TableHead> Address</TableHead>
+              <TableHead>Rent</TableHead>
               <TableHead>Edit</TableHead>
               <TableHead>Delete</TableHead>
             </TableRow>
