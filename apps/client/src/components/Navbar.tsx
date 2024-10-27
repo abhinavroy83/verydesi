@@ -86,7 +86,7 @@ export default function Navbar() {
   return (
     <nav className="flex flex-col shadow-md fixed top-0 left-0 right-0 z-10 font-sans">
       <div className="bg-white border-b border-gray-200 items-center">
-        <div className="max-w-[1370px] lg:max-w-[1600px] h-[79px] mx-auto sm:px-6 px-4 ">
+        <div className="max-w-[1370px] lg:max-w-[1600px] h-[71px] mx-auto sm:px-6 px-4 ">
           <div className="flex items-center justify-between h-16 ">
             <div className="flex items-center mt-3">
               <Link href={"/"}>
@@ -139,13 +139,14 @@ export default function Navbar() {
               onClick={() => {
                 window.open("https://www.rakuten.com/", "_blank");
               }}
-              className="w-[27rem] mt-4 bg-yellow-400 px-1 shadow-lg overflow-hidden relative cursor-pointer hidden lg:flex "
+              className="w-[27rem] mt-2 shadow-lg overflow-hidden relative cursor-pointer"
             >
-              <div className="flex items-center">
-                {/* <img
-                  src="https://res.cloudinary.com/druohnmyv/image/upload/v1726470942/finallogo_oamxsn.png"
-                  className="w-[6rem] h-[5rem]"
-                /> */}
+              <img
+                src="https://res.cloudinary.com/druohnmyv/image/upload/v1730037713/Screenshot_2024-10-27_193134_j1ypv2.png"
+                alt="Animation Character"
+                className="object-cover"
+              />
+              {/* <div className="flex items-center">
                 <div className="ml-3 text-black">
                   <h1 className="text-[25px]">Give $30. Get $30.</h1>
                   <h2 className="text-[13px] mt-0">
@@ -157,16 +158,16 @@ export default function Navbar() {
                   src="https://res.cloudinary.com/druohnmyv/image/upload/v1729838633/two-beautiful-surprised-screaming-with-their-hands-up-dressed-casual-clothes-blue-wall-people-emotions-concept_231208-11780-removebg-preview_qngfm5.png"
                 />
               </div>
-              {/* <Badge className="absolute top-4 right-2 bg-[#426476] text-white px-3 py-1">
+              <Badge className="absolute top-4 right-2 bg-[#426476] text-white px-3 py-1">
                 Talk to Breastfeeding Educator
               </Badge>
               <span className="absolute top-11 right-12 text-[18px] font-bold text-white">
                 {" "}
                 678-310-4660{" "}
-              </span> */}
+              </span>
 
-              {/* <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-white rounded-full opacity-10"></div> */}
-              <div className="absolute -right-8 -top-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div>
+              <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-white rounded-full opacity-10"></div>
+              <div className="absolute -right-8 -top-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div> */}
             </div>
             {/* <div
               onClick={() => {

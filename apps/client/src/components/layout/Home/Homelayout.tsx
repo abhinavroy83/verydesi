@@ -18,7 +18,7 @@ export function HomeLayout({ children }: { children: ReactNode }) {
           }}
           className="w-full max-w-md mx-auto bg-[#0e2144] text-white overflow-hidden shadow-lg h-[290px] cursor-pointer"
         >
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <img
               src="https://www.onepay.com/wp-content/uploads/2021/09/AdobeStock_601870823-600x477.jpg"
               alt="Animation Character"
@@ -51,7 +51,7 @@ export function HomeLayout({ children }: { children: ReactNode }) {
             <p className="text-center text-sm font-semibold">
               Google Fi’s ability to accommodate multiple users under one plan.{" "}
             </p>
-            {/* <div className="flex justify-center space-x-2">
+            <div className="flex justify-center space-x-2">
               {["Disney", "Pixar", "Marvel", "Star Wars", "Geographic"].map(
                 (brand) => (
                   <span key={brand} className="text-xs font-bold">
@@ -59,12 +59,17 @@ export function HomeLayout({ children }: { children: ReactNode }) {
                   </span>
                 )
               )}
-            </div> */}
+            </div>
 
             <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition duration-300">
               Most affordable plan{" "}
             </button>
-          </div>
+          </div> */}
+          <img
+            src="https://res.cloudinary.com/druohnmyv/image/upload/v1730029852/Screenshot_2024-10-27_172007_bmcgnf.png"
+            alt="Animation Character"
+            className="object-cover"
+          />
         </div>
         {/* <Card className="w-full flex flex-col max-w-md mx-auto bg-gradient-to-br from-gray-900 to-gray-700 text-white overflow-hidden">
           <CardContent className="p-6 relative">
