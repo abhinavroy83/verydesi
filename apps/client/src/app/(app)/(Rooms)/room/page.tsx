@@ -129,7 +129,7 @@ export default function RoomDetails({
           ownerEmail: roomData?.email,
         }
       );
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         toast.success("Message send succesfully");
         setEmailStatus(true);
@@ -166,7 +166,7 @@ export default function RoomDetails({
           withCredentials: true,
         }
       );
-      setAllRooms(allRoomsResponse.data.rooms);
+      setAllRooms(allRoomsResponse.data.rooms.reverse());
     } catch (error) {
       setLoading(false);
 

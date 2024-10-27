@@ -40,8 +40,8 @@ export default function SignIn() {
       setError(result.error);
     } else {
       // Redirect to the dashboard or any other protected page
-      const city = "Portland";
-      login(city);
+
+      login();
       toast({
         title: "Success",
         description: "Loggedin successfully!",
@@ -54,7 +54,7 @@ export default function SignIn() {
   console.log(error);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 no-scrollbar overflow-auto font-sans mt-[7rem]">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 no-scrollbar overflow-auto font-sans">
       <div className="p-6">
         <Link href={"/"}>
           <img

@@ -37,7 +37,7 @@ export const useUserData = () => {
         setUserData(data);
 
         // Update store based on fetched user data
-        updateCity(data.belongcity);
+        // updateCity(data.belongcity);
         setVerified(data.IsEmailVerified);
         setname(data.firstName);
       } catch (err) {

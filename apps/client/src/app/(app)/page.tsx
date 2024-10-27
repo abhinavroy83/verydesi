@@ -33,20 +33,21 @@ const Page = () => {
   const [error, setError] = useState<string | null>(null);
   const { currentCity, status } = useAuthStore();
   const [loading, setLoading] = useState(true);
-  const { data: session } = useSession();
   const [userData, setuserData] = useState<UserData | null>(null);
+  const { data: session } = useSession();
   const { openLogin } = useloginstore();
+  const { updateCity, setVerified, setname, setUserImgae } = useAuthStore();
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
 
   const fetchrooms = async () => {
     try {
       setLoading(true);
       setError(null);
       const res = await axios.get(
-        `https://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity}`,
+        `https://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity || "Portland"}`,
         {
           withCredentials: true,
         }
@@ -54,13 +55,11 @@ const Page = () => {
       if (res.data.rooms.length === 0) {
         setError(`No rooms found in ${currentCity}`);
         setRooms([]);
-      } else {
-        setRooms(res.data.rooms);
       }
-      const rooms = res.data.reverse();
+      const rooms = res.data.rooms.reverse();
 
       const areaRes = await axios.get(
-        `https://api.verydesi.com/api/admin/area/${currentCity}`,
+        `https://api.verydesi.com/api/admin/area/${currentCity || "Portland"}`,
         {
           withCredentials: true,
         }
@@ -103,7 +102,7 @@ const Page = () => {
   const NonfeatturedRooms = Room?.slice(6) ?? [];
 
   const totalPages = Math?.ceil(NonfeatturedRooms?.length / itemsPerPage);
-  const paginatedFavorites = NonfeatturedRooms?.slice(
+  const paginatedroom = NonfeatturedRooms?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -112,7 +111,6 @@ const Page = () => {
   }, [currentCity]);
   // console.log(session);
   const token = session?.accessToken;
-  const { updateCity, setVerified, setname, setUserImgae } = useAuthStore();
   const fetchuser = async () => {
     try {
       if (!token) {
@@ -133,6 +131,7 @@ const Page = () => {
         setname(res.data.firstName);
         setUserImgae(res.data.image);
         setuserData(res?.data.userimg);
+        // updateCity(res?.data.postingincity);
       }
     } catch (error) {
       console.log(error);
@@ -198,10 +197,12 @@ const Page = () => {
           <FeaturedCard2 key={index} room={room} />
         ))}
       </div>
-      <h1 className="text-2xl font-bold my-4">More Rooms In {currentCity}</h1>
+      <h1 className="text-2xl font-bold my-4">
+        More Rooms In {currentCity || "Portland"}
+      </h1>
 
       <div className=" flex flex-col gap-2">
-        {NonfeatturedRooms?.map((room, index) => (
+        {paginatedroom?.map((room, index) => (
           <NonFeatureCard key={index} room={room} />
         ))}
       </div>
@@ -211,7 +212,6 @@ const Page = () => {
             {currentPage > 1 && (
               <PaginationItem>
                 <PaginationPrevious
-                  className="border-2 border-black"
                   onClick={() => setCurrentPage((prev) => prev - 1)}
                 />
               </PaginationItem>
@@ -219,7 +219,9 @@ const Page = () => {
             {[...Array(totalPages)].map((_, index) => (
               <PaginationItem key={index}>
                 <PaginationLink
-                  className="border-2 border-black"
+                  className={
+                    currentPage === index + 1 ? "border-2 border-black" : ""
+                  }
                   onClick={() => setCurrentPage(index + 1)}
                   isActive={currentPage === index + 1}
                 >
@@ -230,7 +232,6 @@ const Page = () => {
             {currentPage < totalPages && (
               <PaginationItem>
                 <PaginationNext
-                  className="border-2 border-black"
                   onClick={() => setCurrentPage((prev) => prev + 1)}
                 />
               </PaginationItem>
