@@ -15,8 +15,13 @@ export default function Footer() {
           }}
           className="flex flex-col justify-center items-center mb-2 cursor-pointer"
         >
-          <div className="font-[arial] lg:w-[728px] w-[350px] lg:h-[90px] h-[150px] bg-gradient-to-r from-red-600 to-red-700 flex items-center justify-between overflow-hidden">
-            <div className="flex flex-col justify-center h-full lg:pl-6 pl-2">
+          <div className="font-[arial] lg:w-[728px] w-[350px] lg:h-[90px] h-[150px] flex items-center justify-between overflow-hidden">
+            <img
+              src="https://res.cloudinary.com/druohnmyv/image/upload/v1730035746/Screenshot_2024-10-27_185841_argpoc.png"
+              alt="Animation Character"
+              className="object-cover"
+            />
+            {/* <div className="flex flex-col justify-center h-full lg:pl-6 pl-2">
               <h1 className="text-white lg:text-xl text-[16px] font-bold">
                 RED LETTER WEB{" "}
               </h1>
@@ -35,7 +40,7 @@ export default function Footer() {
             <img
               className="w-[10rem] h-[7.5rem]"
               src="https://www.pngmart.com/files/3/Business-People-PNG-Pic.png"
-            />
+            /> */}
           </div>
           {/* <div className="cursor-pointer lg:w-[44rem] w-[22rem] bg-red-700 border-4 border-[#232f3e] justify-between gap-4 lg:gap-7 flex  lg:p-0 shadow-sm shadow-gray-500 rounded-md">
             <div className="flex flex-col gap-3 ">
