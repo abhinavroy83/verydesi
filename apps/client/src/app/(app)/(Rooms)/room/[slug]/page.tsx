@@ -50,7 +50,7 @@ import {
 import { Slash } from "lucide-react";
 import { useUserData } from "@/hooks/use-userData";
 import Similarroomcard from "@/components/Room/Similarroomcard";
-import { notFound, useRouter } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { format } from "path";
 
@@ -77,10 +77,10 @@ export default function RoomDetails({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  // const param = useParams<{ tag: string; id: string }>();
   const router = useRouter();
-  const id = searchParams.id;
-  const title = searchParams.title;
+  const { slug } = useParams<{ slug: string }>();
+  const id = slug.split("-").pop();
+  // const id = searchParams.id;
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
     null
@@ -189,10 +189,16 @@ export default function RoomDetails({
     const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1;
     if (newIndex >= 0 && newIndex < allRooms.length) {
       const newRoom = allRooms[newIndex];
-      const formatTitle = newRoom?.Title.replace(/\s+/g, "_");
-      router.push(
-        `/room?id=${newRoom._id}&title=${encodeURIComponent(formatTitle)}`
-      );
+      const formatSlug = (title: string, id: string) => {
+        const formattedTitle = title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "");
+        return `${formattedTitle}-${id}`;
+      };
+      const slug = formatSlug(newRoom?.Title, newRoom?._id);
+
+      router.push(`/room/${slug}`);
     }
   };
   const { data: session } = useSession();
@@ -282,6 +288,12 @@ export default function RoomDetails({
 
     fetchWishStatus();
   }, [id]);
+  const formatUrl = () => {
+    const formattedTitle = roomData?.Title.toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+    return `${formattedTitle}-${roomData?._id}`;
+  };
 
   if (loading) {
     return (
@@ -366,7 +378,7 @@ export default function RoomDetails({
                 className="rounded-full flex items-center"
               >
                 <ShareButton
-                  shareLink={`https://verydesi.com/room?id=${roomData?._id ?? ""}&title=${encodeURIComponent(roomData?.Title ?? "")}`}
+                  shareLink={`https://verydesi.com/room/${formatUrl}}`}
                 />
                 <p>Share</p>
               </Button>

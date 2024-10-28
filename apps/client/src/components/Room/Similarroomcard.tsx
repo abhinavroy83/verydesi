@@ -143,18 +143,19 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
       return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
     }
   };
-  const formatTitle = (title: string) => {
-    // Replace spaces with underscores, but keep other characters
-    return title.replace(/\s+/g, "_");
+  const formatSlug = (title: string, id: string) => {
+    const formattedTitle = title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+    return `${formattedTitle}-${id}`;
   };
 
   return (
     <div
       onClick={() => {
-        const formattedTitle = formatTitle(room?.Title);
-        router.push(
-          `/room?id=${room?._id}&title=${encodeURIComponent(formattedTitle)}`
-        );
+        const slug = formatSlug(room?.Title, room?._id);
+        router.push(`/room/${slug}`);
       }}
       className={`flex relative w-full max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-[320px] lg:h-[155px]`}
     >

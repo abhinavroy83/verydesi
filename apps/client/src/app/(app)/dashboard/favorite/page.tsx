@@ -124,6 +124,13 @@ export default function FavoritesPage() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  const formatSlug = (title: string, id: string) => {
+    const formattedTitle = title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+    return `${formattedTitle}-${id}`;
+  };
 
   const SkeletonRow = () => (
     <TableRow>
@@ -219,9 +226,8 @@ export default function FavoritesPage() {
                   <TableCell>
                     <Button
                       onClick={() => {
-                        router.push(
-                          `/room?id=${favorite?._id}&title=${encodeURIComponent(favorite?.Title)}`
-                        );
+                        const slug = formatSlug(favorite?.Title, favorite?._id);
+                        router.push(`/room/${slug}`);
                       }}
                       variant="outline"
                       size="sm"
