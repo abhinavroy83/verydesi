@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo --port 3000",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
