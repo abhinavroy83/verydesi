@@ -16,7 +16,7 @@ export function HomeLayout({ children }: { children: ReactNode }) {
           onClick={() => {
             window.open("https://g.co/fi/r/Y2A1CA", "_blank");
           }}
-          className="w-full max-w-md mx-auto bg-[#0e2144] text-white overflow-hidden shadow-lg h-[290px] cursor-pointer"
+          className="w-full max-w-md mx-auto bg-[#0e2144] text-white overflow-hidden shadow-lg cursor-pointer"
         >
           {/* <div className="flex justify-between">
             <img

@@ -408,11 +408,11 @@ export default function RoomDetails({
           </div>
         </div>
         <div className="flex justify-between items-start  flex-col lg:flex-row">
-          <div className="flex w-full justify-between  flex-col lg:flex-row mt-2">
-            <div className="flex flex-col lg:flex-row gap-2 font-bold lg:items-center">
-              <h1 className="text-3xl font-bold text-gray-900 flex gap-2">
+          <div className="flex w-full lg:justify-between  flex-col lg:flex-row mt-2">
+            <div className="flex lg:flex-row gap-2 font-bold lg:items-center">
+              <h1 className="lg:text-3xl text-2xl font-bold text-gray-900 flex lg:flex-row flex-col gap-2">
                 {roomData?.Title} |{" "}
-                <p className="text-3xl text-green-600">
+                <p className="lg:text-3xl text-2xl text-green-600">
                   ${roomData?.Expected_Rooms}
                 </p>
               </h1>
@@ -429,8 +429,8 @@ export default function RoomDetails({
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-2">
           <div className="lg:col-span-2 space-y-3">
-            <div className="flex items-center gap-2 text-xl font-bold text-gray-600">
-              <p className="text-gray-600">{roomData?.postingincity}, OR</p>|
+            <div className="flex lg:flex-row flex-col lg:items-center gap-2 text-xl font-bold text-gray-600">
+              <p className="text-gray-600">{roomData?.postingincity}, OR |</p>
               <h1 className="text-xl font-bold text-gray-600 whitespace-nowrap">
                 Posted By: {roomData?.user_name}{" "}
               </h1>
@@ -492,41 +492,49 @@ export default function RoomDetails({
               </CardHeader>
               <CardContent className="p-3">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center">
-                    <FaRegBuilding className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500 flex gap-2">
-                        Property Type
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Propertytype}
-                      </p>
+                  {roomData?.Propertytype && (
+                    <div className="flex items-center">
+                      <FaRegBuilding className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500 flex gap-2">
+                          Property Type
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.Propertytype}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <LucideMapPin className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">City</p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.city}
-                      </p>
+                  )}
+                  {roomData?.city && (
+                    <div className="flex items-center">
+                      <LucideMapPin className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          City
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.city}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <FiClock className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">
-                        Available From
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Avaliblity_from
-                          ? new Date(
-                              roomData.Avaliblity_from
-                            ).toLocaleDateString()
-                          : "N/A"}
-                      </p>
+                  )}
+                  {roomData?.Avaliblity_from && (
+                    <div className="flex items-center">
+                      <FiClock className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          Available From
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.Avaliblity_from
+                            ? new Date(
+                                roomData.Avaliblity_from
+                              ).toLocaleDateString()
+                            : "N/A"}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {roomData?.Available_to && (
                     <div className="flex items-center">
@@ -541,51 +549,61 @@ export default function RoomDetails({
                       </div>
                     </div>
                   )}
-                  <div className="flex items-center">
-                    <GiBathtub className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">
-                        Attached Bath
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Attchd_Bath}
-                      </p>
+
+                  {roomData?.Attchd_Bath && (
+                    <div className="flex items-center">
+                      <GiBathtub className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          Attached Bath
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.Attchd_Bath}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <IoTransgender className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">
-                        Preferred Gender
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Preferred_gender}
-                      </p>
+                  )}
+
+                  {roomData?.Preferred_gender && (
+                    <div className="flex items-center">
+                      <IoTransgender className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          Preferred Gender
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.Preferred_gender}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <FaHandHoldingDollar className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">
-                        Deposit
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        ${roomData?.Desposite}
-                      </p>
+                  )}
+                  {roomData?.Desposite && (
+                    <div className="flex items-center">
+                      <FaHandHoldingDollar className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          Deposit
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          ${roomData?.Desposite}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center">
-                    <IoBed className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      {" "}
-                      <p className="text-sm font-medium text-gray-500">
-                        Is Room Furnished
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.is_room_furnished}
-                      </p>
+                  )}
+                  {roomData?.is_room_furnished && (
+                    <div className="flex items-center">
+                      <IoBed className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        {" "}
+                        <p className="text-sm font-medium text-gray-500">
+                          Is Room Furnished
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.is_room_furnished}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
