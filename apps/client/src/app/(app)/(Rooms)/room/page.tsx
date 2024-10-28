@@ -515,17 +515,20 @@ export default function RoomDetails({
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center">
-                    <FiClock className="h-6 w-6 text-[#054687] mr-4" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">
-                        Available To
-                      </p>
-                      <p className="mt-1 text-sm text-gray-900">
-                        {roomData?.Available_to}
-                      </p>
+
+                  {roomData?.Available_to && (
+                    <div className="flex items-center">
+                      <FiClock className="h-6 w-6 text-[#054687] mr-4" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-500">
+                          Available To
+                        </p>
+                        <p className="mt-1 text-sm text-gray-900">
+                          {roomData?.Available_to}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div className="flex items-center">
                     <GiBathtub className="h-6 w-6 text-[#054687] mr-4" />
                     <div>
