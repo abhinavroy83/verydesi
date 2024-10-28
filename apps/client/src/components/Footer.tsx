@@ -15,7 +15,7 @@ export default function Footer() {
           }}
           className="flex flex-col justify-center items-center mb-2 cursor-pointer"
         >
-          <div className="font-[arial] lg:w-[728px] w-[350px] lg:h-[90px] h-[150px] flex items-center justify-between overflow-hidden">
+          <div className="flex items-center justify-between overflow-hidden px-2 lg:px-0">
             <img
               src="https://res.cloudinary.com/druohnmyv/image/upload/v1730035746/Screenshot_2024-10-27_185841_argpoc.png"
               alt="Animation Character"

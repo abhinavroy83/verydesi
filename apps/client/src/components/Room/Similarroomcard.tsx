@@ -215,7 +215,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
       )}
 
       <div className={`px-4 py-1 flex flex-col w-full`}>
-        <p className="flex flex-col text-[19px] capitalize mt-3 lg:mt-1 font-bold">
+        <p className="flex flex-col text-[17px] capitalize mt-3 lg:mt-1 font-bold">
           {room?.Title && truncateCharacters(room?.Title, 33)}
         </p>
         <p className="flex gap-1 text-[14px] text-gray-600 mt-1 items-center">
@@ -237,7 +237,7 @@ export default function SimilarRoomCard({ room }: FeaturedCard2Props) {
           </p>
         </span>
         <p className="absolute  bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
-          <p className="left-5 top-2 text-[22px] text-green-700 text-right font-bold">
+          <p className="left-5 top-2 text-[17px] text-green-700 text-right font-bold">
             ${room?.Expected_Rooms}
           </p>
         </p>
