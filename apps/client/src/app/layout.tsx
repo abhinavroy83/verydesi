@@ -31,32 +31,16 @@ const FAVICON_URL =
 export const metadata: Metadata = {
   title: "Verydesi",
   description:
-    "VeryDesi is the ultimate platform for the Indian community to connect, share, and explore. Find rooms, events, and more.",
-  keywords: ["Indian community", "room finder", "events", "desi", "culture"],
-  openGraph: {
-    title: "VeryDesi - Your Indian Community Platform",
-    description:
-      "Connect with the Indian community, find rooms, and explore events on VeryDesi.",
-    url: "https://verydesi.com",
-    siteName: "VeryDesi",
-    // images: [
-    //   {
-    //     url: 'https://verydesi.com/og-image.jpg',
-    //     width: 1200,
-    //     height: 630,
-    //   },
-    // ],
-    locale: "en_US",
-    type: "website",
+    "VeryDesi helps you find rooms and roommates in the USA with ease. Discover affordable options in your area now.",
+  keywords: "rooms, roommates, USA, affordable housing, room rentals",
+  icons: {
+    icon: [
+      { url: `${FAVICON_URL}?v=1`, sizes: "32x32", type: "image/png" },
+      { url: `${FAVICON_URL}?v=1`, sizes: "16x16", type: "image/png" },
+      { url: `${FAVICON_URL}?v=1`, sizes: "any" },
+    ],
+    apple: { url: `${FAVICON_URL}?v=1`, sizes: "180x180", type: "image/png" },
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "VeryDesi - Your Indian Community Platform",
-    description:
-      "Connect with the Indian community, find rooms, and explore events on VeryDesi.",
-    // images: ['https://verydesi.com/og-image.jpg'],
-  },
-  metadataBase: new URL("https://verydesi.com"),
 };
 
 export default function RootLayout({
@@ -66,6 +50,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="icon" href={`${FAVICON_URL}?v=2`} />
+        <link rel="apple-touch-icon" href={`${FAVICON_URL}?v=2`} />
+      </Head>
       <AuthProvider>
         <body
           className={`${geistSans.variable} ${geistMono.variable} ${openSans.className} antialiased`}
