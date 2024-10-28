@@ -11,7 +11,7 @@ interface CityResponse {
 }
 
 const CACHE_KEY = "cityDataCache";
-const CACHE_EXPIRATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const CACHE_EXPIRATION = 1 * 60 * 60 * 1000;
 
 export function useCityData() {
   const [cities, setCities] = useState<string[]>([]);
