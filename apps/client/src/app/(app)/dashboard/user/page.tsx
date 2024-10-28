@@ -213,28 +213,37 @@ export default function DashboardUserSettings() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 px-4">
               <div className="col-span-full">
                 <Label htmlFor="belongcity">Your Account belong to</Label>
-                <Controller
-                  name="belongcity"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      disabled={!isEditing}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select city" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {cities.map((city) => (
-                          <SelectItem key={city} value={city}>
-                            {city}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
+                {isEditing ? (
+                  <Controller
+                    name="belongcity"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select city" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {cities.map((city) => (
+                            <SelectItem key={city} value={city}>
+                              {city}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                ) : (
+                  <Input
+                    id="belogn city"
+                    value={userData?.belongcity || "No city selected"}
+                    readOnly
+                    className="bg-muted"
+                  />
+                )}
               </div>
               <div>
                 <Label htmlFor="firstName">First Name</Label>
@@ -287,26 +296,35 @@ export default function DashboardUserSettings() {
               </div>
               <div>
                 <Label htmlFor="gender">Gender</Label>
-                <Controller
-                  name="gender"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      disabled={!isEditing}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select gender" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Male">Male</SelectItem>
-                        <SelectItem value="Female">Female</SelectItem>
-                        <SelectItem value="Other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
+                {isEditing ? (
+                  <Controller
+                    name="gender"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Male">Male</SelectItem>
+                          <SelectItem value="Female">Female</SelectItem>
+                          <SelectItem value="Other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                ) : (
+                  <Input
+                    id="dob"
+                    value={userData?.gender || "No gender selected"}
+                    readOnly
+                    className="bg-muted"
+                  />
+                )}
               </div>
               <div className="w-full max-w-sm space-y-4">
                 <Label htmlFor="dob">Date of Birth</Label>
@@ -412,54 +430,73 @@ export default function DashboardUserSettings() {
               </div>
               <div>
                 <Label htmlFor="state">State</Label>
-                <Controller
-                  name="state"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      disabled={!isEditing}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select state" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.entries(stateAbbreviations).map(
-                          ([state, abbreviation]) => (
-                            <SelectItem
-                              key={abbreviation}
-                              value={`${state} (${abbreviation})`}
-                            >
-                              {state} ({abbreviation})
-                            </SelectItem>
-                          )
-                        )}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
+
+                {isEditing ? (
+                  <Controller
+                    name="state"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select state" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Object.entries(stateAbbreviations).map(
+                            ([state, abbreviation]) => (
+                              <SelectItem
+                                key={abbreviation}
+                                value={`${state} (${abbreviation})`}
+                              >
+                                {state} ({abbreviation})
+                              </SelectItem>
+                            )
+                          )}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                ) : (
+                  <Input
+                    id="state"
+                    value={userData?.state || "No state selected"}
+                    readOnly
+                    className="bg-muted"
+                  />
+                )}
               </div>
               <div>
                 <Label htmlFor="country">Country</Label>
-                <Controller
-                  name="country"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      disabled={!isEditing}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select country" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="USA">USA</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
+                {isEditing ? (
+                  <Controller
+                    name="country"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="USA">USA</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                ) : (
+                  <Input
+                    id="country"
+                    value={userData?.country || "No country selected"}
+                    readOnly
+                    className="bg-muted"
+                  />
+                )}
               </div>
               <div>
                 <Label htmlFor="pin">Zip Code</Label>
@@ -467,7 +504,7 @@ export default function DashboardUserSettings() {
                   name="pin"
                   control={control}
                   render={({ field }) => (
-                    <Input {...field} disabled={!isEditing} />
+                    <Input {...field} readOnly={!isEditing} />
                   )}
                 />
               </div>
