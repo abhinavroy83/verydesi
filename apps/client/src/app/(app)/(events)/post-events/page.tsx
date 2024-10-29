@@ -42,9 +42,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@radix-ui/react-label";
 import { Upload } from "lucide-react";
@@ -56,6 +54,8 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { EventformSchema } from "@/schemas";
+import { useCityData } from "@/hooks/use-city-hooks";
 
 const languages = [
   { name: "Hindi", code: "hi" },
@@ -71,53 +71,49 @@ const languages = [
   { name: "Urdu", code: "ur" },
 ];
 
-const formSchema = z.object({
-  eventTitle: z.string().min(2, {
-    message: "Event title must be at least 2 characters.",
-  }),
-  eventType: z.string(),
-  eventName: z.string().min(2, {
-    message: "Event name must be at least 2 characters.",
-  }),
-  startDate: z.date(),
-  startTime: z.string(),
-  endDate: z.date(),
-  endTime: z.string(),
-  timeZone: z.string(),
-  repeatEvent: z.string(),
-  venueName: z.string(),
-  address: z.string().optional(),
-  city: z.string().optional(),
-  zipCode: z.string().optional(),
-  country: z.string().optional(),
-  languages: z.array(z.string()),
-  artists: z.array(z.object({ name: z.string() })),
-  images: z.array(z.string()).max(5, "You can upload a maximum of 5 images"),
-});
-
+const USA_TIME_ZONES = [
+  { value: "HST", label: "Hawaii-Aleutian Standard Time (HST)" },
+  { value: "AKST", label: "Alaska Standard Time (AKST)" },
+  { value: "PST", label: "Pacific Standard Time (PST)" },
+  { value: "MST", label: "Mountain Standard Time (MST)" },
+  { value: "CST", label: "Central Standard Time (CST)" },
+  { value: "EST", label: "Eastern Standard Time (EST)" },
+  {
+    value: "AST",
+    label: "Atlantic Standard Time (AST) - Puerto Rico, U.S. Virgin Islands",
+  },
+  { value: "SST", label: "Samoa Standard Time (SST) - American Samoa" },
+  {
+    value: "ChST",
+    label: "Chamorro Standard Time (ChST) - Guam, Northern Mariana Islands",
+  },
+];
 export default function EventForm() {
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [eventType, setEventType] = useState<string | undefined>();
   const [images, setImages] = useState<string[]>([]);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const form = useForm<z.infer<typeof EventformSchema>>({
+    resolver: zodResolver(EventformSchema),
     defaultValues: {
+      eventpostingcity: "Portland",
       eventTitle: "",
-      eventName: "",
       startDate: new Date(),
       startTime: "00:00",
       endDate: new Date(),
       endTime: "03:00",
-      timeZone: "PDT",
-      repeatEvent: "never",
-      venueName: "FBC Portland",
-      address: "909 Southwest 11th Avenue, Portland, OR, USA",
-      city: "Portland",
-      zipCode: "97205",
-      country: "US",
+      timeZone: "",
+      repeatEvent: "",
+      venueName: "",
+      address: "",
+      city: "",
+      zipCode: "",
+      country: "",
       languages: [],
+      organization: "",
+      hostedBy: "",
+      contactNumber: "",
       artists: [{ name: "" }],
       images: [],
     },
@@ -130,9 +126,24 @@ export default function EventForm() {
     control: form.control,
     name: "artists",
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+
+  const { cities, isLoading, error } = useCityData();
+
+  const onSubmit = async (data: z.infer<typeof EventformSchema>) => {
+    console.log(data);
+    setIsSubmitting(true);
+    try {
+      console.log(data);
+      // Here you would typically send the data to your backend
+      // await sendDataToBackend(data)
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred while submitting the form.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   const scrollToSection = (sectionId: string, offset = 130) => {
     const section = sectionRefs.current[sectionId];
     if (section) {
@@ -145,6 +156,7 @@ export default function EventForm() {
   };
   const sections = [
     { id: "basic-info", label: "Basic Information" },
+    { id: "address", label: "Address" },
     { id: "datetime", label: "Date and time" },
     { id: "availability", label: "Category & Language" },
     { id: "Artist", label: "Organizer & Artist details" },
@@ -189,7 +201,9 @@ export default function EventForm() {
       form.getValues("images").filter((_, i) => i !== index)
     );
   };
-
+  if (isLoading) {
+    return <div>Loading cities...</div>;
+  }
   return (
     <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-[8rem] font-sans">
       <div className="py-1 mb-3">
@@ -222,7 +236,7 @@ export default function EventForm() {
       <div className="flex ">
         <aside className="w-64 bg-[#232f3e] p-4 text-white ">
           <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
-            <ul className="space-y-2 text-gray-500">
+            <ul className="space-y-2 ">
               {sections.map((section) => (
                 <li key={section.id}>
                   <button
@@ -240,23 +254,50 @@ export default function EventForm() {
           </nav>
         </aside>
         <main className="flex-1 p-2 border overflow-y-auto">
-          <h1 className="text-[24px] text-center font-bold py-1">
-            Post Event In
-          </h1>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="flex items-center justify-center space-y-4 w-full mx-auto">
+                <h1 className="text-[24px] font-bold text-center">
+                  Post Event In
+                </h1>
+                <FormField
+                  control={form.control}
+                  name="eventpostingcity"
+                  render={({ field }) => (
+                    <FormItem className="">
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select posting city" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {cities.map((city) => (
+                              <SelectItem key={city} value={city}>
+                                {city}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-          <div
-            ref={(el) => {
-              sectionRefs.current["basic-info"] = el;
-            }}
-            className="space-y-2"
-          >
-            <h2 className="text-2xl font-bold lg:px-6">Basic Information</h2>
-            <CardContent>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-6"
-                >
+              <div
+                ref={(el) => {
+                  sectionRefs.current["basic-info"] = el;
+                }}
+                className="space-y-2"
+              >
+                <h2 className="text-2xl font-bold lg:px-6">
+                  Basic Information
+                </h2>
+                <CardContent>
                   <div
                     ref={(el) => {
                       sectionRefs.current["basic-info"] = el;
@@ -316,7 +357,152 @@ export default function EventForm() {
                       </CardContent>
                     </Card>
                   </div>
+                  <div
+                    ref={(el) => {
+                      sectionRefs.current["address"] = el;
+                    }}
+                  >
+                    <h2 className="text-2xl font-bold lg:px-6">Address</h2>
+                    {eventType == "in-person" && (
+                      <Card>
+                        <CardContent>
+                          <div className="grid grid-cols-2 gap-4">
+                            <FormField
+                              control={form.control}
+                              name="venueName"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>
+                                    Enter a new Venue / select from existing
+                                    venue
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      placeholder="Enter the venue's name"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
 
+                            <FormField
+                              control={form.control}
+                              name="address"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Address *</FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      placeholder="Enter address"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <FormField
+                              control={form.control}
+                              name="city"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>City</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="city"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>State *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <FormField
+                              control={form.control}
+                              name="zipCode"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>ZIP/POSTAL *</FormLabel>
+                                  <FormControl>
+                                    <Input {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="country"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Country *</FormLabel>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select country" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="US">
+                                        United States
+                                      </SelectItem>
+                                      {/* Add more countries as needed */}
+                                    </SelectContent>
+                                  </Select>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                          <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center">
+                            <MapPin className="h-8 w-8 text-gray-400" />
+                            <span className="ml-2 text-gray-500">
+                              Google Maps Embed Placeholder
+                            </span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+
+                    {eventType == "virtual" && (
+                      <Card>
+                        <CardContent>
+                          <FormField
+                            control={form.control}
+                            name="virtualurl"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Virtual event Link</FormLabel>
+                                <FormControl>
+                                  <Input {...field} className=" w-full" />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </CardContent>
+                      </Card>
+                    )}
+                  </div>
                   <div
                     ref={(el) => {
                       sectionRefs.current["datetime"] = el;
@@ -407,8 +593,14 @@ export default function EventForm() {
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    <SelectItem value="PDT">PDT</SelectItem>
-                                    {/* Add more time zones as needed */}
+                                    {USA_TIME_ZONES.map((tz) => (
+                                      <SelectItem
+                                        key={tz.value}
+                                        value={tz.value}
+                                      >
+                                        {tz.label}
+                                      </SelectItem>
+                                    ))}
                                   </SelectContent>
                                 </Select>
                                 <FormMessage />
@@ -495,8 +687,14 @@ export default function EventForm() {
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    <SelectItem value="PDT">PDT</SelectItem>
-                                    {/* Add more time zones as needed */}
+                                    {USA_TIME_ZONES.map((tz) => (
+                                      <SelectItem
+                                        key={tz.value}
+                                        value={tz.value}
+                                      >
+                                        {tz.label}
+                                      </SelectItem>
+                                    ))}
                                   </SelectContent>
                                 </Select>
                                 <FormMessage />
@@ -535,256 +733,68 @@ export default function EventForm() {
                             </FormItem>
                           )}
                         />
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <FormField
-                            control={form.control}
-                            name="endDate"
-                            render={({ field }) => (
-                              <FormItem className="flex flex-col">
-                                <FormLabel>End date</FormLabel>
-                                <Popover>
-                                  <PopoverTrigger asChild>
-                                    <FormControl>
-                                      <Button
-                                        variant={"outline"}
-                                        className={cn(
-                                          "w-[240px] pl-3 text-left font-normal",
-                                          !field.value &&
-                                            "text-muted-foreground"
-                                        )}
-                                      >
-                                        {field.value ? (
-                                          format(field.value, "PPP")
-                                        ) : (
-                                          <span>Pick a date</span>
-                                        )}
-                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                      </Button>
-                                    </FormControl>
-                                  </PopoverTrigger>
-                                  <PopoverContent
-                                    className="w-auto p-0"
-                                    align="start"
-                                  >
-                                    <Calendar
-                                      mode="single"
-                                      onSelect={field.onChange}
-                                      disabled={(date) =>
-                                        date < new Date() ||
-                                        date < new Date("1900-01-01")
-                                      }
-                                      initialFocus
-                                    />
-                                  </PopoverContent>
-                                </Popover>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name="endTime"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>End time</FormLabel>
-                                <FormControl>
-                                  <div className="relative">
-                                    <Input type="time" {...field} />
-                                    {/* <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" /> */}
-                                  </div>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name="timeZone"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Time zone</FormLabel>
-                                <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select time zone" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    <SelectItem value="PDT">PDT</SelectItem>
-                                    {/* Add more time zones as needed */}
-                                  </SelectContent>
-                                </Select>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
                       </CardContent>
                     </Card>
                   </div>
-
-                  {eventType !== "virtual" && (
-                    <>
-                      <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="venueName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>
-                                Enter a new Venue / select from existing venue
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="Enter the venue's name"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="address"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Address *</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Enter address" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="city"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>City</FormLabel>
-                              <FormControl>
-                                <Input {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="city"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>State *</FormLabel>
-                              <FormControl>
-                                <Input {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="zipCode"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>ZIP/POSTAL *</FormLabel>
-                              <FormControl>
-                                <Input {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="country"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Country *</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Select country" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="US">
-                                    United States
-                                  </SelectItem>
-                                  {/* Add more countries as needed */}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center">
-                        <MapPin className="h-8 w-8 text-gray-400" />
-                        <span className="ml-2 text-gray-500">
-                          Google Maps Embed Placeholder
-                        </span>
-                      </div>
-                    </>
-                  )}
-
                   <div className=" space-y-3">
                     <div className="space-y-2">
-                      <Label>Language</Label>
-                      <div className="flex flex-wrap gap-2">
-                        {languages.map((lang) => (
-                          <Button
-                            type="button"
-                            key={lang.code}
-                            variant={
-                              selectedLanguages.includes(lang.code)
-                                ? "default"
-                                : "outline"
-                            }
-                            onClick={() => toggleLanguage(lang.code)}
-                            className="text-sm"
-                          >
-                            {lang.name}
-                          </Button>
-                        ))}
-                      </div>
-                      <div className="mt-2">
-                        {selectedLanguages && (
-                          <Label>Selected Languages:</Label>
+                      <FormField
+                        control={form.control}
+                        name="languages"
+                        render={() => (
+                          <FormItem>
+                            <FormLabel>Language</FormLabel>
+                            <FormControl>
+                              <div className="space-y-2">
+                                <div className="flex flex-wrap gap-2">
+                                  {languages.map((lang) => (
+                                    <Button
+                                      type="button"
+                                      key={lang.code}
+                                      variant={
+                                        selectedLanguages.includes(lang.code)
+                                          ? "default"
+                                          : "outline"
+                                      }
+                                      onClick={() => toggleLanguage(lang.code)}
+                                      className="text-sm"
+                                    >
+                                      {lang.name}
+                                    </Button>
+                                  ))}
+                                </div>
+                                <div className="mt-2">
+                                  {selectedLanguages.length > 0 && (
+                                    <Label>Selected Languages:</Label>
+                                  )}
+                                  <div className="flex flex-wrap gap-2 mt-1">
+                                    {selectedLanguages.map((code) => (
+                                      <div
+                                        key={code}
+                                        className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-sm flex items-center"
+                                      >
+                                        {
+                                          languages.find(
+                                            (lang) => lang.code === code
+                                          )?.name
+                                        }
+                                        <button
+                                          type="button"
+                                          onClick={() => toggleLanguage(code)}
+                                          className="ml-2 focus:outline-none"
+                                        >
+                                          <X className="h-4 w-4" />
+                                        </button>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
                         )}
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {selectedLanguages.map((code) => (
-                            <div
-                              key={code}
-                              className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-sm flex items-center"
-                            >
-                              {
-                                languages.find((lang) => lang.code === code)
-                                  ?.name
-                              }
-                              <button
-                                type="button"
-                                onClick={() => toggleLanguage(code)}
-                                className="ml-2 focus:outline-none"
-                              >
-                                <X className="h-4 w-4" />
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                      />
                     </div>
                     <div
                       ref={(el) => {
@@ -801,28 +811,59 @@ export default function EventForm() {
                             Organizer
                           </h3>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="space-y-2">
-                              <Label htmlFor="organization">
-                                Organization name *
-                              </Label>
-                              <Input
-                                id="organization"
-                                placeholder="Buckhead Baptist Church"
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="hostedBy">Hosted By *</Label>
-                              <Input id="hostedBy" />
-                            </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="contactNumber">
-                                Contact Number
-                              </Label>
-                              <Input
-                                id="contactNumber"
-                                placeholder="404-255-5112"
-                              />
-                            </div>
+                            <FormField
+                              control={form.control}
+                              name="organization"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel htmlFor="organization">
+                                    Organization name *
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      id="organization"
+                                      placeholder="Buckhead Baptist Church"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="hostedBy"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel htmlFor="hostedBy">
+                                    Hosted By *
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input id="hostedBy" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="contactNumber"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel htmlFor="contactNumber">
+                                    Contact Number
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      id="contactNumber"
+                                      placeholder="404-255-5112"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
                           </div>
                         </CardContent>
                       </Card>
@@ -832,23 +873,32 @@ export default function EventForm() {
                             Artist details
                           </h3>
                           {artistFields.map((field, index) => (
-                            <div
+                            <FormField
                               key={field.id}
-                              className="flex items-center space-x-2 mb-2"
-                            >
-                              <Input
-                                {...form.register(`artists.${index}.name`)}
-                                placeholder="Artist name"
-                              />
-                              <Button
-                                type="button"
-                                variant="outline"
-                                size="icon"
-                                onClick={() => removeArtist(index)}
-                              >
-                                <X className="h-4 w-4" />
-                              </Button>
-                            </div>
+                              control={form.control}
+                              name={`artists.${index}.name`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <div className="flex items-center space-x-2 mb-2">
+                                      <Input
+                                        {...field}
+                                        placeholder="Artist name"
+                                      />
+                                      <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={() => removeArtist(index)}
+                                      >
+                                        <X className="h-4 w-4" />
+                                      </Button>
+                                    </div>
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
                           ))}
                           <Button
                             type="button"
@@ -859,52 +909,54 @@ export default function EventForm() {
                         </CardContent>
                       </Card>
                     </div>
-                    {/* <Card>
-                          <CardContent className="pt-6">
-                            <h3 className="text-lg font-semibold mb-4">
-                              Tax Details
-                            </h3>
-                            <div className="space-y-2">
-                              <Label>
-                                Is your organization a non-profit, tax-exempt
-                                501(c)(3) organization?
-                              </Label>
-                              <RadioGroup defaultValue="yes" className="flex">
-                                <div className="flex items-center space-x-2">
-                                  <RadioGroupItem value="yes" id="tax-yes" />
-                                  <Label htmlFor="tax-yes">Yes</Label>
-                                </div>
-                                <div className="flex items-center space-x-2 ml-4">
-                                  <RadioGroupItem value="no" id="tax-no" />
-                                  <Label htmlFor="tax-no">No</Label>
-                                </div>
-                              </RadioGroup>
-                            </div>
-                            <div className="space-y-2 mt-4">
-                              <Label htmlFor="taxId">Enter your Tax ID#</Label>
-                              <Input id="taxId" placeholder="Tax ID" />
-                            </div>
-                          </CardContent>
-                        </Card> */}
 
                     <Card>
                       <CardContent className="pt-6">
                         <h3 className="text-lg font-semibold mb-4">
                           Event Entry
                         </h3>
-                        <div className="space-y-2">
-                          <Label>Select your event's entry option:</Label>
-                          <RadioGroup defaultValue="free" className="flex">
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="free" id="entry-free" />
-                              <Label htmlFor="entry-free">Free entry</Label>
-                            </div>
-                            <div className="flex items-center space-x-2 ml-4">
-                              <RadioGroupItem value="paid" id="entry-paid" />
-                              <Label htmlFor="entry-paid">Paid entry</Label>
-                            </div>
-                          </RadioGroup>
-                        </div>
+
+                        <FormField
+                          control={form.control}
+                          name="entryoption"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>
+                                Select your event's entry option:
+                              </FormLabel>
+                              <FormControl>
+                                <RadioGroup
+                                  defaultValue="free"
+                                  className="flex"
+                                  value={field.value}
+                                  onValueChange={(value) => {
+                                    field.onChange(value);
+                                  }}
+                                >
+                                  <div className="flex items-center space-x-2">
+                                    <RadioGroupItem
+                                      value="free"
+                                      id="entry-free"
+                                    />
+                                    <Label htmlFor="entry-free">
+                                      Free entry
+                                    </Label>
+                                  </div>
+                                  <div className="flex items-center space-x-2 ml-4">
+                                    <RadioGroupItem
+                                      value="paid"
+                                      id="entry-paid"
+                                    />
+                                    <Label htmlFor="entry-paid">
+                                      Paid entry
+                                    </Label>
+                                  </div>
+                                </RadioGroup>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </CardContent>
                     </Card>
 
@@ -913,18 +965,26 @@ export default function EventForm() {
                         sectionRefs.current["Description"] = el;
                       }}
                     >
-                      <h2 className="text-2xl font-bold mb-4">Description</h2>
                       <Card>
-                        <div className="space-y-2">
-                          {/* <Label htmlFor="description">
-                              Enter description
-                            </Label> */}
-                          <Textarea
-                            id="description"
-                            placeholder="Enter description"
-                            className="min-h-[100px]"
+                        <CardContent>
+                          <h2 className="text-2xl font-bold ">Description</h2>
+                          <FormField
+                            control={form.control}
+                            name="description"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Event Title *</FormLabel>
+                                <FormControl>
+                                  <Textarea
+                                    placeholder="Enter description"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
                           />
-                        </div>
+                        </CardContent>
                       </Card>
                     </div>
                     <div
@@ -985,12 +1045,13 @@ export default function EventForm() {
                       </Card>
                     </div>
                   </div>
-
-                  <Button type="submit">Create Event</Button>
-                </form>
-              </Form>
-            </CardContent>
-          </div>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Create Event"}
+                  </Button>{" "}
+                </CardContent>
+              </div>
+            </form>
+          </Form>
         </main>
       </div>
     </div>
