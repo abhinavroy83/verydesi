@@ -98,4 +98,9 @@ export class RoomController {
     }
     return this.roomService.countRoomPostedInLast24Hours(area);
   }
+
+  @Patch('update-room-date')
+  async updateroomposteddate() {
+    return this.roomService.updateroomcreatedat();
+  }
 }
