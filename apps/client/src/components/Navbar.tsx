@@ -139,7 +139,7 @@ export default function Navbar() {
               onClick={() => {
                 window.open("https://www.rakuten.com/", "_blank");
               }}
-              className="w-[27rem] mt-2 shadow-lg overflow-hidden relative cursor-pointer"
+              className="lg:w-[27rem] hidden mt-2 shadow-lg overflow-hidden relative cursor-pointer"
             >
               <img
                 src="https://res.cloudinary.com/druohnmyv/image/upload/v1730037713/Screenshot_2024-10-27_193134_j1ypv2.png"

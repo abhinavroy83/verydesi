@@ -287,7 +287,7 @@ export default function RoomPostingForm() {
 
   return (
     <div className="flex max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-[7.5rem] font-sans">
-      <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
+      <nav className="hidden text-white p-9 bg-[#202938] lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
         <ul className="space-y-2">
           {sections.map((section) => (
             <li key={section.id}>

@@ -194,7 +194,7 @@ export default function Component({ room }: FeaturedCard2Props) {
             </div>
             <div className="flex-grow space-y-1">
               <h2 className="text-[21px] font-bold">
-                {room?.Title && truncateCharacters(room?.Title, 72)}
+                {room?.Title && truncateCharacters(room?.Title, 66)}
               </h2>
               <div className="flex flex-col sm:flex-row sm:items-center text-[17px] text-gray-600 space-y-1 sm:space-y-0">
                 <div className="flex items-center">
@@ -256,7 +256,7 @@ export default function Component({ room }: FeaturedCard2Props) {
             </div>
             <div className="flex">
               <div className="flex w-full sm:w-auto text-left sm:text-right">
-                <div className="flex items-center gap-2 absolute lg:bottom-[1.5rem] bottom-[1rem] right-[2rem] lg:right-[4rem]">
+                <div className="flex items-center gap-2 absolute lg:bottom-[1.5rem] bottom-[1rem] right-[2rem] lg:right-[2.5rem]">
                   {!status && (
                     <div
                       onClick={(e) => {
