@@ -46,6 +46,7 @@ export const EventformSchema = z.object({
   virtualurl: z.string().optional(),
   address: z.string().optional(),
   city: z.string().optional(),
+  state: z.string().optional(),
   zipCode: z.string().optional(),
   country: z.string().optional(),
   languages: z.array(z.string()).min(1, {

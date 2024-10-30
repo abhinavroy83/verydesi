@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -56,6 +56,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { EventformSchema } from "@/schemas";
 import { useCityData } from "@/hooks/use-city-hooks";
+import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 
 const languages = [
   { name: "Hindi", code: "hi" },
@@ -94,6 +95,7 @@ export default function EventForm() {
   const [eventType, setEventType] = useState<string | undefined>();
   const [images, setImages] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<z.infer<typeof EventformSchema>>({
     resolver: zodResolver(EventformSchema),
     defaultValues: {
@@ -108,6 +110,7 @@ export default function EventForm() {
       venueName: "",
       address: "",
       city: "",
+      state: "",
       zipCode: "",
       country: "",
       languages: [],
@@ -128,6 +131,22 @@ export default function EventForm() {
   });
 
   const { cities, isLoading, error } = useCityData();
+
+  //fething location with google map
+  const { addressComponents, location } = useGoogleAutocomplete();
+
+  useEffect(() => {
+    if (Object.keys(addressComponents).length > 0) {
+      form.setValue(
+        "address",
+        `${addressComponents.street_number} ${addressComponents.street}`
+      );
+      form.setValue("city", addressComponents.city);
+      form.setValue("state", addressComponents.state);
+      form.setValue("zipCode", addressComponents.zipCode);
+      form.setValue("country", addressComponents.country);
+    }
+  }, [addressComponents, form]);
 
   const onSubmit = async (data: z.infer<typeof EventformSchema>) => {
     console.log(data);
@@ -180,6 +199,9 @@ export default function EventForm() {
       form.setValue("languages", [...currentLanguages, code]);
     }
   };
+
+  //upload image
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
@@ -395,6 +417,8 @@ export default function EventForm() {
                                   <FormLabel>Address *</FormLabel>
                                   <FormControl>
                                     <Input
+                                      type="text"
+                                      id="address"
                                       placeholder="Enter address"
                                       {...field}
                                     />
@@ -420,7 +444,7 @@ export default function EventForm() {
                             />
                             <FormField
                               control={form.control}
-                              name="city"
+                              name="state"
                               render={({ field }) => (
                                 <FormItem>
                                   <FormLabel>State *</FormLabel>
