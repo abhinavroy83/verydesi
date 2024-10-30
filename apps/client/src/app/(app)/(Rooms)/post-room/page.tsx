@@ -307,7 +307,7 @@ export default function RoomPostingForm() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink
-                href="/events"
+                href="/"
                 className="flex items-center text-primary hover:text-primary-dark transition-colors"
               >
                 <Home className="w-4 h-4 mr-2" />
@@ -364,12 +364,15 @@ export default function RoomPostingForm() {
         </ul> */}
       </nav>
       <main className="flex-1 p-2 border overflow-y-auto">
-        <div className="lg:ml-64 w-full">
+        <div className="lg:ml-64 lg:w-[77rem] w-[20rem]">
           <h1 className="text-[24px] text-center font-bold mb-4">
             Post Room In{" "}
           </h1>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4"
+            >
               <div
                 ref={(el) => {
                   sectionRefs.current["basic-info"] = el;
