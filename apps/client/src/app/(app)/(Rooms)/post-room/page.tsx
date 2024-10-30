@@ -329,9 +329,9 @@ export default function RoomPostingForm() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <nav className="hidden text-white bg-[#232f3e] p-9 lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
-        <aside className="w-[10rem] bg-[#232f3e] text-white ">
-          <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto z-0 fixed overflow-y-auto h-[calc(100vh-7rem)]">
+      <div className=" flex">
+        <aside className="w-64 bg-[#232f3e] p-4 text-white ">
+          <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
             <ul className="space-y-2 ">
               {sections.map((section) => (
                 <li key={section.id}>
@@ -349,30 +349,43 @@ export default function RoomPostingForm() {
             </ul>
           </nav>
         </aside>
-        {/* <ul className="space-y-2">
-          {sections.map((section) => (
-            <li key={section.id}>
-              <Button
-                variant="ghost"
-                className="w-full justify-start"
-                onClick={() => scrollToSection(section.id)}
-              >
-                {section.title}
-              </Button>
-            </li>
-          ))}
-        </ul> */}
-      </nav>
-      <main className="flex-1 p-2 border overflow-y-auto">
-        <div className="lg:ml-64 lg:w-[77rem] w-[20rem]">
-          <h1 className="text-[24px] text-center font-bold mb-4">
-            Post Room In{" "}
-          </h1>
+
+        <main className="flex-1 p-2 border overflow-y-auto">
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-4"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <div className="flex items-center justify-center space-y-4 w-full mx-auto">
+                <h1 className="text-[24px] font-bold text-center">
+                  Post Room In
+                </h1>
+                <FormField
+                  control={form.control}
+                  name="postingIn"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <div className="flex-grow">
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select posting city" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {cities.map((city) => (
+                              <SelectItem key={city} value={city}>
+                                {city}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
               <div
                 ref={(el) => {
                   sectionRefs.current["basic-info"] = el;
@@ -1575,8 +1588,8 @@ export default function RoomPostingForm() {
               </div>
             </form>
           </Form>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
