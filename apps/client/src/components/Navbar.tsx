@@ -396,7 +396,7 @@ export default function Navbar() {
                   <Bell className="h-6 w-6 text-white" />
                   <div className="relative">
                     <Heart className="h-6 w-6 text-white" />
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
                       1
                     </span>
                   </div>
@@ -408,7 +408,7 @@ export default function Navbar() {
                     <AvatarFallback>U</AvatarFallback>
                   </Avatar>
                   <div className="flex items-center space-x-2 text-white py-2">
-                    <MapPin className="h-5 w-5 text-gray-400" />
+                    {/* <MapPin className="h-5 w-5 text-gray-400" /> */}
                     {weatherData?.weather &&
                       weatherData?.weather.length > 0 && (
                         <img
