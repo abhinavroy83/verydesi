@@ -331,7 +331,7 @@ export default function RoomPostingForm() {
       </div>
       <div className=" flex">
         <aside className="w-64 bg-[#232f3e] p-4 text-white ">
-          <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
+          <nav className="hidden  lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
             <ul className="space-y-2 ">
               {sections.map((section) => (
                 <li key={section.id}>
@@ -353,15 +353,13 @@ export default function RoomPostingForm() {
         <main className="flex-1 p-2 border overflow-y-auto">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="flex items-center justify-center space-y-4 w-full mx-auto">
-                <h1 className="text-[24px] font-bold text-center">
-                  Post Room In
-                </h1>
+              <div className="flex items-center gap-2 justify-center">
+                <h1 className="text-2xl font-bold">Post Room In</h1>
                 <FormField
                   control={form.control}
                   name="postingIn"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                    <FormItem className="flex flex-col py-2 space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
                       <div className="flex-grow">
                         <Select
                           onValueChange={field.onChange}
@@ -375,7 +373,7 @@ export default function RoomPostingForm() {
                           <SelectContent>
                             {cities.map((city) => (
                               <SelectItem key={city} value={city}>
-                                {city}
+                                <p className="text-xl font-bold">{city}</p>
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -386,6 +384,7 @@ export default function RoomPostingForm() {
                   )}
                 />
               </div>
+
               <div
                 ref={(el) => {
                   sectionRefs.current["basic-info"] = el;
