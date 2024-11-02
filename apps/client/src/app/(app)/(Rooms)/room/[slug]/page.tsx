@@ -308,8 +308,8 @@ export default function RoomDetails({
 
   return (
     <>
-      <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 pb-0 mx-auto py-8 mt-[7rem] font-sans">
-        <div className="flex flex-col lg:flex-row space-x-2 w-full justify-between lg:items-center">
+      <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 pb-0 mx-auto py-8 mt-[6rem] font-sans">
+        <div className="flex flex-col lg:flex-row space-x-2 w-full justify-between">
           <div className="">
             <Breadcrumb>
               <BreadcrumbList>
@@ -408,7 +408,7 @@ export default function RoomDetails({
           </div>
         </div>
         <div className="flex justify-between items-start  flex-col lg:flex-row">
-          <div className="flex w-full lg:justify-between  flex-col lg:flex-row mt-2">
+          <div className="flex w-full lg:justify-between  flex-col lg:flex-row">
             <div className="flex lg:flex-row gap-2 font-bold lg:items-center">
               <h1 className="lg:text-3xl text-2xl font-bold text-gray-900 flex lg:flex-row flex-col gap-2">
                 {roomData?.Title} |{" "}
@@ -427,8 +427,8 @@ export default function RoomDetails({
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-2">
-          <div className="lg:col-span-2 space-y-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-2">
             <div className="flex lg:flex-row flex-col lg:items-center gap-2 text-xl font-bold text-gray-600">
               <p className="text-gray-600">{roomData?.postingincity}, OR |</p>
               <h1 className="text-xl font-bold text-gray-600 whitespace-nowrap">
@@ -439,13 +439,13 @@ export default function RoomDetails({
               </p> */}
             </div>
             <Card>
-              <CardContent className="p-0">
+              <CardContent className="p-0 rounded-2xl">
                 <Carousel className="w-full">
                   <CarouselContent>
                     {roomData?.Imgurl && roomData.Imgurl.length > 0 ? (
                       roomData.Imgurl.map((image, index) => (
                         <CarouselItem key={index}>
-                          <div className="relative aspect-video">
+                          <div className="relative aspect-video w-full h-[28rem] rounded-lg">
                             <Image
                               src={
                                 image ||
@@ -454,6 +454,7 @@ export default function RoomDetails({
                               alt={`Room image ${index + 1}`}
                               layout="fill"
                               objectFit="cover"
+                              className="rounded-lg"
                             />
                           </div>
                         </CarouselItem>
@@ -480,9 +481,13 @@ export default function RoomDetails({
             <Card>
               <CardContent className="p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-gray-900 text-xl">ABOUT THE PROPERTY</p>
+                  <p className="text-gray-900 text-[16px] font-bold ">
+                    About The Property
+                  </p>
                 </div>
-                <p className="text-gray-700">{roomData?.Description}</p>
+                <p className="text-gray-700 text-[14px]">
+                  {roomData?.Description}
+                </p>
               </CardContent>
             </Card>
 
@@ -609,7 +614,7 @@ export default function RoomDetails({
             </Card>
           </div>
 
-          <div className="space-y-3 lg:mt-8">
+          <div className="space-y-2 lg:mt-8">
             <Card>
               <CardHeader className="p-3"></CardHeader>
               <CardContent className="">
