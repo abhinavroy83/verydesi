@@ -20,5 +20,8 @@
     "apps/*",
     "backend",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@next/third-parties": "^15.0.2"
+  }
 }
