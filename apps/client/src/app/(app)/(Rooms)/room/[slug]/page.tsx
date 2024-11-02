@@ -623,7 +623,7 @@ export default function RoomDetails({
 
             {roomData?.Amenities_include && (
               <Card className="">
-                <CardHeader className="p-3">
+                <CardHeader evclassName="p-3">
                   <CardTitle>Amenities Included</CardTitle>
                 </CardHeader>
                 <CardContent className="p-3">

@@ -7,6 +7,7 @@ import * as z from "zod";
 import { format } from "date-fns";
 import {
   Calendar as CalendarIcon,
+  ChevronDown,
   ChevronRight,
   Clock,
   Home,
@@ -57,6 +58,12 @@ import {
 import { EventformSchema } from "@/schemas";
 import { useCityData } from "@/hooks/use-city-hooks";
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const languages = [
   { name: "Hindi", code: "hi" },
@@ -278,7 +285,31 @@ export default function EventForm() {
         <main className="flex-1 p-2 border overflow-y-auto">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="flex items-center justify-center space-y-4 w-full mx-auto">
+              <div className="flex items-center justify-center space-y-4 gap-1 w-full mx-auto">
+                <h1 className="text-2xl font-bold">Post Event In</h1>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-8 px-3 text-base font-normal"
+                    >
+                      {/* {selectedLocation} */}
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {/* {locations.map((location) => (
+                      <DropdownMenuItem
+                        key={location}
+                        onClick={() => setSelectedLocation(location)}
+                      >
+                        {location}
+                      </DropdownMenuItem>
+                    ))} */}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              {/* <div className="flex items-center justify-center space-y-4 w-full mx-auto">
                 <h1 className="text-[24px] font-bold text-center">
                   Post Event In
                 </h1>
@@ -298,7 +329,7 @@ export default function EventForm() {
                           <SelectContent>
                             {cities.map((city) => (
                               <SelectItem key={city} value={city}>
-                                {city}
+                                <p className="text-xl font-bold"> {city}</p>
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -308,7 +339,7 @@ export default function EventForm() {
                     </FormItem>
                   )}
                 />
-              </div>
+              </div> */}
 
               <div
                 ref={(el) => {
@@ -384,11 +415,11 @@ export default function EventForm() {
                       sectionRefs.current["address"] = el;
                     }}
                   >
-                    <h2 className="text-2xl font-bold lg:px-6">Address</h2>
+                    <h2 className="text-2xl font-bold py-4">Address</h2>
                     {eventType == "in-person" && (
                       <Card>
                         <CardContent>
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-2 gap-4 py-2">
                             <FormField
                               control={form.control}
                               name="venueName"
@@ -428,7 +459,7 @@ export default function EventForm() {
                               )}
                             />
                           </div>
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-2 gap-4 py-2">
                             <FormField
                               control={form.control}
                               name="city"
@@ -456,7 +487,7 @@ export default function EventForm() {
                               )}
                             />
                           </div>
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-2 gap-4 py-2">
                             <FormField
                               control={form.control}
                               name="zipCode"
@@ -499,7 +530,7 @@ export default function EventForm() {
                           </div>
                           <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center">
                             <MapPin className="h-8 w-8 text-gray-400" />
-                            <span className="ml-2 text-gray-500">
+                            <span className="ml-2 text-gray-500 mt-2">
                               Google Maps Embed Placeholder
                             </span>
                           </div>
@@ -532,7 +563,7 @@ export default function EventForm() {
                       sectionRefs.current["datetime"] = el;
                     }}
                   >
-                    <h2 className="text-2xl font-bold mb-4">Date and time</h2>
+                    <h2 className="text-2xl font-bold my-3">Date and time</h2>
                     <Card>
                       <CardContent className="pt-6">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -890,10 +921,8 @@ export default function EventForm() {
                             />
                           </div>
                         </CardContent>
-                      </Card>
-                      <Card>
-                        <CardContent className="pt-6">
-                          <h3 className="text-lg font-semibold mb-4">
+                        <CardContent className="">
+                          <h3 className="text-lg font-semibold mb-4 ">
                             Artist details
                           </h3>
                           {artistFields.map((field, index) => (
@@ -925,6 +954,7 @@ export default function EventForm() {
                             />
                           ))}
                           <Button
+                            className="bg-green-800"
                             type="button"
                             onClick={() => appendArtist({ name: "" })}
                           >
@@ -989,26 +1019,24 @@ export default function EventForm() {
                         sectionRefs.current["Description"] = el;
                       }}
                     >
+                      <h2 className="text-2xl font-bold my-3">Description </h2>
                       <Card>
-                        <CardContent>
-                          <h2 className="text-2xl font-bold ">Description</h2>
-                          <FormField
-                            control={form.control}
-                            name="description"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Event Title *</FormLabel>
-                                <FormControl>
-                                  <Textarea
-                                    placeholder="Enter description"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </CardContent>
+                        <FormField
+                          control={form.control}
+                          name="description"
+                          render={({ field }) => (
+                            <FormItem>
+                              {/* <FormLabel>Event Title *</FormLabel> */}
+                              <FormControl>
+                                <Textarea
+                                  placeholder="Enter description"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </Card>
                     </div>
                     <div
@@ -1069,7 +1097,11 @@ export default function EventForm() {
                       </Card>
                     </div>
                   </div>
-                  <Button type="submit" disabled={isSubmitting}>
+                  <Button
+                    className="bg-green-800 mt-7"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? "Submitting..." : "Create Event"}
                   </Button>{" "}
                 </CardContent>

@@ -193,7 +193,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               )}{" "}
             </div>
             <div className="flex-grow space-y-1">
-              <h2 className="text-[21px] font-bold">
+              <h2 className="text-[21px] text-gray-800 font-bold">
                 {room?.Title && truncateCharacters(room?.Title, 72)}
               </h2>
               <div className="flex flex-col sm:flex-row sm:items-center text-[17px] text-gray-600 space-y-1 sm:space-y-0">
