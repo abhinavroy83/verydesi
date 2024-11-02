@@ -60,17 +60,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  const formatSlug = (title: string, id: string) => {
+    const formattedTitle = title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+    return `${formattedTitle}-${id}`;
+  };
+
   // Fetch rooms for Portland
   const portlandRooms = await getRoomsForPortland();
 
   // Create room pages for Portland
   const roomPages = portlandRooms.map(
-    (room: { _id: string; updatedAt: string }) => ({
-      url: `${baseUrl}/room/${room._id}`,
-      lastModified: new Date(room.updatedAt),
-      changeFrequency: "weekly" as const,
-      priority: 0.7,
-    })
+    (room: { _id: string; postedon: string; Title: string }) => {
+      let lastModified;
+      try {
+        lastModified = new Date(room.postedon);
+        if (isNaN(lastModified.getTime())) {
+          throw new Error("Invalid date");
+        }
+      } catch (error) {
+        console.error(`Invalid date for room ${room._id}: ${room.postedon}`);
+        lastModified = new Date(); // Use current date as fallback
+      }
+
+      const slug = formatSlug(room.Title, room._id);
+
+      return {
+        url: `${baseUrl}/room/${slug}`,
+        lastModified,
+        changeFrequency: "weekly" as const,
+        priority: 0.7,
+      };
+    }
   );
 
   // Combine all entries
