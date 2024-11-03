@@ -215,11 +215,11 @@ export default function Component({ room }: FeaturedCard2Props) {
 
       <div className="flex flex-col w-full flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
         <div>
-          <h2 className="text-[21px] font-sans font-bold text-gray-800  transition-colors duration-300">
+          <h2 className="lg:text-[21px] text-[18px] font-sans font-bold text-gray-800  transition-colors duration-300">
             {room?.Title && truncateCharacters(room?.Title, 44)}
           </h2>
 
-          <div className="flex  flex-wrap items-center text-[18px] text-gray-600  transition-colors duration-300">
+          <div className="flex  flex-wrap items-center lg:text-[18px] text-[15px] text-gray-600  transition-colors duration-300">
             <div className="flex font-sans items-center mr-2 sm:mb-0">
               <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
               <span>
@@ -261,7 +261,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               )}
             </div>
           </div>
-          <div className="flex  font-sans flex-col flex-wrap text-[18px] text-gray-500  transition-colors duration-300">
+          <div className="flex  font-sans flex-col flex-wrap lg:text-[18px] text-[15px] text-gray-500  transition-colors duration-300">
             <div className="flex font-sans items-center mr-2 sm:mb-0">
               <User className="h-5 w-5 mr-1 text-[#054687]" />
               <span className="text-blue-800">
@@ -277,7 +277,7 @@ export default function Component({ room }: FeaturedCard2Props) {
           </div>
         </div>
         <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
-          <p className="left-5 top-2 font-sans text-[22px] text-green-700 text-right">
+          <p className="left-5 top-2 font-sans lg:text-[22px] text-[18px] text-green-700 text-right">
             ${room?.Expected_Rooms}
           </p>
         </p>
