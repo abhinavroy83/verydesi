@@ -78,7 +78,7 @@ function Events() {
                   variant="outline"
                   className="rounded-full flex items-center"
                 >
-                  <ShareButton />
+                  <ShareButton shareLink="" />
                   <p>Share</p>
                 </Button>
                 <div>
