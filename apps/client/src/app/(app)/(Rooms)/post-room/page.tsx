@@ -301,7 +301,7 @@ export default function RoomPostingForm() {
   }
 
   return (
-    <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-[8rem] font-sans">
+    <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-6 mt-[8rem] font-sans">
       <div className="py-1 mb-3">
         <Breadcrumb>
           <BreadcrumbList>
