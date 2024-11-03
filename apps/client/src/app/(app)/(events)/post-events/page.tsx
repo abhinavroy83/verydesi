@@ -285,31 +285,7 @@ export default function EventForm() {
         <main className="flex-1 p-2 border overflow-y-auto">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="flex items-center justify-center space-y-4 gap-1 w-full mx-auto">
-                <h1 className="text-2xl font-bold">Post Event In</h1>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="h-8 px-3 text-base font-normal"
-                    >
-                      {/* {selectedLocation} */}
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    {/* {locations.map((location) => (
-                      <DropdownMenuItem
-                        key={location}
-                        onClick={() => setSelectedLocation(location)}
-                      >
-                        {location}
-                      </DropdownMenuItem>
-                    ))} */}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              {/* <div className="flex items-center justify-center space-y-4 w-full mx-auto">
+              <div className="flex items-center justify-center space-y-4 w-full mx-auto">
                 <h1 className="text-[24px] font-bold text-center">
                   Post Event In
                 </h1>
@@ -317,7 +293,7 @@ export default function EventForm() {
                   control={form.control}
                   name="eventpostingcity"
                   render={({ field }) => (
-                    <FormItem className="">
+                    <FormItem className="flex flex-col py-2 space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
                       <FormControl>
                         <Select
                           onValueChange={field.onChange}
@@ -339,7 +315,7 @@ export default function EventForm() {
                     </FormItem>
                   )}
                 />
-              </div> */}
+              </div>
 
               <div
                 ref={(el) => {
