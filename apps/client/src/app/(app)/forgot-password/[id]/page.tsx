@@ -14,11 +14,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Lock, Mail, ArrowRight, CheckCircle } from "lucide-react";
-import { Form, useForm } from "react-hook-form";
-import { singlepassword } from "@/schemas";
+import { useForm } from "react-hook-form";
+import { SinglepasswordSchema } from "@/schemas";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  Form,
   FormField,
   FormItem,
   FormLabel,
@@ -28,20 +29,21 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 
+type PasswordFormValues = z.infer<typeof SinglepasswordSchema>;
+
 export default function Component() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const { id } = useParams();
-  const form = useForm<z.infer<typeof singlepassword>>({
-    resolver: zodResolver(singlepassword),
+  const form = useForm<PasswordFormValues>({
+    resolver: zodResolver(SinglepasswordSchema),
     defaultValues: {
       password: "",
       confirmPassword: "",
     },
   });
-
-  const onSubmit = async (data: z.infer<typeof singlepassword>) => {
+  const onSubmit = async (data: PasswordFormValues) => {
     try {
       await axios.post(`https://apiv2.verydesi.com/auth/reset-password/${id}`, {
         password: data.password,
@@ -85,11 +87,13 @@ export default function Component() {
                   control={form.control}
                   name="password"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Password
-                      </FormLabel>
-                      <Input placeholder="Enter password" {...field} />
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <Input
+                        type="password"
+                        placeholder="Enter password"
+                        {...field}
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -98,11 +102,13 @@ export default function Component() {
                   control={form.control}
                   name="confirmPassword"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Confirm Password
-                      </FormLabel>
-                      <Input placeholder="Enter Confirm Password" {...field} />
+                    <FormItem>
+                      <FormLabel>Confirm Password</FormLabel>
+                      <Input
+                        type="password"
+                        placeholder="Confirm password"
+                        {...field}
+                      />
                       <FormMessage />
                     </FormItem>
                   )}

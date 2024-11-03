@@ -12,9 +12,9 @@ export const passwordSchema = z.object({
     .min(8, "Confirm password must be at least 8 characters"),
 });
 
-export const singlepassword = z
+export const SinglepasswordSchema = z
   .object({
-    password: z.string().min(8, "password must be at least 8 characters"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

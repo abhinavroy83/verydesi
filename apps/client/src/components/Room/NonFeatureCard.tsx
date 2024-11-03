@@ -24,6 +24,7 @@ import toast from "react-hot-toast";
 import useAuthStore from "@/store/useAuthStore";
 import { useloginstore } from "@/store";
 import { useRouter } from "next/navigation";
+import TruncateText from "@/lib/truncate-characters";
 interface FeaturedCard2Props {
   room: RoomInterface;
 }
@@ -193,9 +194,8 @@ export default function Component({ room }: FeaturedCard2Props) {
               )}{" "}
             </div>
             <div className="flex-grow space-y-1">
-              <h2 className="text-[21px] font-bold">
-                {room?.Title && truncateCharacters(room?.Title, 66)}
-              </h2>
+              {room?.Title && <TruncateText text={room?.Title} />}
+
               <div className="flex flex-col sm:flex-row sm:items-center text-[17px] text-gray-600 space-y-1 sm:space-y-0">
                 <div className="flex items-center">
                   <MapPin className="h-5 w-5 mr-1 text-[#054687]" />

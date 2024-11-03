@@ -33,6 +33,8 @@ import useCartStore from "@/store/useCartStore";
 import useAuthStore from "@/store/useAuthStore";
 import { Badge } from "@/components/ui/badge";
 import { useUserData } from "@/hooks/use-userData";
+import { useScreenResolution } from "@/store";
+import Mobilenotification from "./Notification/Mobilenotification";
 
 export default function Navbar() {
   const { userData } = useUserData();
@@ -48,7 +50,7 @@ export default function Navbar() {
   const router = useRouter();
   const { cartcount } = useCartStore();
   const { firstname, userimage } = useAuthStore();
-
+  const { width } = useScreenResolution();
   useEffect(() => {
     axios
       .get(
@@ -153,7 +155,7 @@ export default function Navbar() {
               {session ? (
                 <>
                   <div
-                    className="relative text-black"
+                    className="relative text-black mx-2"
                     onMouseEnter={() => setIsNotificationOpen(true)}
                     onMouseLeave={() => setIsNotificationOpen(false)}
                   >

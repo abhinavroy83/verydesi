@@ -21,9 +21,10 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
-import { useloginstore } from "@/store";
+import { useloginstore, useScreenResolution } from "@/store";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import TruncateText from "@/lib/truncate-characters";
 
 interface FeaturedCard2Props {
   room: RoomInterface;
@@ -35,14 +36,10 @@ export default function Component({ room }: FeaturedCard2Props) {
   const { data: session } = useSession();
   const { status } = useAuthStore();
   const { openLogin } = useloginstore();
+  const { width } = useScreenResolution();
+  console.log(width);
   const router = useRouter();
 
-  function truncateCharacters(str: string, numCharacters: number) {
-    if (str.length > numCharacters) {
-      return str.slice(0, numCharacters) + "...";
-    }
-    return str;
-  }
   const token = session?.accessToken;
   const makewishlist = async (_id: string) => {
     if (status) {
@@ -166,7 +163,7 @@ export default function Component({ room }: FeaturedCard2Props) {
       }}
       className={`font-sans flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[152px]`}
     >
-      <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] lg:h-[152px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
+      <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] lg:h-[152px] md:h-[200px] h-[200px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
         <img
           src={
             room && room.Imgurl && room.Imgurl.length > 0
@@ -174,7 +171,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               : "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
           }
           alt="Room Image"
-          className="hover:scale-110 w-full object-cover transition-transform duration-500 ease-in duration-70 lg:h-full "
+          className="hover:scale-110 w-full object-cover transition-transform duration-500 ease-in duration-70 lg:h-full md:h-full "
         />
       </div>
       {!status && (
@@ -215,9 +212,8 @@ export default function Component({ room }: FeaturedCard2Props) {
 
       <div className="flex flex-col w-full flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
         <div>
-          <h2 className="lg:text-[21px] text-[18px] font-sans font-bold text-gray-800  transition-colors duration-300">
-            {room?.Title && truncateCharacters(room?.Title, 44)}
-          </h2>
+          {room?.Title && <TruncateText text={room?.Title} />}
+         
 
           <div className="flex  flex-wrap items-center lg:text-[18px] text-[15px] text-gray-600  transition-colors duration-300">
             <div className="flex font-sans items-center mr-2 sm:mb-0">
