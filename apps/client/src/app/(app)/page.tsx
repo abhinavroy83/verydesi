@@ -175,7 +175,7 @@ const Page = () => {
     <HomeLayout>
       <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full justify-between flex items-center font-sans">
-        <h1 className="text-[21px] font-sans font-bold my-1">
+        <h1 className="lg:text-[24px] text-[21px] font-sans font-bold my-1">
           Featured Rooms In {currentCity}
         </h1>
         <button
