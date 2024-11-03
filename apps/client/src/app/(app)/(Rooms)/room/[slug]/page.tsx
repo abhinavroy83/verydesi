@@ -346,7 +346,7 @@ export default function RoomDetails({
                     openLogin();
                   }}
                 >
-                  <Heart className="h-6 w-6 fill-red-600 stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                  <Heart className="h-6 w-6 hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
                 </div>
               )}
               {status && (
@@ -388,7 +388,7 @@ export default function RoomDetails({
                 <button
                   onClick={() => navigateRoom("prev")}
                   disabled={currentIndex === 0}
-                  className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors flex flex-row"
+                  className="px-4 py-2 cursor-pointer bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors flex flex-row"
                   aria-label="Previous listing"
                 >
                   <ChevronLeft className="w-5 h-5 inline-block mr-1" />
@@ -397,7 +397,7 @@ export default function RoomDetails({
                 <button
                   onClick={() => navigateRoom("next")}
                   disabled={currentIndex === allRooms.length - 1}
-                  className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors flex flex-row"
+                  className="px-4 py-2 bg-blue-500 text-white cursor-pointer font-bold rounded-md hover:bg-blue-600 transition-colors flex flex-row"
                   aria-label="Next listing"
                 >
                   NEXT

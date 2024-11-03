@@ -36,6 +36,7 @@ import { useToast } from "@/hooks/use-toast";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import axios from "axios";
+import useAuthStore from "@/store/useAuthStore";
 type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 export default function SignUp() {
@@ -48,6 +49,7 @@ export default function SignUp() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const debounced = useDebounceCallback(setUseremail, 50);
+  const { login } = useAuthStore();
 
   const { toast } = useToast();
   const {
@@ -176,7 +178,14 @@ export default function SignUp() {
                 variant="outline"
                 className="w-full flex items-center justify-center space-x-2"
                 onClick={() => {
-                  /* Handle Google sign-up */
+                  signIn("google", { callbackUrl: "/" });
+                  login();
+                  toast({
+                    title: "Success",
+                    description: "Loggedin successfully!",
+                    duration: 5000,
+                  });
+                  router.push("/");
                 }}
               >
                 <svg
