@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { object, z } from "zod";
 
 export const passwordSchema = z.object({
   oldpassword: z
@@ -11,3 +11,13 @@ export const passwordSchema = z.object({
     .string()
     .min(8, "Confirm password must be at least 8 characters"),
 });
+
+export const singlepassword = z
+  .object({
+    password: z.string().min(8, "password must be at least 8 characters"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });

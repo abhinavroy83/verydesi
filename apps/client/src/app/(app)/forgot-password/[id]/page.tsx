@@ -14,15 +14,42 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Lock, Mail, ArrowRight, CheckCircle } from "lucide-react";
+import { Form, useForm } from "react-hook-form";
+import { singlepassword } from "@/schemas";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import Link from "next/link";
 
 export default function Component() {
-  const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically send a request to your backend
-    setIsSubmitted(true);
+  const { id } = useParams();
+  const form = useForm<z.infer<typeof singlepassword>>({
+    resolver: zodResolver(singlepassword),
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof singlepassword>) => {
+    try {
+      await axios.post(`https://apiv2.verydesi.com/auth/reset-password/${id}`, {
+        password: data.password,
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      setError("Failed to reset password. Please try again.");
+    }
   };
 
   return (
@@ -33,7 +60,7 @@ export default function Component() {
             Reset Password
           </CardTitle>
           <CardDescription className="text-center">
-            Don't worry. You can update your password here.
+            Don&apos;t worry. You can update your password here.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -49,30 +76,47 @@ export default function Component() {
             </motion.div>
           </div>
           {!isSubmitted ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10"
-                    required
-                  />
-                </div>
-              </div>
-              <Button
-                type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600"
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
               >
-                Send Reset Link
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </form>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Password
+                      </FormLabel>
+                      <Input placeholder="Enter password" {...field} />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Confirm Password
+                      </FormLabel>
+                      <Input placeholder="Enter Confirm Password" {...field} />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {error && <p className="text-red-500 text-sm">{error}</p>}
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-500 hover:bg-blue-600"
+                >
+                  Reset Password
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </form>
+            </Form>
           ) : (
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -81,10 +125,12 @@ export default function Component() {
               className="text-center space-y-4"
             >
               <CheckCircle className="w-16 h-16 text-green-500 mx-auto" />
-              <p className="text-lg font-semibold">Reset Link Sent!</p>
+              <p className="text-lg font-semibold">
+                Password Reset Successful!
+              </p>
               <p className="text-sm text-gray-500">
-                Check your email for the password reset link. It may take a few
-                minutes to arrive.
+                Your password has been successfully updated. You can now log in
+                with your new password.
               </p>
             </motion.div>
           )}
@@ -92,9 +138,9 @@ export default function Component() {
         <CardFooter>
           <p className="text-sm text-center text-gray-500 w-full">
             Remember your password?{" "}
-            <a href="#" className="text-blue-500 hover:underline">
+            <Link href="/sign-up" className="text-blue-500 hover:underline">
               Log in
-            </a>
+            </Link>
           </p>
         </CardFooter>
       </Card>
