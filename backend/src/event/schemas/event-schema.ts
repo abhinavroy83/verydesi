@@ -7,6 +7,10 @@ export type EventDocument = Event & Document;
 export class Event {
   @Prop({ required: true })
   UserId: ObjectId;
+
+  @Prop({ required: true, default: Date.now() })
+  postedOn: Date;
+
   @Prop({ required: true })
   eventpostingcity: string;
 
