@@ -213,7 +213,6 @@ export default function Component({ room }: FeaturedCard2Props) {
       <div className="flex flex-col w-full flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
         <div>
           {room?.Title && <TruncateText text={room?.Title} />}
-         
 
           <div className="flex  flex-wrap items-center lg:text-[18px] text-[15px] text-gray-600  transition-colors duration-300">
             <div className="flex font-sans items-center mr-2 sm:mb-0">

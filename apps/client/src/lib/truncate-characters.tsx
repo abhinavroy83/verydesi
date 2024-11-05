@@ -28,7 +28,7 @@ export default function TruncateText({ text }: { text: string }) {
   const truncatedText = truncateCharacters(text, getTruncateOptions(width));
 
   return (
-    <h2 className="lg:text-[21px] text-[18px] font-sans font-bold text-gray-800  transition-colors duration-300">
+    <h2 className="text-[21px] font-sans font-bold text-gray-800 transition-colors duration-300">
       {truncatedText}
     </h2>
   );
