@@ -15,6 +15,7 @@ import {
   User,
   Star,
   DoorOpen,
+  Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -316,10 +317,21 @@ export default function Navbar() {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white group text-[15px] transition duration-300 ease-in-out"
+                className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <DoorOpen className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                <Users className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
                 ROOMMATES
+              </Button>
+
+              <Button
+                onClick={() => {
+                  router.push("/events");
+                }}
+                variant="ghost"
+                className="text-white hover:bg-white transition duration-300 ease-in-out group"
+              >
+                <Calendar className="mr-2 h-4 w-4 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                EVENTS
               </Button>
             </div>
 
