@@ -4,11 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
 import Area from "./Area/Area";
+import Script from "next/script";
 
 export default function Footer() {
   return (
     <div>
       <div className="lg:mt-9 mt-6 w-full font-sans">
+        <Script
+          src="https://www.dpbolvw.net/placeholder-55689450?target=_blank&mouseover=N"
+          strategy="lazyOnload"
+        />
         <div
           onClick={() => {
             window.open("https://redletterweb.com/", "_blank");
@@ -21,47 +26,7 @@ export default function Footer() {
               alt="Animation Character"
               className="object-cover"
             />
-            {/* <div className="flex flex-col justify-center h-full lg:pl-6 pl-2">
-              <h1 className="text-white lg:text-xl text-[16px] font-bold">
-                RED LETTER WEB{" "}
-              </h1>
-              <p className="text-white lg:text-lg text-[14px] font-semibold">
-                Cheapest domain names in the USA{" "}
-              </p>
-              <p className="text-yellow-200 lg:text-sm text-[12px]">
-                Get your own .com, .org, & .net{" "}
-              </p>
-            </div>
-            <div className="flex items-center justify-end h-full lg:pr-6">
-              <button className="bg-yellow-400 hover:bg-yellow-500 text-red-700 font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
-                Start Now
-              </button>
-            </div>
-            <img
-              className="w-[10rem] h-[7.5rem]"
-              src="https://www.pngmart.com/files/3/Business-People-PNG-Pic.png"
-            /> */}
           </div>
-          {/* <div className="cursor-pointer lg:w-[44rem] w-[22rem] bg-red-700 border-4 border-[#232f3e] justify-between gap-4 lg:gap-7 flex  lg:p-0 shadow-sm shadow-gray-500 rounded-md">
-            <div className="flex flex-col gap-3 ">
-              <span className="text-[#232f3e] bg-white rounded-br-full font-bold px-6 text-[18px]">
-                Very Desi Guides
-              </span>
-            </div>
-            <div className="flex flex-col items-center justify-center text-white">
-              <h2 className="lg:text-[25px] text-[20px] font-bold">
-                Red Letter Jobs{" "}
-              </h2>
-              <p className="lg:text-[19px] text-[15px] mb-4 text-gray-300">
-                Elevate Your Online Presence
-              </p>
-            </div>
-            <img
-              className="w-[120px] lg:w-[190px] md:bg-none hidden md:block"
-              src={`https://res.cloudinary.com/druohnmyv/image/upload/v1724996141/R.2894cf285c04316dd503b8d215827e2c_vbweas.png`}
-              alt="logo"
-            />
-          </div> */}
         </div>
 
         <div className=" mx-auto mt-8">
