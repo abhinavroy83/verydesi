@@ -63,6 +63,8 @@ export const EventformSchema = z.object({
     )
     .min(1, { message: "At least one artist is required" }),
   images: z.array(z.string()).max(5, "You can upload a maximum of 5 images"),
+  latitude: z.number(),
+  longitude: z.number(),
 });
 
 export type EventformData = z.infer<typeof EventformSchema>;

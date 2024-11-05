@@ -55,15 +55,10 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { EventformSchema } from "@/schemas";
+import { EventformData, EventformSchema } from "@/schemas";
 import { useCityData } from "@/hooks/use-city-hooks";
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 const languages = [
   { name: "Hindi", code: "hi" },
@@ -102,6 +97,16 @@ export default function EventForm() {
   const [eventType, setEventType] = useState<string | undefined>();
   const [images, setImages] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { addressComponents, location } = useGoogleAutocomplete();
+  const [mapCenter, setMapCenter] = useState({ lat: 40.7128, lng: -74.006 });
+  const [markerPosition, setMarkerPosition] =
+    useState<google.maps.LatLngLiteral | null>(null);
+  const { setValue } = useForm();
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyDvMKQoLUgFGa6RUe91iG3NwcOe6ljj4vw",
+  });
 
   const form = useForm<z.infer<typeof EventformSchema>>({
     resolver: zodResolver(EventformSchema),
@@ -137,17 +142,32 @@ export default function EventForm() {
     name: "artists",
   });
 
-  const { cities, isLoading, error } = useCityData();
+  useEffect(() => {
+    if (location) {
+      setMapCenter(location);
+      setMarkerPosition(location);
+    }
+  }, [location]);
 
-  //fething location with google map
-  const { addressComponents, location } = useGoogleAutocomplete();
+  const onMapClick = (e: google.maps.MapMouseEvent) => {
+    if (e.latLng) {
+      const newPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+      setMarkerPosition(newPosition);
+      // You might want to update the form with these new coordinates
+      setValue("latitude", newPosition.lat);
+      setValue("longitude", newPosition.lng);
+    }
+  };
+
+  const { cities, isLoading, error } = useCityData();
 
   useEffect(() => {
     if (Object.keys(addressComponents).length > 0) {
       form.setValue(
         "address",
-        `${addressComponents.street_number} ${addressComponents.street}`
+        `${addressComponents.street_number || ""} ${addressComponents.street || ""}`.trim()
       );
+
       form.setValue("city", addressComponents.city);
       form.setValue("state", addressComponents.state);
       form.setValue("zipCode", addressComponents.zipCode);
@@ -182,7 +202,7 @@ export default function EventForm() {
   };
   const sections = [
     { id: "basic-info", label: "Basic Information" },
-    { id: "address", label: "Address" },
+    { id: "Address", label: "Address" },
     { id: "datetime", label: "Date and time" },
     { id: "availability", label: "Category & Language" },
     { id: "Artist", label: "Organizer & Artist details" },
@@ -388,7 +408,7 @@ export default function EventForm() {
                   </div>
                   <div
                     ref={(el) => {
-                      sectionRefs.current["address"] = el;
+                      sectionRefs.current["Address"] = el;
                     }}
                   >
                     <h2 className="text-2xl font-bold py-4">Address</h2>
@@ -396,73 +416,52 @@ export default function EventForm() {
                       <Card>
                         <CardContent>
                           <div className="grid grid-cols-2 gap-4 py-2">
-                            <FormField
-                              control={form.control}
-                              name="venueName"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>
-                                    Enter a new Venue / select from existing
-                                    venue
-                                  </FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      placeholder="Enter the venue's name"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
+                            {[
+                              {
+                                name: "venueName",
+                                label:
+                                  "Enter a new Venue / select from existing venue",
+                                placeholder: "Enter the venue's name",
+                              },
+                              {
+                                name: "address",
+                                label: "Address *",
+                                placeholder: "Enter address",
+                                id: "address",
+                              },
+                              {
+                                name: "city",
+                                label: "City",
+                                placeholder: "Enter city",
+                              },
+                              {
+                                name: "state",
+                                label: "State *",
+                                placeholder: "Enter state",
+                              },
+                            ].map((fieldInfo) => (
+                              <FormField
+                                key={fieldInfo.name}
+                                control={form.control}
+                                name={fieldInfo.name as keyof EventformData}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>{fieldInfo.label}</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        type="text"
+                                        id={fieldInfo.name}
+                                        {...field}
+                                        value={field.value as string}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            ))}
+                          </div>
 
-                            <FormField
-                              control={form.control}
-                              name="address"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Address *</FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      type="text"
-                                      id="address"
-                                      placeholder="Enter address"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                          <div className="grid grid-cols-2 gap-4 py-2">
-                            <FormField
-                              control={form.control}
-                              name="city"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>City</FormLabel>
-                                  <FormControl>
-                                    <Input {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control}
-                              name="state"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>State *</FormLabel>
-                                  <FormControl>
-                                    <Input {...field} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
                           <div className="grid grid-cols-2 gap-4 py-2">
                             <FormField
                               control={form.control}
@@ -504,11 +503,28 @@ export default function EventForm() {
                               )}
                             />
                           </div>
-                          <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center">
-                            <MapPin className="h-8 w-8 text-gray-400" />
-                            <span className="ml-2 text-gray-500 mt-2">
-                              Google Maps Embed Placeholder
-                            </span>
+                          <div className="w-full h-64 rounded-md">
+                            {isLoaded ? (
+                              <GoogleMap
+                                mapContainerStyle={{
+                                  width: "100%",
+                                  height: "100%",
+                                }}
+                                center={mapCenter}
+                                zoom={10}
+                                onClick={onMapClick}
+                              >
+                                {markerPosition && (
+                                  <Marker position={markerPosition} />
+                                )}
+                              </GoogleMap>
+                            ) : (
+                              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                                <span className="text-gray-500">
+                                  Loading map...
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </CardContent>
                       </Card>
