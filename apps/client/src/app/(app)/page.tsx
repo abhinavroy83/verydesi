@@ -27,77 +27,19 @@ import {
 import Norooms from "@/components/Room/Norooms";
 import LoginSlider from "@/components/login/login";
 import { useloginstore } from "@/store";
+import { useRoomFetching } from "@/hooks/use-all-roomfetcing";
 const Page = () => {
   const router = useRouter();
-  const [Room, setRooms] = useState<RoomInterface[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const { currentCity, status } = useAuthStore();
-  const [loading, setLoading] = useState(true);
   const [userData, setuserData] = useState<UserData | null>(null);
   const { data: session } = useSession();
   const { openLogin } = useloginstore();
   const { updateCity, setVerified, setname, setUserImgae } = useAuthStore();
-
+  const { Room, loading, error } = useRoomFetching(currentCity || "Portland");
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
-  const fetchrooms = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const res = await axios.get(
-        `https://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity || "Portland"}`,
-        {
-          withCredentials: true,
-        }
-      );
-      if (res.data.rooms.length === 0) {
-        setError(`No rooms found in ${currentCity}`);
-        setRooms([]);
-      }
-      const rooms = res.data.rooms.reverse();
-
-      const areaRes = await axios.get(
-        `https://api.verydesi.com/api/admin/area/${currentCity || "Portland"}`,
-        {
-          withCredentials: true,
-        }
-      );
-      const areaData = areaRes.data.area[0];
-      const primaryState = areaData.primaryState;
-      const states = areaData.state;
-
-      const priority = (room: any) => {
-        const roomStateFullName = Object.keys(stateAbbreviations).find(
-          (key) => stateAbbreviations[key] === room.state
-        );
-
-        const isPrimaryState = roomStateFullName || room.state === primaryState;
-        const isStateListed = states.includes(roomStateFullName || room.state);
-        const isCityListed = areaData.subarea.some(
-          (subarea: any) => subarea.split(",")[0] === room.city
-        );
-        const isZipListed = areaData.zipcode.includes(room.zip_code);
-
-        if (isPrimaryState && (isCityListed || isZipListed)) return 1;
-        if (isStateListed && (isCityListed || isZipListed)) return 2;
-        if (isCityListed) return 3;
-        if (isZipListed) return 4;
-        if (isPrimaryState) return 5;
-        return 6;
-      };
-
-      rooms.sort((a: any, b: any) => priority(a) - priority(b));
-      setRooms(rooms);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setError("Something went wrong while fetching rooms");
-    } finally {
-      setLoading(false);
-    }
-  };
   const featuredRooms = Room?.slice(0, 6);
   const NonfeatturedRooms = Room?.slice(6) ?? [];
 
@@ -106,9 +48,7 @@ const Page = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  useEffect(() => {
-    fetchrooms();
-  }, [currentCity]);
+
   // console.log(session);
   const token = session?.accessToken;
   const fetchuser = async () => {
