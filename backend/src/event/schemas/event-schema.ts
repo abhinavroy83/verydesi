@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, ObjectId } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 
 export type EventDocument = Event & Document;
 
 @Schema()
 export class Event {
-  @Prop({ required: true })
-  UserId: ObjectId;
-
+  @Prop({ type: MongooseSchema.Types.ObjectId, required: true })
+  UserId: MongooseSchema.Types.ObjectId;
+  
   @Prop({ required: true, default: Date.now() })
   postedOn: Date;
 

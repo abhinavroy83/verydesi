@@ -23,7 +23,7 @@ export class EventService {
     try {
       const eventdata = {
         ...createeventdto,
-        userId: userId,
+        UserId: userId,
       };
 
       const newEvent = new this.eventmodel(eventdata);
