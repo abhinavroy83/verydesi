@@ -115,50 +115,52 @@ function Events() {
         </p>
         <div className="flex mx-auto gap-7">
           <div className="w-full">
-            <div className="flex border rounded-xl mt-[1rem]">
-              <img
-                src={
-                  "https://www.theseedcollection.com.au/assets/full/B2-01.jpg?20201208112734"
-                }
-                alt="not"
-                className="h-[20rem] w-[50rem] rounded-tl-xl rounded-bl-xl object-cover"
-              />
-              <div className="flex gap-2 flex-col text-[1rem] ml-6 mt-4">
-                <div className="flex border-b border-gray-300 p-3 gap-2">
-                  <div>
-                    <p>
-                      <HiOutlineLocationMarker size={25} color="gray" />
-                    </p>
+            <Card className="">
+              <CardContent className="p-2 flex flex-row">
+                <img
+                  src={
+                    "https://www.theseedcollection.com.au/assets/full/B2-01.jpg?20201208112734"
+                  }
+                  alt="not"
+                  className="h-[20rem] w-[50rem] rounded-tl-xl rounded-bl-xl object-cover"
+                />
+                <div className="flex gap-2 flex-col text-[1rem] ml-6 mt-4">
+                  <div className="flex border-b border-gray-300 p-3 gap-2">
+                    <div>
+                      <p>
+                        <HiOutlineLocationMarker size={25} color="gray" />
+                      </p>
+                    </div>
+                    <div>
+                      <p> Wayward Winds Lavender Farm</p>
+                      <p>17005 Ne Courtney Rd</p>
+                      <p>Newberg, OR 97132</p>
+                    </div>
                   </div>
-                  <div>
-                    <p> Wayward Winds Lavender Farm</p>
-                    <p>17005 Ne Courtney Rd</p>
-                    <p>Newberg, OR 97132</p>
+                  <div className="flex border-b border-gray-300 p-3 gap-2">
+                    <div>
+                      <p>
+                        <MdOutlineDateRange size={25} color="gray" />
+                      </p>
+                    </div>
+                    <div>
+                      <p className="flex gap-2">
+                        <p className="font-bold">From:</p> Saturday, Jun 29,
+                        10:00 am
+                      </p>
+                      <p className="flex gap-2">
+                        <p className="font-bold">To:</p> Monday, Jul 29, 5:00 pm
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 p-3">
+                    <IoTicketOutline size={25} color="gray" />
+                    <p>Free</p>
                   </div>
                 </div>
-                <div className="flex border-b border-gray-300 p-3 gap-2">
-                  <div>
-                    <p>
-                      <MdOutlineDateRange size={25} color="gray" />
-                    </p>
-                  </div>
-                  <div>
-                    <p className="flex gap-2">
-                      <p className="font-bold">From:</p> Saturday, Jun 29, 10:00
-                      am
-                    </p>
-                    <p className="flex gap-2">
-                      <p className="font-bold">To:</p> Monday, Jul 29, 5:00 pm
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2 p-3">
-                  <IoTicketOutline size={25} color="gray" />
-                  <p>Free</p>
-                </div>
-              </div>
-            </div>
-            <Card className="mt-3">
+              </CardContent>
+            </Card>
+            <Card className="my-3">
               <CardContent className="p-2">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-gray-900 text-xl">What/Why:</p>
@@ -175,103 +177,107 @@ function Events() {
                 </p>
               </CardContent>
             </Card>
-            <div className="mt-[1rem] flex gap-3 flex-col">
-              <div className="justify-between flex items-center">
-                <button
-                  className="border flex gap-1 text-gray-500 font-bold p-1 rounded-sm items-center text-center"
-                  type="button"
-                >
-                  <RiShareBoxLine size={20} color="gray" />
-                  Official Website
-                </button>
-                <button
-                  className="border flex gap-1 text-gray-500 hover:text-black p-1 rounded-sm items-center text-center"
-                  type="button"
-                >
-                  <FiFlag size={17} color="gray" />
-                </button>
-              </div>
-              <p className="text-gray-900 text-xl">Discuss This Event</p>
-              <p className="text-[16px] flex gap-1 items-center text-[#0073bb] hover:underline cursor-pointer">
-                <MdOutlineMailOutline size={17} />
-                Email about event
-              </p>
-              <p>No one has commented on this event yet.</p>
-              <button
-                className="bg-green-800 text-white text-[16px] p-1 rounded-sm items-center w-[3rem] text-center"
-                type="button"
-              >
-                Post
-              </button>
-              <div className="bg-yellow-100 text-black p-3 rounded-md">
-                <p className="flex gap-1">
-                  To use talk boards you must first confirm your email address.
-                  Click the link in email wee sent. If you would like us to
-                  resend confirmation email, go{" "}
-                  <p className="text-[#0073bb] cursor-pointer">here.</p>
+            <Card>
+              <CardContent className=" p-2 my-2 flex gap-3 flex-col">
+                <div className="justify-between flex items-center">
+                  <button
+                    className="border flex gap-1 text-gray-500 font-bold p-1 rounded-sm items-center text-center"
+                    type="button"
+                  >
+                    <RiShareBoxLine size={20} color="gray" />
+                    Official Website
+                  </button>
+                  <button
+                    className="border flex gap-1 text-gray-500 hover:text-black p-1 rounded-sm items-center text-center"
+                    type="button"
+                  >
+                    <FiFlag size={17} color="gray" />
+                  </button>
+                </div>
+                <p className="text-gray-900 text-xl">Discuss This Event</p>
+                <p className="text-[16px] flex gap-1 items-center text-[#0073bb] hover:underline cursor-pointer">
+                  <MdOutlineMailOutline size={17} />
+                  Email about event
                 </p>
-              </div>
-            </div>
-            <div>
-              <h1 className="flex text-[#000] text-[17px] font-bold mt-5 gap-2">
-                User Details-{" "}
-              </h1>
-              <div className="grid grid-cols-3 justify-between border rounded-md p-5">
-                <div className="flex gap-2 items-center">
-                  {/* <FaUserAlt size={35} /> */}
-                  <img
-                    className="w-[2rem] h-15"
-                    src={
-                      "https://icon-library.com/images/username-icon-png/username-icon-png-0.jpg"
-                    }
-                    alt="logo"
-                  />
-                  <div className="flex">
-                    <p className="text-black text-[15px]">
-                      Name
-                      <p className="text-black flex text-[15px]">
-                        {/* {rooms.user_name} */}
-                      </p>
-                    </p>
-                  </div>
+                <p>No one has commented on this event yet.</p>
+                <button
+                  className="bg-green-800 text-white text-[16px] p-1 rounded-sm items-center w-[3rem] text-center"
+                  type="button"
+                >
+                  Post
+                </button>
+                <div className="bg-yellow-100 text-black p-3 rounded-md">
+                  <p className="flex gap-1">
+                    To use talk boards you must first confirm your email
+                    address. Click the link in email wee sent. If you would like
+                    us to resend confirmation email, go{" "}
+                    <p className="text-[#0073bb] cursor-pointer">here.</p>
+                  </p>
                 </div>
-                <div className="flex gap-2 items-center">
-                  {/* <FaPhoneVolume size={35} /> */}
-                  <img
-                    className="w-[2rem] h-13"
-                    src={
-                      "https://th.bing.com/th/id/OIP.5_xxdbU1J1GoLaVng_PBRQHaHa?rs=1&pid=ImgDetMain"
-                    }
-                    alt="logo"
-                  />
-                  <div className="flex">
-                    <p className="text-black text-[15px]">
-                      Phone number
-                      <p className="text-black flex text-[18px]">
-                        {/* {rooms.phone_number} */}
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className=" p-2">
+                <h1 className="flex text-[#000] text-[17px] font-bold mt-5 gap-2">
+                  User Details-{" "}
+                </h1>
+                <div className="grid grid-cols-3 justify-between border rounded-md p-5">
+                  <div className="flex gap-2 items-center">
+                    {/* <FaUserAlt size={35} /> */}
+                    <img
+                      className="w-[2rem] h-15"
+                      src={
+                        "https://icon-library.com/images/username-icon-png/username-icon-png-0.jpg"
+                      }
+                      alt="logo"
+                    />
+                    <div className="flex">
+                      <p className="text-black text-[15px]">
+                        Name
+                        <p className="text-black flex text-[15px]">
+                          {/* {rooms.user_name} */}
+                        </p>
                       </p>
-                    </p>
+                    </div>
                   </div>
-                </div>
+                  <div className="flex gap-2 items-center">
+                    {/* <FaPhoneVolume size={35} /> */}
+                    <img
+                      className="w-[2rem] h-13"
+                      src={
+                        "https://th.bing.com/th/id/OIP.5_xxdbU1J1GoLaVng_PBRQHaHa?rs=1&pid=ImgDetMain"
+                      }
+                      alt="logo"
+                    />
+                    <div className="flex">
+                      <p className="text-black text-[15px]">
+                        Phone number
+                        <p className="text-black flex text-[18px]">
+                          {/* {rooms.phone_number} */}
+                        </p>
+                      </p>
+                    </div>
+                  </div>
 
-                <div className="flex gap-2 items-center">
-                  {/* <MdOutlineEmail size={35} /> */}
-                  <img
-                    className="w-[2rem] h-13"
-                    src={
-                      "https://th.bing.com/th/id/OIP.XIRvuujS5JE0LJYwXfvxwQHaHa?rs=1&pid=ImgDetMain"
-                    }
-                    alt="logo"
-                  />
-                  <div className="flex">
-                    <p className="text-black text-[15px]">
-                      Email
-                      {/* <p className="text-black flex text-[18px]">{rooms.email}</p> */}
-                    </p>
+                  <div className="flex gap-2 items-center">
+                    {/* <MdOutlineEmail size={35} /> */}
+                    <img
+                      className="w-[2rem] h-13"
+                      src={
+                        "https://th.bing.com/th/id/OIP.XIRvuujS5JE0LJYwXfvxwQHaHa?rs=1&pid=ImgDetMain"
+                      }
+                      alt="logo"
+                    />
+                    <div className="flex">
+                      <p className="text-black text-[15px]">
+                        Email
+                        {/* <p className="text-black flex text-[18px]">{rooms.email}</p> */}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
           <div className="mt-5">
             <img
