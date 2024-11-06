@@ -15,6 +15,7 @@ import { RoomService } from '../service/room.service';
 import { CreateRoomDto, sendEmailDto, UpdateRoomDto } from '../dto';
 import { JwtGuard } from 'src/auth/guard';
 import { get } from 'mongoose';
+import { IRoom } from '../schemas';
 
 @Controller('room')
 export class RoomController {
@@ -97,5 +98,11 @@ export class RoomController {
       return { msg: 'No area available' };
     }
     return this.roomService.countRoomPostedInLast24Hours(area);
+  }
+
+  //get duplicate
+  @Get('duplicates')
+  async getDuplicateRooms(): Promise<IRoom[]> {
+    return await this.roomService.findDuplicateRooms();
   }
 }

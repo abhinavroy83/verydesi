@@ -322,4 +322,21 @@ export class RoomService {
       throw new Error('Error sending email.');
     }
   }
+
+  //get the list of duplicate room
+  async findDuplicateRooms() {
+    const duplicates = await this.roomModel.aggregate([
+      {
+        $group: {
+          _id: { title: '$title', address: '$address' },
+          count: { $sum: 1 },
+          rooms: { $push: '$$ROOT' },
+        },
+      },
+      {
+        $match: { count: { $gt: 1 } },
+      },
+    ]);
+    return duplicates.map((d) => d.rooms).flat();
+  }
 }
