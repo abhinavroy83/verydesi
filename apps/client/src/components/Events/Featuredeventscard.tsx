@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function Eventcard() {
   return (
-    <Link href={`/event`}>
+    <Link href={`/165464`}>
       <Card className="h-full transition-shadow hover:shadow-md w-full sm:w-[100%] max-w-sm mx-auto font-sans">
         <CardHeader className="p-0">
           <img
