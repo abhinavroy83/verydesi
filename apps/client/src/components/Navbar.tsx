@@ -324,7 +324,7 @@ export default function Navbar() {
               </Button>
               <Button
                 onClick={() => {
-                  router.push("/");
+                  router.push("/business");
                 }}
                 variant="ghost"
                 className="text-white hover:bg-white group text-[15px] transition duration-300 ease-in-out"
