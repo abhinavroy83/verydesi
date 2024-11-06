@@ -101,6 +101,7 @@ export default function Component() {
     <HomeLayout>
       <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3 font-sans">
         <h2 className="text-2xl font-bold mb-4">Categories</h2>
+       
         <div className="flex flex-wrap gap-2">
           {visibleCategories.map((category) => (
             <Badge
@@ -116,7 +117,7 @@ export default function Component() {
             variant="outline"
             size="sm"
             // onClick={() => setShowAll(!showAll)}
-            onClick={() => router.push('business-all-category')}
+            onClick={() => router.push("business-all-category")}
             className=""
           >
             {showAll ? (
@@ -178,7 +179,8 @@ export default function Component() {
               </div>
 
               <button
-                type="submit"
+                type="button"
+                onClick={() => router.push("post-business")}
                 className="rounded-md bg-green-800 whitespace-nowrap py-2 px-3 lg:px-2 text-[1rem] lg:text-[1.1rem] items-center text-white shadow-sm shadow-[#ccc] hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
               >
                 Post Business
