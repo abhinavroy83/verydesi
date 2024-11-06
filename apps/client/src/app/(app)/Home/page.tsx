@@ -20,7 +20,7 @@ import Featuredeventscard from "@/components/Events/Featuredeventscard";
 
 function WeatherCard() {
   return (
-    <Card className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white mb-4">
+    <Card className="bg-gradient-to-r from-cyan-700 to-blue-700 text-white mb-4">
       <CardHeader className="flex justify-between items-center pb-2">
         <CardTitle className="text-lg font-normal">
           SAINT LOUIS, MISSOURI
@@ -104,8 +104,11 @@ export default function Home() {
   }
 
   return (
-    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6">
+    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans">
       <div className="w-full lg:w-4/5 mr-4">
+        <h2 className="text-[25px] font-sans font-bold text-gray-800">
+          Events{" "}
+        </h2>
         <div className="w-full max-w-[79rem] mt-3 mx-auto">
           <Carousel
             opts={{
@@ -127,6 +130,9 @@ export default function Home() {
           </Carousel>
         </div>
         <div>Featured Rooms</div>
+        <h2 className="text-[25px] font-sans font-bold text-gray-800">
+          Rooms & Roommates{" "}
+        </h2>
         <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
           {featuredRooms?.map((room, index) => (
             <FeaturedCard2 key={index} room={room} />
@@ -136,11 +142,11 @@ export default function Home() {
       {/* //this is the right side */}
 
       <div className="w-full mt-2 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
-        <div className="max-w-md mx-auto p-4">
+        <div className="max-w-md mx-auto">
           <WeatherCard />
           <Card>
             <CardContent className="p-0">
-              <h2 className="text-2xl font-bold p-4 pb-2">Services &</h2>
+              <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2>
               <div className="bg-yellow-300 rounded-b-lg p-4">
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                   <div>
