@@ -163,7 +163,7 @@ export default function Component() {
                           onClick={() => handleSelect(option)}
                           className={`${
                             selectedOption === option
-                              ? "bg-blue-100 text-gray-900"
+                              ? "bg-white text-gray-900"
                               : "text-gray-700"
                           } block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900`}
                           role="option"

@@ -36,18 +36,20 @@ export function FeaturedBusinessCard() {
                     />
                   ))}
                 </div>
-                <span className="ml-2 text-gray-600">4.5 (11 reviews)</span>
+                <span className="ml-2 text-gray-600 text-[17px]">
+                  4.5 (11 reviews)
+                </span>
               </div>
-              <p className=" text-gray-600 mt-1">
+              <p className=" text-gray-600 mt-1 text-[17px]">
                 2808 Rt North Brunswick, New Jersey
               </p>
-              <p className=" font-semibold text-gray-800 mt-1">
+              <p className=" font-semibold text-gray-800 mt-1 text-[17px]">
                 602-600-0217 (Pin: 76065)
               </p>
             </div>
             <Heart className="w-6 h-6 text-gray-900 hover:fill-red-500 hover:text-red-500 cursor-pointer" />
           </div>
-          <div className="flex gap-2 mt-2">
+          <div className="flex flex-wrap gap-2 mt-2">
             {["Psychiatrists", "Cardiologists", "Gastroenterologists"].map(
               (tag) => (
                 <span
