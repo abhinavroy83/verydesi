@@ -32,8 +32,7 @@ export default function Footer() {
         <div className=" mx-auto mt-8">
           <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
             <p>hi</p>
-            {/* <Link to={"/"} className="bg-cover bg-center flex">
-          </div> */}
+          
           </div>
           <div className=" w-full bg-[#131A22] border-t-7 border-[#232f3e]">
             <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto bg-[#131A22] ">
