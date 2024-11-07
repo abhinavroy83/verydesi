@@ -68,7 +68,7 @@ export default function Component() {
           className="flex  mb-4 text-sm text-gray-500 px-4"
           aria-label="Breadcrumb"
         >
-          <ol className="inline-flex items-center space-x-1 md:space-x-3 mt-4">
+          <ol className="inline-flex items-center space-x-[-1px] mt-4">
             <li className="inline-flex items-center">
               <Link
                 href="/dashboard"
@@ -79,7 +79,7 @@ export default function Component() {
             </li>
             <li>
               <div className="flex items-center">
-                <ChevronRight className="w-4 h-4 mx-1" />
+                <ChevronRight className="w-4 h-4" />
                 <Link
                   href="/dashboard/user"
                   className="ml-1 hover:text-gray-700"
