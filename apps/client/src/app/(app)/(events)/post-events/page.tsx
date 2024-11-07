@@ -165,13 +165,8 @@ export default function EventForm() {
     if (Object.keys(addressComponents).length > 0) {
       form.setValue(
         "address",
-        `${addressComponents.street_number || ""} ${addressComponents.street || ""}`.trim()
+        `${addressComponents.street_number} ${addressComponents.street}`
       );
-
-      form.setValue("city", addressComponents.city);
-      form.setValue("state", addressComponents.state);
-      form.setValue("zipCode", addressComponents.zipCode);
-      form.setValue("country", addressComponents.country);
     }
   }, [addressComponents, form]);
 
@@ -202,7 +197,7 @@ export default function EventForm() {
   };
   const sections = [
     { id: "basic-info", label: "Basic Information" },
-    { id: "Address", label: "Address" },
+    { id: "Addrs", label: "Address" },
     { id: "datetime", label: "Date and time" },
     { id: "availability", label: "Category & Language" },
     { id: "Artist", label: "Organizer & Artist details" },
@@ -369,6 +364,26 @@ export default function EventForm() {
                         />
                         <FormField
                           control={form.control}
+                          name="address"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                              <FormLabel className="md:w-1/4 text-md font-medium">
+                                Physical Address
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="text"
+                                  id="address"
+                                  placeholder="Enter business address"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
                           name="eventType"
                           render={({ field }) => (
                             <FormItem>
@@ -408,7 +423,7 @@ export default function EventForm() {
                   </div>
                   <div
                     ref={(el) => {
-                      sectionRefs.current["Address"] = el;
+                      sectionRefs.current["Addrs"] = el;
                     }}
                   >
                     <h2 className="text-2xl font-bold py-4">Address</h2>
@@ -423,12 +438,7 @@ export default function EventForm() {
                                   "Enter a new Venue / select from existing venue",
                                 placeholder: "Enter the venue's name",
                               },
-                              {
-                                name: "address",
-                                label: "Address *",
-                                placeholder: "Enter address",
-                                id: "address",
-                              },
+
                               {
                                 name: "city",
                                 label: "City",
