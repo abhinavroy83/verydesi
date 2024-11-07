@@ -430,7 +430,7 @@ export default function RoomDetails({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-2">
             <div className="flex lg:flex-row flex-col lg:items-center gap-2 text-xl font-bold text-gray-600">
-              <p className="text-gray-600">{roomData?.postingincity}, OR |</p>
+              <p className="text-gray-600">{roomData?.city}, OR |</p>
               <h1 className="text-xl font-bold text-gray-600 whitespace-nowrap">
                 Posted By: {roomData?.user_name}{" "}
               </h1>

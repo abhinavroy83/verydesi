@@ -328,15 +328,28 @@ export class RoomService {
     const duplicates = await this.roomModel.aggregate([
       {
         $group: {
-          _id: { title: '$title', address: '$address' },
+          _id: {
+            Title: '$Title',
+            address: '$address',
+            postingincity: '$postingincity',
+          },
           count: { $sum: 1 },
-          rooms: { $push: '$$ROOT' },
         },
       },
       {
         $match: { count: { $gt: 1 } },
       },
+      {
+        $project: {
+          _id: 0,
+          Title: '$_id.Title',
+          address: '$_id.address',
+          postingincity: '$_id.postingincity',
+          count: 1,
+        },
+      },
     ]);
-    return duplicates.map((d) => d.rooms).flat();
+
+    return duplicates;
   }
 }
