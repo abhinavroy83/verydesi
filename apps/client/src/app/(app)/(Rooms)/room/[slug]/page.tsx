@@ -310,10 +310,10 @@ export default function RoomDetails({
     <>
       <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 pb-0 mx-auto py-8 mt-[6rem] font-sans">
         <div className="flex flex-col lg:flex-row space-x-2 w-full justify-between">
-          <div className="">
+          <div className="flex gap-0">
             <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
+              <BreadcrumbList className="flex items-center space-x-[-7px]">
+                <BreadcrumbItem className="">
                   <BreadcrumbLink
                     href="/"
                     className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
@@ -330,7 +330,7 @@ export default function RoomDetails({
                     href="/rooms"
                     className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
                   >
-                    <Hotel className="w-4 h-4 mr-2" />
+                    <Hotel className="w-4 h-6 mr-2" />
                     <span className="font-medium">Rooms</span>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
