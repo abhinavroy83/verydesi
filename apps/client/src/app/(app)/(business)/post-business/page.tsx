@@ -134,7 +134,7 @@ export default function BusinessForm() {
       );
     }
   }, [addressComponents, form]);
-  
+
   const onSubmit = (data: FormData) => {
     console.log(data);
     // Here you would typically send the data to your backend
@@ -867,25 +867,7 @@ export default function BusinessForm() {
                 <h2 className="text-2xl font-bold mb-4">
                   Current Sales/Discounts
                 </h2>
-                <FormField
-                  control={form.control}
-                  name="sales.description"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Discount/Sale Description
-                      </FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Enter sale description"
-                          className="resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <div className="grid grid-cols-2 gap-4 mt-5">
                   <FormField
                     control={form.control}
@@ -1027,6 +1009,34 @@ export default function BusinessForm() {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="sales.description"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Discount/Sale Description
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Enter sale description"
+                          className="resize-none"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="flex items-center space-x-2">
+                  <Checkbox />
+                  <label
+                    htmlFor={``}
+                    className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    No Discounts/Sales available at this time
+                  </label>
+                </div>
               </div>
 
               <Button className="text-[15px] bg-green-800" type="submit">
