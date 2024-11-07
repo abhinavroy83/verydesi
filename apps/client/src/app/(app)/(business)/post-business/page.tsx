@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -50,6 +50,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 
 const formSchema = z.object({
   userName: z.string().min(1, "Name is required"),
@@ -109,6 +110,7 @@ export default function BusinessForm() {
   const [images, setImages] = useState<File[]>([]);
   const [salesPosters, setSalesPosters] = useState<File[]>([]);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const { addressComponents, location } = useGoogleAutocomplete();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -124,7 +126,15 @@ export default function BusinessForm() {
       },
     },
   });
-
+  useEffect(() => {
+    if (Object.keys(addressComponents).length > 0) {
+      form.setValue(
+        "address",
+        `${addressComponents.street_number} ${addressComponents.street}`
+      );
+    }
+  }, [addressComponents, form]);
+  
   const onSubmit = (data: FormData) => {
     console.log(data);
     // Here you would typically send the data to your backend
@@ -309,7 +319,7 @@ export default function BusinessForm() {
 
         <main className="flex-1 p-2 border overflow-y-auto">
           <div className="flex items-center gap-2 justify-center">
-            <h1 className="text-2xl font-bold py-4">Post Room In</h1>
+            <h1 className="text-2xl font-bold py-4">Post Bussiness In</h1>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -392,7 +402,7 @@ export default function BusinessForm() {
                   name="businessType"
                   render={({ field }) => (
                     <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
+                      <FormLabel className="md:w-1/5 text-md font-medium">
                         Type of Business
                       </FormLabel>
                       <FormControl>
@@ -471,6 +481,8 @@ export default function BusinessForm() {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          type="text"
+                          id="address"
                           placeholder="Enter business address"
                           {...field}
                         />
@@ -479,7 +491,7 @@ export default function BusinessForm() {
                     </FormItem>
                   )}
                 />
-                <div className="grid grid-cols-1 gap-4">
+                <div className="space-y-4">
                   {[
                     { name: "city", label: "City" },
                     { name: "state", label: "State" },
@@ -491,8 +503,8 @@ export default function BusinessForm() {
                       control={form.control}
                       name={fieldInfo.name as keyof FormData}
                       render={({ field }) => (
-                        <FormItem className="flex flex-col md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                          <FormLabel className="md:w-1/4 text-md font-medium">
+                        <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                          <FormLabel className=" md:w-1/5 text-md font-medium">
                             {fieldInfo.label}
                           </FormLabel>
                           <div className="flex-grow">
