@@ -305,15 +305,15 @@ export default function EventForm() {
         <main className="flex-1 p-2 border overflow-y-auto">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="flex items-center justify-center space-y-4 w-full mx-auto">
-                <h1 className="text-[24px] font-bold text-center">
+              <div className="flex gap-2 items-center justify-center space-y-4 w-full mx-auto">
+                <h1 className="text-[24px] font-bold text-center mt-3">
                   Post Event In
                 </h1>
                 <FormField
                   control={form.control}
                   name="eventpostingcity"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col py-2 space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
                       <FormControl>
                         <Select
                           onValueChange={field.onChange}
