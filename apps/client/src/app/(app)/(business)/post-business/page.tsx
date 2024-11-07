@@ -38,6 +38,7 @@ import {
   Briefcase,
   CalendarIcon,
   ChevronRight,
+  Clock,
   Home,
   Upload,
   X,
@@ -78,6 +79,21 @@ const formSchema = z.object({
     couponCodes: z.string().optional(),
   }),
 });
+interface DaySchedule {
+  startTime: string;
+  endTime: string;
+  is24Hours: boolean;
+  isClosed: boolean;
+}
+
+type WeekSchedule = {
+  [key in
+    | "monday"
+    | "tuesday"
+    | "wednesday"
+    | "thursday"
+    | "friday"]: DaySchedule;
+};
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -142,7 +158,105 @@ export default function BusinessForm() {
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
+  const [schedule, setSchedule] = useState<WeekSchedule>({
+    monday: {
+      startTime: "12:00 AM",
+      endTime: "12:00 AM",
+      is24Hours: false,
+      isClosed: false,
+    },
+    tuesday: {
+      startTime: "12:00 AM",
+      endTime: "12:00 AM",
+      is24Hours: false,
+      isClosed: false,
+    },
+    wednesday: {
+      startTime: "12:00 AM",
+      endTime: "12:00 AM",
+      is24Hours: false,
+      isClosed: false,
+    },
+    thursday: {
+      startTime: "12:00 AM",
+      endTime: "12:00 AM",
+      is24Hours: false,
+      isClosed: false,
+    },
+    friday: {
+      startTime: "12:00 AM",
+      endTime: "12:00 AM",
+      is24Hours: false,
+      isClosed: false,
+    },
+  });
 
+  const timeOptions = [
+    "12:00 AM",
+    "12:30 AM",
+    "1:00 AM",
+    "1:30 AM",
+    "2:00 AM",
+    "2:30 AM",
+    "3:00 AM",
+    "3:30 AM",
+    "4:00 AM",
+    "4:30 AM",
+    "5:00 AM",
+    "5:30 AM",
+    "6:00 AM",
+    "6:30 AM",
+    "7:00 AM",
+    "7:30 AM",
+    "8:00 AM",
+    "8:30 AM",
+    "9:00 AM",
+    "9:30 AM",
+    "10:00 AM",
+    "10:30 AM",
+    "11:00 AM",
+    "11:30 AM",
+    "12:00 PM",
+    "12:30 PM",
+    "1:00 PM",
+    "1:30 PM",
+    "2:00 PM",
+    "2:30 PM",
+    "3:00 PM",
+    "3:30 PM",
+    "4:00 PM",
+    "4:30 PM",
+    "5:00 PM",
+    "5:30 PM",
+    "6:00 PM",
+    "6:30 PM",
+    "7:00 PM",
+    "7:30 PM",
+    "8:00 PM",
+    "8:30 PM",
+    "9:00 PM",
+    "9:30 PM",
+    "10:00 PM",
+    "10:30 PM",
+    "11:00 PM",
+    "11:30 PM",
+  ];
+
+  const updateSchedule = (
+    day: keyof WeekSchedule,
+    field: keyof DaySchedule,
+    value: string | boolean
+  ) => {
+    setSchedule((prev) => ({
+      ...prev,
+      [day]: {
+        ...prev[day],
+        [field]: value,
+        ...(field === "is24Hours" && value === true && { isClosed: false }),
+        ...(field === "isClosed" && value === true && { is24Hours: false }),
+      },
+    }));
+  };
   return (
     <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-6 mt-[8rem] font-sans">
       <div className="py-1 mb-3">
@@ -173,8 +287,8 @@ export default function BusinessForm() {
         </Breadcrumb>
       </div>
       <div className=" flex">
-        <aside className="w-64 bg-[#232f3e] p-4 text-white ">
-          <nav className="hidden  lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
+        <aside className="hidden lg:block w-64 bg-[#232f3e] p-4 text-white ">
+          <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
             <ul className="space-y-2 ">
               {sections.map((section) => (
                 <li key={section.id}>
@@ -198,12 +312,12 @@ export default function BusinessForm() {
             <h1 className="text-2xl font-bold py-4">Post Room In</h1>
           </div>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div
                 ref={(el) => {
                   sectionRefs.current["basic-info"] = el;
                 }}
-                className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
+                className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200 space-y-6"
               >
                 {" "}
                 <h2 className="text-2xl font-bold mb-4">Basic Information</h2>
@@ -211,8 +325,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="userName"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name of User</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Name of User
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder="Enter your name" {...field} />
                       </FormControl>
@@ -224,8 +340,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="userPhone"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Phone of User</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Phone of User
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Enter your phone number"
@@ -240,8 +358,8 @@ export default function BusinessForm() {
                   control={form.control}
                   name="businessName"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
                         Name of Business (Doing Business As)
                       </FormLabel>
                       <FormControl>
@@ -255,8 +373,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="legalName"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Registered Legal Name of Business</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Registered Legal Name of Business
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Enter legal business name"
@@ -271,8 +391,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="businessType"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Type of Business</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Type of Business
+                      </FormLabel>
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
@@ -305,8 +427,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="categories"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Categories</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Categories
+                      </FormLabel>
                       <FormControl>
                         <Select
                           onValueChange={(value) =>
@@ -330,9 +454,9 @@ export default function BusinessForm() {
                           </SelectContent>
                         </Select>
                       </FormControl>
-                      <FormDescription>
+                      {/* <FormDescription>
                         Selected categories: {field.value.join(", ")}
-                      </FormDescription>
+                      </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -341,8 +465,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="address"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Physical Address</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Physical Address
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Enter business address"
@@ -353,12 +479,41 @@ export default function BusinessForm() {
                     </FormItem>
                   )}
                 />
+                <div className="grid grid-cols-1 gap-4">
+                  {[
+                    { name: "city", label: "City" },
+                    { name: "state", label: "State" },
+                    { name: "zipCode", label: "Zipcode" },
+                    { name: "country", label: "Country" },
+                  ].map((fieldInfo) => (
+                    <FormField
+                      key={fieldInfo.name}
+                      control={form.control}
+                      name={fieldInfo.name as keyof FormData}
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                          <FormLabel className="md:w-1/4 text-md font-medium">
+                            {fieldInfo.label}
+                          </FormLabel>
+                          <div className="flex-grow">
+                            <FormControl>
+                              <Input {...field} value={field.value as string} />
+                            </FormControl>
+                            <FormMessage />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  ))}
+                </div>
                 <FormField
                   control={form.control}
                   name="website"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Website of business</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Website of business
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Enter business website"
@@ -373,8 +528,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="phone"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Phone number of business</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Phone number of business
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Enter business phone number"
@@ -391,7 +548,7 @@ export default function BusinessForm() {
                 ref={(el) => {
                   sectionRefs.current["verification"] = el;
                 }}
-                className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
+                className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200 space-y-6"
               >
                 <h2 className="text-2xl font-bold mb-4">
                   Business Verification
@@ -400,8 +557,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="verificationMethod"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Verification Method</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Verification Method
+                      </FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -434,8 +593,10 @@ export default function BusinessForm() {
                     control={form.control}
                     name="einNumber"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>EIN Number</FormLabel>
+                      <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                        <FormLabel className="md:w-1/4 text-md font-medium">
+                          EIN Number
+                        </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Enter 9-digit EIN"
@@ -448,7 +609,7 @@ export default function BusinessForm() {
                     )}
                   />
                 )}
-                <div className="mt-4">
+                <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
                   <Label htmlFor="verificationDocument">
                     Upload Verification Document
                   </Label>
@@ -456,7 +617,7 @@ export default function BusinessForm() {
                     id="verificationDocument"
                     type="file"
                     accept=".pdf"
-                    className="mt-1"
+                    className="text-md font-medium"
                   />
                 </div>
               </div>
@@ -465,15 +626,17 @@ export default function BusinessForm() {
                 ref={(el) => {
                   sectionRefs.current["details"] = el;
                 }}
-                className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
+                className="bg-white lg:p-[2rem] p- rounded-xl shadow-md border border-gray-200 space-y-6"
               >
                 <h2 className="text-2xl font-bold mb-4">Business Details</h2>
                 <FormField
                   control={form.control}
                   name="openHours"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Open Hours/Days</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Open Hours/Days
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder="Enter open hours" {...field} />
                       </FormControl>
@@ -481,12 +644,117 @@ export default function BusinessForm() {
                     </FormItem>
                   )}
                 />
+                <div className="w-full max-w-[740px] bg-white rounded-lg space-y-6">
+                  <div className="flex items-center gap-2 mb-6">
+                    <Clock className="w-5 h-5 text-gray-500" />
+                    <h2 className="text-lg font-semibold">
+                      When are you open?
+                    </h2>
+                  </div>
+
+                  {Object.entries(schedule).map(([day, daySchedule]) => (
+                    <div
+                      key={day}
+                      className="grid grid-cols-[1fr,auto,auto,1fr] items-center gap-2"
+                    >
+                      <Label className="capitalize font-medium">{day}</Label>
+
+                      <Select
+                        disabled={daySchedule.is24Hours || daySchedule.isClosed}
+                        value={daySchedule.startTime}
+                        onValueChange={(value) =>
+                          updateSchedule(
+                            day as keyof WeekSchedule,
+                            "startTime",
+                            value
+                          )
+                        }
+                      >
+                        <SelectTrigger className="w-[110px]">
+                          <SelectValue placeholder="Start time" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {timeOptions.map((time) => (
+                            <SelectItem key={time} value={time}>
+                              {time}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      <Select
+                        disabled={daySchedule.is24Hours || daySchedule.isClosed}
+                        value={daySchedule.endTime}
+                        onValueChange={(value) =>
+                          updateSchedule(
+                            day as keyof WeekSchedule,
+                            "endTime",
+                            value
+                          )
+                        }
+                      >
+                        <SelectTrigger className="w-[110px]">
+                          <SelectValue placeholder="End time" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {timeOptions.map((time) => (
+                            <SelectItem key={time} value={time}>
+                              {time}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      <div className="space-y-2 ml-4">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`${day}-24h`}
+                            checked={daySchedule.is24Hours}
+                            onCheckedChange={(checked) =>
+                              updateSchedule(
+                                day as keyof WeekSchedule,
+                                "is24Hours",
+                                Boolean(checked)
+                              )
+                            }
+                          />
+                          <label
+                            htmlFor={`${day}-24h`}
+                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Open 24 hours
+                          </label>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`${day}-closed`}
+                            checked={daySchedule.isClosed}
+                            onCheckedChange={(checked) =>
+                              updateSchedule(
+                                day as keyof WeekSchedule,
+                                "isClosed",
+                                Boolean(checked)
+                              )
+                            }
+                          />
+                          <label
+                            htmlFor={`${day}-closed`}
+                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Closed
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
                 <FormField
                   control={form.control}
                   name="description"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
                         About/Description of Business/Service
                       </FormLabel>
                       <FormControl>
@@ -504,8 +772,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="languages"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Languages spoken</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Languages spoken
+                      </FormLabel>
                       <FormControl>
                         <Select
                           onValueChange={(value) =>
@@ -525,9 +795,9 @@ export default function BusinessForm() {
                           </SelectContent>
                         </Select>
                       </FormControl>
-                      <FormDescription>
+                      {/* <FormDescription>
                         Selected languages: {field.value.join(", ")}
-                      </FormDescription>
+                      </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -580,7 +850,7 @@ export default function BusinessForm() {
                 ref={(el) => {
                   sectionRefs.current["sales"] = el;
                 }}
-                className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
+                className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200 space-y-6"
               >
                 <h2 className="text-2xl font-bold mb-4">
                   Current Sales/Discounts
@@ -589,8 +859,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="sales.description"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Discount/Sale Description</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Discount/Sale Description
+                      </FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Enter sale description"
@@ -608,7 +880,9 @@ export default function BusinessForm() {
                     name="sales.startDate"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Sales Start Date</FormLabel>
+                        <FormLabel className="md:w-1/4 text-md font-medium">
+                          Sales Start Date
+                        </FormLabel>
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
@@ -650,7 +924,9 @@ export default function BusinessForm() {
                     name="sales.endDate"
                     render={({ field }) => (
                       <FormItem className="flex flex-col ">
-                        <FormLabel>Sales End Date</FormLabel>
+                        <FormLabel className="md:w-1/4 text-md font-medium">
+                          Sales End Date
+                        </FormLabel>
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
@@ -689,20 +965,21 @@ export default function BusinessForm() {
                   />
                 </div>
                 <div className="space-y-2 mt-4">
-                  <Label htmlFor="salesPosters">
+                  <Label className="text-[16px]" htmlFor="salesPosters">
                     Posters of Sales/Discounts
                   </Label>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-9">
                     <Input
+                      className=" text-md font-medium"
                       id="salesPosters"
                       type="file"
                       accept="image/*"
                       multiple
                       onChange={(e) => handleImageUpload(e, setSalesPosters)}
                     />
-                    <p className="text-sm text-gray-500">
+                    {/* <p className="text-sm text-gray-500">
                       {salesPosters.length} / 5 images selected
-                    </p>
+                    </p> */}
                   </div>
                   <div className="grid grid-cols-5 gap-4">
                     {salesPosters.map((poster, index) => (
@@ -727,8 +1004,10 @@ export default function BusinessForm() {
                   control={form.control}
                   name="sales.couponCodes"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Coupon Codes</FormLabel>
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Coupon Codes
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder="Enter coupon codes" {...field} />
                       </FormControl>
@@ -738,7 +1017,9 @@ export default function BusinessForm() {
                 />
               </div>
 
-              <Button className="text-[15px] bg-green-800" type="submit">Submit</Button>
+              <Button className="text-[15px] bg-green-800" type="submit">
+                Submit
+              </Button>
             </form>
           </Form>
         </main>
