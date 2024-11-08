@@ -288,13 +288,13 @@ export default function RoomDetails({
 
     fetchWishStatus();
   }, [id]);
+
   const formatUrl = () => {
     const formattedTitle = roomData?.Title.toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
     return `${formattedTitle}-${roomData?._id}`;
   };
-
   if (loading) {
     return (
       <div>
@@ -378,7 +378,7 @@ export default function RoomDetails({
                 className="rounded-full flex items-center"
               >
                 <ShareButton
-                  shareLink={`https://verydesi.com/room/${formatUrl}}`}
+                  shareLink={`https://verydesi.com/room/${formatUrl()}`}
                 />
                 <p>Share</p>
               </Button>

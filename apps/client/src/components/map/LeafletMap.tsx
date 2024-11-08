@@ -186,7 +186,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
                 align-items: center; 
                 justify-content: center; 
                 box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);">
-                <img src="${markerIcon}" style="width: 25px; height: 25px;" />
+                <img src="https://res.cloudinary.com/druohnmyv/image/upload/v1731074132/t9bwal2ivbhxijoafnsb.png" style="width: 25px; height: 25px;" />
               </div>
             `,
             iconSize: [40, 40],
