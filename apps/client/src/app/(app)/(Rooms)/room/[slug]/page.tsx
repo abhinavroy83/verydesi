@@ -80,7 +80,7 @@ export default function RoomDetails({
   const router = useRouter();
   const { slug } = useParams<{ slug: string }>();
   const id = slug.split("-").pop();
-  console.log("rooms id", id)
+  // console.log("rooms id", id)
   // const id = searchParams.id;
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
@@ -624,7 +624,7 @@ export default function RoomDetails({
 
             {roomData?.Amenities_include && (
               <Card className="">
-                <CardHeader evclassName="p-3">
+                <CardHeader className="p-3">
                   <CardTitle>Amenities Included</CardTitle>
                 </CardHeader>
                 <CardContent className="p-3">
