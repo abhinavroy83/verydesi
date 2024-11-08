@@ -40,9 +40,8 @@ export default function Component() {
     venueName: string;
     description: string;
     images: string[];
-    address:string;
-    state:string;
-
+    address: string;
+    state: string;
   }
   const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
   const [nonFeaturedEvents, setNonFeaturedEvents] = useState<Event[]>([]);
@@ -63,21 +62,31 @@ export default function Component() {
         const response = await axios.get(
           `https://apiv2.verydesi.com/event/getEventByArea/${city}`
         );
-        console.log("raw resp", response)
+        console.log("raw resp", response);
         const events: Event[] = response.data;
-        console.log("events",events)
+        console.log("events", events);
 
         const filteredFeaturedEvents = events
-          .filter((event) => event.eventpostingcity === city && new Date(event.startDate) >= new Date())
-          .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+          .filter(
+            (event) =>
+              event.eventpostingcity === city &&
+              new Date(event.startDate) >= new Date()
+          )
+          .sort(
+            (a, b) =>
+              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+          )
           .slice(0, 10); // Takes only the first 10 for the carousel
-        console.log("featured events",filteredFeaturedEvents)
+        console.log("featured events", filteredFeaturedEvents);
 
-    // Separate and sort non-featured events by nearest date
-    const remainingEvents = events
-    .filter((event) => !filteredFeaturedEvents.includes(event))
-    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
-        console.log("remaining events",remainingEvents)
+        // Separate and sort non-featured events by nearest date
+        const remainingEvents = events
+          .filter((event) => !filteredFeaturedEvents.includes(event))
+          .sort(
+            (a, b) =>
+              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+          );
+        console.log("remaining events", remainingEvents);
         setFeaturedEvents(filteredFeaturedEvents);
         setNonFeaturedEvents(remainingEvents);
       } catch (error) {
@@ -157,16 +166,18 @@ export default function Component() {
             }}
             className=""
           >
-
-      <CarouselContent>
-        {featuredEvents.map((event, index) => (
-          <CarouselItem key={event._id} className="md:basis-1/2 lg:basis-1/4">
-            <div className="w-full">
-              <Featuredeventscard key={event._id} event={event} />
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
+            <CarouselContent>
+              {featuredEvents.map((event, index) => (
+                <CarouselItem
+                  key={event._id}
+                  className="md:basis-1/2 lg:basis-1/4"
+                >
+                  <div className="w-full">
+                    <Featuredeventscard key={event._id} event={event} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
             <CarouselPrevious className="absolute left-[-12] top-1/2 -translate-y-1/2" />
             <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
           </Carousel>
