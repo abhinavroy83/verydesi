@@ -25,6 +25,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Featuredeventscard from "@/components/Events/Featuredeventscard";
+import { Button } from "@/components/ui/button";
 
 function WeatherCard() {
   return (
@@ -89,6 +90,16 @@ const rightColumnServices = [
   "Taxes & Finance",
   "Desi Associations",
 ];
+const recommendedSearches = [
+  "Empty Events You need",
+  "India Hire Young",
+  "Supporting Coaching Leading Lea...",
+  "Zin WeAreHire Employ...",
+  "Home That Are Hiring ...",
+  "More Graduate Online",
+  "Linda Bernardi Sales C...",
+  "Write Graduate Online",
+];
 export default function Home() {
   const { currentCity, status } = useAuthStore();
   const { Room, loading, error } = useRoomFetching(currentCity || "Portland");
@@ -112,7 +123,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans">
+    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[23rem] mb-[32rem]">
       <div className="w-full lg:w-4/5 mr-4">
         <h2 className="text-[25px] font-sans font-bold text-gray-800">
           Events{" "}
@@ -221,6 +232,24 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+          <Card className="w-full max-w-3xl mt-6">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-bold">
+                MOST RECENT SEARCHES
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-1">
+              {recommendedSearches.map((search, index) => (
+                <Button
+                  key={index}
+                  variant="link"
+                  className="h-auto p-0 text-sm font-normal text-blue-500 hover:text-blue-700"
+                >
+                  {search}
+                </Button>
+              ))}
             </CardContent>
           </Card>
         </div>

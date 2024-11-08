@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="lg:mt-9 mt-6 w-full font-sans">
        
 
-        <div
+        {/* <div
           onClick={() => {
             window.open("https://redletterweb.com/", "_blank");
           }}
@@ -25,7 +25,7 @@ export default function Footer() {
               className="object-cover"
             />
           </div>
-        </div>
+        </div> */}
 
         <div className=" mx-auto mt-8">
           <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
