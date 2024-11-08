@@ -2,8 +2,7 @@
 
 import { HomeLayout } from "@/components/layout/Home";
 
-import { FeaturedBusinessCard } from "@/components/Business";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import Featuredeventscard from "@/components/Events/Featuredeventscard";
