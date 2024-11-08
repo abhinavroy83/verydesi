@@ -142,22 +142,22 @@ export default function EventForm() {
     name: "artists",
   });
 
-  useEffect(() => {
-    if (location) {
-      setMapCenter(location);
-      setMarkerPosition(location);
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   if (location) {
+  //     setMapCenter(location);
+  //     setMarkerPosition(location);
+  //   }
+  // }, [location]);
 
-  const onMapClick = (e: google.maps.MapMouseEvent) => {
-    if (e.latLng) {
-      const newPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
-      setMarkerPosition(newPosition);
-      // You might want to update the form with these new coordinates
-      setValue("latitude", newPosition.lat);
-      setValue("longitude", newPosition.lng);
-    }
-  };
+  // const onMapClick = (e: google.maps.MapMouseEvent) => {
+  //   if (e.latLng) {
+  //     const newPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+  //     setMarkerPosition(newPosition);
+  //     // You might want to update the form with these new coordinates
+  //     setValue("latitude", newPosition.lat);
+  //     setValue("longitude", newPosition.lng);
+  //   }
+  // };
 
   const { cities, isLoading, error } = useCityData();
 
@@ -513,7 +513,7 @@ export default function EventForm() {
                               )}
                             />
                           </div>
-                          <div className="w-full h-64 rounded-md">
+                          {/* <div className="w-full h-64 rounded-md">
                             {isLoaded ? (
                               <GoogleMap
                                 mapContainerStyle={{
@@ -535,7 +535,7 @@ export default function EventForm() {
                                 </span>
                               </div>
                             )}
-                          </div>
+                          </div> */}
                         </CardContent>
                       </Card>
                     )}
