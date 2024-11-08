@@ -10,6 +10,7 @@ import {
   Car,
   Building2,
   Users,
+  PlusCircle,
 } from "lucide-react";
 import { useRoomFetching } from "@/hooks/use-all-roomfetcing";
 import useAuthStore from "@/store/useAuthStore";
@@ -26,6 +27,9 @@ import {
 } from "@/components/ui/carousel";
 import Featuredeventscard from "@/components/Events/Featuredeventscard";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ChevronDown, Play } from "lucide-react";
 
 function WeatherCard() {
   return (
@@ -100,6 +104,94 @@ const recommendedSearches = [
   "Linda Bernardi Sales C...",
   "Write Graduate Online",
 ];
+const movies = [
+  {
+    id: 1,
+    title: "The Little Things",
+    date: "28 Jan 2021",
+    price: "$19.99",
+    image:
+      "https://cdn.openart.ai/stable_diffusion/0872aa028beb46bbaba5404b93ff7f9b1bac2a1c_2000x2000.webp",
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "The Lost Man",
+    image:
+      "https://cdn.openart.ai/stable_diffusion/0872aa028beb46bbaba5404b93ff7f9b1bac2a1c_2000x2000.webp",
+  },
+  {
+    id: 3,
+    title: "Afterworld",
+    image: "/placeholder.svg?height=400&width=300",
+  },
+  {
+    id: 4,
+    title: "Promising Young Woman",
+    image: "/placeholder.svg?height=400&width=300",
+  },
+  {
+    id: 5,
+    title: "Honest",
+    image: "/placeholder.svg?height=400&width=300",
+  },
+  {
+    id: 6,
+    title: "MINARI",
+    image: "/placeholder.svg?height=400&width=300",
+  },
+];
+const newsItems = [
+  {
+    title: "Before You Buy Sandisk Growers, Stop and Consider These 5 Things",
+    source: "The Motley Fool",
+    time: "1 day ago",
+    price: "$3.50",
+    change: "+12.75%",
+    positive: true,
+  },
+  {
+    title: "Apple (AAPL) HomePod Mini Secret Sensor for Smart Home Thermostats",
+    source: "Bloomberg.com",
+    time: "13 hours ago",
+    price: "$123.39",
+    change: "+2.83%",
+    positive: true,
+  },
+  {
+    title:
+      "BLR Technology stock sinks 45% after report says Chinese government w...",
+    source: "Business Insider",
+    time: "9 hours ago",
+    price: "$10.15",
+    change: "-67.84%",
+    positive: false,
+  },
+  {
+    title: "Why AMC Stock Plunges Today",
+    source: "The Motley Fool",
+    time: "5 hours ago",
+    price: "$12.49",
+    change: "+10.34%",
+    positive: true,
+  },
+  {
+    title: "Ford Spokesperson Dismisses Tesla Model Y as 'Vaporware'",
+    source: "Yahoo Finance",
+    time: "1 day ago",
+    price: "$12.85",
+    change: "+0.19%",
+    positive: true,
+  },
+  {
+    title: "NDX Inc. ADR falls Monday, underperforms market",
+    source: "MarketWatch",
+    time: "3 hours ago",
+    price: "$42.94",
+    change: "-0.99%",
+    positive: false,
+  },
+];
 export default function Home() {
   const { currentCity, status } = useAuthStore();
   const { Room, loading, error } = useRoomFetching(currentCity || "Portland");
@@ -123,7 +215,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[23rem] mb-[32rem]">
+    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[3rem] mb-[32rem]">
       <div className="w-full lg:w-4/5 mr-4">
         <h2 className="text-[25px] font-sans font-bold text-gray-800">
           Events{" "}
@@ -157,7 +249,107 @@ export default function Home() {
             <FeaturedCard2 key={index} room={room} />
           ))}
         </div>
+        <div className="w-full">
+          <div className="container mx-auto py-6">
+            <h2 className="text-xl font-semibold mb-4">Movies</h2>
+            <ScrollArea className="w-full whitespace-nowrap rounded-md">
+              <div className="flex space-x-4 pb-4">
+                {movies.map((movie) => {
+                  return (
+                    <Card
+                      key={movie.id}
+                      className={`shrink-0 rounded-lg overflow-hidden ${movie.featured ? "w-[300px]" : "w-[200px]"}`}
+                    >
+                      <CardContent className="p-0">
+                        <div className="relative aspect-[2/3]">
+                          <Image
+                            src={movie.image}
+                            alt={movie.title}
+                            fill
+                            className="object-cover"
+                          />
+                          {movie.featured && (
+                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                              <h3 className="text-white font-semibold mb-1">
+                                {movie.title}
+                              </h3>
+                              <div className="text-sm text-gray-300 mb-2">
+                                {movie.date} · From {movie.price}
+                              </div>
+                              <div className="flex space-x-2">
+                                <Button
+                                  size="sm"
+                                  variant="secondary"
+                                  className="h-8 text-xs"
+                                >
+                                  <Play className="h-3 w-3 mr-1" />
+                                  Trailer
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="secondary"
+                                  className="h-8 text-xs"
+                                >
+                                  Watch options
+                                  <ChevronDown className="h-3 w-3 ml-1" />
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+          </div>
+        </div>
+        <Card className="w-full">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-xl font-semibold">Jobs</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-0">
+            {newsItems.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-start justify-between py-3 border-b border-gray-200"
+              >
+                <div className="space-y-1 pr-4">
+                  <h3 className="text-sm font-medium leading-none">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground flex items-center">
+                    {item.source}
+                    <span className="mx-1.5 text-gray-300">·</span>
+                    {item.time}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 ml-4 shrink-0">
+                  <div className="text-right flex lg:flex-row flex-col gap-3">
+                    <div className="text-sm font-medium">{item.price}</div>
+                    <div
+                      className={`text-xs px-1.5 rounded-full inline-flex items-center justify-center ${
+                        item.positive
+                          ? "text-green-700 bg-green-100"
+                          : "text-red-700 bg-red-100"
+                      }`}
+                    >
+                      {item.change}
+                    </div>
+                  </div>
+                  <button className="ml-2 rounded-full p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+                    <PlusCircle className="h-4 w-4" />
+                    <span className="sr-only">More information</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </div>
+
       {/* //this is the right side */}
 
       <div className="w-full mt-2 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">

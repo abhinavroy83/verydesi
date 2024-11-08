@@ -8,8 +8,9 @@ const nextConfig = {
       "res.cloudinary.com",
       "d1be4virimwdjl.cloudfront.net",
       "images.unsplash.com",
+      "cdn.openart.ai",
     ],
-  }
+  },
 };
 
 export default nextConfig;
