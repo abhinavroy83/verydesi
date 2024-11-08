@@ -80,6 +80,7 @@ export default function RoomDetails({
   const router = useRouter();
   const { slug } = useParams<{ slug: string }>();
   const id = slug.split("-").pop();
+  console.log("rooms id", id)
   // const id = searchParams.id;
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(

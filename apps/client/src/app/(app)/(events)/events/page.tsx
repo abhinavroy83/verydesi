@@ -3,7 +3,7 @@
 import { HomeLayout } from "@/components/layout/Home";
 
 import { FeaturedBusinessCard } from "@/components/Business";
-import { useState } from "react";
+import {  useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import Featuredeventscard from "@/components/Events/Featuredeventscard";
@@ -17,9 +17,12 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import EventNonfeaturedCard from "@/components/Events/Nonfeaturedeventcard";
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/useAuthStore";
+import axios from "axios";
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
 export default function Component() {
   const [showAll, setShowAll] = useState(false);
+  const { currentCity } = useAuthStore();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] =
@@ -30,6 +33,22 @@ export default function Component() {
     "Highest Rated",
     "Most Reviewed",
   ];
+  interface Event {
+    _id: string;
+    eventpostingcity: string;
+    eventTitle: string;
+    startDate: string;
+    venueName: string;
+    description: string;
+    images: string[];
+    address:string;
+    state:string;
+
+  }
+  const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
+  const [nonFeaturedEvents, setNonFeaturedEvents] = useState<Event[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const city = currentCity || "Portland";
 
   const handleSelect = (option: SortOption) => {
     setSelectedOption(option);
@@ -38,6 +57,38 @@ export default function Component() {
     console.log(`Sorting by: ${option}`);
   };
 
+  useEffect(() => {
+    const city = currentCity || "Portland";
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get(
+          `https://apiv2.verydesi.com/event/getEventByArea/${city}`
+        );
+        console.log("raw resp", response)
+        const events: Event[] = response.data;
+        console.log("events",events)
+
+        const filteredFeaturedEvents = events
+          .filter((event) => event.eventpostingcity === city && new Date(event.startDate) >= new Date())
+          .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+          .slice(0, 10); // Takes only the first 10 for the carousel
+        console.log("featured events",filteredFeaturedEvents)
+
+    // Separate and sort non-featured events by nearest date
+    const remainingEvents = events
+    .filter((event) => !filteredFeaturedEvents.includes(event))
+    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+        console.log("remaining events",remainingEvents)
+        setFeaturedEvents(filteredFeaturedEvents);
+        setNonFeaturedEvents(remainingEvents);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        setError("Could not load events.");
+      }
+    };
+
+    fetchEvents();
+  }, []);
   return (
     <HomeLayout>
       <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3 font-sans">
@@ -107,15 +158,16 @@ export default function Component() {
             }}
             className=""
           >
-            <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
-                  <div className="w-full ">
-                    <Featuredeventscard key={index} />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
+
+      <CarouselContent>
+        {featuredEvents.map((event, index) => (
+          <CarouselItem key={event._id} className="md:basis-1/2 lg:basis-1/4">
+            <div className="w-full">
+              <Featuredeventscard key={event._id} event={event} />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
             <CarouselPrevious className="absolute left-[-12] top-1/2 -translate-y-1/2" />
             <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
           </Carousel>
@@ -124,9 +176,10 @@ export default function Component() {
       <h1 className="capitalize text-[23px] lg:text-[23px] font-bold mt-0">
         <p>More Featured Events In </p>
       </h1>
+
       <div className="flex flex-col gap-2 mt-2 mb-10">
-        {[...Array(6)].map((_, index) => (
-          <EventNonfeaturedCard key={index} />
+        {nonFeaturedEvents.map((event) => (
+          <EventNonfeaturedCard key={event._id} event={event} />
         ))}
       </div>
     </HomeLayout>

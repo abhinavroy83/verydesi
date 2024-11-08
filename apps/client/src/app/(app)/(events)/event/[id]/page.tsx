@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState,  } from "react";
+
+import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { BiSolidMessageRounded } from "react-icons/bi";
@@ -35,8 +38,100 @@ import { Button } from "@/components/ui/button";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Similareventcard from "@/components/Events/Similareventcard";
+import axios from "axios";
 
+interface Event {
+  _id: string | undefined;
+  eventTitle: string;
+  eventType: string;
+  startDate: string;
+  startTime: string;
+  endDate: string;
+  endTime: string;
+  description: string;
+  venueName: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+  images: string[];
+  hostedBy: string;
+  contactNumber: string;
+  virtualurl: string;
+  languages: string[];
+  artists: { name: string }[];
+}
 function Events() {
+  const {id} = useParams();
+
+  const [event, setEvent] = useState<Event | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+
+
+// const fetchEvent = useCallback(async () => {
+//   if (!id) return;
+
+//   setLoading(true);
+//   setError(null);
+
+//   try {
+//     const response = await axios.get(`https://apiv2.verydesi.com/event/find_event_by_id/${id}`);
+//     console.log("response event",response)
+//     setEvent(response?.data); 
+//     console.log("event",event)
+//   } catch (err) {
+//     setError("Failed to load event details.");
+//     console.error("Error fetching event:", err);
+//   } finally {
+//     setLoading(false);
+//   }
+// }, [id]);
+
+// React.useEffect(() => {
+//   fetchEvent();
+// }, [fetchEvent]);
+
+React.useEffect(() => {
+  const fetchEvent = async () => {
+    if (!id) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get(`https://apiv2.verydesi.com/event/find_event_by_id/${id}`);
+      console.log("response event", response);
+      setEvent(response?.data); // Adjust based on actual data structure
+    } catch (err) {
+      setError("Failed to load event details.");
+      console.error("Error fetching event:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchEvent();
+  
+}, [id]);
+// React.useEffect(() => {
+//   console.log("event updated:", event);
+// }, []);
+  // useEffect(() => {
+  //   if (id) {
+  //     axios
+  //       .get(`https://apiv2.verydesi.com/event/find_event_by_id/${id}`)
+  //       .then((response) => {
+  //         setEvent(response.data[0]); // Adjust based on API structure
+  //       })
+  //       .catch((err) => {
+  //         setError("Failed to load event details.");
+  //         console.error(err);
+  //       });
+  //   }
+  // }, [id]);
   return (
     <>
       <div className="max-w-[1370px] lg:max-w-[1600px]  px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6.1rem] font-sans">
@@ -105,10 +200,10 @@ function Events() {
           </div>
         </div>
         <h1 className="text-3xl font-bold text-gray-900">
-          Lavender U-Pick at Wayward Winds
+          {event?.eventTitle}
         </h1>
         <div className="flex items-center gap-2 text-xl font-bold">
-          <p className="text-gray-600">, OR</p>
+          <p className="text-gray-600">{event?.city}, {event?.state}</p>
         </div>
         <p className="text-[1rem] text-[#0073bb] hover:underline cursor-pointer">
           Other{" "}
@@ -131,9 +226,9 @@ function Events() {
                     </p>
                   </div>
                   <div>
-                    <p> Wayward Winds Lavender Farm</p>
-                    <p>17005 Ne Courtney Rd</p>
-                    <p>Newberg, OR 97132</p>
+                    <p> {event?.venueName}</p>
+                    <p>{event?.address}</p>
+                    <p>{event?.city}, {event?.state} {event?.zipCode}</p>
                   </div>
                 </div>
                 <div className="flex border-b border-gray-300 p-3 gap-2">
@@ -144,11 +239,10 @@ function Events() {
                   </div>
                   <div>
                     <p className="flex gap-2">
-                      <p className="font-bold">From:</p> Saturday, Jun 29, 10:00
-                      am
+                      <p className="font-bold">From:</p>  {new Date(event?.startDate || "").toLocaleDateString()} at {event?.startTime || "N/A"}
                     </p>
                     <p className="flex gap-2">
-                      <p className="font-bold">To:</p> Monday, Jul 29, 5:00 pm
+                      <p className="font-bold">To:</p> {new Date(event?.endDate || "").toLocaleDateString()} at {event?.endTime || "N/A"}
                     </p>
                   </div>
                 </div>
@@ -165,13 +259,7 @@ function Events() {
                 </div>
                 <p className="text-gray-700">
                   {" "}
-                  Free Admission! Open daily June 29th-August 11th from 10 am-5
-                  pm. An abundance of the most fragrant and beautiful lavender
-                  in existence, nestled in the hills of Newberg, Oregon. Explore
-                  the twists and turns of our Lavender-a-maze. Experience
-                  everything lavender you can imagine, and shop award-winning
-                  essential oils, plants, and products in our vintage farm
-                  store. If it can be made with this magical herb, we do it!
+                  {event?.description}
                 </p>
               </CardContent>
             </Card>
@@ -246,7 +334,7 @@ function Events() {
                   />
                   <div className="flex">
                     <p className="text-black text-[15px]">
-                      Phone number
+                      {event?.contactNumber}
                       <p className="text-black flex text-[18px]">
                         {/* {rooms.phone_number} */}
                       </p>
@@ -820,3 +908,7 @@ function Events() {
 }
 
 export default Events;
+function useEffect(arg0: () => void, arg1: string[]) {
+  throw new Error("Function not implemented.");
+}
+
