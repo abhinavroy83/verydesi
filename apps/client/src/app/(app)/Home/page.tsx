@@ -104,8 +104,7 @@ const recommendedSearches = [
   "Linda Bernardi Sales C...",
   "Write Graduate Online",
 ];
-const [hoveredId, setHoveredId] = useState<number | null>(null);
-const scrollContainerRef = useRef<HTMLDivElement>(null);
+
 const movies = [
   {
     id: 1,
@@ -140,19 +139,6 @@ const movies = [
     image: "/placeholder.svg?height=400&width=300",
   },
 ];
-
-const scroll = (direction: "left" | "right") => {
-  if (scrollContainerRef.current) {
-    const scrollAmount = 200;
-    const newScrollLeft =
-      scrollContainerRef.current.scrollLeft +
-      (direction === "left" ? -scrollAmount : scrollAmount);
-    scrollContainerRef.current.scrollTo({
-      left: newScrollLeft,
-      behavior: "smooth",
-    });
-  }
-};
 
 const newsItems = [
   {
@@ -208,6 +194,21 @@ const newsItems = [
 export default function Home() {
   const { currentCity, status } = useAuthStore();
   const { Room, loading, error } = useRoomFetching(currentCity || "Portland");
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200;
+      const newScrollLeft =
+        scrollContainerRef.current.scrollLeft +
+        (direction === "left" ? -scrollAmount : scrollAmount);
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth",
+      });
+    }
+  };
   const featuredRooms = Room?.slice(0, 6);
 
   if (loading) {
