@@ -27,10 +27,10 @@ import {
 } from "@/components/ui/carousel";
 import Featuredeventscard from "@/components/Events/Featuredeventscard";
 import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Image from "next/image";
+import { useRef, useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { ChevronDown, Play } from "lucide-react";
-
 function WeatherCard() {
   return (
     <Card className="bg-gradient-to-r from-cyan-700 to-blue-700 text-white mb-4">
@@ -104,21 +104,20 @@ const recommendedSearches = [
   "Linda Bernardi Sales C...",
   "Write Graduate Online",
 ];
+const [hoveredId, setHoveredId] = useState<number | null>(null);
+const scrollContainerRef = useRef<HTMLDivElement>(null);
 const movies = [
   {
     id: 1,
     title: "The Little Things",
     date: "28 Jan 2021",
     price: "$19.99",
-    image:
-      "https://cdn.openart.ai/stable_diffusion/0872aa028beb46bbaba5404b93ff7f9b1bac2a1c_2000x2000.webp",
-    featured: true,
+    image: "/placeholder.svg?height=400&width=300",
   },
   {
     id: 2,
     title: "The Lost Man",
-    image:
-      "https://cdn.openart.ai/stable_diffusion/0872aa028beb46bbaba5404b93ff7f9b1bac2a1c_2000x2000.webp",
+    image: "/placeholder.svg?height=400&width=300",
   },
   {
     id: 3,
@@ -141,6 +140,20 @@ const movies = [
     image: "/placeholder.svg?height=400&width=300",
   },
 ];
+
+const scroll = (direction: "left" | "right") => {
+  if (scrollContainerRef.current) {
+    const scrollAmount = 200;
+    const newScrollLeft =
+      scrollContainerRef.current.scrollLeft +
+      (direction === "left" ? -scrollAmount : scrollAmount);
+    scrollContainerRef.current.scrollTo({
+      left: newScrollLeft,
+      behavior: "smooth",
+    });
+  }
+};
+
 const newsItems = [
   {
     title: "Before You Buy Sandisk Growers, Stop and Consider These 5 Things",
@@ -250,15 +263,17 @@ export default function Home() {
           ))}
         </div>
         <div className="w-full">
-          <div className="container mx-auto py-6">
+          <div className="container mx-auto py-6 relative">
             <h2 className="text-xl font-semibold mb-4">Movies</h2>
-            <ScrollArea className="w-full whitespace-nowrap rounded-md">
-              <div className="flex space-x-4 pb-4">
-                {movies.map((movie) => {
-                  return (
+            <div className="relative group">
+              <ScrollArea className="w-full">
+                <div ref={scrollContainerRef} className="flex space-x-4 pb-4">
+                  {movies.map((movie) => (
                     <Card
                       key={movie.id}
-                      className={`shrink-0 rounded-lg overflow-hidden ${movie.featured ? "w-[300px]" : "w-[200px]"}`}
+                      className="shrink-0 rounded-lg overflow-hidden w-[200px]"
+                      onMouseEnter={() => setHoveredId(movie.id)}
+                      onMouseLeave={() => setHoveredId(null)}
                     >
                       <CardContent className="p-0">
                         <div className="relative aspect-[2/3]">
@@ -268,19 +283,21 @@ export default function Home() {
                             fill
                             className="object-cover"
                           />
-                          {movie.featured && (
-                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                          {hoveredId === movie.id && (
+                            <div className="absolute inset-0 bg-black/70 flex flex-col justify-end p-4 transition-all duration-200">
                               <h3 className="text-white font-semibold mb-1">
                                 {movie.title}
                               </h3>
-                              <div className="text-sm text-gray-300 mb-2">
-                                {movie.date} · From {movie.price}
-                              </div>
+                              {movie.date && (
+                                <div className="text-sm text-gray-300 mb-2">
+                                  {movie.date} · From {movie.price}
+                                </div>
+                              )}
                               <div className="flex space-x-2">
                                 <Button
                                   size="sm"
                                   variant="secondary"
-                                  className="h-8 text-xs"
+                                  className="h-8 text-xs bg-white/20 hover:bg-white/30 text-white"
                                 >
                                   <Play className="h-3 w-3 mr-1" />
                                   Trailer
@@ -288,10 +305,9 @@ export default function Home() {
                                 <Button
                                   size="sm"
                                   variant="secondary"
-                                  className="h-8 text-xs"
+                                  className="h-8 text-xs bg-white/20 hover:bg-white/30 text-white"
                                 >
                                   Watch options
-                                  <ChevronDown className="h-3 w-3 ml-1" />
                                 </Button>
                               </div>
                             </div>
@@ -299,11 +315,33 @@ export default function Home() {
                         </div>
                       </CardContent>
                     </Card>
-                  );
-                })}
+                  ))}
+                </div>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full bg-white/80 hover:bg-white shadow-lg"
+                  onClick={() => scroll("left")}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  <span className="sr-only">Scroll left</span>
+                </Button>
               </div>
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full bg-white/80 hover:bg-white shadow-lg"
+                  onClick={() => scroll("right")}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                  <span className="sr-only">Scroll right</span>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
         <Card className="w-full">
