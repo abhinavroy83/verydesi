@@ -6,20 +6,17 @@ import { IoHome } from "react-icons/io5";
 import { BiLogOut } from "react-icons/bi";
 export default function Navbar() {
   return (
-    <div className=" mx-auto w-full bg-[#232f3e] shadow-2xl font-['udemy-regular'] fixed  ">
+    <nav className="bg-[#232f3e] shadow-2xl font-['udemy-regular'] z-10">
       <div className="mx-auto flex max-w-[1600px] items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <Link href={"/"} className="inline-flex items-center space-x-2">
           <img
             height={100}
             width={150}
             className="w-50 h-50"
-            src={
-              "https://res.cloudinary.com/druohnmyv/image/upload/v1723819327/assests/x31ydsmb8hkg05fqbkjf.png"
-            }
+            src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819327/assests/x31ydsmb8hkg05fqbkjf.png"
             alt=""
           />
         </Link>
-
         <div>
           <button
             type="button"
@@ -29,6 +26,6 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
