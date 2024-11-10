@@ -12,6 +12,7 @@ import {
   Users,
   PlusCircle,
   Expand,
+  Bookmark,
 } from "lucide-react";
 import { useRoomFetching } from "@/hooks/use-all-roomfetcing";
 import useAuthStore from "@/store/useAuthStore";
@@ -110,34 +111,47 @@ const movies = [
   {
     id: 1,
     title: "The Little Things",
-    date: "28 Jan 2021",
-    price: "$19.99",
-    image: "/placeholder.svg?height=400&width=300",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
   },
   {
     id: 2,
-    title: "The Lost Man",
-    image: "/placeholder.svg?height=400&width=300",
+    title: "Tenet",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
   },
   {
     id: 3,
-    title: "Afterworld",
-    image: "/placeholder.svg?height=400&width=300",
+    title: "The Empty Man",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
   },
   {
     id: 4,
-    title: "Promising Young Woman",
-    image: "/placeholder.svg?height=400&width=300",
+    title: "Greenland",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
   },
   {
     id: 5,
-    title: "Honest",
-    image: "/placeholder.svg?height=400&width=300",
-  },
-  {
-    id: 6,
-    title: "MINARI",
-    image: "/placeholder.svg?height=400&width=300",
+    title: "Promising Young Woman",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
   },
 ];
 
@@ -265,87 +279,63 @@ export default function Home() {
           ))}
         </div>
         <div className="w-full">
-          <div className="container mx-auto py-6 relative">
-            <h2 className="text-xl font-semibold mb-4 text-black">Movies</h2>
-            <div className="relative group">
-              <ScrollArea className="w-full">
-                <div ref={scrollContainerRef} className="flex space-x-4 pb-4">
-                  {movies.map((movie) => (
-                    <Card
-                      key={movie.id}
-                      className="shrink-0 rounded-sm overflow-hidden w-[180px] h-[270px] bg-transparent"
-                      onMouseEnter={() => setHoveredId(movie.id)}
-                      onMouseLeave={() => setHoveredId(null)}
-                    >
-                      <CardContent className="p-0 h-full">
-                        <div className="relative h-full">
-                          <Image
-                            src={movie.image}
-                            alt={movie.title}
-                            fill
-                            className="object-cover"
-                          />
-                          {hoveredId === movie.id && (
-                            <div className="absolute inset-0 bg-black/80 flex flex-col justify-end p-4 transition-all duration-200">
-                              <button className="absolute top-2 right-2 text-white/80 hover:text-white">
-                                <Expand className="h-5 w-5" />
-                              </button>
-                              <h3 className="text-white font-medium text-sm mb-1">
-                                {movie.title}
-                              </h3>
-                              {movie.date && (
-                                <div className="text-xs text-gray-400 mb-3">
-                                  {movie.date} · From {movie.price}
-                                </div>
-                              )}
-                              <div className="flex flex-col space-y-2">
-                                <Button
-                                  size="sm"
-                                  variant="secondary"
-                                  className="h-8 text-xs bg-white hover:bg-white/90 text-black w-full justify-center"
-                                >
-                                  <Play className="h-3 w-3 mr-1" />
-                                  Trailer
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  className="h-8 text-xs border-white text-black hover:bg-white/20 w-full justify-center"
-                                >
-                                  Watch options
-                                </Button>
-                              </div>
-                            </div>
-                          )}
+          <div className="container mx-auto">
+            <h2 className="text-2xl font-bold text-white mb-4">Movies</h2>
+            <div className="flex space-x-4 overflow-x-auto pb-4">
+              {movies.map((movie) => (
+                <div
+                  key={movie.id}
+                  className="flex-shrink-0 w-[150px] transition-all duration-300 ease-in-out hover:w-[400px]"
+                >
+                  <Card className="h-[300px] border-0 bg-transparent relative group overflow-hidden">
+                    <div className="absolute inset-0">
+                      <img
+                        src={movie.image}
+                        alt={movie.title}
+                        className="object-cover w-full h-full rounded-lg"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="absolute top-2 right-2 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                        aria-label={`Bookmark ${movie.title}`}
+                      >
+                        <Bookmark className="h-6 w-6" />
+                      </Button>
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="space-y-2 text-white">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs border px-1 rounded">
+                              {movie.rating}
+                            </span>
+                            <span className="text-xs">{movie.duration}</span>
+                            <span className="text-xs">• {movie.year}</span>
+                          </div>
+                          <h3 className="font-bold text-sm">{movie.title}</h3>
+                          <p className="text-xs text-gray-200">{movie.price}</p>
+                          <div className="flex gap-2 pt-2">
+                            <Button
+                              size="sm"
+                              variant="secondary"
+                              className="text-xs bg-white/10 hover:bg-white/20 text-white"
+                            >
+                              Trailer
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="secondary"
+                              className="text-xs bg-white/10 hover:bg-white/20 text-white"
+                            >
+                              Watch options
+                            </Button>
+                          </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                      </div>
+                    </div>
+                  </Card>
                 </div>
-                <ScrollBar orientation="horizontal" className="bg-white/10" />
-              </ScrollArea>
-              <div className="absolute -left-16 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="rounded-full bg-white/10 hover:bg-white/20 text-white w-10 h-10"
-                  onClick={() => scroll("left")}
-                  aria-label="Scroll left"
-                >
-                  <ChevronLeft className="h-6 w-6" />
-                </Button>
-              </div>
-              <div className="absolute -right-16 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="rounded-full bg-white/10 hover:bg-white/20 text-white w-10 h-10"
-                  onClick={() => scroll("right")}
-                  aria-label="Scroll right"
-                >
-                  <ChevronRight className="h-6 w-6" />
-                </Button>
-              </div>
+              ))}
             </div>
           </div>
         </div>
