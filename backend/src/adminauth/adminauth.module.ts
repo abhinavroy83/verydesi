@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AdminauthController } from './adminauth.controller';
-import { AdminauthService } from './adminauth.service';
+import { AdminauthController } from './controller/adminauth.controller';
+import { AdminauthService } from './service/adminauth.service';
 
 @Module({
   controllers: [AdminauthController],
