@@ -24,7 +24,9 @@ export class RolesGuard implements CanActivate {
     }
 
     for (const permission of requiredPermissions) {
-      if (!(await this.adminauthService.hasPermission(user.username, permission))) {
+      if (
+        !(await this.adminauthService.hasPermission(user.email, permission))
+      ) {
         return false;
       }
     }
