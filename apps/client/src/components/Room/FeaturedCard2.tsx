@@ -1,129 +1,99 @@
 "use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  BedDouble,
-  Heart,
-  MapPin,
-  Clock,
-  User,
-  Wifi,
-  Utensils,
-} from "lucide-react";
-import { RoomInterface } from "@myrepo/types";
-import Link from "next/link";
+import { Heart, MapPin, Clock, User } from "lucide-react";
+import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
 import { stateAbbreviations } from "@/constants";
 import useCartStore from "@/store/useCartStore";
 import useAuthStore from "@/store/useAuthStore";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import toast from "react-hot-toast";
-import { IoIosFemale, IoIosMale, IoIosTransgender } from "react-icons/io";
 import { useloginstore, useScreenResolution } from "@/store";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import TruncateText from "@/lib/truncate-characters";
+
+interface RoomInterface {
+  _id: string;
+  Title: string;
+  Imgurl: string[];
+  city: string;
+  state: string;
+  Preferred_gender: string;
+  user_name: string;
+  postedon: Date;
+  Expected_Rooms: number;
+}
 
 interface FeaturedCard2Props {
   room: RoomInterface;
 }
 
 export default function Component({ room }: FeaturedCard2Props) {
+  const [wishlistStatus, setWishlistStatus] = useState(false);
   const { pluscart, minuscart } = useCartStore();
-  const [wishliststatys, setWishlistStatus] = useState(false);
   const { data: session } = useSession();
   const { status } = useAuthStore();
   const { openLogin } = useloginstore();
   const { width } = useScreenResolution();
-  console.log(width);
   const router = useRouter();
 
   const token = session?.accessToken;
-  const makewishlist = async (_id: string) => {
-    if (status) {
-      try {
-        const dat = { roomId: _id, status: true };
-        const res = await axios.post(
-          `https://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
-          dat,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
 
-        if (
-          res.data.msg === "Successfully added to wishlist" ||
-          res.data.msg === "Successfully updated"
-        ) {
-          pluscart();
-          setWishlistStatus(true);
-          toast.success("Added to Favorites.");
-        }
-      } catch (error) {
-        console.error("Error adding to wishlist:", error);
-      }
-    } else {
-      toast.error("Removed from Favorites.");
+  const handleWishlist = async (action: "add" | "remove") => {
+    if (!status) {
+      openLogin();
+      return;
     }
-  };
-  const unwish = async (_id: string) => {
+
     try {
-      const dat = { roomId: _id, status: false };
+      const dat = { roomId: room._id, status: action === "add" };
       const res = await axios.post(
         `https://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
         dat,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      if (
-        res.data.msg === "Successfully removed" ||
-        res.data.msg === "Wishlist cleared"
-      ) {
-        minuscart();
-        setWishlistStatus(false);
-        toast.error("Removed from Favorites.");
+      if (res.data.msg.includes("Successfully")) {
+        action === "add" ? pluscart() : minuscart();
+        setWishlistStatus(action === "add");
+        toast.success(
+          action === "add" ? "Added to Favorites." : "Removed from Favorites."
+        );
       }
     } catch (error) {
-      console.error("Error removing from wishlist:", error);
+      console.error(
+        `Error ${action === "add" ? "adding to" : "removing from"} wishlist:`,
+        error
+      );
+      toast.error(
+        `Failed to ${action === "add" ? "add to" : "remove from"} Favorites.`
+      );
     }
   };
 
   useEffect(() => {
     const fetchWishStatus = async () => {
+      if (!token) return;
       try {
-        if (!token) {
-          return "token not found, please sign in!!";
-        }
-        if (token) {
-          const res = await axios.get(
-            `https://apiv2.verydesi.com/favorite/findfavoritebyId/${room?._id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (res.data.status === "not found") {
-            setWishlistStatus(false);
-          } else {
-            setWishlistStatus(res.data.status);
-          }
-        }
+        const res = await axios.get(
+          `https://apiv2.verydesi.com/favorite/findfavoritebyId/${room._id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setWishlistStatus(res.data.status !== "not found");
       } catch (error) {
-        console.error("Error during fetching wishlist status:", error);
+        console.error("Error fetching wishlist status:", error);
       }
     };
 
     fetchWishStatus();
-  }, [room?._id, token, status]);
+  }, [room._id, token, status]);
 
   const calculateTimeDifference = (dateStr: Date) => {
     const date = new Date(dateStr);
@@ -135,148 +105,108 @@ export default function Component({ room }: FeaturedCard2Props) {
     const diffInDays = Math.floor(diffInHours / 24);
     const diffInMonths = Math.floor(diffInDays / 30);
 
-    if (diffInSeconds < 60) {
-      return "Just now";
-    } else if (diffInMinutes < 60) {
+    if (diffInSeconds < 60) return "Just now";
+    if (diffInMinutes < 60)
       return `${diffInMinutes} minute${diffInMinutes > 1 ? "s" : ""} ago`;
-    } else if (diffInHours < 24) {
+    if (diffInHours < 24)
       return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} ago`;
-    } else if (diffInDays < 30) {
+    if (diffInDays < 30)
       return `${diffInDays} day${diffInDays > 1 ? "s" : ""} ago`;
-    } else {
-      return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
-    }
+    return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
   };
+
   const formatSlug = (title: string, id: string) => {
-    const formattedTitle = title
+    return `${title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
-    return `${formattedTitle}-${id}`;
+      .replace(/(^-|-$)/g, "")}-${id}`;
+  };
+
+  const handleCardClick = () => {
+    const slug = formatSlug(room.Title, room._id);
+    router.push(`/room/${slug}`);
   };
 
   return (
-    <div
-      onClick={() => {
-        const slug = formatSlug(room?.Title, room?._id);
-        router.push(`/room/${slug}`);
-      }}
-      className={`font-sans flex relative cursor-pointer max-w-4xl flex-col rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[152px]`}
+    <Card
+      onClick={handleCardClick}
+      className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden"
     >
-      <div className="relative w-full lg:w-72 max-w-4xl sm:w-[300px] lg:h-[152px] md:h-[200px] h-[200px] sm:h-full overflow-hidden lg:rounded-tl-md lg:rounded-bl-md lg:rounded-none rounded-tl-md rounded-tr-md">
-        <img
-          src={
-            room && room.Imgurl && room.Imgurl.length > 0
-              ? room.Imgurl[0]
-              : "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
-          }
-          alt="Room Image"
-          className="hover:scale-110 w-full object-cover transition-transform duration-500 ease-in duration-70 lg:h-full md:h-full "
+      <CardContent className="p-0">
+        <div className="flex flex-col sm:flex-row">
+          <div className="relative w-full sm:w-1/3 h-48 sm:h-auto">
+            <Image
+              src={
+                room.Imgurl[0] ||
+                "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
+              }
+              alt="Room Image"
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-500 ease-in-out hover:scale-110"
+            />
+            <Badge className="text-[21px] absolute top-2 left-2 bg-white/80 text-green-700">
+              ${room.Expected_Rooms}
+            </Badge>
+          </div>
+          <div className="flex-1 p-4">
+            <div className="mb-2 text-[21px]">
+              <TruncateText text={room.Title} />
+            </div>
+            <div className="flex flex-wrap items-center text-sm text-gray-600 mb-2">
+              <div className="flex items-center mr-2 sm:mb-0">
+                <MapPin className="h-5 w-5 mr-1 text-blue-600" />
+                <span className="text-[18px]">
+                  {room.city}, {stateAbbreviations[room.state] || room.state}
+                </span>
+              </div>
+              <div className="flex items-center">
+                {room.Preferred_gender === "Male only" ? (
+                  <>
+                    <IoIosMale className="h-5 w-5 mr-1 text-blue-600" />
+                    <span className="text-[18px]">Male</span>
+                  </>
+                ) : room.Preferred_gender === "Female only" ? (
+                  <>
+                    <IoIosFemale className="h-5 w-5 mr-1 text-pink-500" />
+                    <span className="text-[18px]">Female</span>
+                  </>
+                ) : (
+                  <>
+                    <IoIosTransgender className="h-5 w-5 mr-1 text-purple-500" />
+                    <span className="text-[18px]">Any</span>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col text-sm text-gray-500">
+              <div className="flex items-center mb-1">
+                <User className="h-5 w-5mr-1 text-blue-600" />
+                <span className="text-[18px]">Posted by: {room.user_name}</span>
+              </div>
+              <div className="flex items-center">
+                <Clock className="h-5 w-5 mr-1 text-blue-600 mt-2" />
+                <span className="text-[18px]">
+                  {calculateTimeDifference(room.postedon)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute top-2 right-2 bg-white/80 hover:bg-white"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleWishlist(wishlistStatus ? "remove" : "add");
+        }}
+      >
+        <Heart
+          className={`h-5 w-5 ${wishlistStatus ? "fill-red-500 stroke-red-500" : "stroke-gray-400"}`}
         />
-      </div>
-      {!status && (
-        <div
-          className="absolute bottom-[1.5rem] right-[1.5rem]"
-          onClick={(e) => {
-            e.preventDefault();
-            openLogin();
-          }}
-        >
-          <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-        </div>
-      )}
-      {status && (
-        <div className="absolute bottom-[1.5rem] right-[1.5rem]">
-          {!wishliststatys ? (
-            <div
-              onClick={(e) => {
-                e.preventDefault();
-                makewishlist(room?._id);
-              }}
-            >
-              <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-            </div>
-          ) : (
-            <div
-              className="cursor-pointer "
-              onClick={(e) => {
-                e.preventDefault();
-                unwish(room?._id);
-              }}
-            >
-              <Heart className=" hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-            </div>
-          )}
-        </div>
-      )}
-
-      <div className="flex flex-col w-full flex-grow px-4 lg:py-0 py-3 transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
-        <div>
-          {room?.Title && <TruncateText text={room?.Title} />}
-
-          <div className="flex  flex-wrap items-center lg:text-[18px] text-[15px] text-gray-600  transition-colors duration-300">
-            <div className="flex font-sans items-center mr-2 sm:mb-0">
-              <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
-              <span>
-                {room?.city},{" "}
-                {room?.state &&
-                  (room.state.length > 2
-                    ? stateAbbreviations[room.state]
-                    : room.state)}
-              </span>
-            </div>
-            <div className="flex font-sans items-center">
-              {room?.Preferred_gender === "Male only" ? (
-                <>
-                  <img
-                    className="h-5 w-5 mx-1"
-                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
-                  />
-                  {/* <IoIosMale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-blue-700" /> */}
-                  <span>Male</span>
-                </>
-              ) : room?.Preferred_gender === "Female only" ? (
-                <>
-                  <img
-                    className="h-5 w-5  mx-1"
-                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
-                  />
-                  {/* <IoIosFemale className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
-                  <span>Female</span>
-                </>
-              ) : (
-                <>
-                  <img
-                    className="h-5 w-5  mx-1"
-                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
-                  />
-                  {/* <IoIosTransgender className="h-3 w-3 sm:h-4 sm:w-4 mx-1 text-pink-500" /> */}
-                  <span>Any</span>
-                </>
-              )}
-            </div>
-          </div>
-          <div className="flex  font-sans flex-col flex-wrap lg:text-[18px] text-[15px] text-gray-500  transition-colors duration-300">
-            <div className="flex font-sans items-center mr-2 sm:mb-0">
-              <User className="h-5 w-5 mr-1 text-[#054687]" />
-              <span className="text-blue-800">
-                Posted by: {room?.user_name}
-              </span>
-            </div>
-            <div className="flex font-sans items-center">
-              <Clock className="h-5 w-5 mr-1 text-[#054687]" />
-              <span className="text-blue-800">
-                {calculateTimeDifference(room?.postedon)}
-              </span>
-            </div>
-          </div>
-        </div>
-        <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
-          <p className="left-5 top-2 font-sans lg:text-[22px] text-[18px] text-green-700 text-right">
-            ${room?.Expected_Rooms}
-          </p>
-        </p>
-      </div>
-    </div>
+      </Button>
+    </Card>
   );
 }

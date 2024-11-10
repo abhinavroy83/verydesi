@@ -6,7 +6,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
+import Image from "next/image";
+import { Heart } from "lucide-react";
+import Link from "next/link";
 const neighborhoods = [
   {
     name: "Beaverton",
@@ -61,6 +63,73 @@ const movingToPortlandInfo = [
   "Indian Embassy access for Portland, Oregon is in Seattle, Washington - www.indiainseattle.gov.in",
   "Things to do in and around Portland, Oregon",
   "The Benefits and Challenges of Living in Portland, Oregon",
+];
+const attractions = [
+  {
+    title: "Moynihan Train Hall",
+    image: "/placeholder.svg?height=400&width=600",
+    description: "History & Government of Portland, Oregon",
+    link: "#",
+  },
+  {
+    title: "NYC Food & Drink",
+    image: "/placeholder.svg?height=400&width=600",
+    description: "Indian / Desi Events in and around Portland, Oregon",
+    link: "#",
+  },
+  {
+    title: "NYC Attractions",
+    image: "/placeholder.svg?height=400&width=600",
+    description:
+      "Indian / Desi Temples, Churches, Mosques and other religious places in and around Portland, Oregon",
+    link: "#",
+  },
+  {
+    title: "Weekend in the Bronx",
+    image: "/placeholder.svg?height=400&width=600",
+    description: "Indian / Desi organization in and around Portland, Oregon",
+    link: "#",
+  },
+  {
+    title: "Weekend in the Bronx",
+    image: "/placeholder.svg?height=400&width=600",
+    description: "Things to do in and around Portland, Oregon",
+    link: "#",
+  },
+  {
+    title: "Weekend in the Bronx",
+    image: "/placeholder.svg?height=400&width=600",
+    description:
+      "Indian / Desi Businesses & Services in and around Portland, Oregon",
+    link: "#",
+  },
+  {
+    title: "Weekend in the Bronx",
+    image: "/placeholder.svg?height=400&width=600",
+    description:
+      "Indian / Desi Rooms & Roommates in and around Portland, Oregon",
+    link: "#",
+  },
+  {
+    title: "Weekend in the Bronx",
+    image: "/placeholder.svg?height=400&width=600",
+    description:
+      "Indian / Desi Groceries & Shopping in and around Portland, Oregon",
+    link: "#",
+  },
+  {
+    title: "Weekend in the Bronx",
+    image: "/placeholder.svg?height=400&width=600",
+    description:
+      "Indian Embassy access for Portland, Oregon is in Seattle, Washington - www.indiainseattle.gov.in",
+    link: "#",
+  },
+  {
+    title: "Weekend in the Bronx",
+    image: "/placeholder.svg?height=400&width=600",
+    description: "The Benefits and Challenges of Living in Portland, Oregon",
+    link: "#",
+  },
 ];
 
 export default function PortlandOregonPage() {
@@ -205,7 +274,54 @@ export default function PortlandOregonPage() {
 
       <section>
         <h2 className="text-3xl font-bold mb-6">Moving to Portland</h2>
-        <Card>
+        <div className="container mx-auto px-4 py-12">
+          <div className="mb-12 flex items-center justify-center">
+            <div className="h-px flex-1 bg-gray-200" />
+            <div className="mx-4">
+              <Heart className="h-8 w-8 text-red-500 fill-current" />
+            </div>
+            <div className="h-px flex-1 bg-gray-200" />
+          </div>
+          <h1 className="mb-1 text-center text-4xl font-bold text-gray-900">
+            More to Love in New York City
+          </h1>
+          <h1 className="mb-1 text-center text-2xl text-gray-900">
+            Essential Information for Newcomers
+          </h1>
+          <h1 className="mb-12 text-center text-xl text-gray-700">
+            Moving to Portland, Oregon can be an exciting choice! Here's a
+            snapshot of what to expect if you're making the move:
+          </h1>
+          <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-5">
+            {attractions.map((attraction, index) => (
+              <div
+                key={index}
+                className="group overflow-hidden border bg-white shadow-sm transition-shadow hover:shadow-md"
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={"https://wallpapercave.com/wp/Nb3d7Ur.jpg"}
+                    alt={attraction.title}
+                    className="object-cover transition-transform duration-300 group-hover:scale-105 p-2"
+                  />
+                </div>
+                <div className="px-5 py-2 text-center">
+                  {/* <h2 className="mb-2 text-xl font-semibold text-gray-900">
+                    {attraction.title}
+                  </h2> */}
+                  <p className="mb-1 text-gray-600">{attraction.description}</p>
+                  <Link
+                    href={attraction.link}
+                    className="text-sm font-medium text-red-500 hover:text-red-600"
+                  >
+                    more
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* <Card>
           <CardHeader>
             <CardTitle>Essential Information for Newcomers</CardTitle>
             <CardDescription>
@@ -222,7 +338,7 @@ export default function PortlandOregonPage() {
               ))}
             </ul>
           </CardContent>
-        </Card>
+        </Card> */}
       </section>
     </div>
   );

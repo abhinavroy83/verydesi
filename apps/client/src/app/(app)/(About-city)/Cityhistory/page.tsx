@@ -151,7 +151,7 @@ export default function PortlandHistoryGeographyGovernment() {
                   title: "City Auditor",
                   content:
                     "An independent official elected separately from the council, responsible for ensuring government accountability through audits, investigations, and oversight of public records and elections.",
-                //   icon: <FileAudit className="text-green-500" />,
+                  //   icon: <FileAudit className="text-green-500" />,
                 },
                 {
                   title: "Neighborhood Involvement",

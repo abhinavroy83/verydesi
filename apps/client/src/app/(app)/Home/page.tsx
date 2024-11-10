@@ -33,6 +33,9 @@ import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { LucideChevronRight } from "lucide-react";
 function WeatherCard() {
   return (
     <Card className="bg-gradient-to-r from-cyan-700 to-blue-700 text-white mb-4">
@@ -206,6 +209,41 @@ const newsItems = [
     positive: false,
   },
 ];
+const categories = {
+  "Daily Services": [
+    "Home Services",
+    "Health & Medical",
+    "Food & Restaurants",
+    "Auto Care",
+    "Insurance",
+    "Beauty",
+    "Legal",
+    "Travel",
+    "Clothing",
+    "Groceries",
+    "Entertainment",
+    "Pets",
+    "Food/Catering",
+    "Moving",
+    "Phone & Cable",
+  ],
+  "Community & Professional": [
+    "Govt. Services",
+    "Places of Worship",
+    "Education & Schools",
+    "Music",
+    "Sports",
+    "Child & Seniors",
+    "Care",
+    "Jobs & Careers",
+    "Real Estates",
+    "Weddings",
+    "Funeral & Rites",
+    "Hotels",
+    "Taxes & Finance",
+    "Desi Associations",
+  ],
+};
 export default function Home() {
   const { currentCity, status } = useAuthStore();
   const { Room, loading, error } = useRoomFetching(currentCity || "Portland");
@@ -224,6 +262,54 @@ export default function Home() {
       });
     }
   };
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible((prev) => !prev);
+    }, 3000); // Toggle visibility every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const containerVariants = {
+    visible: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const childVariants = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 200,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 200,
+      },
+    },
+  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const words = ["Welcome", "to", "Portland"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
   const featuredRooms = Room?.slice(0, 6);
 
   if (loading) {
@@ -246,7 +332,124 @@ export default function Home() {
   return (
     <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[3rem] mb-[32rem]">
       <div className="w-full lg:w-4/5 mr-4">
-        <h2 className="text-[25px] font-sans font-bold text-gray-800">
+        <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
+          <motion.h1
+            className="text-4xl font-bold"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
+          >
+            <motion.span
+              initial={{ display: "inline-block" }}
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
+            >
+              Welcome
+            </motion.span>{" "}
+            <motion.span
+              initial={{ display: "inline-block", opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              To
+            </motion.span>{" "}
+            <motion.span
+              initial={{ display: "inline-block", opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              Portland
+            </motion.span>
+          </motion.h1>
+        </section>
+        <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
+          <motion.h1
+            className="text-4xl font-bold"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+          >
+            {["Welcome", "To", "Portland"].map((word, index) => (
+              <motion.span
+                key={index}
+                className="inline-block mx-1"
+                variants={childVariants}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </motion.h1>
+          <motion.div
+            className="mt-4 h-1 bg-white rounded-full"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: isVisible ? 1 : 0 }}
+            transition={{ duration: 3, ease: "linear" }}
+          />
+        </section>
+        <section className="relative overflow-hidden bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2">
+          <div className="absolute inset-0 opacity-20">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute bg-white rounded-full"
+                style={{
+                  width: Math.random() * 10 + 5,
+                  height: Math.random() * 10 + 5,
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: Math.random() * 3 + 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="relative flex items-center justify-center h-24">
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={currentIndex}
+                className="text-4xl font-bold absolute"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                {words[currentIndex]}
+              </motion.h1>
+            </AnimatePresence>
+          </div>
+
+          <motion.div
+            className="mt-4 flex items-center justify-center space-x-2"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            {words.map((_, index) => (
+              <motion.div
+                key={index}
+                className={`h-2 w-2 rounded-full ${index === currentIndex ? "bg-white" : "bg-white/50"}`}
+                animate={{ scale: index === currentIndex ? [1, 1.2, 1] : 1 }}
+                transition={{ duration: 0.5 }}
+              />
+            ))}
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-2 right-2 text-white/70"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <LucideChevronRight size={24} />
+          </motion.div>
+        </section>
+        <h2 className="text-[25px] font-sans font-bold text-gray-800 mt-3">
           Events{" "}
         </h2>
         <div className="w-full max-w-[79rem] mt-3 mx-auto">
@@ -280,7 +483,7 @@ export default function Home() {
         </div>
         <div className="w-full">
           <div className="container mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-4">Movies</h2>
+            <h2 className="text-2xl font-bold text-black my-4">Movies</h2>
             <div className="flex space-x-4 overflow-x-auto pb-4">
               {movies.map((movie) => (
                 <div
@@ -290,7 +493,9 @@ export default function Home() {
                   <Card className="h-[300px] border-0 bg-transparent relative group overflow-hidden">
                     <div className="absolute inset-0">
                       <img
-                        src={movie.image}
+                        src={
+                          "https://th.bing.com/th/id/OIP.CD_KlLIkxB1zZCcn7Yh3QAHaJa?rs=1&pid=ImgDetMain"
+                        }
                         alt={movie.title}
                         className="object-cover w-full h-full rounded-lg"
                       />
@@ -339,48 +544,46 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <Card className="w-full">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-xl font-semibold">Jobs</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-0">
-            {newsItems.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-start justify-between py-3 border-b border-gray-200"
-              >
-                <div className="space-y-1 pr-4">
-                  <h3 className="text-sm font-medium leading-none">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground flex items-center">
-                    {item.source}
-                    <span className="mx-1.5 text-gray-300">·</span>
-                    {item.time}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 ml-4 shrink-0">
-                  <div className="text-right flex lg:flex-row flex-col gap-3">
-                    <div className="text-sm font-medium">{item.price}</div>
-                    <div
-                      className={`text-xs px-1.5 rounded-full inline-flex items-center justify-center ${
-                        item.positive
-                          ? "text-green-700 bg-green-100"
-                          : "text-red-700 bg-red-100"
-                      }`}
-                    >
-                      {item.change}
-                    </div>
-                  </div>
-                  <button className="ml-2 rounded-full p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
-                    <PlusCircle className="h-4 w-4" />
-                    <span className="sr-only">More information</span>
-                  </button>
-                </div>
+        <div className="pb-3">
+          <h2 className="text-2xl font-bold text-black my-4">Jobs</h2>
+        </div>
+        <div className="grid gap-0">
+          {newsItems.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-start justify-between py-3 border-t border-gray-200"
+            >
+              <div className="space-y-1 pr-4">
+                <h3 className="text-[21px] font-bold leading-none">
+                  {item.title}
+                </h3>
+                <p className="text-[18px] text-muted-foreground flex items-center">
+                  {item.source}
+                  <span className="mx-1.5 text-gray-300">·</span>
+                  {item.time}
+                </p>
               </div>
-            ))}
-          </CardContent>
-        </Card>
+              <div className="flex items-center gap-2 ml-4 shrink-0">
+                <div className="text-right flex lg:flex-row flex-col gap-3">
+                  <div className="text-[18px] font-medium">{item.price}</div>
+                  <div
+                    className={`text-[18px] px-1.5 rounded-full inline-flex items-center justify-center ${
+                      item.positive
+                        ? "text-green-700 bg-green-100"
+                        : "text-red-700 bg-red-100"
+                    }`}
+                  >
+                    {item.change}
+                  </div>
+                </div>
+                <button className="ml-2 rounded-full p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+                  <PlusCircle className="h-4 w-4" />
+                  <span className="sr-only">More information</span>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* //this is the right side */}
@@ -440,7 +643,29 @@ export default function Home() {
             <CardContent className="p-0">
               <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2>
               <div className="bg-yellow-300 rounded-b-lg p-4">
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                <div className="p-1 space-y-8">
+                  <div className="space-y-8">
+                    {Object.entries(categories).map(([section, items]) => (
+                      <div key={section} className="space-y-4">
+                        <h3 className="text-xl font-semibold text-muted-foreground">
+                          {section}
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {items.map((category) => (
+                            <Button
+                              key={category}
+                              variant="secondary"
+                              className="rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+                            >
+                              {category}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                   <div>
                     {leftColumnServices.map((service, index) => (
                       <div key={index} className="text-sm">
@@ -455,7 +680,7 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </CardContent>
           </Card>
