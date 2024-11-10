@@ -11,6 +11,7 @@ import {
   Building2,
   Users,
   PlusCircle,
+  Expand,
 } from "lucide-react";
 import { useRoomFetching } from "@/hooks/use-all-roomfetcing";
 import useAuthStore from "@/store/useAuthStore";
@@ -265,19 +266,19 @@ export default function Home() {
         </div>
         <div className="w-full">
           <div className="container mx-auto py-6 relative">
-            <h2 className="text-xl font-semibold mb-4">Movies</h2>
+            <h2 className="text-xl font-semibold mb-4 text-black">Movies</h2>
             <div className="relative group">
               <ScrollArea className="w-full">
                 <div ref={scrollContainerRef} className="flex space-x-4 pb-4">
                   {movies.map((movie) => (
                     <Card
                       key={movie.id}
-                      className="shrink-0 rounded-lg overflow-hidden w-[200px]"
+                      className="shrink-0 rounded-sm overflow-hidden w-[180px] h-[270px] bg-transparent"
                       onMouseEnter={() => setHoveredId(movie.id)}
                       onMouseLeave={() => setHoveredId(null)}
                     >
-                      <CardContent className="p-0">
-                        <div className="relative aspect-[2/3]">
+                      <CardContent className="p-0 h-full">
+                        <div className="relative h-full">
                           <Image
                             src={movie.image}
                             alt={movie.title}
@@ -285,28 +286,31 @@ export default function Home() {
                             className="object-cover"
                           />
                           {hoveredId === movie.id && (
-                            <div className="absolute inset-0 bg-black/70 flex flex-col justify-end p-4 transition-all duration-200">
-                              <h3 className="text-white font-semibold mb-1">
+                            <div className="absolute inset-0 bg-black/80 flex flex-col justify-end p-4 transition-all duration-200">
+                              <button className="absolute top-2 right-2 text-white/80 hover:text-white">
+                                <Expand className="h-5 w-5" />
+                              </button>
+                              <h3 className="text-white font-medium text-sm mb-1">
                                 {movie.title}
                               </h3>
                               {movie.date && (
-                                <div className="text-sm text-gray-300 mb-2">
+                                <div className="text-xs text-gray-400 mb-3">
                                   {movie.date} · From {movie.price}
                                 </div>
                               )}
-                              <div className="flex space-x-2">
+                              <div className="flex flex-col space-y-2">
                                 <Button
                                   size="sm"
                                   variant="secondary"
-                                  className="h-8 text-xs bg-white/20 hover:bg-white/30 text-white"
+                                  className="h-8 text-xs bg-white hover:bg-white/90 text-black w-full justify-center"
                                 >
                                   <Play className="h-3 w-3 mr-1" />
                                   Trailer
                                 </Button>
                                 <Button
                                   size="sm"
-                                  variant="secondary"
-                                  className="h-8 text-xs bg-white/20 hover:bg-white/30 text-white"
+                                  variant="outline"
+                                  className="h-8 text-xs border-white text-black hover:bg-white/20 w-full justify-center"
                                 >
                                   Watch options
                                 </Button>
@@ -318,28 +322,28 @@ export default function Home() {
                     </Card>
                   ))}
                 </div>
-                <ScrollBar orientation="horizontal" />
+                <ScrollBar orientation="horizontal" className="bg-white/10" />
               </ScrollArea>
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute -left-16 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="rounded-full bg-white/80 hover:bg-white shadow-lg"
+                  className="rounded-full bg-white/10 hover:bg-white/20 text-white w-10 h-10"
                   onClick={() => scroll("left")}
+                  aria-label="Scroll left"
                 >
-                  <ChevronLeft className="h-4 w-4" />
-                  <span className="sr-only">Scroll left</span>
+                  <ChevronLeft className="h-6 w-6" />
                 </Button>
               </div>
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute -right-16 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="rounded-full bg-white/80 hover:bg-white shadow-lg"
+                  className="rounded-full bg-white/10 hover:bg-white/20 text-white w-10 h-10"
                   onClick={() => scroll("right")}
+                  aria-label="Scroll right"
                 >
-                  <ChevronRight className="h-4 w-4" />
-                  <span className="sr-only">Scroll right</span>
+                  <ChevronRight className="h-6 w-6" />
                 </Button>
               </div>
             </div>
