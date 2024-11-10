@@ -6,6 +6,7 @@ import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { Open_Sans } from "next/font/google";
 import Head from "next/head";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -59,6 +60,8 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} ${openSans.className} antialiased`}
         >
           {children}
+          <GoogleAnalytics gaId="G-0TC5ZZ5FMP" />
+
           <Toaster />
         </body>
       </AuthProvider>

@@ -47,7 +47,6 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-  
       </main>
       <footer className={styles.footer}>
         <a
@@ -69,7 +68,6 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-       
           Examples
         </a>
         <a

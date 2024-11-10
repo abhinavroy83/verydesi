@@ -9,6 +9,8 @@ import { RedisModule } from './redis/redis.module';
 import { RoomModule } from './room/room.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { UploadModule } from './s3/s3.module';
+import { EventModule } from './event/event.module';
+import { AdminauthModule } from './adminauth/adminauth.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { UploadModule } from './s3/s3.module';
     RoomModule,
     FavoriteModule,
     UploadModule,
+    EventModule,
+    AdminauthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -41,8 +41,8 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
             variant="ghost"
             className={`${textcolour} hover:text-gray-900  ${bgcolour} border-white border-2 rounded-md`}
           >
-            <MapPin className="h-5 w-5 " />
-            <span className="text-[16px] px-1 ">
+            <MapPin className="h-4 w-4 lg:h-5 lg:w-5 " />
+            <span className="lg:text-[16px] text-[12px] px-1 ">
               {currentCity || "Portland"}
             </span>
             <ChevronDown

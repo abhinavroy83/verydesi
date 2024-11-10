@@ -289,13 +289,13 @@ export default function RoomDetails({
 
     fetchWishStatus();
   }, [id]);
+
   const formatUrl = () => {
     const formattedTitle = roomData?.Title.toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
     return `${formattedTitle}-${roomData?._id}`;
   };
-
   if (loading) {
     return (
       <div>
@@ -309,12 +309,12 @@ export default function RoomDetails({
 
   return (
     <>
-      <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 pb-0 mx-auto py-8 mt-[7rem] font-sans">
-        <div className="flex flex-col lg:flex-row space-x-2 w-full justify-between lg:items-center">
-          <div className="">
+      <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 pb-0 mx-auto py-8 mt-[6rem] font-sans">
+        <div className="flex flex-col lg:flex-row space-x-2 w-full justify-between">
+          <div className="flex gap-0">
             <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
+              <BreadcrumbList className="flex items-center space-x-[-7px]">
+                <BreadcrumbItem className="">
                   <BreadcrumbLink
                     href="/"
                     className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
@@ -331,7 +331,7 @@ export default function RoomDetails({
                     href="/rooms"
                     className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
                   >
-                    <Hotel className="w-4 h-4 mr-2" />
+                    <Hotel className="w-4 h-6 mr-2" />
                     <span className="font-medium">Rooms</span>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
@@ -347,7 +347,7 @@ export default function RoomDetails({
                     openLogin();
                   }}
                 >
-                  <Heart className="h-6 w-6 fill-red-600 stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                  <Heart className="h-6 w-6 hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
                 </div>
               )}
               {status && (
@@ -379,7 +379,7 @@ export default function RoomDetails({
                 className="rounded-full flex items-center"
               >
                 <ShareButton
-                  shareLink={`https://verydesi.com/room/${formatUrl}}`}
+                  shareLink={`https://verydesi.com/room/${formatUrl()}`}
                 />
                 <p>Share</p>
               </Button>
@@ -389,7 +389,7 @@ export default function RoomDetails({
                 <button
                   onClick={() => navigateRoom("prev")}
                   disabled={currentIndex === 0}
-                  className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors flex flex-row"
+                  className="px-4 py-2 cursor-pointer bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors flex flex-row"
                   aria-label="Previous listing"
                 >
                   <ChevronLeft className="w-5 h-5 inline-block mr-1" />
@@ -398,7 +398,7 @@ export default function RoomDetails({
                 <button
                   onClick={() => navigateRoom("next")}
                   disabled={currentIndex === allRooms.length - 1}
-                  className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors flex flex-row"
+                  className="px-4 py-2 bg-blue-500 text-white cursor-pointer font-bold rounded-md hover:bg-blue-600 transition-colors flex flex-row"
                   aria-label="Next listing"
                 >
                   NEXT
@@ -409,7 +409,7 @@ export default function RoomDetails({
           </div>
         </div>
         <div className="flex justify-between items-start  flex-col lg:flex-row">
-          <div className="flex w-full lg:justify-between  flex-col lg:flex-row mt-2">
+          <div className="flex w-full lg:justify-between  flex-col lg:flex-row">
             <div className="flex lg:flex-row gap-2 font-bold lg:items-center">
               <h1 className="lg:text-3xl text-2xl font-bold text-gray-900 flex lg:flex-row flex-col gap-2">
                 {roomData?.Title} |{" "}
@@ -428,10 +428,10 @@ export default function RoomDetails({
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-2">
-          <div className="lg:col-span-2 space-y-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-2">
             <div className="flex lg:flex-row flex-col lg:items-center gap-2 text-xl font-bold text-gray-600">
-              <p className="text-gray-600">{roomData?.postingincity}, OR |</p>
+              <p className="text-gray-600">{roomData?.city}, OR |</p>
               <h1 className="text-xl font-bold text-gray-600 whitespace-nowrap">
                 Posted By: {roomData?.user_name}{" "}
               </h1>
@@ -440,13 +440,13 @@ export default function RoomDetails({
               </p> */}
             </div>
             <Card>
-              <CardContent className="p-0">
+              <CardContent className="p-0 rounded-2xl">
                 <Carousel className="w-full">
                   <CarouselContent>
                     {roomData?.Imgurl && roomData.Imgurl.length > 0 ? (
                       roomData.Imgurl.map((image, index) => (
                         <CarouselItem key={index}>
-                          <div className="relative aspect-video">
+                          <div className="relative aspect-video w-full h-[28rem] rounded-lg">
                             <Image
                               src={
                                 image ||
@@ -455,6 +455,7 @@ export default function RoomDetails({
                               alt={`Room image ${index + 1}`}
                               layout="fill"
                               objectFit="cover"
+                              className="rounded-lg"
                             />
                           </div>
                         </CarouselItem>
@@ -481,9 +482,13 @@ export default function RoomDetails({
             <Card>
               <CardContent className="p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-gray-900 text-xl">ABOUT THE PROPERTY</p>
+                  <p className="text-gray-900 text-[16px] font-bold ">
+                    About The Property
+                  </p>
                 </div>
-                <p className="text-gray-700">{roomData?.Description}</p>
+                <p className="text-gray-700 text-[14px]">
+                  {roomData?.Description}
+                </p>
               </CardContent>
             </Card>
 
@@ -610,7 +615,7 @@ export default function RoomDetails({
             </Card>
           </div>
 
-          <div className="space-y-3 lg:mt-8">
+          <div className="space-y-2 lg:mt-8">
             <Card>
               <CardHeader className="p-3"></CardHeader>
               <CardContent className="">
@@ -815,8 +820,8 @@ export default function RoomDetails({
           </div>
         </div>
       </div>
-      <section className="container mx-auto px-4 lg:mt-0 mt-5">
-        <h2 className="text-2xl font-bold mb-6">Similar Rooms</h2>
+      <section className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 pb-0 mx-auto font-sans">
+        <h2 className="text-2xl font-bold mb-2">Similar Rooms</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {allRooms.slice(0, 3).map((room) => (
             <Similarroomcard key={room._id} room={room} />

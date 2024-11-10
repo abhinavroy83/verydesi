@@ -34,7 +34,8 @@ import useCartStore from "@/store/useCartStore";
 import useAuthStore from "@/store/useAuthStore";
 import { Badge } from "@/components/ui/badge";
 import { useUserData } from "@/hooks/use-userData";
-import { MdOutlineBusinessCenter } from "react-icons/md";
+import { useScreenResolution } from "@/store";
+import Mobilenotification from "./Notification/Mobilenotification";
 
 export default function Navbar() {
   const { userData } = useUserData();
@@ -49,20 +50,20 @@ export default function Navbar() {
   const [IsNotificationOpen, setIsNotificationOpen] = useState(false);
   const router = useRouter();
   const { cartcount } = useCartStore();
-  const { firstname, userimage } = useAuthStore();
-
+  const { firstname, userimage, currentCity } = useAuthStore();
+  const { width } = useScreenResolution();
   useEffect(() => {
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-          "Portland"
+          currentCity || "Portland"
         )}&appid=5e414d6a2d51b65b62d9b463859ae456`
       )
       .then((res) => {
         setWeatherData(res.data);
       })
       .catch((error) => console.log("Error during fetcing whether", error));
-  }, []);
+  }, [currentCity]);
 
   const convertKelvinToCelsius = (kelvin: any) => {
     return kelvin - 273.15;
@@ -88,7 +89,7 @@ export default function Navbar() {
   return (
     <nav className="flex flex-col shadow-md fixed top-0 left-0 right-0 z-10 font-sans">
       <div className="bg-white border-b border-gray-200 items-center">
-        <div className="max-w-[1370px] lg:max-w-[1600px] h-[71px] mx-auto sm:px-6 px-4 ">
+        <div className="max-w-[1370px] lg:max-w-[1600px] h-[71px] mx-auto sm:px-2 px-4 ">
           <div className="flex items-center justify-between h-16 ">
             <div className="flex items-center mt-3">
               <Link href={"/"}>
@@ -112,6 +113,7 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
+
             {/* <div className="relative overflow-hidden bg-yellow-400 text-gray-900 h-[5rem] mt-[1rem]">
               <div className="absolute top-0 right-0 w-1/2 h-full">
                 <div className="absolute transform rotate-15 bg-pink-300 w-full h-200% -top-1/2 -right-1/4">
@@ -141,73 +143,20 @@ export default function Navbar() {
               onClick={() => {
                 window.open("https://www.rakuten.com/", "_blank");
               }}
-              className="w-[27rem] mt-2 shadow-lg overflow-hidden relative cursor-pointer"
+              className="lg:w-[27rem] hidden lg:flex mt-2 shadow-lg overflow-hidden relative cursor-pointer"
             >
               <img
                 src="https://res.cloudinary.com/druohnmyv/image/upload/v1730037713/Screenshot_2024-10-27_193134_j1ypv2.png"
-                alt="Animation Character"
+                alt="Rakuten"
                 className="object-cover"
               />
-              {/* <div className="flex items-center">
-                <div className="ml-3 text-black">
-                  <h1 className="text-[25px]">Give $30. Get $30.</h1>
-                  <h2 className="text-[13px] mt-0">
-                    Refer a friend (or ten) and get $30 per referral.
-                  </h2>
-                </div>
-                <img
-                  className="w-[9rem] h-[5rem]"
-                  src="https://res.cloudinary.com/druohnmyv/image/upload/v1729838633/two-beautiful-surprised-screaming-with-their-hands-up-dressed-casual-clothes-blue-wall-people-emotions-concept_231208-11780-removebg-preview_qngfm5.png"
-                />
-              </div>
-              <Badge className="absolute top-4 right-2 bg-[#426476] text-white px-3 py-1">
-                Talk to Breastfeeding Educator
-              </Badge>
-              <span className="absolute top-11 right-12 text-[18px] font-bold text-white">
-                {" "}
-                678-310-4660{" "}
-              </span>
-
-              <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-white rounded-full opacity-10"></div>
-              <div className="absolute -right-8 -top-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div> */}
             </div>
-            {/* <div
-              onClick={() => {
-                window.open("https://lifepointlactation.com/", "_blank");
-              }}
-              className="w-[37rem] mt-4 bg-[#F59583] px-1 shadow-lg overflow-hidden relative cursor-pointer hidden lg:flex "
-            >
-              <div className="flex items-center">
-                <img
-                  src="https://res.cloudinary.com/druohnmyv/image/upload/v1726470942/finallogo_oamxsn.png"
-                  className="w-[6rem] h-[5rem]"
-                />
-                <div className="ml-3">
-                  <span className="text-white"> Healthy Baby</span>
-                  <h2 className="text-[18px] font-bold text-[#426476] mt-0">
-                    Lifepoint Lactation
-                  </h2>
-                </div>
-                <img
-                  className="w-[9rem] h-[5rem]"
-                  src="https://res.cloudinary.com/druohnmyv/image/upload/v1727429131/img1_b7arix.png"
-                />
-              </div>
-              <Badge className="absolute top-4 right-2 bg-[#426476] text-white px-3 py-1">
-                Talk to Breastfeeding Educator
-              </Badge>
-              <span className="absolute top-11 right-12 text-[18px] font-bold text-white">
-                {" "}
-                678-310-4660{" "}
-              </span>{" "}
-              <div className="absolute -right-8 -top-8 w-24 h-24 bg-yellow-300 rounded-full opacity-20"></div>
-            </div> */}
 
             <div className="hidden sm:flex items-center space-x-6 mt-3">
               {session ? (
                 <>
                   <div
-                    className="relative text-black"
+                    className="relative text-black mx-2"
                     onMouseEnter={() => setIsNotificationOpen(true)}
                     onMouseLeave={() => setIsNotificationOpen(false)}
                   >
@@ -314,7 +263,15 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-            <div className="md:hidden mt-2">
+            <div className="md:hidden mt-2 flex items-center">
+              <div
+                className="relative text-black"
+                onMouseEnter={() => setIsNotificationOpen(true)}
+                onMouseLeave={() => setIsNotificationOpen(false)}
+              >
+                <Bell className="cursor-pointer" />
+                <Notification isOpen={IsNotificationOpen} />
+              </div>
               <Button
                 variant="ghost"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -325,6 +282,18 @@ export default function Navbar() {
                   <Menu className="h-6 w-6" />
                 )}
               </Button>
+              {/* <div
+                  onClick={() => {
+                    window.open("https://www.rakuten.com/", "_blank");
+                  }}
+                  className="lg:w-[27rem] flex lg:hidden mt-2 shadow-lg overflow-hidden relative cursor-pointer"
+                >
+                  <img
+                    src="https://res.cloudinary.com/druohnmyv/image/upload/v1730037713/Screenshot_2024-10-27_193134_j1ypv2.png"
+                    alt="Rakuten"
+                    className="object-cover"
+                  />
+                </div> */}
             </div>
           </div>
         </div>
@@ -405,11 +374,11 @@ export default function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1">
             {session ? (
               <div className="space-y-4">
-                <div className="flex items-center space-x-6 px-3">
-                  <Bell className="h-6 w-6 text-white" />
+                <div className="flex items-center space-x-4">
+                  <Bell className="h-6 w-6 text-white lg:flex hidden" />
                   <div className="relative">
                     <Heart className="h-6 w-6 text-white" />
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full  h-5 w-5 flex items-center justify-center">
                       1
                     </span>
                   </div>
@@ -421,7 +390,7 @@ export default function Navbar() {
                     <AvatarFallback>U</AvatarFallback>
                   </Avatar>
                   <div className="flex items-center space-x-2 text-white py-2">
-                    <MapPin className="h-5 w-5 text-gray-400" />
+                    {/* <MapPin className="h-5 w-5 text-gray-400" /> */}
                     {weatherData?.weather &&
                       weatherData?.weather.length > 0 && (
                         <img

@@ -194,6 +194,12 @@ export default function SignIn() {
                     Sign In
                   </Button>
                 </motion.div>
+                {error && (
+                  <p className=" text-red-500 text-sm">
+                    Sorry, your password was incorrect. <br />
+                    Please double-check your password.
+                  </p>
+                )}
 
                 <motion.div
                   initial={{ opacity: 0 }}

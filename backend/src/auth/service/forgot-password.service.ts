@@ -118,11 +118,11 @@ export class ForgotPasswordService {
   //send email to reset password
   async sendemailverification(email: string, token: string) {
     const transport = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      host: 'live.smtp.mailtrap.io',
+      port: 587,
       auth: {
-        user: 'f8220dd13ab2b9',
-        pass: '64e618e922d9bd',
+        user: 'smtp@mailtrap.io',
+        pass: 'fb6024e6b348ed1e4b070b0e231d0d4f',
       },
     });
 
@@ -138,14 +138,14 @@ export class ForgotPasswordService {
           <p>Dear <strong>username</strong>,</p>
           <p>We received a request to reset your password. Click the link below to proceed:</p>
           <p style="text-align: center;">
-            <a href="https://apiv2.verydesi.com/auth/reset-password/${token}" style="display: inline-block; padding: 10px 20px; background-color: #ff5722; color: #fff; text-decoration: none; border-radius: 5px;">
+            <a href="https://verydesi.com/forgot-password/${token}" style="display: inline-block; padding: 10px 20px; background-color: #ff5722; color: #fff; text-decoration: none; border-radius: 5px;">
               Reset Password
             </a>
           </p>
           <p>If the button above doesn't work, you can copy and paste the following link into your browser:</p>
           <p style="word-wrap: break-word;">
-            <a href="https://apiv2.verydesi.com/auth/reset-password/${token}">
-              https://apiv2.verydesi.com/auth/reset-password/${token}
+            <a href="https://verydesi.com/forgot-password/${token}">
+              https://verydesi.com/forgot-password/${token}
             </a>
           </p>
           <p><strong>Note:</strong> This link will expire in 10 minutes.</p>
@@ -162,11 +162,11 @@ export class ForgotPasswordService {
   }
   async sendPasswordChangeConfirmation(email: string) {
     const transport = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      host: 'live.smtp.mailtrap.io',
+      port: 587,
       auth: {
-        user: 'f8220dd13ab2b9',
-        pass: '64e618e922d9bd',
+        user: 'smtp@mailtrap.io',
+        pass: 'fb6024e6b348ed1e4b070b0e231d0d4f',
       },
     });
 
