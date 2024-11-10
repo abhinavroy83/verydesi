@@ -160,9 +160,9 @@ export default function DashboardUserSettings() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col h-screen overflow-hidden border rounded-lg">
+      <div className="flex flex-col h-screen overflow-hidden border rounded-tr-lg">
         <div className="flex justify-between items-center">
-          <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2 mb- flex justify-between w-full">
+          <div className="bg-gray-100 text-black p-4 rounded-r-lg items-center space-x-2 mb- flex justify-between w-full">
             <h2 className="text-2xl font-bold flex gap-1 items-center">
               <Settings className="mr-2" /> Settings
             </h2>
@@ -191,7 +191,7 @@ export default function DashboardUserSettings() {
               <li className="inline-flex items-center">
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center hover:text-gray-700"
+                  className="inline-flex items-center hover:text-gray-700 hover:underline"
                 >
                   Dashboard
                 </Link>
@@ -201,7 +201,7 @@ export default function DashboardUserSettings() {
                   <ChevronRight className="w-4 h-4 mx-1" />
                   <Link
                     href="/dashboard/user"
-                    className="ml-1 hover:text-gray-700"
+                    className="ml-1 hover:text-gray-700 hover:underline"
                   >
                     Settings
                   </Link>

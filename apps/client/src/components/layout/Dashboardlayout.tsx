@@ -208,7 +208,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       )}
-      <div className="mt-2 flex h-screen bg-background overflow-x-hidden overflow-y-hidden mx-auto border shadow-xl shadow-gray-300 rounded-2xl mb-5">
+      <div className="mt-2 flex h-auto bg-background overflow-x-hidden overflow-y-hidden mx-auto border shadow-xl shadow-gray-300 rounded-2xl mb-5">
         <aside className="w-64 border-r bg-muted/30 lg:flex flex-col hidden">
           <div className="p-6 flex flex-col items-center">
             <Avatar className="w-24 h-24 mb-4 border-4 border-primary">

@@ -10,6 +10,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import {
   AlertCircle,
@@ -71,8 +72,6 @@ export default function Component() {
             },
           }
         );
-        // console.log(res.data);
-
         toast.success(res.data.message);
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -100,150 +99,167 @@ export default function Component() {
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto flex flex-col w-full">
-        <div className="bg-gray-100 text-black p-4 rounded-t-lg items-center space-x-2 mb- flex justify-between w-full">
-          <h2 className="text-2xl font-bold flex gap-1 items-center">
-            <Lock className="mr-2" /> Update Password
+      <div className="flex-1 overflow-y-auto font-sans">
+        <div className="bg-gray-100 text-black p-4 rounded-t-lg flex flex-col sm:flex-row justify-between items-start sm:items-center">
+          <h2 className="text-xl sm:text-2xl font-bold flex items-center mb-2 sm:mb-0">
+            <Lock className="mr-2 h-5 w-5 sm:h-6 sm:w-6" /> Update Password
           </h2>
         </div>
-        <nav
-          className="flex mb-4 text-sm text-gray-500 px-4"
-          aria-label="Breadcrumb"
-        >
-          <ol className="inline-flex items-center space-x-[-1px] mt-4">
-            <li className="inline-flex items-center">
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center hover:text-gray-700"
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <div className="flex items-center">
-                <ChevronRight className="w-4 h-4 mx-1" />
+        <div className="mx-auto px-4 md:px-6 lg:px-8 lg:py-6 py-2">
+          <nav
+            className="flex mb-4 text-sm text-gray-500"
+            aria-label="Breadcrumb"
+          >
+            <ol className="inline-flex items-center space-x-1">
+              <li className="inline-flex items-center">
                 <Link
-                  href="/dashboard/user"
-                  className="ml-1 hover:text-gray-700"
+                  href="/dashboard"
+                  className="inline-flex items-center text-sm md:text-base hover:text-gray-700 hover:underline"
                 >
-                  Settings
+                  Dashboard
                 </Link>
-              </div>
-            </li>
-            <li aria-current="page">
-              <div className="flex items-center">
-                <ChevronRight className="w-4 h-4 mx-1" />
-                <span className="ml-1 font-medium text-gray-700">
-                  Update Password
-                </span>
-              </div>
-            </li>
-          </ol>
-        </nav>
-        <Card className="p-2 max-w-2xl w-full ml-4">
-          <CardHeader>
-            <CardDescription>
-              Change your password to keep your account secure.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onsubmit)} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="oldpassword">Current Password</Label>
-                <div className="relative">
-                  <Input
-                    id="oldpassword"
-                    type={showCurrentPassword ? "text" : "password"}
-                    {...register("oldpassword")}
-                    className="pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                    className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
+              </li>
+              <li>
+                <div className="flex items-center">
+                  <ChevronRight className="w-4 h-4 mx-1" />
+                  <Link
+                    href="/dashboard/user"
+                    className="ml-1 text-sm md:text-base hover:text-gray-700 hover:underline"
                   >
-                    {showCurrentPassword ? (
-                      <EyeOffIcon className="h-5 w-5" />
-                    ) : (
-                      <EyeIcon className="h-5 w-5" />
-                    )}
-                  </button>
+                    Settings
+                  </Link>
                 </div>
-                {errors.oldpassword && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.oldpassword.message}
-                  </p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="newpassword">New Password</Label>
-                <div className="relative">
-                  <Input
-                    id="newpassword"
-                    type={showNewPassword ? "text" : "password"}
-                    {...register("newpassword")}
-                    className="pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
-                  >
-                    {showNewPassword ? (
-                      <EyeOffIcon className="h-5 w-5" />
-                    ) : (
-                      <EyeIcon className="h-5 w-5" />
-                    )}
-                  </button>
+              </li>
+              <li aria-current="page">
+                <div className="flex items-center">
+                  <ChevronRight className="w-4 h-4 mx-1" />
+                  <span className="ml-1 text-sm md:text-base text-gray-500 hover:underline cursor-pointer">
+                    Update Password
+                  </span>
                 </div>
-                {errors.newpassword && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.newpassword.message}
-                  </p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  {...register("confirmPassword")}
-                />
-                {errors.confirmPassword && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.confirmPassword.message}
-                  </p>
-                )}
-                {!passwordsMatch && (
-                  <p className="text-red-500 text-sm mt-1">
-                    Passwords do not match
-                  </p>
-                )}
-              </div>
-              <CardFooter className="flex flex-col space-y-4 px-0">
-                <div
-                  className="flex items-center p-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50"
-                  role="alert"
-                >
-                  <AlertCircle className="flex-shrink-0 inline w-4 h-4 mr-3" />
-                  <span className="sr-only">Info</span>
-                  <div>
-                    <span className="font-medium">Tip:</span> Use a strong,
-                    unique password that you don't use for other accounts.
+              </li>
+            </ol>
+          </nav>
+          <Card className="w-full max-w-2xl">
+            <CardHeader>
+              <CardTitle className="text-xl sm:text-2xl mb-2">
+                Change Password
+              </CardTitle>
+              <CardDescription>
+                Change your password to keep your account secure.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit(onsubmit)} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="oldpassword" className="text-sm sm:text-base">
+                    Current Password
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="oldpassword"
+                      type={showCurrentPassword ? "text" : "password"}
+                      {...register("oldpassword")}
+                      className="pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowCurrentPassword(!showCurrentPassword)
+                      }
+                      className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
+                    >
+                      {showCurrentPassword ? (
+                        <EyeOffIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      ) : (
+                        <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      )}
+                    </button>
                   </div>
+                  {errors.oldpassword && (
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">
+                      {errors.oldpassword.message}
+                    </p>
+                  )}
                 </div>
-                <Button
-                  type="submit"
-                  className="w-full sm:w-auto"
-                  disabled={!passwordsMatch}
-                >
-                  <LockIcon className="w-4 h-4 mr-2" />
-                  Update Password
-                </Button>
-              </CardFooter>
-            </form>
-          </CardContent>
-        </Card>
+                <div className="space-y-2">
+                  <Label htmlFor="newpassword" className="text-sm sm:text-base">
+                    New Password
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="newpassword"
+                      type={showNewPassword ? "text" : "password"}
+                      {...register("newpassword")}
+                      className="pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600"
+                    >
+                      {showNewPassword ? (
+                        <EyeOffIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      ) : (
+                        <EyeIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                      )}
+                    </button>
+                  </div>
+                  {errors.newpassword && (
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">
+                      {errors.newpassword.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="confirmPassword"
+                    className="text-sm sm:text-base"
+                  >
+                    Confirm New Password
+                  </Label>
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    {...register("confirmPassword")}
+                  />
+                  {errors.confirmPassword && (
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">
+                      {errors.confirmPassword.message}
+                    </p>
+                  )}
+                  {!passwordsMatch && (
+                    <p className="text-red-500 text-xs sm:text-sm mt-1">
+                      Passwords do not match
+                    </p>
+                  )}
+                </div>
+              </form>
+            </CardContent>
+            <CardFooter className="flex flex-col space-y-4">
+              <div
+                className="flex items-center p-4 text-xs sm:text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50"
+                role="alert"
+              >
+                <AlertCircle className="flex-shrink-0 inline w-4 h-4 mr-3" />
+                <span className="sr-only">Info</span>
+                <div>
+                  <span className="font-medium">Tip:</span> Use a strong, unique
+                  password that you don't use for other accounts.
+                </div>
+              </div>
+              <Button
+                type="submit"
+                className="w-full bg-green-800 hover:bg-green-700"
+                disabled={!passwordsMatch}
+                onClick={handleSubmit(onsubmit)}
+              >
+                <LockIcon className="w-4 h-4 mr-2" />
+                Update Password
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
       </div>
     </DashboardLayout>
   );

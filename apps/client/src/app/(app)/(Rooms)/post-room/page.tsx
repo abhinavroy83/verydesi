@@ -70,7 +70,7 @@ const sections = [
   { id: "preferences", title: "Preferences" },
   { id: "photos", title: "Photos" },
   { id: "your-details", title: "Your Details" },
-  { id: "submit", title: "Submit" },
+  // { id: "submit", title: "Submit" },
 ];
 
 export default function RoomPostingForm() {
@@ -308,7 +308,7 @@ export default function RoomPostingForm() {
             <BreadcrumbItem>
               <BreadcrumbLink
                 href="/"
-                className="flex items-center text-primary hover:text-primary-dark transition-colors"
+                className="flex items-center text-primary hover:text-primary-dark transition-colors hover:underline"
               >
                 <Home className="w-4 h-4 mr-2" />
                 <span className="font-medium">Home</span>
@@ -320,7 +320,7 @@ export default function RoomPostingForm() {
             <BreadcrumbItem>
               <BreadcrumbLink
                 href="/rooms"
-                className="flex items-center text-primary hover:text-primary-dark transition-colors"
+                className="flex items-center text-primary hover:text-primary-dark transition-colors hover:underline"
               >
                 <DoorOpen className="w-4 h-4 mr-2" />
                 <span className="font-medium">Post Room</span>
@@ -330,8 +330,8 @@ export default function RoomPostingForm() {
         </Breadcrumb>
       </div>
       <div className=" flex">
-        <aside className="w-64 bg-[#232f3e] p-4 text-white ">
-          <nav className="hidden  lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
+        <aside className="hidden lg:block w-64 bg-[#232f3e] p-4 text-white ">
+          <nav className=" max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
             <ul className="space-y-2 ">
               {sections.map((section) => (
                 <li key={section.id}>
