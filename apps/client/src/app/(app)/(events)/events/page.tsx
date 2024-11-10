@@ -45,9 +45,8 @@ export default function Component() {
     venueName: string;
     description: string;
     images: string[];
-    address:string;
-    state:string;
-
+    address: string;
+    state: string;
   }
   const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
   const [nonFeaturedEvents, setNonFeaturedEvents] = useState<Event[]>([]);

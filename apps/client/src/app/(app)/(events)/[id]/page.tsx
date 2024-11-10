@@ -26,7 +26,6 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronUp,
   Heart,
   Home,
 } from "lucide-react";
