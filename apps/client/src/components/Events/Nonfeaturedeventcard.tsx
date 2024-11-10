@@ -26,7 +26,11 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
     <article className="font-sans flex flex-col sm:flex-row w-full sm:h-[80px] hover:cursor-pointer justify-start border shadow-md rounded-xl hover:shadow-lg relative">
       <div className="w-full sm:w-auto">
         <img
-          src={`https://envira.es/wp-content/uploads/2019/10/ruido-nocturno.jpg`}
+          src={
+            event.images && event.images.length > 0
+              ? event.images[0]
+              : "https://envira.es/wp-content/uploads/2019/10/ruido-nocturno.jpg" // Fallback image
+          }
           alt="Event image"
           className="rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none w-full sm:w-[7rem] h-48 sm:h-full object-cover transition duration-300 ease-in-out hover:opacity-80"
         />

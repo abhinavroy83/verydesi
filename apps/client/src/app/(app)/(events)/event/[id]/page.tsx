@@ -69,31 +69,6 @@ function Events() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-
-
-// const fetchEvent = useCallback(async () => {
-//   if (!id) return;
-
-//   setLoading(true);
-//   setError(null);
-
-//   try {
-//     const response = await axios.get(`https://apiv2.verydesi.com/event/find_event_by_id/${id}`);
-//     console.log("response event",response)
-//     setEvent(response?.data); 
-//     console.log("event",event)
-//   } catch (err) {
-//     setError("Failed to load event details.");
-//     console.error("Error fetching event:", err);
-//   } finally {
-//     setLoading(false);
-//   }
-// }, [id]);
-
-// React.useEffect(() => {
-//   fetchEvent();
-// }, [fetchEvent]);
-
 React.useEffect(() => {
   const fetchEvent = async () => {
     if (!id) return;
@@ -116,22 +91,6 @@ React.useEffect(() => {
   fetchEvent();
   
 }, [id]);
-// React.useEffect(() => {
-//   console.log("event updated:", event);
-// }, []);
-  // useEffect(() => {
-  //   if (id) {
-  //     axios
-  //       .get(`https://apiv2.verydesi.com/event/find_event_by_id/${id}`)
-  //       .then((response) => {
-  //         setEvent(response.data[0]); // Adjust based on API structure
-  //       })
-  //       .catch((err) => {
-  //         setError("Failed to load event details.");
-  //         console.error(err);
-  //       });
-  //   }
-  // }, [id]);
   return (
     <>
       <div className="max-w-[1370px] lg:max-w-[1600px]  px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6.1rem] font-sans">

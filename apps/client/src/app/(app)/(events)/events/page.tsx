@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import Featuredeventscard from "@/components/Events/Featuredeventscard";
+import SkeletonFeaturedeventscard from "@/components/skeleton/FeaturedEventsSkeletonCard";
+import SkeletonNonfeaturedeventcard from "@/components/skeleton/NonFeaturedEventsCardSkeleton";
 import {
   Carousel,
   CarouselContent,
@@ -15,6 +17,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import EventNonfeaturedCard from "@/components/Events/Nonfeaturedeventcard";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import axios from "axios";
@@ -24,6 +27,8 @@ export default function Component() {
   const { currentCity } = useAuthStore();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [selectedOption, setSelectedOption] =
     useState<SortOption>("Recommended");
 
@@ -47,7 +52,7 @@ export default function Component() {
   const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
   const [nonFeaturedEvents, setNonFeaturedEvents] = useState<Event[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const city = currentCity || "Portland";
+
 
   const handleSelect = (option: SortOption) => {
     setSelectedOption(option);
@@ -55,39 +60,45 @@ export default function Component() {
     // Here you would typically call a function to actually sort the items
     console.log(`Sorting by: ${option}`);
   };
+  const itemsPerPage = 7;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(nonFeaturedEvents.length / itemsPerPage);
 
   useEffect(() => {
-    const city = currentCity || "Portland";
     const fetchEvents = async () => {
-      try {
-        const response = await axios.get(
-          `https://apiv2.verydesi.com/event/getEventByArea/${city}`
-        );
-        console.log("raw resp", response)
-        const events: Event[] = response.data;
-        console.log("events",events)
+        setLoading(true); // Start loading
+        try {
+            const city = currentCity || "Portland";
+            const response = await axios.get(
+                `https://apiv2.verydesi.com/event/getEventByArea/${city}`
+            );
+            const events: Event[] = response.data;
 
-        const filteredFeaturedEvents = events
-          .filter((event) => event.eventpostingcity === city && new Date(event.startDate) >= new Date())
-          .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
-          .slice(0, 10); // Takes only the first 10 for the carousel
-        console.log("featured events",filteredFeaturedEvents)
+            const filteredFeaturedEvents = events
+                .filter(event => event.eventpostingcity === city && new Date(event.startDate) >= new Date())
+                .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+                .slice(0, 10);
 
-    // Separate and sort non-featured events by nearest date
-    const remainingEvents = events
-    .filter((event) => !filteredFeaturedEvents.includes(event))
-    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
-        console.log("remaining events",remainingEvents)
-        setFeaturedEvents(filteredFeaturedEvents);
-        setNonFeaturedEvents(remainingEvents);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-        setError("Could not load events.");
-      }
+            const remainingEvents = events
+                .filter(event => !filteredFeaturedEvents.includes(event))
+                .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+
+            setFeaturedEvents(filteredFeaturedEvents);
+            setNonFeaturedEvents(remainingEvents);
+        } catch (error) {
+            console.error("Error fetching events:", error);
+            setError("Could not load events.");
+        } finally {
+            setLoading(false); // Stop loading
+        }
     };
-
     fetchEvents();
-  }, []);
+}, []);
+
+  const paginatedEvents = nonFeaturedEvents.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
   return (
     <HomeLayout>
       <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3 font-sans">
@@ -150,36 +161,80 @@ export default function Component() {
             </div>
           </div>
         </div>
-        <div className="w-full max-w-[79rem] mt-3 mx-auto">
-          <Carousel
-            opts={{
-              align: "start",
-            }}
-            className=""
-          >
 
-      <CarouselContent>
-        {featuredEvents.map((event, index) => (
+
+<div className="w-full max-w-[79rem] mt-3 mx-auto">
+  <Carousel
+    opts={{
+      align: "start",
+    }}
+    className=""
+  >
+    <CarouselContent>
+      {loading ? (
+        // Display skeleton cards while loading
+        [...Array(10)].map((_, index) => (
+          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
+            <div className="w-full">
+          
+              <SkeletonFeaturedeventscard key={index}/>
+            </div>
+          </CarouselItem>
+        ))
+      ) : (
+        // Display actual featured events after loading completes
+        featuredEvents.map((event) => (
           <CarouselItem key={event._id} className="md:basis-1/2 lg:basis-1/4">
             <div className="w-full">
               <Featuredeventscard key={event._id} event={event} />
             </div>
           </CarouselItem>
-        ))}
-      </CarouselContent>
-            <CarouselPrevious className="absolute left-[-12] top-1/2 -translate-y-1/2" />
-            <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
-          </Carousel>
-        </div>
+        ))
+      )}
+    </CarouselContent>
+    <CarouselPrevious className="absolute left-[-12] top-1/2 -translate-y-1/2" />
+    <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
+  </Carousel>
+</div>
       </div>
       <h1 className="capitalize text-[23px] lg:text-[23px] font-bold mt-0">
         <p>More Featured Events In </p>
       </h1>
 
+
+
       <div className="flex flex-col gap-2 mt-2 mb-10">
-        {nonFeaturedEvents.map((event) => (
-          <EventNonfeaturedCard key={event._id} event={event} />
-        ))}
+  {loading ? (
+    // Render skeleton cards while loading
+    [...Array(itemsPerPage)].map((_, index) => (
+
+      <SkeletonNonfeaturedeventcard key={index} />
+    ))
+  ) : (
+    // Render actual non-featured events after loading completes
+    paginatedEvents.map((event) => (
+      <EventNonfeaturedCard key={event._id} event={event} />
+    ))
+  )}
+</div>
+
+      {/* Pagination Component */}
+      <div className="flex justify-center mb-4">
+        <Pagination>
+          <PaginationContent>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(index + 1)}
+                  isActive={currentPage === index + 1}
+                  className={currentPage === index + 1 ? "border-2 border-black" : ""}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+          </PaginationContent>
+        </Pagination>
       </div>
     </HomeLayout>
   );
