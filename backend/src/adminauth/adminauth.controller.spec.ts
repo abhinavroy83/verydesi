@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AdminauthController } from './adminauth.controller';
+import { AdminauthController } from './controller/adminauth.controller';
 
 describe('AdminauthController', () => {
   let controller: AdminauthController;
