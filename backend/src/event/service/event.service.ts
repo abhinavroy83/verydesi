@@ -70,4 +70,26 @@ export class EventService {
       throw new InternalServerErrorException('Error fetching event');
     }
   }
+
+  async geteventpostedbyuser(userId: string) {
+    const cacheKey = 'userId: ${userId}';
+
+    try {
+      const cachedroom = await this.cacheManager.get<Event>(cacheKey);
+      if (cachedroom) {
+        return cachedroom;
+      }
+      const event = await this.eventmodel.find({ UserId: userId });
+      if (!event) {
+        throw new NotFoundException('no room found by user');
+      }
+      await this.cacheManager.set(cacheKey, event);
+
+      return event;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Something went wrong while fetching rooms',
+      );
+    }
+  }
 }

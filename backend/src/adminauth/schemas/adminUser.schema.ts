@@ -11,7 +11,7 @@ export class AdminUser {
   password: string;
 
   @Prop({ required: true, enum: ['admin', 'manager', 'customer_support'] })
-  role: string[];
+  role: string;
 
   @Prop({ required: true, unique: true })
   permissions: string[];

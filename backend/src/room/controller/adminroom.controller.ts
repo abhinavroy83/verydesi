@@ -9,4 +9,6 @@ export class AdminRoomController {
   getallroom() {
     return this.adminroomservice.getallrooms();
   }
+
+  
 }

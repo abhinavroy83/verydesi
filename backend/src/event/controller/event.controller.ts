@@ -35,4 +35,11 @@ export class EventController {
     }
     return this.eventservice.SingleEvent(_id);
   }
+
+  @UseGuards(JwtGuard)
+  @Get('list-my-event')
+  getallroompostedbyuser(@Request() req) {
+    const userId = req.user.userId;
+    return this.eventservice.geteventpostedbyuser(userId);
+  }
 }

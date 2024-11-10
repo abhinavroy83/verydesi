@@ -67,10 +67,8 @@ export class AdminauthService {
 
   async hasPermission(email: string, permission: string) {
     const user = await this.getUser(email);
-    return user.permissions.includes(permission);
-    // return user.role === 'admin' || user.permissions.includes(permission);
+    return user.role === 'admin' || user.permissions.includes(permission);
   }
-  
 
   // send token
   async signToken(
