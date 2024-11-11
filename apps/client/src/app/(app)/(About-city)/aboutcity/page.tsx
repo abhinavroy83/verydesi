@@ -378,7 +378,7 @@ export default function PortlandOregonPage() {
         </div>
         <div className="w-full">
           {sections.map((section, index) => (
-            <div key={index} className="relative overflow-hidden">
+            <div key={index} className="relative">
               <div
                 className={`flex min-h-[400px] flex-col ${
                   section.imagePosition === "right"
@@ -387,45 +387,32 @@ export default function PortlandOregonPage() {
                 }`}
               >
                 {/* Image Section */}
-                <div className="relative flex-1">
-                  <div className="absolute inset-0">
-                    <Image
-                      src={section.imageSrc}
-                      alt={section.imageAlt}
-                      fill
-                      className="object-cover"
-                      priority={index === 0}
-                    />
-                  </div>
-                  {/* Diagonal Overlay */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-r ${
-                      section.imagePosition === "right"
-                        ? "from-transparent to-white/10"
-                        : "from-white/10 to-transparent"
-                    }`}
+                <div className="relative flex-1 w-full h-full">
+                  <img
+                    src={
+                      "https://farm9.staticflickr.com/8541/8670217964_8311c2dc7e_z.jpg"
+                    }
+                    alt={section.imageAlt}
+                    className="object-cover"
+                    // priority={index === 0}
                   />
                 </div>
 
                 {/* Content Section */}
-                <div className="relative flex-1 bg-blue-50">
-                  {/* Diagonal Shape */}
+                <div className="relative flex-1">
+                  {/* Background with diagonal cut */}
                   <div
-                    className={`absolute inset-0 ${
-                      section.imagePosition === "right"
-                        ? "clip-path-diagonal-left"
-                        : "clip-path-diagonal-right"
-                    }`}
+                    className="absolute inset-0 bg-[#EBF3FF]"
                     style={{
                       clipPath:
                         section.imagePosition === "right"
-                          ? "polygon(0 0, 100% 0, 100% 100%, 10% 100%)"
-                          : "polygon(0 0, 90% 0, 100% 100%, 0 100%)",
+                          ? "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)"
+                          : "polygon(0 0, 85% 0, 100% 100%, 0 100%)",
                     }}
                   />
 
                   {/* Content */}
-                  <div className="relative z-10 flex h-full flex-col justify-center p-8 md:p-12">
+                  <div className="relative flex h-full flex-col justify-center p-8 md:p-12">
                     <h2 className="mb-4 text-3xl font-bold text-blue-600">
                       {section.title}
                     </h2>
@@ -433,7 +420,7 @@ export default function PortlandOregonPage() {
                       {section.description}
                     </p>
                     <Button
-                      // variant="outline"
+                      variant="outline"
                       className="w-fit border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                     >
                       {section.buttonText}
@@ -443,16 +430,8 @@ export default function PortlandOregonPage() {
               </div>
             </div>
           ))}
-
-          <style jsx>{`
-            .clip-path-diagonal-right {
-              background: rgb(239 246 255);
-            }
-            .clip-path-diagonal-left {
-              background: rgb(239 246 255);
-            }
-          `}</style>
         </div>
+
         <section className="text-center">
           <h1 className="text-4xl font-bold mb-4">Portland, Oregon</h1>
           <p className="text-xl max-w-3xl mx-auto">
