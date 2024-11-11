@@ -69,7 +69,7 @@ export default function LoginSlider() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-4xl font-bold mb-8 text-center bg-clip-text text-black"
+                className="text-3xl font-bold mb-3 text-center bg-clip-text text-black"
               >
                 Welcome Back
               </motion.h2>
@@ -113,6 +113,14 @@ export default function LoginSlider() {
                     />
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary/60" />
                   </div>
+                  <div className="w-full flex justify-end">
+                    <Link
+                      href="/forgot-password"
+                      className="text-xs align-end text-black hover:text-purple-900 "
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
                 </div>
                 <motion.div
                   whileHover={{ scale: 1.03 }}
@@ -120,7 +128,7 @@ export default function LoginSlider() {
                 >
                   <Button
                     type="submit"
-                    className="w-full bg-primary hover:bg-primary/90"
+                    className="w-full bg-[#9333EA] hover:bg-[#9333EA]"
                   >
                     Log In
                     <ArrowRight className="ml-2 h-4 w-4" />

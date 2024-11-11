@@ -144,7 +144,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 overflow-hidden font-sans ">
+    <div className="min-h-auto bg-gradient-to-br from-purple-100 to-indigo-100 overflow-hidden font-sans ">
       <div className="p-6">
         <Link href={"/"}>
           <img

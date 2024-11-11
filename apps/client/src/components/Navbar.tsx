@@ -257,7 +257,7 @@ export default function Navbar() {
                     // onClick={() => handlemModal(true)}
                   >
                     Hello, Sign in
-                    <p className="text-[15px]">Or Sign up</p>
+                    <p className=" text-[16px]">Or Sign up</p>
                   </p>
                 </div>
               )}
@@ -306,7 +306,7 @@ export default function Navbar() {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white group text-[15px] transition duration-300 ease-in-out"
+                className="text-white hover:bg-white group text-[16px] transition duration-300 ease-in-out"
               >
                 <Home className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />
                 HOME
@@ -316,7 +316,7 @@ export default function Navbar() {
                   router.push("/");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white group text-[15px] transition duration-300 ease-in-out"
+                className="text-white hover:bg-white group text-[16px] transition duration-300 ease-in-out"
               >
                 <DoorOpen className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
                 ROOMMATES
@@ -332,11 +332,13 @@ export default function Navbar() {
               }}
               className="hidden md:flex cursor-pointer items-center space-x-2 text-white"
             >
-              <span className="font-medium">{weatherData?.name}</span>
+              <span className="font-medium text-[16px]">
+                {weatherData?.name}
+              </span>
               <div>
                 {weatherData?.main && (
                   <div className="">
-                    <p className="font-medium cursor-pointer">
+                    <p className="font-medium text-[16px] cursor-pointer">
                       {isHovered
                         ? `${tempInCelsius}°C`
                         : `${tempInFahrenheit}°F`}
