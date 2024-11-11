@@ -10,6 +10,8 @@ import Image from "next/image";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import { HomeLayout } from "@/components/layout/Home";
+import { motion } from "framer-motion";
+import { Building2, Theater, Waves, MapPin, Building } from "lucide-react";
 const neighborhoods = [
   {
     name: "Beaverton",
@@ -132,11 +134,152 @@ const attractions = [
     link: "#",
   },
 ];
-
+const stats = [
+  {
+    icon: Building2,
+    number: "3rd",
+    label: "Largest City in the U.S.",
+    delay: 0,
+  },
+  {
+    icon: Theater,
+    number: "190+",
+    label: "Live Performance Theaters",
+    delay: 0.1,
+  },
+  {
+    icon: Waves,
+    number: "26",
+    label: "Miles of Lakefront",
+    delay: 0.2,
+  },
+  {
+    icon: Waves,
+    number: "50",
+    label: "Museums",
+    delay: 0.3,
+  },
+  {
+    icon: Waves,
+    number: "7",
+    label: "Professional Sports Teams",
+    delay: 0.4,
+  },
+  {
+    icon: MapPin,
+    number: "25+",
+    label: "Neighborhoods",
+    delay: 0.5,
+  },
+  {
+    icon: Building,
+    number: "30+",
+    label: "Fortune 500 Companies",
+    delay: 0.6,
+  },
+];
 export default function PortlandOregonPage() {
   return (
     <HomeLayout>
       <div className="container mx-auto py-12 space-y-12 mt-[7rem]">
+        <div className="min-h-screen bg-white">
+          {/* Hero Section */}
+          <section className="relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 to-blue-500/0 pointer-events-none" />
+            <div className="container px-4 py-16 md:py-24">
+              <div className="text-center space-y-4 mb-12">
+                <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
+                  CHICAGO
+                </h1>
+                <p className="text-xl text-gray-600">
+                  Find just about anything around the corner.
+                </p>
+              </div>
+              <div className="relative h-[400px] md:h-[500px] rounded-xl overflow-hidden">
+                <Image
+                  src="/placeholder.svg?height=500&width=1200"
+                  alt="Chicago riverfront with skyscrapers and bridge"
+                  className="object-cover"
+                  fill
+                  priority
+                />
+              </div>
+              <div className="max-w-3xl mx-auto mt-8 text-gray-600 text-center">
+                <p>
+                  Spend hours studying at your favorite coffee shop ... Discover
+                  where some of the country's best improv comedians, and jazz
+                  and blues musicians hang out ... Nom on some famous food from
+                  Chicago dogs to Morton's hot chocolate cake ... or learn from
+                  the city's best and brightest at a tech startup.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Stats Grid */}
+          <section className="py-16 bg-gray-50">
+            <div className="container px-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {stats.map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: stat.delay, duration: 0.5 }}
+                  >
+                    <Card className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300">
+                      <CardContent className="p-6">
+                        <div className="flex flex-col items-center text-center space-y-4">
+                          <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+                            <stat.icon className="w-8 h-8 text-blue-600" />
+                          </div>
+                          <div className="space-y-2">
+                            <div className="text-3xl font-bold text-blue-600">
+                              {stat.number}
+                            </div>
+                            <div className="text-sm text-gray-600 leading-tight">
+                              {stat.label}
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Additional Content Section */}
+          <section className="py-16">
+            <div className="container px-4">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="relative h-[300px] rounded-xl overflow-hidden">
+                  <Image
+                    src="/placeholder.svg?height=300&width=600"
+                    alt="Chicago cityscape"
+                    className="object-cover"
+                    fill
+                  />
+                </div>
+                <div className="space-y-4">
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    Discover Chicago
+                  </h2>
+                  <p className="text-gray-600">
+                    Experience the vibrant culture, world-class attractions, and
+                    diverse neighborhoods that make Chicago one of America's
+                    greatest cities. From the shores of Lake Michigan to the
+                    heart of downtown, adventure awaits around every corner.
+                  </p>
+                  <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    Explore More
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
         <section className="text-center">
           <h1 className="text-4xl font-bold mb-4">Portland, Oregon</h1>
           <p className="text-xl max-w-3xl mx-auto">
