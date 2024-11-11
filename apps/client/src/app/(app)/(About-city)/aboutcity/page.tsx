@@ -7,12 +7,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Image from "next/image";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import { HomeLayout } from "@/components/layout/Home";
 import { motion } from "framer-motion";
-import { Building2, Theater, Waves, MapPin, Building } from "lucide-react";
+import * as React from "react";
+import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
+  Building2,
+  Theater,
+  Crown,
+  Waves,
+  Building,
+  Mic2,
+  Users,
+} from "lucide-react";
+import { Button } from "react-day-picker";
 
 const neighborhoods = [
   {
@@ -136,151 +153,305 @@ const attractions = [
     link: "#",
   },
 ];
+const images = [
+  "/https://wallpapercave.com/wp/wp2826340.jpg",
+  "/placeholder.svg?height=600&width=1200",
+  "/placeholder.svg?height=600&width=1200",
+];
+
 const stats = [
   {
     icon: Building2,
     number: "3rd",
     label: "Largest City in the U.S.",
-    delay: 0,
+    sublabel: null,
   },
   {
     icon: Theater,
     number: "190+",
-    label: "Live Performance Theaters",
-    delay: 0.1,
+    label: "Live Performance",
+    sublabel: "Theatres",
+  },
+  {
+    icon: Crown,
+    number: "1st",
+    label: "Home to the",
+    sublabel: "Improv Troupe",
   },
   {
     icon: Waves,
     number: "26",
-    label: "Miles of Lakefront",
-    delay: 0.2,
-  },
-  {
-    icon: Waves,
-    number: "50",
-    label: "Museums",
-    delay: 0.3,
-  },
-  {
-    icon: Waves,
-    number: "7",
-    label: "Professional Sports Teams",
-    delay: 0.4,
-  },
-  {
-    icon: MapPin,
-    number: "25+",
-    label: "Neighborhoods",
-    delay: 0.5,
+    label: "Miles",
+    sublabel: "of Lakefront",
   },
   {
     icon: Building,
+    number: "50",
+    label: "Museums",
+    sublabel: null,
+  },
+  {
+    icon: Building,
+    number: "7",
+    label: "Professional",
+    sublabel: "Sports Teams",
+  },
+  {
+    icon: Mic2,
+    number: "25+",
+    label: "Music Festivals",
+    sublabel: null,
+  },
+  {
+    icon: Users,
     number: "30+",
     label: "Fortune 500 Companies",
-    delay: 0.6,
+    sublabel: null,
   },
 ];
+const sections = [
+  {
+    title: "Get around Chicago",
+    description:
+      "Learn about city transportation and how to get where you need to.",
+    buttonText: "Learn to navigate the city",
+    buttonHref: "#",
+    imageSrc: "/placeholder.svg?height=400&width=600",
+    imageAlt: "Chicago train station",
+    imagePosition: "left",
+  },
+  {
+    title: "Campuses",
+    description: "We have more than one campus.",
+    buttonText: "Explore our campuses",
+    buttonHref: "#",
+    imageSrc: "/placeholder.svg?height=400&width=600",
+    imageAlt: "Modern campus interior",
+    imagePosition: "right",
+  },
+  {
+    title: "Maps",
+    description: "Find DePaul on the map.",
+    buttonText: "View our campus maps",
+    buttonHref: "#",
+    imageSrc: "/placeholder.svg?height=400&width=600",
+    imageAlt: "DePaul University entrance",
+    imagePosition: "left",
+  },
+];
+
 export default function PortlandOregonPage() {
   return (
     <HomeLayout>
-      <div className="container mx-auto py-12 space-y-12 mt-[7rem]">
-        <div className="min-h-screen bg-white">
-          {/* Hero Section */}
-          <section className="relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 to-blue-500/0 pointer-events-none" />
-            <div className="container px-4 py-16 md:py-24">
-              <div className="text-center space-y-4 mb-12">
-                <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
-                  CHICAGO
-                </h1>
-                <p className="text-xl text-gray-600">
-                  Find just about anything around the corner.
-                </p>
-              </div>
-              <div className="relative h-[400px] md:h-[500px] rounded-xl overflow-hidden">
-                <Image
-                  src="/placeholder.svg?height=500&width=1200"
-                  alt="Chicago riverfront with skyscrapers and bridge"
-                  className="object-cover"
-                  fill
-                  priority
-                />
-              </div>
-              <div className="max-w-3xl mx-auto mt-8 text-gray-600 text-center">
-                <p>
-                  Spend hours studying at your favorite coffee shop ... Discover
-                  where some of the country's best improv comedians, and jazz
-                  and blues musicians hang out ... Nom on some famous food from
-                  Chicago dogs to Morton's hot chocolate cake ... or learn from
-                  the city's best and brightest at a tech startup.
-                </p>
-              </div>
-            </div>
-          </section>
+      <div className="container mx-auto pb-12 space-y-12 mt-3">
+        <div className="flex min-h-screen flex-col bg-white">
+          {/* Header */}
+          <header className="container mx-auto px-4 py-8 text-center border-t-2 border-b-2 border-blue-600">
+            <h1 className="mb-4 text-4xl font-bold text-blue-600">CHICAGO</h1>
+            <p className="text-xl text-gray-600">
+              Find just about anything around the corner.
+            </p>
+          </header>
+
+          {/* Image Slider */}
+          <div className="container mx-auto px-4 mt-9">
+            <Carousel className="relative w-full">
+              <CarouselContent>
+                {images.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
+                      <Image
+                        src={image}
+                        alt={`Chicago cityscape ${index + 1}`}
+                        fill
+                        className="object-cover"
+                        priority={index === 0}
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-4 top-1/2" />
+              <CarouselNext className="absolute right-4 top-1/2" />
+            </Carousel>
+          </div>
+
+          {/* Description */}
+          <div className="container mx-auto mt-8 px-4 text-center">
+            <p className="mx-auto max-w-3xl text-gray-600">
+              Spend hours studying at your favorite coffee shop ... Discover
+              where some of the country's best improv comedians, and jazz and
+              blues musicians hang out ... Nom on some famous food from Chicago
+              dogs to Morton's hot chocolate cake ... or learn from the city's
+              best and brightest at a tech startup. You can find just about
+              anything around the corner in Chicago, Illinois.
+            </p>
+          </div>
 
           {/* Stats Grid */}
-          <section className="py-16 bg-gray-50">
-            <div className="container px-4">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {stats.map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: stat.delay, duration: 0.5 }}
-                  >
-                    <Card className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300">
-                      <CardContent className="p-6">
-                        <div className="flex flex-col items-center text-center space-y-4">
-                          <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
-                            <stat.icon className="w-8 h-8 text-blue-600" />
-                          </div>
-                          <div className="space-y-2">
-                            <div className="text-3xl font-bold text-blue-600">
-                              {stat.number}
-                            </div>
-                            <div className="text-sm text-gray-600 leading-tight">
-                              {stat.label}
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
+          <div className="container mx-auto px-4 py-12">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="group flex items-start space-x-4 rounded-xl border border-transparent p-4 transition-colors hover:border-blue-100 hover:bg-blue-50"
+                >
+                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-blue-600">
+                    <stat.icon className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="text-3xl font-bold text-blue-600">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {stat.label}
+                      {stat.sublabel && (
+                        <>
+                          <br />
+                          {stat.sublabel}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </section>
 
-          {/* Additional Content Section */}
-          <section className="py-16">
-            <div className="container px-4">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="relative h-[300px] rounded-xl overflow-hidden">
-                  <Image
-                    src="/placeholder.svg?height=300&width=600"
-                    alt="Chicago cityscape"
-                    className="object-cover"
-                    fill
+            {/* Duplicate grid with different styling */}
+            <div className="mt-12 grid gap-8 rounded-xl bg-blue-50 p-8 md:grid-cols-2 lg:grid-cols-4">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="group flex items-start space-x-4 rounded-xl bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-blue-600">
+                    <stat.icon className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="text-3xl font-bold text-blue-600">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {stat.label}
+                      {stat.sublabel && (
+                        <>
+                          <br />
+                          {stat.sublabel}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Box layout version */}
+            <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="group overflow-hidden rounded-xl border-2 border-blue-100 bg-white transition-shadow hover:shadow-lg"
+                >
+                  <div className="flex items-center justify-center bg-blue-50 p-6">
+                    <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-blue-600">
+                      <stat.icon className="h-8 w-8 text-blue-600" />
+                    </div>
+                  </div>
+                  <div className="p-4 text-center">
+                    <div className="text-3xl font-bold text-blue-600">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {stat.label}
+                      {stat.sublabel && (
+                        <>
+                          <br />
+                          {stat.sublabel}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="w-full">
+          {sections.map((section, index) => (
+            <div key={index} className="relative overflow-hidden">
+              <div
+                className={`flex min-h-[400px] flex-col ${
+                  section.imagePosition === "right"
+                    ? "md:flex-row-reverse"
+                    : "md:flex-row"
+                }`}
+              >
+                {/* Image Section */}
+                <div className="relative flex-1">
+                  <div className="absolute inset-0">
+                    <Image
+                      src={section.imageSrc}
+                      alt={section.imageAlt}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                    />
+                  </div>
+                  {/* Diagonal Overlay */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-r ${
+                      section.imagePosition === "right"
+                        ? "from-transparent to-white/10"
+                        : "from-white/10 to-transparent"
+                    }`}
                   />
                 </div>
-                <div className="space-y-4">
-                  <h2 className="text-3xl font-bold text-gray-900">
-                    Discover Chicago
-                  </h2>
-                  <p className="text-gray-600">
-                    Experience the vibrant culture, world-class attractions, and
-                    diverse neighborhoods that make Chicago one of America's
-                    greatest cities. From the shores of Lake Michigan to the
-                    heart of downtown, adventure awaits around every corner.
-                  </p>
-                  <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    Explore More
-                  </button>
+
+                {/* Content Section */}
+                <div className="relative flex-1 bg-blue-50">
+                  {/* Diagonal Shape */}
+                  <div
+                    className={`absolute inset-0 ${
+                      section.imagePosition === "right"
+                        ? "clip-path-diagonal-left"
+                        : "clip-path-diagonal-right"
+                    }`}
+                    style={{
+                      clipPath:
+                        section.imagePosition === "right"
+                          ? "polygon(0 0, 100% 0, 100% 100%, 10% 100%)"
+                          : "polygon(0 0, 90% 0, 100% 100%, 0 100%)",
+                    }}
+                  />
+
+                  {/* Content */}
+                  <div className="relative z-10 flex h-full flex-col justify-center p-8 md:p-12">
+                    <h2 className="mb-4 text-3xl font-bold text-blue-600">
+                      {section.title}
+                    </h2>
+                    <p className="mb-6 text-lg text-gray-600">
+                      {section.description}
+                    </p>
+                    <Button
+                      // variant="outline"
+                      className="w-fit border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                    >
+                      {section.buttonText}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
-          </section>
+          ))}
+
+          <style jsx>{`
+            .clip-path-diagonal-right {
+              background: rgb(239 246 255);
+            }
+            .clip-path-diagonal-left {
+              background: rgb(239 246 255);
+            }
+          `}</style>
         </div>
         <section className="text-center">
           <h1 className="text-4xl font-bold mb-4">Portland, Oregon</h1>
