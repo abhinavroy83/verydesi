@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -12,6 +13,7 @@ import Link from "next/link";
 import { HomeLayout } from "@/components/layout/Home";
 import { motion } from "framer-motion";
 import { Building2, Theater, Waves, MapPin, Building } from "lucide-react";
+
 const neighborhoods = [
   {
     name: "Beaverton",
