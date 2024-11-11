@@ -29,7 +29,7 @@ import {
   Mic2,
   Users,
 } from "lucide-react";
-import { Button } from "react-day-picker";
+import { Button } from "@/components/ui/button";
 
 const neighborhoods = [
   {
