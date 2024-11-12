@@ -9,6 +9,9 @@ const nextConfig = {
       "d1be4virimwdjl.cloudfront.net",
       "images.unsplash.com",
       "cdn.openart.ai",
+      "www.pixelstalk.net",
+      "static.toiimg.com",
+      "img.budgettravel.com",
     ],
   },
 };

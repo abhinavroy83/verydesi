@@ -3,11 +3,12 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Heart } from "lucide-react";
+import { ArrowRight, Heart, Instagram } from "lucide-react";
 import Link from "next/link";
 import { HomeLayout } from "@/components/layout/Home";
 import { motion } from "framer-motion";
@@ -30,6 +31,7 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const neighborhoods = [
   {
@@ -154,9 +156,38 @@ const attractions = [
   },
 ];
 const images = [
-  "/https://wallpapercave.com/wp/wp2826340.jpg",
-  "/placeholder.svg?height=600&width=1200",
-  "/placeholder.svg?height=600&width=1200",
+  "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+  "https://static.toiimg.com/photo/84475061.cms",
+  "https://img.budgettravel.com/_galleryImage/golden-gate-bridge-san-francisco-952012-114744_original.jpeg?mtime=20140903194435",
+];
+const sections = [
+  {
+    title: "Get around Chicago",
+    description:
+      "Learn about city transportation and how to get where you need to.",
+    buttonText: "Learn to navigate the city",
+    imageSrc:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Chicago train station",
+    imageLeft: true,
+  },
+  {
+    title: "Campuses",
+    description: "We have more than one campus.",
+    buttonText: "Explore our campuses",
+    imageSrc: "https://static.toiimg.com/photo/84475061.cms",
+    imageAlt: "Modern campus interior",
+    imageLeft: false,
+  },
+  {
+    title: "Maps",
+    description: "Find DePaul on the map.",
+    buttonText: "View our campus maps",
+    imageSrc:
+      "https://img.budgettravel.com/_galleryImage/golden-gate-bridge-san-francisco-952012-114744_original.jpeg?mtime=20140903194435",
+    imageAlt: "DePaul University entrance sign",
+    imageLeft: true,
+  },
 ];
 
 const stats = [
@@ -209,37 +240,104 @@ const stats = [
     sublabel: null,
   },
 ];
-const sections = [
+const image = [
   {
-    title: "Get around Chicago",
-    description:
-      "Learn about city transportation and how to get where you need to.",
-    buttonText: "Learn to navigate the city",
-    buttonHref: "#",
-    imageSrc: "/placeholder.svg?height=400&width=600",
-    imageAlt: "Chicago train station",
-    imagePosition: "left",
+    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    alt: "Manhattan skyline with water view",
+    className: "col-span-2 row-span-1",
   },
   {
-    title: "Campuses",
-    description: "We have more than one campus.",
-    buttonText: "Explore our campuses",
-    buttonHref: "#",
-    imageSrc: "/placeholder.svg?height=400&width=600",
-    imageAlt: "Modern campus interior",
-    imagePosition: "right",
+    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    alt: "Empire State Building view from street level",
+    className: "col-span-1 row-span-1",
   },
   {
-    title: "Maps",
-    description: "Find DePaul on the map.",
-    buttonText: "View our campus maps",
-    buttonHref: "#",
-    imageSrc: "/placeholder.svg?height=400&width=600",
-    imageAlt: "DePaul University entrance",
-    imagePosition: "left",
+    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    alt: "Citi Field stadium with flowers",
+    className: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    alt: "Classical building facade at night",
+    className: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    alt: "Historic building corner with night lighting",
+    className: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    alt: "Empire State Building with full moon",
+    className: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    alt: "Interior terminal shot with motion blur",
+    className: "col-span-1 row-span-1",
+  },
+  {
+    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    alt: "Bethesda Terrace archway",
+    className: "col-span-1 row-span-1",
   },
 ];
-
+const historyCards = [
+  {
+    type: "Page",
+    title: "Early Inhabitants and Founding",
+    description:
+      "Originally inhabited by Native American tribes, including the Multnomah and Clackamas, who utilized the rivers for trade. Established in 1845, named after Portland, Maine following a coin toss between Asa Lovejoy and Francis Pettygrove.",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Historical Portland riverside",
+  },
+  {
+    type: "Article",
+    title: "Economic Growth and Development",
+    description:
+      "Late 1800s saw boom in timber and shipping industries due to its riverside location. Railroads arrived in 1880s, cementing Portland's role as an economic hub in the Pacific Northwest.",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Historical Portland industry",
+  },
+  {
+    type: "Article",
+    title: "Modern Portland Identity",
+    description:
+      "Portland is known for its progressive values, green initiatives, and cultural character—especially in the arts, food, and environmental sectors.",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Modern Portland cityscape",
+  },
+  {
+    type: "Article",
+    title: "Location and Climate",
+    description:
+      "Situated at the confluence of the Willamette and Columbia Rivers, in the shadow of Mount Hood, Portland enjoys a mild, temperate climate.",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Portland landscape",
+  },
+  {
+    type: "Article",
+    title: "Natural Boundaries",
+    description:
+      "The city has an urban growth boundary to control sprawl and protect nearby farms and forests, which has helped Portland stay compact and green.",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Portland urban boundary",
+  },
+  {
+    type: "Article",
+    title: "20th Century Changes",
+    description:
+      "Economy shifted with shipbuilding during WWII and later the high-tech sector in the 1980s. Urban renewal transformed neighborhoods like the Pearl District.",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Portland urban development",
+  },
+];
 export default function PortlandOregonPage() {
   return (
     <HomeLayout>
@@ -376,62 +474,125 @@ export default function PortlandOregonPage() {
             </div>
           </div>
         </div>
-        <div className="w-full">
+        <div className="container mx-auto px-4 pb-12">
+          <h1 className="mb-8 text-4xl font-bold">History and Geography</h1>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {historyCards.map((card, index) => (
+              <Card
+                key={index}
+                className="overflow-hidden transition-shadow hover:shadow-lg"
+              >
+                <CardHeader className="p-0">
+                  <div className="relative aspect-video w-full">
+                    <Image
+                      src={card.image}
+                      alt={card.imageAlt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
+                      priority={index === 0}
+                    />
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <Badge variant="secondary" className="mb-3">
+                    {card.type}
+                  </Badge>
+                  <h2 className="mb-2 text-2xl font-bold">{card.title}</h2>
+                  <p className="text-muted-foreground">{card.description}</p>
+                </CardContent>
+                <CardFooter className="p-6 pt-0">
+                  <div className="flex items-center text-sm font-medium text-primary hover:underline">
+                    LEARN MORE
+                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </div>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        </div>
+        <div className="w-full space-y-1">
           {sections.map((section, index) => (
-            <div key={index} className="relative">
+            <div key={index} className="flex h-[200px] overflow-hidden">
+              {/* Image Section */}
               <div
-                className={`flex min-h-[400px] flex-col ${
-                  section.imagePosition === "right"
-                    ? "md:flex-row-reverse"
-                    : "md:flex-row"
+                className={`relative w-[65%] ${
+                  section.imageLeft ? "order-first" : "order-last"
                 }`}
               >
-                {/* Image Section */}
-                <div className="relative flex-1 w-full h-full">
-                  <img
-                    src={
-                      "https://farm9.staticflickr.com/8541/8670217964_8311c2dc7e_z.jpg"
-                    }
-                    alt={section.imageAlt}
-                    className="object-cover"
-                    // priority={index === 0}
-                  />
-                </div>
+                <Image
+                  src={section.imageSrc}
+                  alt={section.imageAlt}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                />
+                {/* Diagonal Overlay */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    clipPath: section.imageLeft
+                      ? "polygon(0 0, 100% 0, 85% 100%, 0 100%)"
+                      : "polygon(15% 0, 100% 0, 100% 100%, 0 100%)",
+                  }}
+                />
+              </div>
 
-                {/* Content Section */}
-                <div className="relative flex-1">
-                  {/* Background with diagonal cut */}
-                  <div
-                    className="absolute inset-0 bg-[#EBF3FF]"
-                    style={{
-                      clipPath:
-                        section.imagePosition === "right"
-                          ? "polygon(15% 0, 100% 0, 100% 100%, 0% 100%)"
-                          : "polygon(0 0, 85% 0, 100% 100%, 0 100%)",
-                    }}
-                  />
-
-                  {/* Content */}
-                  <div className="relative flex h-full flex-col justify-center p-8 md:p-12">
-                    <h2 className="mb-4 text-3xl font-bold text-blue-600">
-                      {section.title}
-                    </h2>
-                    <p className="mb-6 text-lg text-gray-600">
-                      {section.description}
-                    </p>
-                    <Button
-                      variant="outline"
-                      className="w-fit border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                    >
-                      {section.buttonText}
-                    </Button>
-                  </div>
+              {/* Content Section */}
+              <div
+                className={`flex w-[35%] items-center bg-blue-50 px-6 ${
+                  section.imageLeft ? "order-last" : "order-first"
+                }`}
+              >
+                <div className="space-y-3">
+                  <h2 className="text-2xl font-bold text-blue-600">
+                    {section.title}
+                  </h2>
+                  <p className="text-sm text-gray-600">{section.description}</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                  >
+                    {section.buttonText}
+                  </Button>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            {image.map((image, index) => (
+              <div
+                key={index}
+                className={`group relative aspect-square overflow-hidden rounded-none bg-black ${image.className || ""}`}
+              >
+                <Image
+                  src={image.src}
+                  // alt={image.alt}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105 w-[20rem]"
+                />
+                {/* Instagram-style overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 group-hover:bg-black/50">
+                  <div className="translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                    <div className="flex items-center gap-2 text-white">
+                      <Instagram className="h-6 w-6" />
+                      {/* <span className="text-sm">@{image.username}</span> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 text-center">
+            <button className="w-full rounded-none bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700">
+              Load More
+            </button>
+          </div>
+        </div>
         <section className="text-center">
           <h1 className="text-4xl font-bold mb-4">Portland, Oregon</h1>
           <p className="text-xl max-w-3xl mx-auto">
