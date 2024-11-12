@@ -227,7 +227,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               </AvatarFallback>
             </Avatar>
             <h2 className="text-xl font-semibold mb-1">{firstname}</h2>
-            <p className="text-[15px] text-muted-foreground mb-4 font-sans">
+            <p className="text-[16px] text-muted-foreground mb-4 font-sans">
               Since 2024
             </p>
             <div className="flex justify-center space-x-2">
@@ -266,7 +266,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <Button
                   key={item.name}
                   variant={activeItem === item.name ? "secondary" : "ghost"}
-                  className="w-full justify-start text-[15px] font-sans border-b border-gray-200 p-1 rounded-sm"
+                  className="w-full justify-start text-[16px] font-sans border-b border-gray-200 p-1 rounded-sm"
                   onClick={() => {
                     setActiveItem(item.name);
 
@@ -279,7 +279,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               ))}
               <Button
                 variant="ghost"
-                className="w-full justify-start font-sans text-[15px] border-b border-gray-200 p-1"
+                className="w-full justify-start font-sans text-[16px] border-b border-gray-200 p-1"
                 onClick={() => setIsMyPostExpanded(!isMyPostExpanded)}
               >
                 <FileText className="mr-2 h-5 w-5" />
@@ -298,7 +298,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 >
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-[15px] font-sans p-1"
+                    className="w-full justify-start text-[16px] font-sans p-1"
                     onClick={() => {
                       router.push("/dashboard/my-rooms");
                     }}
@@ -311,7 +311,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       router.push("/dashboard/my-rooms");
                     }}
                     variant="ghost"
-                    className="w-full justify-start text-[15px] font-sans p-1"
+                    className="w-full justify-start text-[16px] font-sans p-1"
                   >
                     <Briefcase className="mr-2 h-5 w-5" />
                     My Business

@@ -162,7 +162,7 @@ export default function Footer() {
                   </div>
                 </div>
               </div>
-              <div className="border-t border-gray-700 pt-8 text-[15px] text-white">
+              <div className="border-t border-gray-700 pt-8  text-[16px] text-white">
                 <ul className="flex flex-wrap justify-center space-x-9 mb-4">
                   <li>
                     <Link

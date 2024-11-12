@@ -20,7 +20,7 @@ const page = () => {
   return (
     <DashboardLayout>
       <div className=" p-6">
-        <h1 className="text-[25px] font-bold mb-4">Welcome, {firstname}</h1>
+        <h1 className="text-[24px] font-bold mb-4">Welcome, {firstname}</h1>
         <div className="grid grid-cols-2 gap-6 mb-8">
           <DashboardCard
             url="/dashboard/user"

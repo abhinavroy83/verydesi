@@ -380,7 +380,7 @@ export default function RoomDetails({
                 <ShareButton
                   shareLink={`https://verydesi.com/room/${formatUrl()}`}
                 />
-                <p>Share</p>
+                <p className="text-[16px]">Share</p>
               </Button>
             </div>
             <div>

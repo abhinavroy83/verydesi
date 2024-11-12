@@ -354,7 +354,7 @@ export default function RoomPostingForm() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <div className="flex items-center gap-2 justify-center">
-                <h1 className="text-2xl font-bold">Post Room In</h1>
+                <h1 className="text-[24px] font-bold">Post Room In</h1>
                 <FormField
                   control={form.control}
                   name="postingIn"
@@ -373,7 +373,7 @@ export default function RoomPostingForm() {
                           <SelectContent>
                             {cities.map((city) => (
                               <SelectItem key={city} value={city}>
-                                <p className="text-xl font-bold">{city}</p>
+                                <p className="text-[22px] font-bold">{city}</p>
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -585,7 +585,6 @@ export default function RoomPostingForm() {
                   />
                 </div>
               </div>
-
               <div
                 ref={(el) => {
                   sectionRefs.current["pricing"] = el;
@@ -762,7 +761,6 @@ export default function RoomPostingForm() {
                   )}
                 </div>
               </div>
-
               <div
                 ref={(el) => {
                   sectionRefs.current["availability"] = el;
@@ -975,7 +973,6 @@ export default function RoomPostingForm() {
                   />
                 </div>
               </div>
-
               <div
                 ref={(el) => {
                   sectionRefs.current["amenities"] = el;
@@ -1260,7 +1257,6 @@ export default function RoomPostingForm() {
                   />
                 </div>
               </div>
-
               <div
                 ref={(el) => {
                   sectionRefs.current["preferences"] = el;
@@ -1435,7 +1431,6 @@ export default function RoomPostingForm() {
                   />
                 </div>
               </div>
-
               <div
                 ref={(el) => {
                   sectionRefs.current["photos"] = el;
@@ -1494,7 +1489,6 @@ export default function RoomPostingForm() {
                   </div>
                 </div>
               </div>
-
               <div
                 ref={(el) => {
                   sectionRefs.current["your-details"] = el;
@@ -1571,7 +1565,6 @@ export default function RoomPostingForm() {
                   </div>
                 </div>
               </div>
-
               <div
                 ref={(el) => {
                   sectionRefs.current["submit"] = el;
@@ -1580,7 +1573,7 @@ export default function RoomPostingForm() {
               >
                 <Button
                   type="submit"
-                  className="flex items-center justify-center"
+                  className="flex items-center justify-center text-[16px] bg-green-800"
                 >
                   Add New Room
                 </Button>
