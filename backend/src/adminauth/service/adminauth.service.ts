@@ -35,7 +35,7 @@ export class AdminauthService {
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = await this.signToken(user._id.toString(), user.email);
       return {
-        access_token: token,
+        access_token: token.access_token,
         user: {
           email: user.email,
           role: user.role,

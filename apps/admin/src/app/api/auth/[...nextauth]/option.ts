@@ -15,10 +15,10 @@ export const authOptions: NextAuthOptions = {
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
         });
-        const user = await res.json();
+        const data = await res.json();
 
-        if (res.ok && user) {
-          return user;
+        if (res.ok && data) {
+          return data;
         }
         return null;
       },
@@ -26,10 +26,10 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.accessToken = user.access_token;
-        token.role = user.role;
-        token.permissions = user.permissions;
+      if (data) {
+        token.accessToken = data.access_token;
+        token.role = data.role;
+        token.permissions = data.permissions;
       }
       return token;
     },
