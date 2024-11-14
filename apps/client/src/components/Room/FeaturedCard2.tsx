@@ -149,6 +149,19 @@ export default function Component({ room }: FeaturedCard2Props) {
               ${room.Expected_Rooms}
             </Badge>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className=" absolute"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleWishlist(wishlistStatus ? "remove" : "add");
+            }}
+          >
+            <Heart
+              className={`h-5 w-5 ${wishlistStatus ? " stroke-red-500 fill-red-500 hover:fill-white " : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
+            />
+          </Button>
           <div className="flex-1 p-4">
             <div className="mb-2 text-[21px]">
               <TruncateText text={room.Title} />
@@ -194,19 +207,6 @@ export default function Component({ room }: FeaturedCard2Props) {
           </div>
         </div>
       </CardContent>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-2 right-2 bg-white/80 hover:bg-white"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleWishlist(wishlistStatus ? "remove" : "add");
-        }}
-      >
-        <Heart
-          className={`h-5 w-5 ${wishlistStatus ? "fill-red-500 stroke-red-500" : "stroke-gray-400"}`}
-        />
-      </Button>
     </Card>
   );
 }
