@@ -197,12 +197,13 @@ export default function Component({ room }: FeaturedCard2Props) {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute top-2 right-2 bg-white/80 hover:bg-white"
+        className="absolute top-12 right-12 bg-white/80 hover:bg-white"
         onClick={(e) => {
           e.stopPropagation();
           handleWishlist(wishlistStatus ? "remove" : "add");
         }}
       >
+        
         <Heart
           className={`h-5 w-5 ${wishlistStatus ? "fill-red-500 stroke-red-500" : "stroke-gray-400"}`}
         />

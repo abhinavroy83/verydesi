@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import InstaImagegrid from "@/components/About-city/insta-image-grid";
 
 const neighborhoods = [
   {
@@ -244,7 +245,7 @@ const image = [
   {
     src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
     alt: "Manhattan skyline with water view",
-    className: "col-span-2 row-span-1",
+    className: "col-span-2 row-span-2",
   },
   {
     src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
@@ -259,7 +260,7 @@ const image = [
   {
     src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
     alt: "Classical building facade at night",
-    className: "col-span-1 row-span-1",
+    className: "col-span-1 row-span-2",
   },
   {
     src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
@@ -562,6 +563,8 @@ export default function PortlandOregonPage() {
             </div>
           ))}
         </div>
+
+        {/* //her  */}
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-3">
             {image.map((image, index) => (
@@ -571,7 +574,7 @@ export default function PortlandOregonPage() {
               >
                 <Image
                   src={image.src}
-                  // alt={image.alt}
+                  alt={"image"}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105 w-[20rem]"
                 />
@@ -593,6 +596,8 @@ export default function PortlandOregonPage() {
             </button>
           </div>
         </div>
+        {/* <InstaImagegrid /> */}
+
         <section className="text-center">
           <h1 className="text-4xl font-bold mb-4">Portland, Oregon</h1>
           <p className="text-xl max-w-3xl mx-auto">
