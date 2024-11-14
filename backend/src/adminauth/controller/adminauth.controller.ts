@@ -20,18 +20,18 @@ export class AdminauthController {
 
   @Post('register')
   async register(
-    @Body() userData: { username: string; password: string; role: string },
+    @Body() userData: { email: string; password: string; role: string },
   ) {
     return this.adminauthservice.createUser(
-      userData.username,
+      userData.email,
       userData.password,
       userData.role,
     );
   }
 
   @Post('login')
-  async login(@Body() userData: { username: string; password: string }) {
-    return this.adminauthservice.signin(userData.username, userData.password);
+  async login(@Body() userData: { email: string; password: string }) {
+    return this.adminauthservice.signin(userData.email, userData.password);
   }
 
   @UseGuards(JwtGuard, RolesGuard)
