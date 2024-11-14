@@ -149,10 +149,44 @@ export default function Component({ room }: FeaturedCard2Props) {
               ${room.Expected_Rooms}
             </Badge>
           </div>
+          {!status && (
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                openLogin();
+              }}
+            >
+              <Heart className=" hover:fill-red-600 hover:stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+            </div>
+          )}
+          {status && (
+            <div>
+              {!wishliststatys ? (
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    makewishlist(room?._id);
+                  }}
+                >
+                  <Heart className=" hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                </div>
+              ) : (
+                <div
+                  className="cursor-pointer "
+                  onClick={(e) => {
+                    e.preventDefault();
+                    unwish(room?._id);
+                  }}
+                >
+                  <Heart className=" hover:fill-white  stroke-red-500 fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+                </div>
+              )}
+            </div>
+          )}
           <Button
             variant="ghost"
             size="icon"
-            className=" absolute"
+            className=" bottom-0 right-0"
             onClick={(e) => {
               e.stopPropagation();
               handleWishlist(wishlistStatus ? "remove" : "add");
