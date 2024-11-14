@@ -1,19 +1,25 @@
 "use client";
+import dynamic from "next/dynamic";
+import React, { ReactNode } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { ArrowRight, Heart, Instagram } from "lucide-react";
-import Link from "next/link";
+  Sun,
+  Cloud,
+  MoreHorizontal,
+  TreePine,
+  Car,
+  Building2,
+  Users,
+  PlusCircle,
+  Expand,
+  Bookmark,
+} from "lucide-react";
+import { useRoomFetching } from "@/hooks/use-all-roomfetcing";
+import useAuthStore from "@/store/useAuthStore";
+import { Skeleton } from "@/components/ui/skeleton";
 import { HomeLayout } from "@/components/layout/Home";
-import { motion } from "framer-motion";
-import * as React from "react";
-import Image from "next/image";
+import { SkeletonFeaturedCard } from "@/components/skeleton";
+import FeaturedCard2 from "@/components/Room/FeaturedCard2";
 import {
   Carousel,
   CarouselContent,
@@ -21,797 +27,683 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  Building2,
-  Theater,
-  Crown,
-  Waves,
-  Building,
-  Mic2,
-  Users,
-} from "lucide-react";
+import Featuredeventscard from "@/components/Events/Featuredeventscard";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import InstaImagegrid from "@/components/About-city/insta-image-grid";
-
-const neighborhoods = [
-  {
-    name: "Beaverton",
-    overview:
-      "Major hub for Indian families, close to tech companies and excellent schools.",
-    communityLife:
-      "Indian grocery stores, restaurants, community centers, and cultural events.",
-  },
-  {
-    name: "Hillsboro",
-    overview:
-      "High concentration of tech companies in 'Silicon Forest', popular with Indian professionals.",
-    communityLife:
-      "Indian groceries, restaurants, Swagat Indian Cuisine chain, and Hindu Temple of Oregon nearby.",
-  },
-  {
-    name: "Bethany",
-    overview:
-      "Newer, family-friendly suburb with top-rated schools and strong Indian community.",
-    communityLife:
-      "Easy access to community events and Indian shopping in nearby Beaverton.",
-  },
-  {
-    name: "Tigard and Tualatin",
-    overview: "Growing suburbs with mix of Indian professionals and families.",
-    communityLife: "Indian restaurants, grocery options, and good schools.",
-  },
-  {
-    name: "Camas, Vancouver & Washougal",
-    overview:
-      "Growing suburbs in Washington State with Indian professionals and families.",
-    communityLife:
-      "Best schools, safer neighborhoods, and cleaner areas, but fewer Indian-specific amenities.",
-  },
-  {
-    name: "Northeast and Southeast Portland",
-    overview:
-      "Some Indian communities with access to public transit and urban amenities.",
-    communityLife:
-      "Attracts younger professionals, diverse cultural events and restaurants.",
-  },
-];
-
-const movingToPortlandInfo = [
-  "History & Government of Portland, Oregon",
-  "Indian / Desi Businesses & Services in and around Portland, Oregon",
-  "Indian / Desi Events in and around Portland, Oregon",
-  "Indian / Desi Rooms & Roommates in and around Portland, Oregon",
-  "Indian / Desi Temples, Churches, Mosques and other religious places in and around Portland, Oregon",
-  "Indian / Desi Groceries & Shopping in and around Portland, Oregon",
-  "Indian / Desi organization in and around Portland, Oregon",
-  "Indian Embassy access for Portland, Oregon is in Seattle, Washington - www.indiainseattle.gov.in",
-  "Things to do in and around Portland, Oregon",
-  "The Benefits and Challenges of Living in Portland, Oregon",
-];
-const attractions = [
-  {
-    title: "Moynihan Train Hall",
-    image: "/placeholder.svg?height=400&width=600",
-    description: "History & Government of Portland, Oregon",
-    link: "#",
-  },
-  {
-    title: "NYC Food & Drink",
-    image: "/placeholder.svg?height=400&width=600",
-    description: "Indian / Desi Events in and around Portland, Oregon",
-    link: "#",
-  },
-  {
-    title: "NYC Attractions",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Indian / Desi Temples, Churches, Mosques and other religious places in and around Portland, Oregon",
-    link: "#",
-  },
-  {
-    title: "Weekend in the Bronx",
-    image: "/placeholder.svg?height=400&width=600",
-    description: "Indian / Desi organization in and around Portland, Oregon",
-    link: "#",
-  },
-  {
-    title: "Weekend in the Bronx",
-    image: "/placeholder.svg?height=400&width=600",
-    description: "Things to do in and around Portland, Oregon",
-    link: "#",
-  },
-  {
-    title: "Weekend in the Bronx",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Indian / Desi Businesses & Services in and around Portland, Oregon",
-    link: "#",
-  },
-  {
-    title: "Weekend in the Bronx",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Indian / Desi Rooms & Roommates in and around Portland, Oregon",
-    link: "#",
-  },
-  {
-    title: "Weekend in the Bronx",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Indian / Desi Groceries & Shopping in and around Portland, Oregon",
-    link: "#",
-  },
-  {
-    title: "Weekend in the Bronx",
-    image: "/placeholder.svg?height=400&width=600",
-    description:
-      "Indian Embassy access for Portland, Oregon is in Seattle, Washington - www.indiainseattle.gov.in",
-    link: "#",
-  },
-  {
-    title: "Weekend in the Bronx",
-    image: "/placeholder.svg?height=400&width=600",
-    description: "The Benefits and Challenges of Living in Portland, Oregon",
-    link: "#",
-  },
-];
-const images = [
-  "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-  "https://static.toiimg.com/photo/84475061.cms",
-  "https://img.budgettravel.com/_galleryImage/golden-gate-bridge-san-francisco-952012-114744_original.jpeg?mtime=20140903194435",
-];
-const sections = [
-  {
-    title: "Get around Chicago",
-    description:
-      "Learn about city transportation and how to get where you need to.",
-    buttonText: "Learn to navigate the city",
-    imageSrc:
-      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    imageAlt: "Chicago train station",
-    imageLeft: true,
-  },
-  {
-    title: "Campuses",
-    description: "We have more than one campus.",
-    buttonText: "Explore our campuses",
-    imageSrc: "https://static.toiimg.com/photo/84475061.cms",
-    imageAlt: "Modern campus interior",
-    imageLeft: false,
-  },
-  {
-    title: "Maps",
-    description: "Find DePaul on the map.",
-    buttonText: "View our campus maps",
-    imageSrc:
-      "https://img.budgettravel.com/_galleryImage/golden-gate-bridge-san-francisco-952012-114744_original.jpeg?mtime=20140903194435",
-    imageAlt: "DePaul University entrance sign",
-    imageLeft: true,
-  },
-];
-
-const stats = [
-  {
-    icon: Building2,
-    number: "3rd",
-    label: "Largest City in the U.S.",
-    sublabel: null,
-  },
-  {
-    icon: Theater,
-    number: "190+",
-    label: "Live Performance",
-    sublabel: "Theatres",
-  },
-  {
-    icon: Crown,
-    number: "1st",
-    label: "Home to the",
-    sublabel: "Improv Troupe",
-  },
-  {
-    icon: Waves,
-    number: "26",
-    label: "Miles",
-    sublabel: "of Lakefront",
-  },
-  {
-    icon: Building,
-    number: "50",
-    label: "Museums",
-    sublabel: null,
-  },
-  {
-    icon: Building,
-    number: "7",
-    label: "Professional",
-    sublabel: "Sports Teams",
-  },
-  {
-    icon: Mic2,
-    number: "25+",
-    label: "Music Festivals",
-    sublabel: null,
-  },
-  {
-    icon: Users,
-    number: "30+",
-    label: "Fortune 500 Companies",
-    sublabel: null,
-  },
-];
-const image = [
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Manhattan skyline with water view",
-    className: "col-span-2 row-span-2",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Empire State Building view from street level",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Citi Field stadium with flowers",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Classical building facade at night",
-    className: "col-span-1 row-span-2",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Historic building corner with night lighting",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Empire State Building with full moon",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Interior terminal shot with motion blur",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Bethesda Terrace archway",
-    className: "col-span-1 row-span-1",
-  },
-];
-const historyCards = [
-  {
-    type: "Page",
-    title: "Early Inhabitants and Founding",
-    description:
-      "Originally inhabited by Native American tribes, including the Multnomah and Clackamas, who utilized the rivers for trade. Established in 1845, named after Portland, Maine following a coin toss between Asa Lovejoy and Francis Pettygrove.",
-    image:
-      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    imageAlt: "Historical Portland riverside",
-  },
-  {
-    type: "Article",
-    title: "Economic Growth and Development",
-    description:
-      "Late 1800s saw boom in timber and shipping industries due to its riverside location. Railroads arrived in 1880s, cementing Portland's role as an economic hub in the Pacific Northwest.",
-    image:
-      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    imageAlt: "Historical Portland industry",
-  },
-  {
-    type: "Article",
-    title: "Modern Portland Identity",
-    description:
-      "Portland is known for its progressive values, green initiatives, and cultural character—especially in the arts, food, and environmental sectors.",
-    image:
-      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    imageAlt: "Modern Portland cityscape",
-  },
-  {
-    type: "Article",
-    title: "Location and Climate",
-    description:
-      "Situated at the confluence of the Willamette and Columbia Rivers, in the shadow of Mount Hood, Portland enjoys a mild, temperate climate.",
-    image:
-      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    imageAlt: "Portland landscape",
-  },
-  {
-    type: "Article",
-    title: "Natural Boundaries",
-    description:
-      "The city has an urban growth boundary to control sprawl and protect nearby farms and forests, which has helped Portland stay compact and green.",
-    image:
-      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    imageAlt: "Portland urban boundary",
-  },
-  {
-    type: "Article",
-    title: "20th Century Changes",
-    description:
-      "Economy shifted with shipbuilding during WWII and later the high-tech sector in the 1980s. Urban renewal transformed neighborhoods like the Pearl District.",
-    image:
-      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    imageAlt: "Portland urban development",
-  },
-];
-export default function PortlandOregonPage() {
+import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { LucideChevronRight } from "lucide-react";
+function WeatherCard() {
   return (
-    <HomeLayout>
-      <div className="container mx-auto pb-12 space-y-12 mt-3">
-        <div className="flex min-h-screen flex-col bg-white">
-          {/* Header */}
-          <header className="container mx-auto px-4 py-8 text-center border-t-2 border-b-2 border-blue-600">
-            <h1 className="mb-4 text-4xl font-bold text-blue-600">CHICAGO</h1>
-            <p className="text-xl text-gray-600">
-              Find just about anything around the corner.
-            </p>
-          </header>
-
-          {/* Image Slider */}
-          <div className="container mx-auto px-4 mt-9">
-            <Carousel className="relative w-full">
-              <CarouselContent>
-                {images.map((image, index) => (
-                  <CarouselItem key={index}>
-                    <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
-                      <Image
-                        src={image}
-                        alt={`Chicago cityscape ${index + 1}`}
-                        fill
-                        className="object-cover"
-                        priority={index === 0}
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="absolute left-4 top-1/2" />
-              <CarouselNext className="absolute right-4 top-1/2" />
-            </Carousel>
+    <Card className="bg-gradient-to-r from-cyan-700 to-blue-700 text-white mb-4">
+      <CardHeader className="flex justify-between items-center pb-2">
+        <CardTitle className="text-lg font-normal">
+          SAINT LOUIS, MISSOURI
+        </CardTitle>
+        <MoreHorizontal className="h-5 w-5" />
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center">
+          <div className="flex items-center mr-4">
+            <Cloud className="h-10 w-10 text-white -ml-4" />
           </div>
-
-          {/* Description */}
-          <div className="container mx-auto mt-8 px-4 text-center">
-            <p className="mx-auto max-w-3xl text-gray-600">
-              Spend hours studying at your favorite coffee shop ... Discover
-              where some of the country's best improv comedians, and jazz and
-              blues musicians hang out ... Nom on some famous food from Chicago
-              dogs to Morton's hot chocolate cake ... or learn from the city's
-              best and brightest at a tech startup. You can find just about
-              anything around the corner in Chicago, Illinois.
-            </p>
-          </div>
-
-          {/* Stats Grid */}
-          <div className="container mx-auto px-4 py-12">
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="group flex items-start space-x-4 rounded-xl border border-transparent p-4 transition-colors hover:border-blue-100 hover:bg-blue-50"
-                >
-                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-blue-600">
-                    <stat.icon className="h-8 w-8 text-blue-600" />
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="text-3xl font-bold text-blue-600">
-                      {stat.number}
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {stat.label}
-                      {stat.sublabel && (
-                        <>
-                          <br />
-                          {stat.sublabel}
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Duplicate grid with different styling */}
-            <div className="mt-12 grid gap-8 rounded-xl bg-blue-50 p-8 md:grid-cols-2 lg:grid-cols-4">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="group flex items-start space-x-4 rounded-xl bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
-                >
-                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-blue-600">
-                    <stat.icon className="h-8 w-8 text-blue-600" />
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="text-3xl font-bold text-blue-600">
-                      {stat.number}
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {stat.label}
-                      {stat.sublabel && (
-                        <>
-                          <br />
-                          {stat.sublabel}
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Box layout version */}
-            <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="group overflow-hidden rounded-xl border-2 border-blue-100 bg-white transition-shadow hover:shadow-lg"
-                >
-                  <div className="flex items-center justify-center bg-blue-50 p-6">
-                    <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-blue-600">
-                      <stat.icon className="h-8 w-8 text-blue-600" />
-                    </div>
-                  </div>
-                  <div className="p-4 text-center">
-                    <div className="text-3xl font-bold text-blue-600">
-                      {stat.number}
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {stat.label}
-                      {stat.sublabel && (
-                        <>
-                          <br />
-                          {stat.sublabel}
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
+          <div className="text-4xl font-light">54°F</div>
+          <div className="ml-auto">
+            <div>Mostly cloudy</div>
+            <div className="flex items-center">
+              <Cloud className="h-4 w-4 mr-1 text-blue-300" />
+              <span>5%</span>
             </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 pb-12">
-          <h1 className="mb-8 text-4xl font-bold">History and Geography</h1>
+        <div className="text-xs mt-4">
+          Data from Foreca | Updated 5 mins ago
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+const leftColumnServices = [
+  "Home Services",
+  "Health & Medical",
+  "Food & Restaurants",
+  "Auto Care",
+  "Insurance",
+  "Beauty",
+  "Legal",
+  "Travel",
+  "Clothing",
+  "Groceries",
+  "Entertainment",
+  "Pets",
+  "Food /Catering Services",
+  "Moving",
+  "Phone & Cable",
+];
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {historyCards.map((card, index) => (
-              <Card
+const rightColumnServices = [
+  "Govt. Services",
+  "Places of Worship",
+  "Education & Schools",
+  "Music",
+  "Sports",
+  "Child & Seniors Care",
+  "Jobs & Careers",
+  "Real Estates",
+  "Weddings",
+  "Funeral & Rites",
+  "Hotels",
+  "Taxes & Finance",
+  "Desi Associations",
+];
+const recommendedSearches = [
+  "Empty Events You need",
+  "India Hire Young",
+  "Supporting Coaching Leading Lea...",
+  "Zin WeAreHire Employ...",
+  "Home That Are Hiring ...",
+  "More Graduate Online",
+  "Linda Bernardi Sales C...",
+  "Write Graduate Online",
+];
+
+const movies = [
+  {
+    id: 1,
+    title: "The Little Things",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
+  },
+  {
+    id: 2,
+    title: "Tenet",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
+  },
+  {
+    id: 3,
+    title: "The Empty Man",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
+  },
+  {
+    id: 4,
+    title: "Greenland",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
+  },
+  {
+    id: 5,
+    title: "Promising Young Woman",
+    rating: "R",
+    duration: "2h 8m",
+    year: 2021,
+    price: "From $19.99",
+    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
+  },
+];
+
+const newsItems = [
+  {
+    title: "Before You Buy Sandisk Growers, Stop and Consider These 5 Things",
+    source: "The Motley Fool",
+    time: "1 day ago",
+    price: "$3.50",
+    change: "+12.75%",
+    positive: true,
+  },
+  {
+    title: "Apple (AAPL) HomePod Mini Secret Sensor for Smart Home Thermostats",
+    source: "Bloomberg.com",
+    time: "13 hours ago",
+    price: "$123.39",
+    change: "+2.83%",
+    positive: true,
+  },
+  {
+    title:
+      "BLR Technology stock sinks 45% after report says Chinese government w...",
+    source: "Business Insider",
+    time: "9 hours ago",
+    price: "$10.15",
+    change: "-67.84%",
+    positive: false,
+  },
+  {
+    title: "Why AMC Stock Plunges Today",
+    source: "The Motley Fool",
+    time: "5 hours ago",
+    price: "$12.49",
+    change: "+10.34%",
+    positive: true,
+  },
+  {
+    title: "Ford Spokesperson Dismisses Tesla Model Y as 'Vaporware'",
+    source: "Yahoo Finance",
+    time: "1 day ago",
+    price: "$12.85",
+    change: "+0.19%",
+    positive: true,
+  },
+  {
+    title: "NDX Inc. ADR falls Monday, underperforms market",
+    source: "MarketWatch",
+    time: "3 hours ago",
+    price: "$42.94",
+    change: "-0.99%",
+    positive: false,
+  },
+];
+const categories = {
+  "Daily Services": [
+    "Home Services",
+    "Health & Medical",
+    "Food & Restaurants",
+    "Auto Care",
+    "Insurance",
+    "Beauty",
+    "Legal",
+    "Travel",
+    "Clothing",
+    "Groceries",
+    "Entertainment",
+    "Pets",
+    "Food/Catering",
+    "Moving",
+    "Phone & Cable",
+  ],
+  "Community & Professional": [
+    "Govt. Services",
+    "Places of Worship",
+    "Education & Schools",
+    "Music",
+    "Sports",
+    "Child & Seniors",
+    "Care",
+    "Jobs & Careers",
+    "Real Estates",
+    "Weddings",
+    "Funeral & Rites",
+    "Hotels",
+    "Taxes & Finance",
+    "Desi Associations",
+  ],
+};
+export default function Home() {
+  const { currentCity, status } = useAuthStore();
+  const { Room, loading, error } = useRoomFetching(currentCity || "Portland");
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200;
+      const newScrollLeft =
+        scrollContainerRef.current.scrollLeft +
+        (direction === "left" ? -scrollAmount : scrollAmount);
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth",
+      });
+    }
+  };
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible((prev) => !prev);
+    }, 3000); // Toggle visibility every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const containerVariants = {
+    visible: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const childVariants = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 200,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 200,
+      },
+    },
+  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const words = ["Welcome", "to", "Portland"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+  const featuredRooms = Room?.slice(0, 6);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6">
+        <div className="w-full justify-between flex items-center font-sans">
+          <Skeleton className="h-8 w-64" />
+          <Skeleton className="h-10 w-28" />
+        </div>
+        <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
+          {[...Array(6)].map((_, index) => (
+            <SkeletonFeaturedCard key={index} />
+          ))}
+        </div>
+        <Skeleton className="h-8 w-64 my-4" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[3rem] mb-[32rem]">
+      <div className="w-full lg:w-4/5 mr-4">
+        <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
+          <motion.h1
+            className="text-4xl font-bold"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
+          >
+            <motion.span
+              initial={{ display: "inline-block" }}
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
+            >
+              Welcome
+            </motion.span>{" "}
+            <motion.span
+              initial={{ display: "inline-block", opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              To
+            </motion.span>{" "}
+            <motion.span
+              initial={{ display: "inline-block", opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              Portland
+            </motion.span>
+          </motion.h1>
+        </section>
+        <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
+          <motion.h1
+            className="text-4xl font-bold"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+          >
+            {["Welcome", "To", "Portland"].map((word, index) => (
+              <motion.span
                 key={index}
-                className="overflow-hidden transition-shadow hover:shadow-lg"
+                className="inline-block mx-1"
+                variants={childVariants}
               >
-                <CardHeader className="p-0">
-                  <div className="relative aspect-video w-full">
-                    <Image
-                      src={card.image}
-                      alt={card.imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover"
-                      priority={index === 0}
-                    />
-                  </div>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <Badge variant="secondary" className="mb-3">
-                    {card.type}
-                  </Badge>
-                  <h2 className="mb-2 text-2xl font-bold">{card.title}</h2>
-                  <p className="text-muted-foreground">{card.description}</p>
-                </CardContent>
-                <CardFooter className="p-6 pt-0">
-                  <div className="flex items-center text-sm font-medium text-primary hover:underline">
-                    LEARN MORE
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </div>
-                </CardFooter>
-              </Card>
+                {word}
+              </motion.span>
+            ))}
+          </motion.h1>
+          <motion.div
+            className="mt-4 h-1 bg-white rounded-full"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: isVisible ? 1 : 0 }}
+            transition={{ duration: 3, ease: "linear" }}
+          />
+        </section>
+        <section className="relative overflow-hidden bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2">
+          <div className="absolute inset-0 opacity-20">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute bg-white rounded-full"
+                style={{
+                  width: Math.random() * 10 + 5,
+                  height: Math.random() * 10 + 5,
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: Math.random() * 3 + 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
             ))}
           </div>
-        </div>
-        <div className="w-full space-y-1">
-          {sections.map((section, index) => (
-            <div key={index} className="flex h-[200px] overflow-hidden">
-              {/* Image Section */}
-              <div
-                className={`relative w-[65%] ${
-                  section.imageLeft ? "order-first" : "order-last"
-                }`}
-              >
-                <Image
-                  src={section.imageSrc}
-                  alt={section.imageAlt}
-                  fill
-                  className="object-cover"
-                  priority={index === 0}
-                />
-                {/* Diagonal Overlay */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    clipPath: section.imageLeft
-                      ? "polygon(0 0, 100% 0, 85% 100%, 0 100%)"
-                      : "polygon(15% 0, 100% 0, 100% 100%, 0 100%)",
-                  }}
-                />
-              </div>
 
-              {/* Content Section */}
-              <div
-                className={`flex w-[35%] items-center bg-blue-50 px-6 ${
-                  section.imageLeft ? "order-last" : "order-first"
-                }`}
+          <div className="relative flex items-center justify-center h-24">
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={currentIndex}
+                className="text-4xl font-bold absolute"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
               >
-                <div className="space-y-3">
-                  <h2 className="text-2xl font-bold text-blue-600">
-                    {section.title}
-                  </h2>
-                  <p className="text-sm text-gray-600">{section.description}</p>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                  >
-                    {section.buttonText}
-                  </Button>
+                {words[currentIndex]}
+              </motion.h1>
+            </AnimatePresence>
+          </div>
+
+          <motion.div
+            className="mt-4 flex items-center justify-center space-x-2"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            {words.map((_, index) => (
+              <motion.div
+                key={index}
+                className={`h-2 w-2 rounded-full ${index === currentIndex ? "bg-white" : "bg-white/50"}`}
+                animate={{ scale: index === currentIndex ? [1, 1.2, 1] : 1 }}
+                transition={{ duration: 0.5 }}
+              />
+            ))}
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-2 right-2 text-white/70"
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <LucideChevronRight size={24} />
+          </motion.div>
+        </section>
+        <h2 className="text-[25px] font-sans font-bold text-gray-800 mt-3">
+          Events{" "}
+        </h2>
+        <div className="w-full max-w-[79rem] mt-3 mx-auto">
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className=""
+          >
+            <CarouselContent>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
+                  <div className="w-full ">
+                    <Featuredeventscard key={index} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-[-12] top-1/2 -translate-y-1/2" />
+            <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
+          </Carousel>
+        </div>
+        <div>Featured Rooms</div>
+        <h2 className="text-[25px] font-sans font-bold text-gray-800">
+          Rooms & Roommates{" "}
+        </h2>
+        <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
+          {featuredRooms?.map((room, index) => (
+            <FeaturedCard2 key={index} room={room} />
+          ))}
+        </div>
+        <div className="w-full">
+          <div className="container mx-auto">
+            <h2 className="text-2xl font-bold text-black my-4">Movies</h2>
+            <div className="flex space-x-4 overflow-x-auto pb-4">
+              {movies.map((movie) => (
+                <div
+                  key={movie.id}
+                  className="flex-shrink-0 w-[150px] transition-all duration-300 ease-in-out hover:w-[400px]"
+                >
+                  <Card className="h-[300px] border-0 bg-transparent relative group overflow-hidden">
+                    <div className="absolute inset-0">
+                      <img
+                        src={
+                          "https://th.bing.com/th/id/OIP.CD_KlLIkxB1zZCcn7Yh3QAHaJa?rs=1&pid=ImgDetMain"
+                        }
+                        alt={movie.title}
+                        className="object-cover w-full h-full rounded-lg"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="absolute top-2 right-2 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                        aria-label={`Bookmark ${movie.title}`}
+                      >
+                        <Bookmark className="h-6 w-6" />
+                      </Button>
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="space-y-2 text-white">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs border px-1 rounded">
+                              {movie.rating}
+                            </span>
+                            <span className="text-xs">{movie.duration}</span>
+                            <span className="text-xs">• {movie.year}</span>
+                          </div>
+                          <h3 className="font-bold text-sm">{movie.title}</h3>
+                          <p className="text-xs text-gray-200">{movie.price}</p>
+                          <div className="flex gap-2 pt-2">
+                            <Button
+                              size="sm"
+                              variant="secondary"
+                              className="text-xs bg-white/10 hover:bg-white/20 text-white"
+                            >
+                              Trailer
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="secondary"
+                              className="text-xs bg-white/10 hover:bg-white/20 text-white"
+                            >
+                              Watch options
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="pb-3">
+          <h2 className="text-2xl font-bold text-black my-4">Jobs</h2>
+        </div>
+        <div className="grid gap-0">
+          {newsItems.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-start justify-between py-3 border-t border-gray-200"
+            >
+              <div className="space-y-1 pr-4">
+                <h3 className="text-[21px] font-bold leading-none">
+                  {item.title}
+                </h3>
+                <p className="text-[18px] text-muted-foreground flex items-center">
+                  {item.source}
+                  <span className="mx-1.5 text-gray-300">·</span>
+                  {item.time}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 ml-4 shrink-0">
+                <div className="text-right flex lg:flex-row flex-col gap-3">
+                  <div className="text-[18px] font-medium">{item.price}</div>
+                  <div
+                    className={`text-[18px] px-1.5 rounded-full inline-flex items-center justify-center ${
+                      item.positive
+                        ? "text-green-700 bg-green-100"
+                        : "text-red-700 bg-red-100"
+                    }`}
+                  >
+                    {item.change}
+                  </div>
+                </div>
+                <button className="ml-2 rounded-full p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+                  <PlusCircle className="h-4 w-4" />
+                  <span className="sr-only">More information</span>
+                </button>
               </div>
             </div>
           ))}
         </div>
-
-        {/* //her  */}
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            {image.map((image, index) => (
-              <div
-                key={index}
-                className={`group relative aspect-square overflow-hidden rounded-none bg-black ${image.className || ""}`}
-              >
-                <Image
-                  src={image.src}
-                  alt={"image"}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105 w-[20rem]"
-                />
-                {/* Instagram-style overlay */}
-                <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 group-hover:bg-black/50">
-                  <div className="translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                    <div className="flex items-center gap-2 text-white">
-                      <Instagram className="h-6 w-6" />
-                      {/* <span className="text-sm">@{image.username}</span> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 text-center">
-            <button className="w-full rounded-none bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700">
-              Load More
-            </button>
-          </div>
-        </div>
-        {/* <InstaImagegrid /> */}
-
-        <section className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Portland, Oregon</h1>
-          <p className="text-xl max-w-3xl mx-auto">
-            A city known for its beautiful landscape, sustainable planning, and
-            vibrant urban culture, Portland offers a unique blend of history,
-            nature, and modern living.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="text-3xl font-bold mb-6">History and Geography</h2>
-          <Card>
-            <CardContent className="p-6 space-y-4">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  Early Inhabitants and Founding
-                </h3>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>
-                    Originally inhabited by Native American tribes, including
-                    the Multnomah and Clackamas, who utilized the rivers for
-                    trade.
-                  </li>
-                  <li>
-                    Established in 1845, named after Portland, Maine following a
-                    coin toss between Asa Lovejoy and Francis Pettygrove.
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Economic Growth</h3>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>
-                    Late 1800s saw boom in timber and shipping industries due to
-                    its riverside location.
-                  </li>
-                  <li>
-                    Railroads arrived in 1880s, cementing Portland's role as an
-                    economic hub in the Pacific Northwest.
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  20th Century Changes
-                </h3>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>
-                    Economy shifted with shipbuilding during WWII and later the
-                    high-tech sector in the 1980s.
-                  </li>
-                  <li>
-                    Urban renewal transformed neighborhoods like the Pearl
-                    District.
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Modern Identity</h3>
-                <p>
-                  Portland is known for its progressive values, green
-                  initiatives, and cultural character—especially in the arts,
-                  food, and environmental sectors.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  Location and Climate
-                </h3>
-                <p>
-                  Situated at the confluence of the Willamette and Columbia
-                  Rivers, in the shadow of Mount Hood, Portland enjoys a mild,
-                  temperate climate.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Topography</h3>
-                <p>
-                  The city is characterized by lush, forested hills,
-                  particularly in the west. East of the Willamette, the terrain
-                  flattens into the fertile Willamette Valley.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  Natural Boundaries
-                </h3>
-                <p>
-                  The city has an urban growth boundary to control sprawl and
-                  protect nearby farms and forests, which has helped Portland
-                  stay compact and green.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section>
-          <h2 className="text-3xl font-bold mb-6">
-            Indian Diaspora in Portland
-          </h2>
-          <Card>
-            <CardContent className="p-6">
-              <p className="mb-4">
-                In Portland, the Indian diaspora or the Desis are spread across
-                several neighborhoods, particularly those with good schools,
-                access to public transit, and proximity to tech hubs.
-              </p>
-              <ScrollArea className="w-full rounded-md p-2">
-                {neighborhoods.map((neighborhood, index) => (
-                  <Card key={index} className="mb-4">
-                    <CardHeader>
-                      <CardTitle>{neighborhood.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="mb-2">
-                        <strong>Overview:</strong> {neighborhood.overview}
-                      </p>
-                      <p>
-                        <strong>Community Life:</strong>{" "}
-                        {neighborhood.communityLife}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
-                <Card className="mb-4">
-                  <CardHeader>
-                    <CardTitle>Cultural & Community Centers</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      <strong>India Cultural Association (ICA):</strong>{" "}
-                      Organizes major events, including the popular India
-                      Festival at Pioneer Courthouse Square, and serves as a
-                      community hub.
-                    </p>
-                  </CardContent>
-                </Card>
-              </ScrollArea>
-            </CardContent>
-          </Card>
-        </section>
-
-        <section>
-          <h2 className="text-3xl font-bold mb-6">Moving to Portland</h2>
-          <div className="container mx-auto px-4 py-12">
-            <div className="mb-12 flex items-center justify-center">
-              <div className="h-px flex-1 bg-gray-200" />
-              <div className="mx-4">
-                <Heart className="h-8 w-8 text-red-500 fill-current" />
-              </div>
-              <div className="h-px flex-1 bg-gray-200" />
-            </div>
-            <h1 className="mb-1 text-center text-4xl font-bold text-gray-900">
-              More to Love in New York City
-            </h1>
-            <h1 className="mb-1 text-center text-2xl text-gray-900">
-              Essential Information for Newcomers
-            </h1>
-            <h1 className="mb-12 text-center text-xl text-gray-700">
-              Moving to Portland, Oregon can be an exciting choice! Here's a
-              snapshot of what to expect if you're making the move:
-            </h1>
-            <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-5">
-              {attractions.map((attraction, index) => (
-                <div
-                  key={index}
-                  className="group overflow-hidden border bg-white shadow-sm transition-shadow hover:shadow-md"
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={"https://wallpapercave.com/wp/Nb3d7Ur.jpg"}
-                      alt={attraction.title}
-                      className="object-cover transition-transform duration-300 group-hover:scale-105 p-2"
-                    />
-                  </div>
-                  <div className="px-5 py-2 text-center">
-                    {/* <h2 className="mb-2 text-xl font-semibold text-gray-900">
-                    {attraction.title}
-                  </h2> */}
-                    <p className="mb-1 text-gray-600">
-                      {attraction.description}
-                    </p>
-                    <Link
-                      href={attraction.link}
-                      className="text-sm font-medium text-red-500 hover:text-red-600"
-                    >
-                      more
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* <Card>
-          <CardHeader>
-            <CardTitle>Essential Information for Newcomers</CardTitle>
-            <CardDescription>
-              Moving to Portland, Oregon can be an exciting choice! Here's a
-              snapshot of what to expect if you're making the move:
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-disc pl-6">
-              {movingToPortlandInfo.map((item, index) => (
-                <li key={index} className="text-sm">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card> */}
-        </section>
       </div>
-    </HomeLayout>
+
+      {/* //this is the right side */}
+
+      <div className="w-full mt-2 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
+        <div className="max-w-md mx-auto">
+          <WeatherCard />
+          <Card className="w-full max-w-md bg-gradient-to-r from-cyan-700 to-blue-700 text-white">
+            <CardHeader>
+              <CardTitle className="text-xl font-medium text-center">
+                About Portland
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  <div>
+                    <p className="text-sm text-white/80">Population</p>
+                    <p className="font-medium">652,503</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Building2 className="h-5 w-5" />
+                  <div>
+                    <p className="text-sm text-white/80">Metro Area</p>
+                    <p className="font-medium">2.5M</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TreePine className="h-5 w-5" />
+                  <div>
+                    <p className="text-sm text-white/80">Parks</p>
+                    <p className="font-medium">279</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Car className="h-5 w-5" />
+                  <div>
+                    <p className="text-sm text-white/80">Transit Lines</p>
+                    <p className="font-medium">85</p>
+                  </div>
+                </div>
+              </div>
+              <div className="pt-2">
+                <p className="text-sm leading-relaxed">
+                  Portland is known for its parks, bridges and bicycle paths, as
+                  well as for its eco-friendliness and microbreweries. Sitting
+                  in the shadow of Mount Hood, it's one of the most
+                  environmentally conscious cities in the world.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-5">
+            <CardContent className="p-0">
+              <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2>
+              <div className="bg-yellow-300 rounded-b-lg p-4">
+                <div className="p-1 space-y-8">
+                  <div className="space-y-8">
+                    {Object.entries(categories).map(([section, items]) => (
+                      <div key={section} className="space-y-4">
+                        <h3 className="text-xl font-semibold text-muted-foreground">
+                          {section}
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {items.map((category) => (
+                            <Button
+                              key={category}
+                              variant="secondary"
+                              className="rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+                            >
+                              {category}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                  <div>
+                    {leftColumnServices.map((service, index) => (
+                      <div key={index} className="text-sm">
+                        {service}
+                      </div>
+                    ))}
+                  </div>
+                  <div>
+                    {rightColumnServices.map((service, index) => (
+                      <div key={index} className="text-sm">
+                        {service}
+                      </div>
+                    ))}
+                  </div>
+                </div> */}
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="w-full max-w-3xl mt-6">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-bold">
+                MOST RECENT SEARCHES
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-1">
+              {recommendedSearches.map((search, index) => (
+                <Button
+                  key={index}
+                  variant="link"
+                  className="h-auto p-0 text-sm font-normal text-blue-500 hover:text-blue-700"
+                >
+                  {search}
+                </Button>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
   );
 }
