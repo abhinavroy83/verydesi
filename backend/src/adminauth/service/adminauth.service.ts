@@ -33,7 +33,15 @@ export class AdminauthService {
   async signin(email: string, password: string) {
     const user = await this.AdminUserModel.findOne({ email }).exec();
     if (user && (await bcrypt.compare(password, user.password))) {
-      return this.signToken(user._id.toString(), user.email);
+      const token = await this.signToken(user._id.toString(), user.email);
+      return {
+        access_token: token,
+        user: {
+          email: user.email,
+          role: user.role,
+          permissions: user.permissions,
+        },
+      };
     }
   }
 
