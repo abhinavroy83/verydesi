@@ -130,7 +130,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   return (
     <Card
       onClick={handleCardClick}
-      className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+      className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden relative"
     >
       <CardContent className="p-0">
         <div className="flex flex-col sm:flex-row">
@@ -152,14 +152,14 @@ export default function Component({ room }: FeaturedCard2Props) {
           <Button
             variant="ghost"
             size="icon"
-            className=" absolute"
+            className=""
             onClick={(e) => {
               e.stopPropagation();
               handleWishlist(wishlistStatus ? "remove" : "add");
             }}
           >
             <Heart
-              className={`h-5 w-5 ${wishlistStatus ? " stroke-red-500 fill-red-500 hover:fill-white " : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
+              className={`absolute right-3 bottom-4 h-6 w-6 ${wishlistStatus ? "hover:stroke-red-500 hover:fill-red-500 stroke-black" : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
             />
           </Button>
           <div className="flex-1 p-4">
