@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 export default function LogoutComponent() {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function LogoutComponent() {
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
-      // Simulate logout action
+      signOut();
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Logged out successfully");
       // Here you would typically call your logout API or clear session data

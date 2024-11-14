@@ -13,16 +13,41 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 
 export default function AdminSignIn() {
   const [showPassword, setShowPassword] = useState(false);
-  const [emailOrId, setEmailOrId] = useState("");
+  const [email, setEmailOrId] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement sign-in logic here
-    console.log("Sign in attempted with:", { emailOrId, password });
+
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    if (result?.error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "Loggedin successfully!",
+        duration: 5000,
+      });
+      router.push("/");
+    }
+    console.log("Sign in attempted with:", { email, password });
   };
 
   return (
@@ -44,7 +69,7 @@ export default function AdminSignIn() {
                   id="emailOrId"
                   placeholder="Enter your email or ID"
                   type="text"
-                  value={emailOrId}
+                  value={email}
                   onChange={(e) => setEmailOrId(e.target.value)}
                   className="pl-10"
                   required

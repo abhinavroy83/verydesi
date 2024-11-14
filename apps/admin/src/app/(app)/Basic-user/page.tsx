@@ -25,6 +25,7 @@ import { ChevronRight, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import ProtectedRoute from "@/context/ProtectedRoute";
 
 export default function Page() {
   const [userData, setUserData] = useState<UserData[]>([]);
@@ -81,116 +82,126 @@ export default function Page() {
   );
 
   return (
-    <Dashboardlayout>
-      <div className="container mx-auto bg-white text-black rounded-lg min-h-screen">
-        <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2">
-          <FaUser className="w-6 h-6 text-black" />
-          <h1 className="text-2xl font-bold">Basic User</h1>
-        </div>
-        <nav
-          className="flex text-sm text-gray-500 px-4 py-2"
-          aria-label="Breadcrumb"
-        >
-          <ol className="inline-flex items-center space-x-1 md:space-x-3">
-            <li className="inline-flex items-center">
-              <Link
-                href="/"
-                className="inline-flex items-center hover:text-gray-700"
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <div className="flex items-center">
-                <ChevronRight className="w-4 h-4 mx-1" />
-                <Link href="/Basic-user" className="ml-1 hover:text-gray-700">
-                  Basic User
+    <ProtectedRoute requiredPermission="manage_users">
+      <Dashboardlayout>
+        <div className="container mx-auto bg-white text-black rounded-lg min-h-screen">
+          <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2">
+            <FaUser className="w-6 h-6 text-black" />
+            <h1 className="text-2xl font-bold">Basic User</h1>
+          </div>
+          <nav
+            className="flex text-sm text-gray-500 px-4 py-2"
+            aria-label="Breadcrumb"
+          >
+            <ol className="inline-flex items-center space-x-1 md:space-x-3">
+              <li className="inline-flex items-center">
+                <Link
+                  href="/"
+                  className="inline-flex items-center hover:text-gray-700"
+                >
+                  Dashboard
                 </Link>
-              </div>
-            </li>
-          </ol>
-        </nav>
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px] py-2">First Name</TableHead>
-                <TableHead className="py-2">Last Name</TableHead>
-                <TableHead className="py-2">Email</TableHead>
-                <TableHead className="py-2">Email Status</TableHead>
-                <TableHead className="py-2">Edit</TableHead>
-                <TableHead className="py-2">Delete</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
-                Array.from({ length: itemsPerPage }).map((_, index) => (
-                  <SkeletonRow key={index} />
-                ))
-              ) : userData.length > 0 ? (
-                paginatedFavorites.map((user) => (
-                  <TableRow key={user?.email}>
-                    <TableCell className="py-2">{user.firstName}</TableCell>
-                    <TableCell className="py-2">{user.lastName}</TableCell>
-                    <TableCell className="py-2">{user.email}</TableCell>
-                    <TableCell className="py-2">
-                      {user.IsEmailVerified ? "Verified" : "Not Verified"}
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                        <Edit className="h-4 w-4 text-blue-500" />
-                      </Button>
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                        <Trash2 className="h-4 w-4 text-red-500" />
-                      </Button>
+              </li>
+              <li>
+                <div className="flex items-center">
+                  <ChevronRight className="w-4 h-4 mx-1" />
+                  <Link href="/Basic-user" className="ml-1 hover:text-gray-700">
+                    Basic User
+                  </Link>
+                </div>
+              </li>
+            </ol>
+          </nav>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[200px] py-2">First Name</TableHead>
+                  <TableHead className="py-2">Last Name</TableHead>
+                  <TableHead className="py-2">Email</TableHead>
+                  <TableHead className="py-2">Email Status</TableHead>
+                  <TableHead className="py-2">Edit</TableHead>
+                  <TableHead className="py-2">Delete</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {loading ? (
+                  Array.from({ length: itemsPerPage }).map((_, index) => (
+                    <SkeletonRow key={index} />
+                  ))
+                ) : userData.length > 0 ? (
+                  paginatedFavorites.map((user) => (
+                    <TableRow key={user?.email}>
+                      <TableCell className="py-2">{user.firstName}</TableCell>
+                      <TableCell className="py-2">{user.lastName}</TableCell>
+                      <TableCell className="py-2">{user.email}</TableCell>
+                      <TableCell className="py-2">
+                        {user.IsEmailVerified ? "Verified" : "Not Verified"}
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                        >
+                          <Edit className="h-4 w-4 text-blue-500" />
+                        </Button>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                        >
+                          <Trash2 className="h-4 w-4 text-red-500" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center py-4">
+                      No users found.
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={6} className="text-center py-4">
-                    No users found.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        {!loading && userData.length > 0 && (
-          <div className="mt-4 flex justify-center">
-            <Pagination>
-              <PaginationContent>
-                {currentPage > 1 && (
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() => setCurrentPage((prev) => prev - 1)}
-                    />
-                  </PaginationItem>
                 )}
-                {[...Array(totalPages)].map((_, index) => (
-                  <PaginationItem key={index}>
-                    <PaginationLink
-                      onClick={() => setCurrentPage(index + 1)}
-                      isActive={currentPage === index + 1}
-                    >
-                      {index + 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-                {currentPage < totalPages && (
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() => setCurrentPage((prev) => prev + 1)}
-                    />
-                  </PaginationItem>
-                )}
-              </PaginationContent>
-            </Pagination>
+              </TableBody>
+            </Table>
           </div>
-        )}
-      </div>
-    </Dashboardlayout>
+          {!loading && userData.length > 0 && (
+            <div className="mt-4 flex justify-center">
+              <Pagination>
+                <PaginationContent>
+                  {currentPage > 1 && (
+                    <PaginationItem>
+                      <PaginationPrevious
+                        onClick={() => setCurrentPage((prev) => prev - 1)}
+                      />
+                    </PaginationItem>
+                  )}
+                  {[...Array(totalPages)].map((_, index) => (
+                    <PaginationItem key={index}>
+                      <PaginationLink
+                        onClick={() => setCurrentPage(index + 1)}
+                        isActive={currentPage === index + 1}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  {currentPage < totalPages && (
+                    <PaginationItem>
+                      <PaginationNext
+                        onClick={() => setCurrentPage((prev) => prev + 1)}
+                      />
+                    </PaginationItem>
+                  )}
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
+        </div>
+      </Dashboardlayout>
+    </ProtectedRoute>
   );
 }

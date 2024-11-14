@@ -37,6 +37,7 @@ export class AdminauthService {
       return {
         access_token: token.access_token,
         user: {
+          id: user._id,
           email: user.email,
           role: user.role,
           permissions: user.permissions,
