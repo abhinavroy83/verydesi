@@ -33,7 +33,7 @@ interface FeaturedCard2Props {
   room: RoomInterface;
 }
 
-export default function Component({ room }: FeaturedCard2Props) {
+export default function Component() {
   const [wishlistStatus, setWishlistStatus] = useState(false);
   const { pluscart, minuscart } = useCartStore();
   const { data: session } = useSession();
@@ -43,57 +43,6 @@ export default function Component({ room }: FeaturedCard2Props) {
   const router = useRouter();
 
   const token = session?.accessToken;
-
-  const handleWishlist = async (action: "add" | "remove") => {
-    if (!status) {
-      openLogin();
-      return;
-    }
-
-    try {
-      const dat = { roomId: room._id, status: action === "add" };
-      const res = await axios.post(
-        `https://apiv2.verydesi.com/favorite/postAndUpdateFavorite`,
-        dat,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      if (res.data.msg.includes("Successfully")) {
-        action === "add" ? pluscart() : minuscart();
-        setWishlistStatus(action === "add");
-        toast.success(
-          action === "add" ? "Added to Favorites." : "Removed from Favorites."
-        );
-      }
-    } catch (error) {
-      console.error(
-        `Error ${action === "add" ? "adding to" : "removing from"} wishlist:`,
-        error
-      );
-      toast.error(
-        `Failed to ${action === "add" ? "add to" : "remove from"} Favorites.`
-      );
-    }
-  };
-
-  useEffect(() => {
-    const fetchWishStatus = async () => {
-      if (!token) return;
-      try {
-        const res = await axios.get(
-          `https://apiv2.verydesi.com/favorite/findfavoritebyId/${room._id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        setWishlistStatus(res.data.status !== "not found");
-      } catch (error) {
-        console.error("Error fetching wishlist status:", error);
-      }
-    };
-
-    fetchWishStatus();
-  }, [room._id, token, status]);
 
   const calculateTimeDifference = (dateStr: Date) => {
     const date = new Date(dateStr);
@@ -122,22 +71,13 @@ export default function Component({ room }: FeaturedCard2Props) {
       .replace(/(^-|-$)/g, "")}-${id}`;
   };
 
-  const handleCardClick = () => {
-    const slug = formatSlug(room.Title, room._id);
-    router.push(`/room/${slug}`);
-  };
-
   return (
-    <Card
-      onClick={handleCardClick}
-      className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden"
-    >
+    <Card className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden">
       <CardContent className="p-0">
         <div className="flex flex-col sm:flex-row">
           <div className="relative w-full sm:w-1/3 h-48 sm:h-auto">
             <Image
               src={
-                room.Imgurl[0] ||
                 "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
               }
               alt="Room Image"
@@ -146,68 +86,34 @@ export default function Component({ room }: FeaturedCard2Props) {
               className="transition-transform duration-500 ease-in-out hover:scale-110"
             />
             <Badge className="text-[21px] absolute top-2 left-2 bg-white/80 text-green-700">
-              ${room.Expected_Rooms}
+              $200
             </Badge>
           </div>
           <div className="flex-1 p-4">
             <div className="mb-2 text-[21px]">
-              <TruncateText text={room.Title} />
+              <TruncateText
+                text={`Fully Furnished Room With Attached Bathroom For Rent In 2B2B ( Near To Apple Campus ) |
+`}
+              />
             </div>
             <div className="flex flex-wrap items-center text-sm text-gray-600 mb-2">
               <div className="flex items-center mr-2 sm:mb-0">
                 <MapPin className="h-5 w-5 mr-1 text-blue-600" />
-                <span className="text-[18px]">
-                  {room.city}, {stateAbbreviations[room.state] || room.state}
-                </span>
-              </div>
-              <div className="flex items-center">
-                {room.Preferred_gender === "Male only" ? (
-                  <>
-                    <IoIosMale className="h-5 w-5 mr-1 text-blue-600" />
-                    <span className="text-[18px]">Male</span>
-                  </>
-                ) : room.Preferred_gender === "Female only" ? (
-                  <>
-                    <IoIosFemale className="h-5 w-5 mr-1 text-pink-500" />
-                    <span className="text-[18px]">Female</span>
-                  </>
-                ) : (
-                  <>
-                    <IoIosTransgender className="h-5 w-5 mr-1 text-purple-500" />
-                    <span className="text-[18px]">Any</span>
-                  </>
-                )}
+                <span className="text-[18px]">Portland.OR</span>
               </div>
             </div>
             <div className="flex flex-col text-sm text-gray-500">
               <div className="flex items-center mb-1">
                 <User className="h-5 w-5mr-1 text-blue-600" />
-                <span className="text-[18px]">Posted by: {room.user_name}</span>
               </div>
               <div className="flex items-center">
                 <Clock className="h-5 w-5 mr-1 text-blue-600 mt-2" />
-                <span className="text-[18px]">
-                  {calculateTimeDifference(room.postedon)}
-                </span>
+                <span className="text-[18px]"></span>
               </div>
             </div>
           </div>
         </div>
       </CardContent>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-12 right-12 bg-white/80 hover:bg-white"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleWishlist(wishlistStatus ? "remove" : "add");
-        }}
-      >
-        
-        <Heart
-          className={`h-5 w-5 ${wishlistStatus ? "fill-red-500 stroke-red-500" : "stroke-gray-400"}`}
-        />
-      </Button>
     </Card>
   );
 }
