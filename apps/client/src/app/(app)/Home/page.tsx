@@ -1,13 +1,18 @@
 "use client";
 import dynamic from "next/dynamic";
 import React, { ReactNode } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Sun,
   Cloud,
   MoreHorizontal,
   TreePine,
-  Car,
   Building2,
   Users,
   PlusCircle,
@@ -29,13 +34,31 @@ import {
 } from "@/components/ui/carousel";
 import Featuredeventscard from "@/components/Events/Featuredeventscard";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { ChevronLeft, Play } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LucideChevronRight } from "lucide-react";
+import {
+  Heart,
+  Utensils,
+  Car,
+  Umbrella,
+  Scissors,
+  Scale,
+  Plane,
+  ShirtIcon as ShirtRound,
+  ShoppingCart,
+  Film,
+  Dog,
+  UtensilsCrossed,
+  Truck,
+  Phone,
+  ChevronRight,
+} from "lucide-react";
+
 function WeatherCard() {
   return (
     <Card className="bg-gradient-to-r from-cyan-700 to-blue-700 text-white mb-4">
@@ -210,7 +233,7 @@ const newsItems = [
   },
 ];
 const categories = {
-  "Daily Services": [
+  "Business & Services": [
     "Home Services",
     "Health & Medical",
     "Food & Restaurants",
@@ -226,22 +249,6 @@ const categories = {
     "Food/Catering",
     "Moving",
     "Phone & Cable",
-  ],
-  "Community & Professional": [
-    "Govt. Services",
-    "Places of Worship",
-    "Education & Schools",
-    "Music",
-    "Sports",
-    "Child & Seniors",
-    "Care",
-    "Jobs & Careers",
-    "Real Estates",
-    "Weddings",
-    "Funeral & Rites",
-    "Hotels",
-    "Taxes & Finance",
-    "Desi Associations",
   ],
 };
 export default function Home() {
@@ -267,7 +274,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible((prev) => !prev);
-    }, 3000); 
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -300,6 +307,23 @@ export default function Home() {
       },
     },
   };
+  const categories = [
+    { name: "Home Services", icon: Home },
+    { name: "Health & Medical", icon: Heart },
+    { name: "Food & Restaurants", icon: Utensils },
+    { name: "Auto Care", icon: Car },
+    { name: "Insurance", icon: Umbrella },
+    { name: "Beauty", icon: Scissors },
+    { name: "Legal", icon: Scale },
+    { name: "Travel", icon: Plane },
+    { name: "Clothing", icon: ShirtRound },
+    { name: "Groceries", icon: ShoppingCart },
+    { name: "Entertainment", icon: Film },
+    { name: "Pets", icon: Dog },
+    { name: "Food/Catering", icon: UtensilsCrossed },
+    { name: "Moving", icon: Truck },
+    { name: "Phone & Cable", icon: Phone },
+  ];
   const [currentIndex, setCurrentIndex] = useState(0);
   const words = ["Welcome", "to", "Portland"];
 
@@ -363,30 +387,40 @@ export default function Home() {
           </motion.h1>
         </section> */}
 
-        <section className="text-center text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
-          <h1 className="text-[35px] font-bold">Welcome To Portland</h1>
-          {/* <motion.h1
-            className="text-4xl font-bold"
-            variants={containerVariants}
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-          >
-            {["Welcome", "To", "Portland"].map((word, index) => (
-              <motion.span
-                key={index}
-                className="inline-block mx-1"
-                variants={childVariants}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </motion.h1> */}
-          <motion.div
-            className="mt-4 h-1 bg-white rounded-full"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: isVisible ? 1 : 0 }}
-            transition={{ duration: 3, ease: "linear" }}
+        <section className="relative h-[170px] mt-3 rounded-lg overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage:
+                "url('https://th.bing.com/th/id/R.987b01d079e428e779f18622e3c11302?rik=R1kwpQbf%2b7On6g&riu=http%3a%2f%2fwallpapercave.com%2fwp%2feKouupY.jpg&ehk=AXFugzftEWDWTkEFwM1y42ecFqn7iHnSoJhJGlAqY%2bY%3d&risl=&pid=ImgRaw&r=0')",
+            }}
           />
+          <div className="absolute inset-0 bg-black bg-opacity-50" />
+          <div className="relative z-10 flex flex-col items-center justify-center h-full text-white p-2">
+            <h1 className="text-[43px] font-bold">Welcome To Portland</h1>
+            {/* <motion.h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold"
+              variants={containerVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+            >
+              {["Welcome", "To", "Portland"].map((word, index) => (
+                <motion.span
+                  key={index}
+                  className="inline-block mx-1"
+                  variants={childVariants}
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </motion.h1> */}
+            <motion.div
+              className="mt-4 h-1 bg-white rounded-full w-48"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: isVisible ? 1 : 0 }}
+              transition={{ duration: 3, ease: "linear" }}
+            />
+          </div>
         </section>
 
         <h2 className="text-[25px] font-sans font-bold text-gray-800 mt-3">
@@ -417,9 +451,7 @@ export default function Home() {
           Rooms & Roommates{" "}
         </h2>
         <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
-          {featuredRooms?.map((room, index) => (
-            <FeaturedCard2 key={index}  />
-          ))}
+          {featuredRooms?.map((room, index) => <FeaturedCard2 key={index} />)}
         </div>
         <div className="w-full">
           <div className="container mx-auto">
@@ -528,9 +560,9 @@ export default function Home() {
 
       {/* //this is the right side */}
 
-      <div className="w-full mt-2 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
+      <div className="w-full mt-3 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
         <div className="max-w-md mx-auto">
-          <WeatherCard />
+          {/* <WeatherCard /> */}
           <Card className="w-full max-w-md bg-gradient-to-r from-cyan-700 to-blue-700 text-white">
             <CardHeader>
               <CardTitle className="text-xl font-medium text-center">
@@ -581,8 +613,8 @@ export default function Home() {
 
           <Card className="mt-5">
             <CardContent className="p-0">
-              <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2>
-              <div className="bg-yellow-300 rounded-b-lg p-4">
+              {/* <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2> */}
+              <div className="bg-yellow-400 rounded-lg p-1">
                 <div className="p-1 space-y-8">
                   <div className="space-y-8">
                     {Object.entries(categories).map(([section, items]) => (
@@ -590,7 +622,7 @@ export default function Home() {
                         <h3 className="text-xl font-semibold text-muted-foreground">
                           {section}
                         </h3>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1">
                           {items.map((category) => (
                             <Button
                               key={category}
@@ -601,6 +633,9 @@ export default function Home() {
                             </Button>
                           ))}
                         </div>
+                        <p className="flex w-full justify-end">
+                          View All Category
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -624,10 +659,45 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
+          <Card className="w-full max-w-4xl mx-auto">
+            <CardHeader>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                Business & Services
+              </h2>
+            </CardHeader>
+            <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {categories.map((category) => {
+                const Icon = category.icon;
+                return (
+                  <Button
+                    key={category.name}
+                    variant="outline"
+                    className="h-auto py-4 px-4 flex items-center justify-start gap-3 hover:bg-blue-50 hover:border-blue-200 transition-all group"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                      <Icon className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-sm font-medium text-gray-700 group-hover:text-blue-700">
+                      {category.name}
+                    </span>
+                  </Button>
+                );
+              })}
+            </CardContent>
+            <CardFooter>
+              <Button
+                variant="ghost"
+                className="w-full text-blue-600 hover:text-blue-700 hover:bg-blue-50 group"
+              >
+                View All Categories
+                <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </CardFooter>
+          </Card>
           <Card className="w-full max-w-3xl mt-6">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-bold">
-                MOST RECENT SEARCHES
+              <CardTitle className="text-[20px] font-bold">
+                TRENDING IN PORTLAND
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-1">
