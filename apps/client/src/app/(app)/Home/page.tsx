@@ -267,7 +267,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible((prev) => !prev);
-    }, 3000); // Toggle visibility every 3 seconds
+    }, 3000); 
 
     return () => clearInterval(interval);
   }, []);
@@ -478,7 +478,7 @@ export default function Home() {
         </h2>
         <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
           {featuredRooms?.map((room, index) => (
-            <FeaturedCard2 key={index} room={room} />
+            <FeaturedCard2 key={index}  />
           ))}
         </div>
         <div className="w-full">
