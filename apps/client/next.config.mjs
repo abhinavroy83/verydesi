@@ -13,7 +13,7 @@ const nextConfig = {
       "static.toiimg.com",
       "img.budgettravel.com",
     ],
-  },
+  },  
 };
 
 export default nextConfig;
