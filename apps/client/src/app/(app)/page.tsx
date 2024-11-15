@@ -134,7 +134,7 @@ const Page = () => {
       </div>
       <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
         {featuredRooms?.map((room, index) => (
-          <FeaturedCard2 key={index} room={room} />
+          <FeaturedCard2 key={index}  />
         ))}
       </div>
       <h1 className="text-2xl font-bold my-4">
