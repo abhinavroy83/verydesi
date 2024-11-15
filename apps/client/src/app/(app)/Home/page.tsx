@@ -332,7 +332,7 @@ export default function Home() {
   return (
     <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[3rem] mb-[32rem]">
       <div className="w-full lg:w-4/5 mr-4">
-        <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
+        {/* <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
           <motion.h1
             className="text-4xl font-bold"
             initial={{ opacity: 0, y: 20 }}
@@ -361,9 +361,11 @@ export default function Home() {
               Portland
             </motion.span>
           </motion.h1>
-        </section>
-        <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
-          <motion.h1
+        </section> */}
+
+        <section className="text-center text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
+          <h1 className="text-[35px] font-bold">Welcome To Portland</h1>
+          {/* <motion.h1
             className="text-4xl font-bold"
             variants={containerVariants}
             initial="hidden"
@@ -378,7 +380,7 @@ export default function Home() {
                 {word}
               </motion.span>
             ))}
-          </motion.h1>
+          </motion.h1> */}
           <motion.div
             className="mt-4 h-1 bg-white rounded-full"
             initial={{ scaleX: 0 }}
@@ -386,69 +388,7 @@ export default function Home() {
             transition={{ duration: 3, ease: "linear" }}
           />
         </section>
-        <section className="relative overflow-hidden bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2">
-          <div className="absolute inset-0 opacity-20">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute bg-white rounded-full"
-                style={{
-                  width: Math.random() * 10 + 5,
-                  height: Math.random() * 10 + 5,
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  y: [0, -20, 0],
-                  opacity: [0.7, 1, 0.7],
-                }}
-                transition={{
-                  duration: Math.random() * 3 + 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </div>
 
-          <div className="relative flex items-center justify-center h-24">
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={currentIndex}
-                className="text-4xl font-bold absolute"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                {words[currentIndex]}
-              </motion.h1>
-            </AnimatePresence>
-          </div>
-
-          <motion.div
-            className="mt-4 flex items-center justify-center space-x-2"
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            {words.map((_, index) => (
-              <motion.div
-                key={index}
-                className={`h-2 w-2 rounded-full ${index === currentIndex ? "bg-white" : "bg-white/50"}`}
-                animate={{ scale: index === currentIndex ? [1, 1.2, 1] : 1 }}
-                transition={{ duration: 0.5 }}
-              />
-            ))}
-          </motion.div>
-
-          <motion.div
-            className="absolute bottom-2 right-2 text-white/70"
-            animate={{ x: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            <LucideChevronRight size={24} />
-          </motion.div>
-        </section>
         <h2 className="text-[25px] font-sans font-bold text-gray-800 mt-3">
           Events{" "}
         </h2>

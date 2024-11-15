@@ -40,10 +40,10 @@ export default function Eventcard() {
             Free Admission! Open daily June - August 11th from 10 am-5 pm.
           </p>
         </CardContent>
-        <CardFooter className="flex justify-between items-center border-t p-4 text-sm sm:text-base text-gray-900">
+        {/* <CardFooter className="flex justify-between items-center border-t p-4 text-sm sm:text-base text-gray-900">
           <p className="hover:underline">Other</p>
           <span>12 interested</span>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </Link>
   );
