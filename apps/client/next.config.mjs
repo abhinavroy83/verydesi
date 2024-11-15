@@ -12,7 +12,7 @@ const nextConfig = {
       "www.pixelstalk.net",
       "static.toiimg.com",
       "img.budgettravel.com",
-    ],
+    ],   
   },  
 };
 
