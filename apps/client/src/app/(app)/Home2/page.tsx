@@ -60,7 +60,6 @@ import {
 } from "lucide-react";
 import Waethercard from "@/components/Whether/waether";
 
-
 const leftColumnServices = [
   "Home Services",
   "Health & Medical",
@@ -335,7 +334,7 @@ export default function Home() {
                 </motion.span>
               ))}
             </motion.h1>
-             <motion.div
+            <motion.div
               className="mt-4 h-1 bg-white rounded-full w-48"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: isVisible ? 1 : 0 }}
@@ -590,7 +589,7 @@ export default function Home() {
               </h2>
             </CardHeader>
             <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {categories.map((category) => {
+              {/* {categories.map((category) => {
                 const Icon = category.icon;
                 return (
                   <Button
@@ -606,7 +605,7 @@ export default function Home() {
                     </span>
                   </Button>
                 );
-              })}
+              })} */}
             </CardContent>
             <CardFooter>
               <Button
