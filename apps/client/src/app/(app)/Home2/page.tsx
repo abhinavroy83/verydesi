@@ -204,37 +204,43 @@ const newsItems = [
     positive: false,
   },
 ];
-const categories = [
-  { name: "Home Services", tag: "services" },
-  { name: "Health & Medical", tag: "health" },
-  { name: "Food & Restaurants", tag: "food" },
-  { name: "Auto Care", tag: "auto" },
-  { name: "Insurance", tag: "finance" },
-  { name: "Beauty", tag: "lifestyle" },
-  { name: "Legal", tag: "services" },
-  { name: "Travel", tag: "lifestyle" },
-  { name: "Clothing", tag: "retail" },
-  { name: "Groceries", tag: "retail" },
-  { name: "Entertainment", tag: "lifestyle" },
-  { name: "Pets", tag: "services" },
-  { name: "Food/Catering", tag: "food" },
-  { name: "Moving", tag: "services" },
-  { name: "Phone & Cable", tag: "utilities" },
-];
-
-const getTagColor = (tag: string) => {
-  const colors = {
-    services: "bg-blue-100 text-blue-800",
-    health: "bg-green-100 text-green-800",
-    food: "bg-orange-100 text-orange-800",
-    auto: "bg-red-100 text-red-800",
-    finance: "bg-purple-100 text-purple-800",
-    lifestyle: "bg-pink-100 text-pink-800",
-    retail: "bg-indigo-100 text-indigo-800",
-    utilities: "bg-gray-100 text-gray-800",
-  };
-  return colors[tag as keyof typeof colors] || "bg-gray-100 text-gray-800";
+const categories = {
+  "Business & Services": [
+    "Home Services",
+    "Health & Medical",
+    "Food & Restaurants",
+    "Auto Care",
+    "Insurance",
+    "Beauty",
+    "Legal",
+    "Travel",
+    "Clothing",
+    "Groceries",
+    "Entertainment",
+    "Pets",
+    "Food/Catering",
+    "Moving",
+    "Phone & Cable",
+  ],
 };
+
+const Category = [
+  { name: "Home Services", icon: <Home /> },
+  { name: "Health & Medical", icon: Heart },
+  { name: "Food & Restaurants", icon: Utensils },
+  { name: "Auto Care", icon: Car },
+  { name: "Insurance", icon: Umbrella },
+  { name: "Beauty", icon: Scissors },
+  { name: "Legal", icon: Scale },
+  { name: "Travel", icon: Plane },
+  { name: "Clothing", icon: ShirtRound },
+  { name: "Groceries", icon: ShoppingCart },
+  { name: "Entertainment", icon: Film },
+  { name: "Pets", icon: Dog },
+  { name: "Food/Catering", icon: UtensilsCrossed },
+  { name: "Moving", icon: Truck },
+  { name: "Phone & Cable", icon: Phone },
+];
 
 export default function Home() {
   const { currentCity, status } = useAuthStore();
@@ -535,18 +541,21 @@ export default function Home() {
               <div className="bg-yellow-400 rounded-lg p-1">
                 <div className="p-1 space-y-8">
                   <div className="space-y-8">
-                    {categories.map((item, index) => (
-                      <div className="space-y-4">
+                    {Object.entries(categories).map(([section, items]) => (
+                      <div key={section} className="space-y-4">
                         <h3 className="text-xl font-semibold text-muted-foreground">
-                          category
+                          {section}
                         </h3>
                         <div className="flex flex-wrap gap-1">
-                          <Button
-                            variant="secondary"
-                            className="rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
-                          >
-                            {item.name}
-                          </Button>
+                          {items.map((category) => (
+                            <Button
+                              key={category}
+                              variant="secondary"
+                              className="rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+                            >
+                              {category}
+                            </Button>
+                          ))}
                         </div>
                         <p className="flex w-full justify-end">
                           View All Category
