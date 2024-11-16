@@ -204,26 +204,6 @@ const newsItems = [
     positive: false,
   },
 ];
-// const categories = {
-//   "Business & Services": [
-//     "Home Services",
-//     "Health & Medical",
-//     "Food & Restaurants",
-//     "Auto Care",
-//     "Insurance",
-//     "Beauty",
-//     "Legal",
-//     "Travel",
-//     "Clothing",
-//     "Groceries",
-//     "Entertainment",
-//     "Pets",
-//     "Food/Catering",
-//     "Moving",
-//     "Phone & Cable",
-//   ],
-// };
-
 const categories = [
   { name: "Home Services", tag: "services" },
   { name: "Health & Medical", tag: "health" },
@@ -555,21 +535,18 @@ export default function Home() {
               <div className="bg-yellow-400 rounded-lg p-1">
                 <div className="p-1 space-y-8">
                   <div className="space-y-8">
-                    {Object.entries(categories).map(([section, items]) => (
-                      <div key={section} className="space-y-4">
+                    {categories.map((item, index) => (
+                      <div className="space-y-4">
                         <h3 className="text-xl font-semibold text-muted-foreground">
-                          {section}
+                          category
                         </h3>
                         <div className="flex flex-wrap gap-1">
-                          {items.map((category) => (
-                            <Button
-                              key={category}
-                              variant="secondary"
-                              className="rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
-                            >
-                              {category}
-                            </Button>
-                          ))}
+                          <Button
+                            variant="secondary"
+                            className="rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+                          >
+                            {item.name}
+                          </Button>
                         </div>
                         <p className="flex w-full justify-end">
                           View All Category
