@@ -60,7 +60,6 @@ import {
 } from "lucide-react";
 import Waethercard from "@/components/Whether/waether";
 
-
 const leftColumnServices = [
   "Home Services",
   "Health & Medical",
@@ -583,7 +582,7 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-          <Card className="w-full max-w-4xl mx-auto">
+          {/* <Card className="w-full max-w-4xl mx-auto">
             <CardHeader>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
                 Business & Services
@@ -617,7 +616,7 @@ export default function Home() {
                 <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             </CardFooter>
-          </Card>
+          </Card> */}
           <Card className="w-full max-w-3xl mt-6">
             <CardHeader className="pb-2">
               <CardTitle className="text-[20px] font-bold">

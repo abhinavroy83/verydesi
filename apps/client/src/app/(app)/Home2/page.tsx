@@ -18,6 +18,7 @@ import {
   PlusCircle,
   Expand,
   Bookmark,
+  HomeIcon,
 } from "lucide-react";
 import { useRoomFetching } from "@/hooks/use-all-roomfetcing";
 import useAuthStore from "@/store/useAuthStore";
@@ -224,22 +225,36 @@ const newsItems = [
 // };
 
 const categories = [
-  { name: "Home Services", icon: Home },
-  { name: "Health & Medical", icon: Heart },
-  { name: "Food & Restaurants", icon: Utensils },
-  { name: "Auto Care", icon: Car },
-  { name: "Insurance", icon: Umbrella },
-  { name: "Beauty", icon: Scissors },
-  { name: "Legal", icon: Scale },
-  { name: "Travel", icon: Plane },
-  { name: "Clothing", icon: ShirtRound },
-  { name: "Groceries", icon: ShoppingCart },
-  { name: "Entertainment", icon: Film },
-  { name: "Pets", icon: Dog },
-  { name: "Food/Catering", icon: UtensilsCrossed },
-  { name: "Moving", icon: Truck },
-  { name: "Phone & Cable", icon: Phone },
+  { name: "Home Services", tag: "services" },
+  { name: "Health & Medical", tag: "health" },
+  { name: "Food & Restaurants", tag: "food" },
+  { name: "Auto Care", tag: "auto" },
+  { name: "Insurance", tag: "finance" },
+  { name: "Beauty", tag: "lifestyle" },
+  { name: "Legal", tag: "services" },
+  { name: "Travel", tag: "lifestyle" },
+  { name: "Clothing", tag: "retail" },
+  { name: "Groceries", tag: "retail" },
+  { name: "Entertainment", tag: "lifestyle" },
+  { name: "Pets", tag: "services" },
+  { name: "Food/Catering", tag: "food" },
+  { name: "Moving", tag: "services" },
+  { name: "Phone & Cable", tag: "utilities" },
 ];
+
+const getTagColor = (tag: string) => {
+  const colors = {
+    services: "bg-blue-100 text-blue-800",
+    health: "bg-green-100 text-green-800",
+    food: "bg-orange-100 text-orange-800",
+    auto: "bg-red-100 text-red-800",
+    finance: "bg-purple-100 text-purple-800",
+    lifestyle: "bg-pink-100 text-pink-800",
+    retail: "bg-indigo-100 text-indigo-800",
+    utilities: "bg-gray-100 text-gray-800",
+  };
+  return colors[tag as keyof typeof colors] || "bg-gray-100 text-gray-800";
+};
 
 export default function Home() {
   const { currentCity, status } = useAuthStore();
@@ -307,7 +322,7 @@ export default function Home() {
           </motion.h1>
         </section> */}
 
-        {/* <section className="relative h-[170px] mt-3 rounded-lg overflow-hidden">
+        <section className="relative h-[170px] mt-3 rounded-lg overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
@@ -318,7 +333,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-black bg-opacity-50" />
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white p-2">
             <h1 className="text-[43px] font-bold">Welcome To Portland</h1>
-            <motion.h1
+            {/* <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl font-bold"
               variants={containerVariants}
               initial="hidden"
@@ -333,7 +348,7 @@ export default function Home() {
                   {word}
                 </motion.span>
               ))}
-            </motion.h1>
+            </motion.h1> */}
             <motion.div
               className="mt-4 h-1 bg-white rounded-full w-48"
               initial={{ scaleX: 0 }}
@@ -341,7 +356,7 @@ export default function Home() {
               transition={{ duration: 3, ease: "linear" }}
             />
           </div>
-        </section> */}
+        </section>
 
         <h2 className="text-[25px] font-sans font-bold text-gray-800 mt-3">
           Events{" "}
@@ -485,7 +500,7 @@ export default function Home() {
 
       <div className="w-full mt-3 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
         <div className="max-w-md mx-auto">
-          <Waethercard />
+          {/* <Waethercard /> */}
           <Card className="w-full max-w-md bg-gradient-to-r from-cyan-700 to-blue-700 text-white">
             <CardHeader>
               <CardTitle className="text-xl font-medium text-center">
@@ -538,7 +553,7 @@ export default function Home() {
             <CardContent className="p-0">
               {/* <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2> */}
               <div className="bg-yellow-400 rounded-lg p-1">
-                {/* <div className="p-1 space-y-8">
+                <div className="p-1 space-y-8">
                   <div className="space-y-8">
                     {Object.entries(categories).map(([section, items]) => (
                       <div key={section} className="space-y-4">
@@ -562,7 +577,7 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                </div> */}
+                </div>
                 {/* <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                   <div>
                     {leftColumnServices.map((service, index) => (
@@ -582,14 +597,15 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-          <Card className="w-full max-w-4xl mx-auto">
+
+          {/* <Card className="w-full max-w-4xl mx-auto">
             <CardHeader>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
                 Business & Services
               </h2>
             </CardHeader>
             <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {/* {categories.map((category) => {
+              {categories.map((category) => {
                 const Icon = category.icon;
                 return (
                   <Button
@@ -599,13 +615,15 @@ export default function Home() {
                   >
                     <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors">
                       <Icon className="w-4 h-4 text-blue-600" />
+                      {category.icon}
+                      <HomeIcon />
                     </div>
                     <span className="text-sm font-medium text-gray-700 group-hover:text-blue-700">
                       {category.name}
                     </span>
                   </Button>
                 );
-              })} */}
+              })}
             </CardContent>
             <CardFooter>
               <Button
@@ -616,7 +634,7 @@ export default function Home() {
                 <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Button>
             </CardFooter>
-          </Card>
+          </Card> */}
           <Card className="w-full max-w-3xl mt-6">
             <CardHeader className="pb-2">
               <CardTitle className="text-[20px] font-bold">
