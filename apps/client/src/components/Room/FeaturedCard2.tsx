@@ -79,14 +79,14 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
 
   useEffect(() => {
-    const fetchWishStatus = async () => {
+    const fetchWishStatus = async () => { 
       if (!token) return;
       try {
         const res = await axios.get(
           `https://apiv2.verydesi.com/favorite/findfavoritebyId/${room._id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        setWishlistStatus(res.data.status !== "not found");
+        setWishlistStatus(res.data.status);
       } catch (error) {
         console.error("Error fetching wishlist status:", error);
       }
@@ -145,23 +145,33 @@ export default function Component({ room }: FeaturedCard2Props) {
               objectFit="cover"
               className="transition-transform duration-500 ease-in-out hover:scale-110"
             />
-            <Badge className="text-[21px] absolute top-2 left-2 bg-white/80 text-green-700">
+            <div className="text-[21px] absolute px-2 rounded-md top-2 left-2 bg-white/80 text-green-700">
               ${room.Expected_Rooms}
-            </Badge>
+            </div>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            className=""
-            onClick={(e) => {
-              e.stopPropagation();
-              handleWishlist(wishlistStatus ? "remove" : "add");
-            }}
-          >
-            <Heart
-              className={`absolute right-3 bottom-4 h-6 w-6 ${wishlistStatus ? "hover:stroke-red-500 hover:fill-red-500 stroke-black" : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
-            />
-          </Button>
+          {session ? (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleWishlist(wishlistStatus ? "remove" : "add");
+              }}
+            >
+              <Heart
+                className={`absolute right-3 bottom-4 h-6 w-6 ${wishlistStatus ? "stroke-red-500 fill-red-500 hover:fill-white hover:stroke-black " : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
+              />
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                openLogin();
+              }}
+            >
+              <Heart
+                className={`absolute right-3 bottom-4 h-6 w-6 ${wishlistStatus ? "hover:stroke-red-500 hover:fill-red-500 stroke-black" : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
+              />
+            </button>
+          )}
           <div className="flex-1 p-4">
             <div className="mb-2 text-[21px]">
               <TruncateText text={room.Title} />

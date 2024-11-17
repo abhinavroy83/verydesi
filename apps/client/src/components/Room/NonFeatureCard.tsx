@@ -265,7 +265,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   {!status && (
                     <div
                       onClick={(e) => {
-                        e.preventDefault();
+                        e.stopPropagation();
                         openLogin();
                       }}
                     >
@@ -277,7 +277,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                       {!wishliststatys ? (
                         <div
                           onClick={(e) => {
-                            e.preventDefault();
+                            e.stopPropagation();
                             makewishlist(room?._id);
                           }}
                         >
@@ -287,7 +287,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                         <div
                           className="cursor-pointer "
                           onClick={(e) => {
-                            e.preventDefault();
+                            e.stopPropagation();
                             unwish(room?._id);
                           }}
                         >
