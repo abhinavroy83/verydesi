@@ -79,7 +79,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
 
   useEffect(() => {
-    const fetchWishStatus = async () => { 
+    const fetchWishStatus = async () => {
       if (!token) return;
       try {
         const res = await axios.get(
@@ -134,16 +134,17 @@ export default function Component({ room }: FeaturedCard2Props) {
     >
       <CardContent className="p-0">
         <div className="flex flex-col sm:flex-row">
-          <div className="relative w-full sm:w-1/3 h-48 sm:h-auto  lg:h-52 ">
+          <div className="relative w-full sm:w-1/3 h-48 sm:h-auto lg:h-44  overflow-hidden">
             <Image
               src={
-                room.Imgurl[0] ||
-                "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
+                room.Imgurl && room.Imgurl.length > 0
+                  ? room.Imgurl[0]
+                  : "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
               }
               alt="Room Image"
-              layout="fill"
-              objectFit="cover"
-              className="transition-transform duration-500 ease-in-out hover:scale-110"
+              width={600}
+              height={300}
+              className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
             />
             <div className="text-[21px] absolute px-2 rounded-md top-2 left-2 bg-white/80 text-green-700">
               ${room.Expected_Rooms}
@@ -157,7 +158,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               }}
             >
               <Heart
-                className={`absolute right-3 bottom-4 h-6 w-6 ${wishlistStatus ? "stroke-red-500 fill-red-500 hover:fill-white hover:stroke-black " : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
+                className={`absolute right-3 bottom-9 h-6 w-6 ${wishlistStatus ? "stroke-red-500 fill-red-500 hover:fill-white hover:stroke-black " : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
               />
             </button>
           ) : (
@@ -172,7 +173,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               />
             </button>
           )}
-          <div className="flex-1 p-4">
+          <div className="flex-1 px-4 py-2">
             <div className="mb-2 text-[21px]">
               <TruncateText text={room.Title} />
             </div>
@@ -204,11 +205,11 @@ export default function Component({ room }: FeaturedCard2Props) {
             </div>
             <div className="flex flex-col text-sm text-gray-500">
               <div className="flex items-center mb-1">
-                <User className="h-5 w-5mr-1 text-blue-600" />
+                <User className="h-5 w-5 mr-1 text-blue-600" />
                 <span className="text-[18px]">Posted by: {room.user_name}</span>
               </div>
-              <div className="flex items-center">
-                <Clock className="h-5 w-5 mr-1 text-blue-600 mt-2" />
+              <div className="flex items-center mt-1">
+                <Clock className="h-5 w-5 mr-1 text-blue-600 " />
                 <span className="text-[18px]">
                   {calculateTimeDifference(room.postedon)}
                 </span>
