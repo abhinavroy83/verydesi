@@ -1,6 +1,11 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+declare module "next-auth" {
+  interface CallbacksOptions {
+    signOut?: (params: { callbackUrl: string }) => Promise<string>;
+  }
+}
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({

@@ -20,10 +20,9 @@ export default function LogoutComponent() {
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
-      signOut();
+      signOut({ callbackUrl: "/sign-in" });
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Logged out successfully");
-      // Here you would typically call your logout API or clear session data
     } catch (error) {
       console.error("Logout failed", error);
     } finally {

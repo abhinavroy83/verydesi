@@ -1,8 +1,6 @@
 "use client";
-
 import Dashboardlayout from "@/components/Layout/Dashboardlayout";
 import axios from "axios";
-import { FaUser } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { RoomInterface } from "@myrepo/types";
 import {
@@ -137,7 +135,7 @@ export default function Page() {
                     <TableCell className="py-2">{user.postingincity}</TableCell>
                     <TableCell className="py-2">{user.city}</TableCell>
                     <TableCell className="py-2">{user.address}</TableCell>
-                   
+
                     <TableCell className="py-2">
                       <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                         <Edit className="h-4 w-4 text-blue-500" />
