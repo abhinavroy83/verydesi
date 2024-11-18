@@ -2,8 +2,8 @@
 
 import React, { useCallback, useState,  } from "react";
 
-import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useParams, useRouter } from "next/navigation";
+
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { BiSolidMessageRounded } from "react-icons/bi";
@@ -33,64 +33,83 @@ import {
   Heart,
   Home,
 } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import ShareButton from "@/components/Popups/ShareButton";
 import { Button } from "@/components/ui/button";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Similareventcard from "@/components/Events/Similareventcard";
 import axios from "axios";
+import useAuthStore from "@/store/useAuthStore";
+import { Event } from "@myrepo/types";
 
-interface Event {
-  _id: string | undefined;
-  eventTitle: string;
-  eventType: string;
-  startDate: string;
-  startTime: string;
-  endDate: string;
-  endTime: string;
-  description: string;
-  venueName: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-  images: string[];
-  hostedBy: string;
-  contactNumber: string;
-  virtualurl: string;
-  languages: string[];
-  artists: { name: string }[];
-}
+
 function Events() {
   const {id} = useParams();
 
   const [event, setEvent] = useState<Event | null>(null);
+  const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { currentCity } = useAuthStore();
+  const router = useRouter();
 
-React.useEffect(() => {
-  const fetchEvent = async () => {
-    if (!id) return;
+  React.useEffect(() => {
+    // Fetch all events
+    const fetchEvents = async () => {
+      try {
+        const city = currentCity || "Portland";
+        const response = await axios.get(
+            `https://apiv2.verydesi.com/event/getEventByArea/${city}`
+        );
+        setAllEvents(response.data || []); 
+      } catch (err) {
+        console.error("Error fetching events:", err);
+      }
+    };
 
-    setLoading(true);
-    setError(null);
+    // Fetch current event
+    const fetchEvent = async () => {
+      if (!id) return;
 
-    try {
-      const response = await axios.get(`https://apiv2.verydesi.com/event/find_event_by_id/${id}`);
-      console.log("response event", response);
-      setEvent(response?.data); // Adjust based on actual data structure
-    } catch (err) {
-      setError("Failed to load event details.");
-      console.error("Error fetching event:", err);
-    } finally {
-      setLoading(false);
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.get(
+          `https://apiv2.verydesi.com/event/find_event_by_id/${id}`
+        );
+        setEvent(response?.data); 
+      } catch (err) {
+        setError("Failed to load event details.");
+        console.error("Error fetching event:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+    fetchEvent();
+  }, [id]);
+  const currentIndex = allEvents.findIndex((event) => event._id === id);
+
+  const navigateEvent = (direction: "prev" | "next") => {
+    const newIndex =
+      direction === "prev" ? currentIndex - 1 : currentIndex + 1;
+
+    if (newIndex >= 0 && newIndex < allEvents.length) {
+      const newEventId = allEvents[newIndex]._id;
+      router.push(`/event/${newEventId}`);
     }
   };
 
-  fetchEvent();
-  
-}, [id]);
+
   return (
     <>
       <div className="max-w-[1370px] lg:max-w-[1600px]  px-4 sm:px-6 lg:px-8  mx-auto py-8 mt-[6.1rem] font-sans">
@@ -132,12 +151,16 @@ React.useEffect(() => {
                   variant="outline"
                   className="rounded-full flex items-center"
                 >
-                  <ShareButton shareLink="" />
+                                  <ShareButton
+                  shareLink={`https://verydesi.com/event/${id}`}
+                />
                   <p>Share</p>
                 </Button>
                 <div>
                   <div className="flex gap-2">
                     <button
+                      onClick={() => navigateEvent("prev")}
+                      disabled={currentIndex === 0}
                       className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 transition-colors"
                       aria-label="Previous listing"
                     >
@@ -145,6 +168,8 @@ React.useEffect(() => {
                       PREV
                     </button>
                     <button
+                      onClick={() => navigateEvent("next")}
+                      disabled={currentIndex === allEvents.length - 1}
                       // onClick={onNext}
                       className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors"
                       aria-label="Next listing"
@@ -169,14 +194,41 @@ React.useEffect(() => {
         </p>
         <div className="flex mx-auto gap-7">
           <div className="w-full">
-            <div className="flex border rounded-xl mt-[1rem]">
-              <img
-                src={
-                  "https://www.theseedcollection.com.au/assets/full/B2-01.jpg?20201208112734"
-                }
-                alt="not"
-                className="h-[20rem] w-[50rem] rounded-tl-xl rounded-bl-xl object-cover"
-              />
+            <div className="flex border rounded-xl mt-0 ">
+
+        <div className="w-[65%]">
+        <Carousel opts={{ align: "start" }} className="relative">
+          <CarouselContent>
+            {loading ? (
+              [...Array(5)].map((_, index) => (
+                <CarouselItem key={index} className="basis-full">
+                  <div className="w-full h-[20rem] bg-gray-200 animate-pulse rounded-lg"></div>
+                </CarouselItem>
+              ))
+            ) : event?.images && event.images.length > 0 ? (
+              event.images.map((imageUrl, index) => (
+                <CarouselItem key={index} className="basis-full">
+                  <img
+                    src={imageUrl}
+                    alt={`Event Image ${index + 1}`}
+                    className="w-full h-[20rem] object-cover rounded-lg"
+                  />
+                </CarouselItem>
+              ))
+            ) : (
+              <CarouselItem className="basis-full">
+                <div className="w-full h-[20rem] bg-gray-300 flex items-center justify-center rounded-lg">
+                  <p className="text-gray-500">No images available</p>
+                </div>
+              </CarouselItem>
+            )}
+          </CarouselContent>
+          <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10" />
+          <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10" />
+        </Carousel>
+      </div>
+
+
               <div className="flex gap-2 flex-col text-[1rem] ml-6 mt-4">
                 <div className="flex border-b border-gray-300 p-3 gap-2">
                   <div>
@@ -278,6 +330,7 @@ React.useEffect(() => {
                       Name
                       <p className="text-black flex text-[15px]">
                         {/* {rooms.user_name} */}
+                        {event?.hostedBy}
                       </p>
                     </p>
                   </div>
@@ -402,455 +455,7 @@ React.useEffect(() => {
               </CardContent>
             </Card>
 
-            {/* <div className="border-l pl-4 flex gap-2 flex-col mt-10">
-            <p className="text-[#d32323] font-bold text-[17px]">
-              Are You Interested?
-            </p>
-            <button
-              className="bg-[#d32323] text-white text-[16px] p-1 rounded-sm items-center w-[6rem] text-center"
-              type="button"
-            >
-              Respond
-            </button>
-            <p className="text-[#d32323] font-bold text-[17px] flex gap-3">
-              Who's in? <p className="text-black font-light">8 responses</p>
-            </p>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[2rem] h-[2rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline">
-                  Terees A.
-                </p>
-                <p className="flex gap-1 mt-1">
-                  <BsFilePerson className="text-[#f15c00]" />
-                  <p className="text-gray-500 font-bold text-[13px]">22</p>
-                  <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
-                  <p className="text-gray-500 font-bold text-[13px]">261</p>
-                  <p className="text-[#f15c00] font-bold text-[13px] ml-[0.4rem]">
-                    Elite 24
-                  </p>
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[2rem] h-[2rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline">
-                  Terees A.
-                </p>
-                <p className="flex gap-1 mt-1">
-                  <BsFilePerson className="text-[#f15c00]" />
-                  <p className="text-gray-500 font-bold text-[13px]">22</p>
-                  <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
-                  <p className="text-gray-500 font-bold text-[13px]">261</p>
-                  <p className="text-[#f15c00] font-bold text-[13px] ml-[0.4rem]">
-                    Elite 24
-                  </p>
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[2rem] h-[2rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer">
-                  Terees A.
-                </p>
-                <p className="flex gap-1 mt-1">
-                  <BsFilePerson className="text-[#f15c00]" />
-                  <p className="text-gray-500 font-bold text-[12px]">22</p>
-                  <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
-                  <p className="text-gray-500 font-bold text-[12px]">261</p>
-                  <p className="text-[#f15c00] font-bold text-[12px] ml-[0.4rem]">
-                    Elite 24
-                  </p>
-                </p>
-              </div>
-            </div>
-            <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
-              See All
-            </p>
-
-            <p className="text-[#d32323] font-bold text-[17px] flex gap-3">
-              Sounds Cool <p className="text-black font-light">5 responses</p>
-            </p>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[2rem] h-[2rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline">
-                  Terees A.
-                </p>
-                <p className="flex gap-1 mt-1">
-                  <BsFilePerson className="text-[#f15c00]" />
-                  <p className="text-gray-500 font-bold text-[13px]">22</p>
-                  <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
-                  <p className="text-gray-500 font-bold text-[13px]">261</p>
-                  <p className="text-[#f15c00] font-bold text-[13px] ml-[0.4rem]">
-                    Elite 24
-                  </p>
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[2rem] h-[2rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline">
-                  Terees A.
-                </p>
-                <p className="flex gap-1 mt-1">
-                  <BsFilePerson className="text-[#f15c00]" />
-                  <p className="text-gray-500 font-bold text-[13px]">22</p>
-                  <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
-                  <p className="text-gray-500 font-bold text-[13px]">261</p>
-                  <p className="text-[#f15c00] font-bold text-[13px] ml-[0.4rem]">
-                    Elite 24
-                  </p>
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[2rem] h-[2rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.HQorgohovSAwHh6JnfzcegHaFj?w=750&h=562&rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer">
-                  Terees A.
-                </p>
-                <p className="flex gap-1 mt-1">
-                  <BsFilePerson className="text-[#f15c00]" />
-                  <p className="text-gray-500 font-bold text-[12px]">22</p>
-                  <FaRegStar className="text-[#f15c00] ml-[0.4rem]" />
-                  <p className="text-gray-500 font-bold text-[12px]">261</p>
-                  <p className="text-[#f15c00] font-bold text-[12px] ml-[0.4rem]">
-                    Elite 24
-                  </p>
-                </p>
-              </div>
-            </div>
-            <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
-              See All
-            </p>
-            <p className="text-[#d32323] font-bold text-[17px] flex gap-3">
-              Nearby businesses
-            </p>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[4rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
-                  JORY{" "}
-                </p>
-                <div className="flex gap-1 items-center">
-                  <img
-                    className="w-[5rem] h-[2rem] rounded-md"
-                    src={
-                      "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
-                    }
-                    alt="logo"
-                  />
-                  <p className="text-gray-500 font-bold text-[12px]">
-                    327 reviews
-                  </p>
-                </div>
-                <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
-                  New American, Wine Bars
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[4rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
-                  JORY{" "}
-                </p>
-                <div className="flex gap-1 items-center">
-                  <img
-                    className="w-[5rem] h-[2rem] rounded-md"
-                    src={
-                      "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
-                    }
-                    alt="logo"
-                  />
-                  <p className="text-gray-500 font-bold text-[12px]">
-                    327 reviews
-                  </p>
-                </div>
-                <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
-                  New American, Wine Bars
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[4rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
-                  JORY{" "}
-                </p>
-                <div className="flex gap-1 items-center">
-                  <img
-                    className="w-[5rem] h-[2rem] rounded-md"
-                    src={
-                      "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
-                    }
-                    alt="logo"
-                  />
-                  <p className="text-gray-500 font-bold text-[12px]">
-                    327 reviews
-                  </p>
-                </div>
-                <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
-                  New American, Wine Bars
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[4rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
-                  JORY{" "}
-                </p>
-                <div className="flex gap-1 items-center">
-                  <img
-                    className="w-[5rem] h-[2rem] rounded-md"
-                    src={
-                      "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
-                    }
-                    alt="logo"
-                  />
-                  <p className="text-gray-500 font-bold text-[12px]">
-                    327 reviews
-                  </p>
-                </div>
-                <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
-                  New American, Wine Bars
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[4rem] rounded-md"
-                src={
-                  "https://th.bing.com/th/id/OIP.ZZsn6lD6PCjocBzx1tuu1QHaEo?rs=1&pid=ImgDetMain"
-                }
-                alt="logo"
-              />
-              <div className="">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer ml-1">
-                  JORY{" "}
-                </p>
-                <div className="flex gap-1 items-center">
-                  <img
-                    className="w-[5rem] h-[2rem] rounded-md"
-                    src={
-                      "https://terrywhite.com/wp-content/uploads/2009/12/5starsbig.png"
-                    }
-                    alt="logo"
-                  />
-                  <p className="text-gray-500 font-bold text-[12px]">
-                    327 reviews
-                  </p>
-                </div>
-                <p className="text-[#0073bb] text-[12px] ml-[0.4rem] flex gap-2">
-                  New American, Wine Bars
-                </p>
-              </div>
-            </div>
-            <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
-              More nearby{" "}
-            </p>
-            <p className="text-[#d32323] font-bold text-[17px] flex gap-3">
-              Other events this week{" "}
-            </p>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[3.4rem] rounded-md"
-                src={
-                  "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
-                }
-                alt="logo"
-              />
-              <div className=" ml-[0.4rem]">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
-                  Area 51 Encounter{" "}
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    Wednesday, Jul 3,
-                  </p>
-                </p>
-                <div className="flex gap-1 items-center">
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    {" "}
-                    11:00 am – Saturday, Jul 27, 7:00 pm
-                  </p>
-                </div>
-                <p className="text-gray-400 text-[12px] flex gap-2">
-                  4 are interested{" "}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[3.4rem] rounded-md"
-                src={
-                  "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
-                }
-                alt="logo"
-              />
-              <div className=" ml-[0.4rem]">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
-                  Area 51 Encounter{" "}
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    Wednesday, Jul 3,
-                  </p>
-                </p>
-                <div className="flex gap-1 items-center">
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    {" "}
-                    11:00 am – Saturday, Jul 27, 7:00 pm
-                  </p>
-                </div>
-                <p className="text-gray-400 text-[12px] flex gap-2">
-                  4 are interested{" "}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[3.4rem] rounded-md"
-                src={
-                  "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
-                }
-                alt="logo"
-              />
-              <div className=" ml-[0.4rem]">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
-                  Area 51 Encounter{" "}
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    Wednesday, Jul 3,
-                  </p>
-                </p>
-                <div className="flex gap-1 items-center">
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    {" "}
-                    11:00 am – Saturday, Jul 27, 7:00 pm
-                  </p>
-                </div>
-                <p className="text-gray-400 text-[12px] flex gap-2">
-                  4 are interested{" "}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[3.4rem] rounded-md"
-                src={
-                  "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
-                }
-                alt="logo"
-              />
-              <div className=" ml-[0.4rem]">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
-                  Area 51 Encounter{" "}
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    Wednesday, Jul 3,
-                  </p>
-                </p>
-                <div className="flex gap-1 items-center">
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    {" "}
-                    11:00 am – Saturday, Jul 27, 7:00 pm
-                  </p>
-                </div>
-                <p className="text-gray-400 text-[12px] flex gap-2">
-                  4 are interested{" "}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <img
-                className="w-[3.4rem] h-[3.4rem] rounded-md"
-                src={
-                  "https://on-productions.co.uk/wp-content/uploads/On_Event_Production_provide_full_creative_production_for_Blue_Square_Event3.jpg"
-                }
-                alt="logo"
-              />
-              <div className=" ml-[0.4rem]">
-                <p className="text-[#0073bb] font-bold hover:underline cursor-pointer flex items-center gap-1">
-                  Area 51 Encounter{" "}
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    Wednesday, Jul 3,
-                  </p>
-                </p>
-                <div className="flex gap-1 items-center">
-                  <p className="text-black font-normal text-[13px] mt-[0.2rem]">
-                    {" "}
-                    11:00 am – Saturday, Jul 27, 7:00 pm
-                  </p>
-                </div>
-                <p className="text-gray-400 text-[12px] flex gap-2">
-                  4 are interested{" "}
-                </p>
-              </div>
-            </div>
-            <p className="text-[12px] text-[#0073bb] ml-1 hover:underline cursor-pointer">
-              More events{" "}
-            </p>
-          </div> */}
+            
           </div>
         </div>
       </div>

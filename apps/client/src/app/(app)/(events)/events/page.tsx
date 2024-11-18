@@ -21,6 +21,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import axios from "axios";
+
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
 export default function Component() {
   const [showAll, setShowAll] = useState(false);
