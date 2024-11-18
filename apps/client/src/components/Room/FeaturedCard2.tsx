@@ -158,7 +158,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               }}
             >
               <Heart
-                className={`absolute right-3 bottom-9 h-6 w-6 ${wishlistStatus ? "stroke-red-500 fill-red-500 hover:fill-white hover:stroke-black " : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
+                className={`absolute right-3 bottom-4 h-6 w-6 ${wishlistStatus ? "stroke-red-500 fill-red-500 hover:fill-white hover:stroke-black " : "hover:stroke-red-500 hover:fill-red-500 cursor-pointer transition-colors duration-200 ease-in-out"}`}
               />
             </button>
           ) : (

@@ -37,7 +37,12 @@ const Page = () => {
   const { data: session } = useSession();
   const { openLogin } = useloginstore();
   const { updateCity, setVerified, setname, setUserImgae } = useAuthStore();
-
+  // console.log(localStorage.getItem("auth-storage"));
+  // const storagecity = localStorage.getItem("auth-storage");
+  // if (storagecity) {
+  //   const parsedstroge = JSON.parse(storagecity);
+  //   console.log("city", parsedstroge.state.currentCity);
+  // }
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;

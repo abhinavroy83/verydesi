@@ -1,4 +1,3 @@
-"use client";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -8,9 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Open_Sans } from "next/font/google";
 import Head from "next/head";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import useAuthStore from "@/store/useAuthStore";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import CitySelector from "@/components/Area/city-selector";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,43 +30,26 @@ const openSans = Open_Sans({
 const FAVICON_URL =
   "https://res.cloudinary.com/druohnmyv/image/upload/v1729843667/lume1vaskd4swknuhexd.png";
 
-// export const metadata: Metadata = {
-//   title: "Verydesi",
-//   description:
-//     "VeryDesi helps you find rooms and roommates in the USA with ease. Discover affordable options in your area now.",
-//   keywords: "rooms, roommates, USA, affordable housing, room rentals",
-//   icons: {
-//     icon: [
-//       { url: `${FAVICON_URL}?v=1`, sizes: "32x32", type: "image/png" },
-//       { url: `${FAVICON_URL}?v=1`, sizes: "16x16", type: "image/png" },
-//       { url: `${FAVICON_URL}?v=1`, sizes: "any" },
-//     ],
-//     apple: { url: `${FAVICON_URL}?v=1`, sizes: "180x180", type: "image/png" },
-//   },
-// };
+export const metadata: Metadata = {
+  title: "Verydesi",
+  description:
+    "VeryDesi helps you find rooms and roommates in the USA with ease. Discover affordable options in your area now.",
+  keywords: "rooms, roommates, USA, affordable housing, room rentals",
+  icons: {
+    icon: [
+      { url: `${FAVICON_URL}?v=1`, sizes: "32x32", type: "image/png" },
+      { url: `${FAVICON_URL}?v=1`, sizes: "16x16", type: "image/png" },
+      { url: `${FAVICON_URL}?v=1`, sizes: "any" },
+    ],
+    apple: { url: `${FAVICON_URL}?v=1`, sizes: "180x180", type: "image/png" },
+  },
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { currentCity, status } = useAuthStore();
-  const router = useRouter();
-  console.log("currentCity", currentCity);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const searchParams = new URLSearchParams(window.location.search);
-      if (!searchParams.has("area")) {
-        if (currentCity) {
-          const area = currentCity;
-          searchParams.set("area", area);
-          const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-          console.log(newUrl);
-          router.replace(newUrl);
-        }
-      }
-    }
-  }, [currentCity, router]);
   return (
     <html lang="en">
       <Head>
