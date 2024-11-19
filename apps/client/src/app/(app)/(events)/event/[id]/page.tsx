@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState,  } from "react";
+import React, { useCallback, useState } from "react";
 
 import { useParams, useRouter } from "next/navigation";
 
@@ -49,9 +49,8 @@ import axios from "axios";
 import useAuthStore from "@/store/useAuthStore";
 import { Event } from "@myrepo/types";
 
-
 function Events() {
-  const {id} = useParams();
+  const { id } = useParams();
 
   const [event, setEvent] = useState<Event | null>(null);
   const [allEvents, setAllEvents] = useState<Event[]>([]);
@@ -62,13 +61,13 @@ function Events() {
 
   React.useEffect(() => {
     // Fetch all events
-    const fetchEvents = async () => {
+    const fetchallEvents = async () => {
       try {
         const city = currentCity || "Portland";
         const response = await axios.get(
-            `https://apiv2.verydesi.com/event/getEventByArea/${city}`
+          `https://apiv2.verydesi.com/event/getEventByArea/${city}`
         );
-        setAllEvents(response.data || []); 
+        setAllEvents(response.data || []);
       } catch (err) {
         console.error("Error fetching events:", err);
       }
@@ -85,7 +84,7 @@ function Events() {
         const response = await axios.get(
           `https://apiv2.verydesi.com/event/find_event_by_id/${id}`
         );
-        setEvent(response?.data); 
+        setEvent(response?.data);
       } catch (err) {
         setError("Failed to load event details.");
         console.error("Error fetching event:", err);
@@ -94,21 +93,19 @@ function Events() {
       }
     };
 
-    fetchEvents();
+    fetchallEvents();
     fetchEvent();
   }, [id]);
   const currentIndex = allEvents.findIndex((event) => event._id === id);
 
   const navigateEvent = (direction: "prev" | "next") => {
-    const newIndex =
-      direction === "prev" ? currentIndex - 1 : currentIndex + 1;
+    const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1;
 
     if (newIndex >= 0 && newIndex < allEvents.length) {
       const newEventId = allEvents[newIndex]._id;
       router.push(`/event/${newEventId}`);
     }
   };
-
 
   return (
     <>
@@ -151,9 +148,7 @@ function Events() {
                   variant="outline"
                   className="rounded-full flex items-center"
                 >
-                                  <ShareButton
-                  shareLink={`https://verydesi.com/event/${id}`}
-                />
+                  <ShareButton shareLink={`https://verydesi.com/event/${id}`} />
                   <p>Share</p>
                 </Button>
                 <div>
@@ -187,7 +182,9 @@ function Events() {
           {event?.eventTitle}
         </h1>
         <div className="flex items-center gap-2 text-xl font-bold">
-          <p className="text-gray-600">{event?.city}, {event?.state}</p>
+          <p className="text-gray-600">
+            {event?.city}, {event?.state}
+          </p>
         </div>
         <p className="text-[1rem] text-[#0073bb] hover:underline cursor-pointer">
           Other{" "}
@@ -195,39 +192,37 @@ function Events() {
         <div className="flex mx-auto gap-7">
           <div className="w-full">
             <div className="flex border rounded-xl mt-0 ">
-
-        <div className="w-[65%]">
-        <Carousel opts={{ align: "start" }} className="relative">
-          <CarouselContent>
-            {loading ? (
-              [...Array(5)].map((_, index) => (
-                <CarouselItem key={index} className="basis-full">
-                  <div className="w-full h-[20rem] bg-gray-200 animate-pulse rounded-lg"></div>
-                </CarouselItem>
-              ))
-            ) : event?.images && event.images.length > 0 ? (
-              event.images.map((imageUrl, index) => (
-                <CarouselItem key={index} className="basis-full">
-                  <img
-                    src={imageUrl}
-                    alt={`Event Image ${index + 1}`}
-                    className="w-full h-[20rem] object-cover rounded-lg"
-                  />
-                </CarouselItem>
-              ))
-            ) : (
-              <CarouselItem className="basis-full">
-                <div className="w-full h-[20rem] bg-gray-300 flex items-center justify-center rounded-lg">
-                  <p className="text-gray-500">No images available</p>
-                </div>
-              </CarouselItem>
-            )}
-          </CarouselContent>
-          <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10" />
-          <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10" />
-        </Carousel>
-      </div>
-
+              <div className="w-[65%]">
+                <Carousel opts={{ align: "start" }} className="relative">
+                  <CarouselContent>
+                    {loading ? (
+                      [...Array(5)].map((_, index) => (
+                        <CarouselItem key={index} className="basis-full">
+                          <div className="w-full h-[20rem] bg-gray-200 animate-pulse rounded-lg"></div>
+                        </CarouselItem>
+                      ))
+                    ) : event?.images && event.images.length > 0 ? (
+                      event.images.map((imageUrl, index) => (
+                        <CarouselItem key={index} className="basis-full">
+                          <img
+                            src={imageUrl}
+                            alt={`Event Image ${index + 1}`}
+                            className="w-full h-[20rem] object-cover rounded-lg"
+                          />
+                        </CarouselItem>
+                      ))
+                    ) : (
+                      <CarouselItem className="basis-full">
+                        <div className="w-full h-[20rem] bg-gray-300 flex items-center justify-center rounded-lg">
+                          <p className="text-gray-500">No images available</p>
+                        </div>
+                      </CarouselItem>
+                    )}
+                  </CarouselContent>
+                  <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10" />
+                  <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10" />
+                </Carousel>
+              </div>
 
               <div className="flex gap-2 flex-col text-[1rem] ml-6 mt-4">
                 <div className="flex border-b border-gray-300 p-3 gap-2">
@@ -239,7 +234,9 @@ function Events() {
                   <div>
                     <p> {event?.venueName}</p>
                     <p>{event?.address}</p>
-                    <p>{event?.city}, {event?.state} {event?.zipCode}</p>
+                    <p>
+                      {event?.city}, {event?.state} {event?.zipCode}
+                    </p>
                   </div>
                 </div>
                 <div className="flex border-b border-gray-300 p-3 gap-2">
@@ -250,10 +247,14 @@ function Events() {
                   </div>
                   <div>
                     <p className="flex gap-2">
-                      <p className="font-bold">From:</p>  {new Date(event?.startDate || "").toLocaleDateString()} at {event?.startTime || "N/A"}
+                      <p className="font-bold">From:</p>{" "}
+                      {new Date(event?.startDate || "").toLocaleDateString()} at{" "}
+                      {event?.startTime || "N/A"}
                     </p>
                     <p className="flex gap-2">
-                      <p className="font-bold">To:</p> {new Date(event?.endDate || "").toLocaleDateString()} at {event?.endTime || "N/A"}
+                      <p className="font-bold">To:</p>{" "}
+                      {new Date(event?.endDate || "").toLocaleDateString()} at{" "}
+                      {event?.endTime || "N/A"}
                     </p>
                   </div>
                 </div>
@@ -268,10 +269,7 @@ function Events() {
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-gray-900 text-xl">What/Why:</p>
                 </div>
-                <p className="text-gray-700">
-                  {" "}
-                  {event?.description}
-                </p>
+                <p className="text-gray-700"> {event?.description}</p>
               </CardContent>
             </Card>
             <div className="mt-[1rem] flex gap-3 flex-col">
@@ -454,8 +452,6 @@ function Events() {
                 </div>
               </CardContent>
             </Card>
-
-            
           </div>
         </div>
       </div>
@@ -475,4 +471,3 @@ export default Events;
 function useEffect(arg0: () => void, arg1: string[]) {
   throw new Error("Function not implemented.");
 }
-
