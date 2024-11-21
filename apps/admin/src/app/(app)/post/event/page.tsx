@@ -32,12 +32,14 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Dashboardlayout from "@/components/Layout/Dashboardlayout";
 import { MdMeetingRoom } from "react-icons/md";
+import { Event } from "@myrepo/types";
+import { useRouter } from "next/navigation";
 
 function page() {
-  const [eventdata, seteventdata] = useState([]);
+  const [eventdata, seteventdata] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const router = useRouter();
   const itemsPerPage = 10;
 
   const fetchrooms = async () => {
@@ -126,6 +128,13 @@ function page() {
               <Button variant="outline">Sort Ascending</Button>
               <Button variant="outline">Sort Descending</Button>
             </div>
+            <Button
+              onClick={() => {
+                router.push("/add-post/post-event");
+              }}
+            >
+              Post Event
+            </Button>
           </div>
         </nav>
         <div className="overflow-x-auto">
@@ -133,9 +142,8 @@ function page() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[400px] py-2 cursor-pointer">
-                  Room{" "}
+                  Event{" "}
                 </TableHead>
-                <TableHead className="py-2 cursor-pointer">Email </TableHead>
                 <TableHead className="py-2 cursor-pointer">
                   Postingcity
                 </TableHead>
@@ -157,13 +165,14 @@ function page() {
                 ))
               ) : eventdata.length > 0 ? (
                 paginatedFavorites.map((user) => (
-                  <TableRow key={user?.email}>
-                    <TableCell className="py-2">{user.Title}</TableCell>
-                    <TableCell className="py-2">{user.email}</TableCell>
-                    <TableCell className="py-2">{user.postingincity}</TableCell>
+                  <TableRow key={user?._id}>
+                    <TableCell className="py-2">{user.eventTitle}</TableCell>
+                    <TableCell className="py-2">
+                      {user.eventpostingcity}
+                    </TableCell>
                     <TableCell className="py-2">{user.city}</TableCell>
                     <TableCell className="py-2">
-                      {new Date(user.postedon).toLocaleDateString()}
+                      {new Date(user.postedOn).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="py-2">{user.address}</TableCell>
 
@@ -189,7 +198,7 @@ function page() {
             </TableBody>
           </Table>
         </div>
-        {!loading && RoomData.length > 0 && (
+        {!loading && eventdata.length > 0 && (
           <div className="mt-4 flex justify-center">
             <Pagination>
               <PaginationContent>

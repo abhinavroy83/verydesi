@@ -26,13 +26,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProtectedRoute from "@/context/ProtectedRoute";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [userData, setUserData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
-
+  const router = useRouter();
   const fetchusers = async () => {
     try {
       const res = await axios.get(
@@ -143,6 +144,9 @@ export default function Page() {
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0"
+                          onClick={() => {
+                            router.push("/Basic-user/add-user");
+                          }}
                         >
                           <Edit className="h-4 w-4 text-blue-500" />
                         </Button>

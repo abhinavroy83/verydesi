@@ -31,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [RoomData, setRoomData] = useState<RoomInterface[]>([]);
@@ -44,7 +45,7 @@ export default function Page() {
   } | null>(null);
 
   const itemsPerPage = 10;
-
+  const router = useRouter();
   const fetchrooms = async () => {
     try {
       const res = await axios.get(
@@ -175,6 +176,13 @@ export default function Page() {
                 Sort Ascending
               </Button>
               <Button variant="outline">Sort Descending</Button>
+              <Button
+                onClick={() => {
+                  router.push("/add-post/post-event");
+                }}
+              >
+                Post Event
+              </Button>
             </div>
           </div>
         </nav>
