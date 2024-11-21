@@ -181,7 +181,7 @@ export default function Page() {
                   router.push("/add-post/post-event");
                 }}
               >
-                Post Event
+                Post Room
               </Button>
             </div>
           </div>
