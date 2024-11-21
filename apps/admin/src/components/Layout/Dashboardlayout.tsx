@@ -35,7 +35,6 @@ import Navbar from "../Navbar";
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, to: "/" },
   { name: "Basic Users", icon: Users, to: "/Basic-user" },
-  { name: "Admin Users", icon: Users, to: "/All-rooms" },
   { name: "Pending Requests", icon: Mail, to: "/admin/getapproval" },
   { name: "Area", icon: MapPin, to: "/admin/allarea" },
   { name: "Customer Message", icon: MessageSquare, to: "/admin/getHelp" },
@@ -52,9 +51,7 @@ export default function DashboardLayout({
 
   return (
     <div className="flex flex-col h-screen">
-      {/* navbar */}
       <Navbar />
-
       <div className="flex flex-1 overflow-hidden">
         <aside className="w-64 overflow-y-auto bg-white dark:bg-gray-800 border-r">
           <nav className="mt-5 px-2">

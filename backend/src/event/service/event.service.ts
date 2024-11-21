@@ -71,6 +71,19 @@ export class EventService {
     }
   }
 
+  async findallevent() {
+    try {
+      const allevent = await this.eventmodel.find();
+      if (allevent.length <= 0) {
+        throw new NotFoundException('there is no event');
+      }
+
+      return allevent;
+    } catch (error) {
+      throw new InternalServerErrorException('error while finding all event ');
+    }
+  }
+
   async geteventpostedbyuser(userId: string) {
     const cacheKey = 'userId: ${userId}';
 

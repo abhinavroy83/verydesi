@@ -42,4 +42,9 @@ export class EventController {
     const userId = req.user.userId;
     return this.eventservice.geteventpostedbyuser(userId);
   }
+
+  @Get('find-all-event')
+  getallevent() {
+    return this.eventservice.findallevent();
+  }
 }
