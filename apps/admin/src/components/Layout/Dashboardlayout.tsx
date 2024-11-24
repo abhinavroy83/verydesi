@@ -35,6 +35,7 @@ import Navbar from "../Navbar";
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, to: "/" },
   { name: "Basic Users", icon: Users, to: "/Basic-user" },
+  { name: "Admins Users", icon: Users, to: "/Admin-user" },
   { name: "Pending Requests", icon: Mail, to: "/admin/getapproval" },
   { name: "Area", icon: MapPin, to: "/admin/allarea" },
   { name: "Customer Message", icon: MessageSquare, to: "/admin/getHelp" },
@@ -50,7 +51,7 @@ export default function DashboardLayout({
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen ">
       <Navbar />
       <div className="flex flex-1 overflow-hidden">
         <aside className="w-64 overflow-y-auto bg-white dark:bg-gray-800 border-r">
@@ -109,6 +110,16 @@ export default function DashboardLayout({
                 >
                   <Briefcase className="mr-2 h-5 w-5" />
                   Event
+                </Button>
+                <Button
+                  onClick={() => {
+                    router.push("/post/business");
+                  }}
+                  variant="ghost"
+                  className="w-full justify-start mb-1"
+                >
+                  <Briefcase className="mr-2 h-5 w-5" />
+                  Business
                 </Button>
               </motion.div>
             )}

@@ -15,9 +15,13 @@ import DashboardLayout from "@/components/Layout/Dashboardlayout";
 import ProtectedRoute from "@/context/ProtectedRoute";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { date } from "zod";
 
 export default function Dashboard() {
   const [duplicateroomdata, setduplicateroomdata] = useState([]);
+  const { data: session } = useSession();
+  console.log(session);
   const fetchduplicateroom = async () => {
     try {
       const res = await axios.get("https://apiv2.verydesi.com/room/duplicates");
@@ -139,7 +143,9 @@ export default function Dashboard() {
                   <CardHeader>
                     <CardTitle className="flex items-center text-2xl font-bold text-red-500 text-primary">
                       <Home className="mr-2 h-6 w-6 text-red-600" />
-                      <span className=" text-red-600">{duplicateroomdata.length} Repeating Rooms</span>
+                      <span className=" text-red-600">
+                        {duplicateroomdata.length} Repeating Rooms
+                      </span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>

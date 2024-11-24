@@ -178,7 +178,7 @@ export default function Page() {
               <Button variant="outline">Sort Descending</Button>
               <Button
                 onClick={() => {
-                  router.push("/add-post/post-event");
+                  router.push("/add-post/post-room");
                 }}
               >
                 Post Room
