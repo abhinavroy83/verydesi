@@ -118,11 +118,11 @@ export class ForgotPasswordService {
   //send email to reset password
   async sendemailverification(email: string, token: string) {
     const transport = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      host: 'live.smtp.mailtrap.io',
+      port: 587,
       auth: {
-        user: 'f8220dd13ab2b9',
-        pass: '64e618e922d9bd',
+        user: 'smtp@mailtrap.io',
+        pass: 'fb6024e6b348ed1e4b070b0e231d0d4f',
       },
     });
 
@@ -162,11 +162,11 @@ export class ForgotPasswordService {
   }
   async sendPasswordChangeConfirmation(email: string) {
     const transport = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      host: 'live.smtp.mailtrap.io',
+      port: 587,
       auth: {
-        user: 'f8220dd13ab2b9',
-        pass: '64e618e922d9bd',
+        user: 'smtp@mailtrap.io',
+        pass: 'fb6024e6b348ed1e4b070b0e231d0d4f',
       },
     });
 

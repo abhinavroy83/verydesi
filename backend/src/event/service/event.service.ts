@@ -2,6 +2,7 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Event } from '../schemas/event-schema';
 import { Model } from 'mongoose';
@@ -23,7 +24,7 @@ export class EventService {
     try {
       const eventdata = {
         ...createeventdto,
-        userId: userId,
+        UserId: userId,
       };
 
       const newEvent = new this.eventmodel(eventdata);
@@ -51,5 +52,22 @@ export class EventService {
       );
     }
   }
-  
+
+  async SingleEvent(_id: string) {
+    const cacheId = `event:${_id}`;
+
+    try {
+      let event = await this.cacheManager.get<Event>(cacheId);
+      if (!event) {
+        event = await this.eventmodel.findById(_id);
+        if (!event) {
+          throw new NotFoundException('Event not found');
+        }
+        await this.cacheManager.set(cacheId, event);
+      }
+      return event;
+    } catch (error) {
+      throw new InternalServerErrorException('Error fetching event');
+    }
+  }
 }

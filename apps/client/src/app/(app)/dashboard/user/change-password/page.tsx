@@ -110,7 +110,7 @@ export default function Component() {
           className="flex mb-4 text-sm text-gray-500 px-4"
           aria-label="Breadcrumb"
         >
-          <ol className="inline-flex items-center space-x-1 md:space-x-3 mt-4">
+          <ol className="inline-flex items-center space-x-[-1px] mt-4">
             <li className="inline-flex items-center">
               <Link
                 href="/dashboard"

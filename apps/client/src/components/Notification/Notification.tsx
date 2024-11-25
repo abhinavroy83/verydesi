@@ -63,7 +63,7 @@ export default function Component(
   }, [currentCity]);
 
   return isOpen ? (
-    <div className="w-full lg:max-w-md max-w-sm mx-auto bg-white shadow-lg overflow-hidden font-sans lg:mt-[22rem]  mt-[22rem] ">
+    <div className="w-full lg:max-w-md max-w-sm mx-auto bg-white shadow-lg overflow-hidden font-sans lg:mt-[12rem]  mt-[22rem] ">
       <div className="bg-gray-200 text-black p-4 flex justify-between items-center">
         <h2 className="lg:text-2xl text-xl font-bold text-black flex items-center">
           <Bell className="mr-2" />

@@ -10,7 +10,11 @@ export default function Footer() {
   return (
     <div>
       <div className="lg:mt-9 mt-6 w-full font-sans">
-        {/* <div
+        <Script
+          src="https://www.dpbolvw.net/placeholder-55689450?target=_blank&mouseover=N"
+          strategy="lazyOnload"
+        />
+        <div
           onClick={() => {
             window.open("https://redletterweb.com/", "_blank");
           }}
@@ -23,13 +27,11 @@ export default function Footer() {
               className="object-cover"
             />
           </div>
-        </div> */}
+        </div>
 
         <div className=" mx-auto mt-8">
           <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
             <p>hi</p>
-            {/* <Link to={"/"} className="bg-cover bg-center flex">
-          </div> */}
           </div>
           <div className=" w-full bg-[#131A22] border-t-7 border-[#232f3e]">
             <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto bg-[#131A22] ">

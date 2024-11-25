@@ -7,7 +7,7 @@ const useGoogleAutocomplete = () => {
   }>({});
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
     null
-  ); 
+  );
 
   useEffect(() => {
     const loadGoogleMapsScript = () => {

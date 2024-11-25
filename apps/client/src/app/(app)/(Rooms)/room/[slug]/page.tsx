@@ -80,6 +80,7 @@ export default function RoomDetails({
   const router = useRouter();
   const { slug } = useParams<{ slug: string }>();
   const id = slug.split("-").pop();
+  // console.log("rooms id", id)
   // const id = searchParams.id;
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
@@ -288,13 +289,13 @@ export default function RoomDetails({
 
     fetchWishStatus();
   }, [id]);
+
   const formatUrl = () => {
     const formattedTitle = roomData?.Title.toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
     return `${formattedTitle}-${roomData?._id}`;
   };
-
   if (loading) {
     return (
       <div>
@@ -310,10 +311,10 @@ export default function RoomDetails({
     <>
       <div className="max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 pb-0 mx-auto py-8 mt-[6rem] font-sans">
         <div className="flex flex-col lg:flex-row space-x-2 w-full justify-between">
-          <div className="">
+          <div className="flex gap-0">
             <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
+              <BreadcrumbList className="flex items-center space-x-[-7px]">
+                <BreadcrumbItem className="">
                   <BreadcrumbLink
                     href="/"
                     className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
@@ -330,7 +331,7 @@ export default function RoomDetails({
                     href="/rooms"
                     className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
                   >
-                    <Hotel className="w-4 h-4 mr-2" />
+                    <Hotel className="w-4 h-6 mr-2" />
                     <span className="font-medium">Rooms</span>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
@@ -378,7 +379,7 @@ export default function RoomDetails({
                 className="rounded-full flex items-center"
               >
                 <ShareButton
-                  shareLink={`https://verydesi.com/room/${formatUrl}}`}
+                  shareLink={`https://verydesi.com/room/${formatUrl()}`}
                 />
                 <p>Share</p>
               </Button>
@@ -430,7 +431,7 @@ export default function RoomDetails({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-2">
             <div className="flex lg:flex-row flex-col lg:items-center gap-2 text-xl font-bold text-gray-600">
-              <p className="text-gray-600">{roomData?.postingincity}, OR |</p>
+              <p className="text-gray-600">{roomData?.city}, OR |</p>
               <h1 className="text-xl font-bold text-gray-600 whitespace-nowrap">
                 Posted By: {roomData?.user_name}{" "}
               </h1>

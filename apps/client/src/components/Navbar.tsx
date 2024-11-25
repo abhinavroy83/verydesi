@@ -50,20 +50,20 @@ export default function Navbar() {
   const [IsNotificationOpen, setIsNotificationOpen] = useState(false);
   const router = useRouter();
   const { cartcount } = useCartStore();
-  const { firstname, userimage } = useAuthStore();
+  const { firstname, userimage, currentCity } = useAuthStore();
   const { width } = useScreenResolution();
   useEffect(() => {
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-          "Portland"
+          currentCity || "Portland"
         )}&appid=5e414d6a2d51b65b62d9b463859ae456`
       )
       .then((res) => {
         setWeatherData(res.data);
       })
       .catch((error) => console.log("Error during fetcing whether", error));
-  }, []);
+  }, [currentCity]);
 
   const convertKelvinToCelsius = (kelvin: any) => {
     return kelvin - 273.15;
