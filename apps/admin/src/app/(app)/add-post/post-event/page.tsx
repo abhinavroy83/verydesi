@@ -58,7 +58,6 @@ import {
 import { EventformData, EventformSchema } from "@/schema";
 import { useCityData } from "@/hooks/use-city-hooks";
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import DashboardLayout from "@/components/Layout/Dashboardlayout";
 
 const languages = [
@@ -104,11 +103,6 @@ export default function EventForm() {
     useState<google.maps.LatLngLiteral | null>(null);
   const { setValue } = useForm();
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyDvMKQoLUgFGa6RUe91iG3NwcOe6ljj4vw",
-  });
-
   const form = useForm<z.infer<typeof EventformSchema>>({
     resolver: zodResolver(EventformSchema),
     defaultValues: {
@@ -121,7 +115,6 @@ export default function EventForm() {
       timeZone: "",
       repeatEvent: "",
       venueName: "",
-      address: "",
       city: "",
       state: "",
       zipCode: "",
@@ -198,7 +191,7 @@ export default function EventForm() {
   };
   const sections = [
     { id: "basic-info", label: "Basic Information" },
-    { id: "Addrs", label: "Address" },
+    { id: "Addrs", label: "Add" },
     { id: "datetime", label: "Date and time" },
     { id: "availability", label: "Category & Language" },
     { id: "Artist", label: "Organizer & Artist details" },
@@ -246,9 +239,7 @@ export default function EventForm() {
       form.getValues("images").filter((_, i) => i !== index)
     );
   };
-  if (isLoading) {
-    return <div>Loading cities...</div>;
-  }
+
   return (
     <DashboardLayout>
       <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 font-sans">
@@ -367,26 +358,7 @@ export default function EventForm() {
                               </FormItem>
                             )}
                           />
-                          <FormField
-                            control={form.control}
-                            name="address"
-                            render={({ field }) => (
-                              <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                                <FormLabel className="md:w-1/4 text-md font-medium">
-                                  Physical Address
-                                </FormLabel>
-                                <FormControl>
-                                  <Input
-                                    type="text"
-                                    id="address"
-                                    placeholder="Enter business address"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+
                           <FormField
                             control={form.control}
                             name="eventType"
@@ -440,6 +412,24 @@ export default function EventForm() {
                         <Card>
                           <CardContent>
                             <div className="grid grid-cols-2 gap-4 py-2">
+                              <FormField
+                                control={form.control}
+                                name="address"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Physical Address</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        type="text"
+                                        id="address"
+                                        placeholder="Enter business address"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
                               {[
                                 {
                                   name: "venueName",

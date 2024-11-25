@@ -44,7 +44,7 @@ export const EventformSchema = z.object({
     message: "Event type is required.",
   }),
   virtualurl: z.string().optional(),
-  address: z.string().min(1, { message: "Address is required" }),
+  address: z.string().min(1, "Address is required"),
   city: z.string().optional(),
   state: z.string().optional(),
   zipCode: z.string().optional(),
