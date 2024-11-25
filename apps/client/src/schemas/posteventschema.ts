@@ -35,8 +35,9 @@ export const EventformSchema = z.object({
       message: "Description must be at least 10 characters.",
     })
     .max(500, {
-      message: "Description must not be longer than 30 characters.",
+      message: "Description must not be longer than 500 characters.",
     }),
+
   venueName: z.string().min(1, {
     message: "Venue name is required.",
   }),

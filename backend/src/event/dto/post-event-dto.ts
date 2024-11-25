@@ -120,4 +120,9 @@ export class EventFormDTO {
   @ArrayMaxSize(5, { message: 'You can upload a maximum of 5 images' })
   @IsString({ each: true })
   images: string[];
+
+  @IsNotEmpty()
+  @IsArray()
+  @Type(() => Number)
+  coordinates: number[];
 }

@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Clock,
   Home,
+  Loader2,
   MapPin,
   Repeat,
   Video,
@@ -58,7 +59,9 @@ import {
 import { EventformData, EventformSchema } from "@/schemas";
 import { useCityData } from "@/hooks/use-city-hooks";
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 const languages = [
   { name: "Hindi", code: "hi" },
@@ -95,18 +98,11 @@ export default function EventForm() {
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [eventType, setEventType] = useState<string | undefined>();
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<File[]>([]);
+  const [imageurl, setimageurls] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { addressComponents, location } = useGoogleAutocomplete();
-  const [mapCenter, setMapCenter] = useState({ lat: 40.7128, lng: -74.006 });
-  const [markerPosition, setMarkerPosition] =
-    useState<google.maps.LatLngLiteral | null>(null);
-  const { setValue } = useForm();
-
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyDvMKQoLUgFGa6RUe91iG3NwcOe6ljj4vw",
-  });
 
   const form = useForm<z.infer<typeof EventformSchema>>({
     resolver: zodResolver(EventformSchema),
@@ -142,23 +138,6 @@ export default function EventForm() {
     name: "artists",
   });
 
-  // useEffect(() => {
-  //   if (location) {
-  //     setMapCenter(location);
-  //     setMarkerPosition(location);
-  //   }
-  // }, [location]);
-
-  // const onMapClick = (e: google.maps.MapMouseEvent) => {
-  //   if (e.latLng) {
-  //     const newPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
-  //     setMarkerPosition(newPosition);
-  //     // You might want to update the form with these new coordinates
-  //     setValue("latitude", newPosition.lat);
-  //     setValue("longitude", newPosition.lng);
-  //   }
-  // };
-
   const { cities, isLoading, error } = useCityData();
 
   useEffect(() => {
@@ -167,24 +146,13 @@ export default function EventForm() {
         "address",
         `${addressComponents.street_number} ${addressComponents.street}`
       );
+      form.setValue("city", addressComponents.city);
+      form.setValue("state", addressComponents.state);
+      form.setValue("zipCode", addressComponents.zipCode);
+      form.setValue("country", addressComponents.country);
     }
   }, [addressComponents, form]);
 
-  const onSubmit = async (data: z.infer<typeof EventformSchema>) => {
-    console.log(data);
-    setIsSubmitting(true);
-    try {
-      console.log(data);
-      // Here you would typically send the data to your backend
-      // await sendDataToBackend(data)
-      alert("Form submitted successfully!");
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred while submitting the form.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
   const scrollToSection = (sectionId: string, offset = 130) => {
     const section = sectionRefs.current[sectionId];
     if (section) {
@@ -225,26 +193,93 @@ export default function EventForm() {
   //upload image
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const newImages = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      setImages((prevImages) => [...prevImages, ...newImages].slice(0, 5));
-      form.setValue(
-        "images",
-        [...form.getValues("images"), ...newImages].slice(0, 5)
-      );
+    const files = Array.from(e.target.files || []);
+    if (images.length + files.length > 5) {
+      alert("You can only upload up to 5 images");
+      return;
     }
+    setImages((prevImages) => {
+      const updatefiles = [...prevImages, ...files];
+      return updatefiles;
+    });
   };
 
   const removeImage = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
-    form.setValue(
-      "images",
-      form.getValues("images").filter((_, i) => i !== index)
-    );
+    setimageurls((prevUrls) => prevUrls.filter((_, i) => i !== index));
   };
+
+  const uploadtos3 = async (updatefiles: File[]) => {
+    setIsUploading(true);
+    try {
+      const data = new FormData();
+      updatefiles.forEach((file) => {
+        data.append("my_files", file);
+      });
+      const res = await axios.post(
+        "https://apiv2.verydesi.com/img/upload",
+        data
+      );
+      console.log(res.data.urls);
+      setimageurls(res.data.urls);
+    } catch (error) {
+      console.error("Upload failed", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (images.length > 0) {
+      uploadtos3(images);
+    }
+  }, [images]);
+
+  const { data: session } = useSession();
+
+  const onSubmit = async (data: z.infer<typeof EventformSchema>) => {
+    console.log("first");
+    console.log(data);
+    setIsSubmitting(true);
+    try {
+      const token = session?.accessToken;
+      if (!token) {
+        throw new Error("token not found");
+      }
+      if (!location || !imageurl) {
+        throw new Error("Location or image URL is missing.");
+      }
+      const payload = {
+        ...data,
+        imageurl,
+        location: {
+          coordinates: [location?.lng, location?.lat],
+        },
+      };
+      const res = await axios.post(
+        "http://localhost:8000/event/postevent",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
+      if (res) {
+        toast.success("event added successully");
+      }
+      console.log("Payload:", payload);
+
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred while submitting the form.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   if (isLoading) {
     return <div>Loading cities...</div>;
   }
@@ -284,6 +319,7 @@ export default function EventForm() {
               {sections.map((section) => (
                 <li key={section.id}>
                   <button
+                    type="button"
                     className={cn(
                       "w-full text-left px-4 py-2 rounded",
                       "hover:bg-white hover:text-[#232f3e]"
@@ -364,26 +400,6 @@ export default function EventForm() {
                         />
                         <FormField
                           control={form.control}
-                          name="address"
-                          render={({ field }) => (
-                            <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                              <FormLabel className="md:w-1/4 text-md font-medium">
-                                Physical Address
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  type="text"
-                                  id="address"
-                                  placeholder="Enter business address"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
                           name="eventType"
                           render={({ field }) => (
                             <FormItem>
@@ -427,122 +443,108 @@ export default function EventForm() {
                     }}
                   >
                     <h2 className="text-2xl font-bold py-4">Address</h2>
-                    {eventType == "in-person" && (
-                      <Card>
-                        <CardContent>
-                          <div className="grid grid-cols-2 gap-4 py-2">
-                            {[
-                              {
-                                name: "venueName",
-                                label:
-                                  "Enter a new Venue / select from existing venue",
-                                placeholder: "Enter the venue's name",
-                              },
 
-                              {
-                                name: "city",
-                                label: "City",
-                                placeholder: "Enter city",
-                              },
-                              {
-                                name: "state",
-                                label: "State *",
-                                placeholder: "Enter state",
-                              },
-                            ].map((fieldInfo) => (
-                              <FormField
-                                key={fieldInfo.name}
-                                control={form.control}
-                                name={fieldInfo.name as keyof EventformData}
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormLabel>{fieldInfo.label}</FormLabel>
-                                    <FormControl>
-                                      <Input
-                                        type="text"
-                                        id={fieldInfo.name}
-                                        {...field}
-                                        value={field.value as string}
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                            ))}
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-4 py-2">
+                    <Card>
+                      <CardContent>
+                        <div className="grid grid-cols-2 gap-4 py-2">
+                          <FormField
+                            control={form.control}
+                            name="address"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Physical Address</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type="text"
+                                    id="address"
+                                    placeholder="Enter business address"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          {[
+                            {
+                              name: "venueName",
+                              label:
+                                "Enter a new Venue / select from existing venue",
+                              placeholder: "Enter the venue's name",
+                            },
+                            {
+                              name: "city",
+                              label: "City",
+                              placeholder: "Enter city",
+                            },
+                            {
+                              name: "state",
+                              label: "State *",
+                              placeholder: "Enter state",
+                            },
+                          ].map((fieldInfo) => (
                             <FormField
+                              key={fieldInfo.name}
                               control={form.control}
-                              name="zipCode"
+                              name={fieldInfo.name as keyof EventformData}
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>ZIP/POSTAL *</FormLabel>
+                                  <FormLabel>{fieldInfo.label}</FormLabel>
                                   <FormControl>
-                                    <Input {...field} />
+                                    <Input
+                                      type="text"
+                                      id={fieldInfo.name}
+                                      {...field}
+                                      value={field.value as string}
+                                    />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
                               )}
                             />
-                            <FormField
-                              control={form.control}
-                              name="country"
-                              render={({ field }) => (
-                                <FormItem>
-                                  <FormLabel>Country *</FormLabel>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
-                                    <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select country" />
-                                      </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="US">
-                                        United States
-                                      </SelectItem>
-                                      {/* Add more countries as needed */}
-                                    </SelectContent>
-                                  </Select>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                          {/* <div className="w-full h-64 rounded-md">
-                            {isLoaded ? (
-                              <GoogleMap
-                                mapContainerStyle={{
-                                  width: "100%",
-                                  height: "100%",
-                                }}
-                                center={mapCenter}
-                                zoom={10}
-                                onClick={onMapClick}
-                              >
-                                {markerPosition && (
-                                  <Marker position={markerPosition} />
-                                )}
-                              </GoogleMap>
-                            ) : (
-                              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                                <span className="text-gray-500">
-                                  Loading map...
-                                </span>
-                              </div>
-                            )}
-                          </div> */}
-                        </CardContent>
-                      </Card>
-                    )}
+                          ))}
+                        </div>
 
-                    {eventType == "virtual" && (
-                      <Card>
-                        <CardContent>
+                        <div className="grid grid-cols-2 gap-4 py-2">
+                          <FormField
+                            control={form.control}
+                            name="zipCode"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>ZIP/POSTAL *</FormLabel>
+                                <FormControl>
+                                  <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="country"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Country *</FormLabel>
+                                <Select
+                                  onValueChange={field.onChange}
+                                  defaultValue={field.value}
+                                >
+                                  <FormControl>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select country" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    <SelectItem value="US">
+                                      United States
+                                    </SelectItem>
+                                    {/* Add more countries as needed */}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
                           <FormField
                             control={form.control}
                             name="virtualurl"
@@ -556,9 +558,9 @@ export default function EventForm() {
                               </FormItem>
                             )}
                           />
-                        </CardContent>
-                      </Card>
-                    )}
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
                   <div
                     ref={(el) => {
@@ -579,6 +581,7 @@ export default function EventForm() {
                                   <PopoverTrigger asChild>
                                     <FormControl>
                                       <Button
+                                        type="button"
                                         variant={"outline"}
                                         className={cn(
                                           "w-[240px] pl-3 text-left font-normal",
@@ -677,6 +680,7 @@ export default function EventForm() {
                                   <PopoverTrigger asChild>
                                     <FormControl>
                                       <Button
+                                        type="button"
                                         variant={"outline"}
                                         className={cn(
                                           "w-[240px] pl-3 text-left font-normal",
@@ -1058,11 +1062,11 @@ export default function EventForm() {
                           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                             <input
                               type="file"
-                              id="image-upload"
-                              className="hidden"
-                              multiple
                               accept="image/*"
+                              multiple
                               onChange={handleImageUpload}
+                              className="hidden"
+                              id="image-upload"
                             />
                             <label
                               htmlFor="image-upload"
@@ -1081,7 +1085,7 @@ export default function EventForm() {
                             {images.map((image, index) => (
                               <div key={index} className="relative">
                                 <img
-                                  src={image}
+                                  src={URL.createObjectURL(image)}
                                   alt={`Uploaded ${index + 1}`}
                                   className="w-full h-24 object-cover rounded"
                                 />
@@ -1095,6 +1099,12 @@ export default function EventForm() {
                               </div>
                             ))}
                           </div>
+                          {isUploading && (
+                            <div className="flex items-center justify-center mt-4">
+                              <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                              <span>Uploading images...</span>
+                            </div>
+                          )}
                         </CardContent>
                       </Card>
                     </div>
@@ -1105,7 +1115,7 @@ export default function EventForm() {
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Submitting..." : "Create Event"}
-                  </Button>{" "}
+                  </Button>
                 </CardContent>
               </div>
             </form>

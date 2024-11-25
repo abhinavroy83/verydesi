@@ -7,7 +7,7 @@ export type EventDocument = Event & Document;
 export class Event {
   @Prop({ type: MongooseSchema.Types.ObjectId, required: true })
   UserId: MongooseSchema.Types.ObjectId;
-  
+
   @Prop({ required: true, default: Date.now() })
   postedOn: Date;
 
@@ -106,6 +106,23 @@ export class Event {
     ],
   })
   images: string[];
+
+  @Prop({
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+      default: 'Point',
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  })
+  location: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);
