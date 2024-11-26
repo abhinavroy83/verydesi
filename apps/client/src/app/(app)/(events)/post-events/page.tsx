@@ -126,7 +126,6 @@ export default function EventForm() {
       hostedBy: "",
       contactNumber: "",
       artists: [{ name: "" }],
-      images: [],
     },
   });
   const {
@@ -251,7 +250,7 @@ export default function EventForm() {
       }
       const payload = {
         ...data,
-        imageurl,
+        images: imageurl,
         location: {
           coordinates: [location?.lng, location?.lat],
         },
@@ -266,7 +265,7 @@ export default function EventForm() {
         }
       );
       console.log(res);
-      if (res) {
+      if (res.data) {
         toast.success("event added successully");
       }
       console.log("Payload:", payload);
@@ -1114,7 +1113,14 @@ export default function EventForm() {
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Submitting..." : "Create Event"}
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </CardContent>
               </div>
