@@ -304,7 +304,7 @@ export default function Navbar() {
             <div className="flex items-center">
               <Button
                 onClick={() => {
-                  router.push("/");
+                  router.push("/Home");
                 }}
                 variant="ghost"
                 className="text-white hover:bg-white group text-[15px] transition duration-300 ease-in-out"
