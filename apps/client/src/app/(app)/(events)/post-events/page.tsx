@@ -243,7 +243,7 @@ export default function EventForm() {
         },
       };
       const res = await axios.post(
-        "http://localhost:8000/event/postevent",
+        "https://apiv2.verydesi.com/event/postevent",
         payload,
         {
           headers: {
