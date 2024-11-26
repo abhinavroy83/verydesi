@@ -316,10 +316,10 @@ export default function RoomDetails({
                 <BreadcrumbItem className="">
                   <BreadcrumbLink
                     href="/"
-                    className="flex items-center text-[15px] hover:text-primary-dark transition-colors hover:underline"
+                    className="flex text-orange-500 items-center text-[15px] hover:text-primary-dark transition-colors hover:underline"
                   >
                     <Home className="w-4 h-4 mr-2" />
-                    <span className="font-medium">Home</span>
+                    <span className="font-medium ">Home</span>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator>
@@ -330,8 +330,7 @@ export default function RoomDetails({
                     href="/rooms"
                     className="flex items-center text-[15px] hover:text-primary-dark transition-colors hover:underline"
                   >
-                    <Hotel className="w-4 h-6 mr-2" />
-                    <span className="font-medium">Rooms</span>
+                    <span className="font-medium ">Rooms</span>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>
