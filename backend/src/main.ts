@@ -12,7 +12,7 @@ async function bootstrap() {
       'http://apiv2.verydesi.com',
       'https://apiv2.verydesi.com',
       'https://verydesi-client.vercel.app',
-      "https://verydesi.com"
+      "https://verydesi.com"  
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
