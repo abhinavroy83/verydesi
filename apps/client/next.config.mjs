@@ -12,8 +12,9 @@ const nextConfig = {
       "www.pixelstalk.net",
       "static.toiimg.com",
       "img.budgettravel.com",
-    ],   
-  },  
+      "th.bing.com",
+    ],
+  },
 };
 
 export default nextConfig;

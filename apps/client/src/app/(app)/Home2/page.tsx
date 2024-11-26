@@ -60,8 +60,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Waethercard from "@/components/Whether/waether";
-import axios from "axios";
-import SkeletonFeaturedeventscard from "@/components/skeleton/FeaturedEventsSkeletonCard";
 
 const leftColumnServices = [
   "Home Services",
@@ -146,33 +144,6 @@ const movies = [
   },
   {
     id: 5,
-    title: "Promising Young Woman",
-    rating: "R",
-    duration: "2h 8m",
-    year: 2021,
-    price: "From $19.99",
-    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
-  },
-  {
-    id: 6,
-    title: "Promising Young Woman",
-    rating: "R",
-    duration: "2h 8m",
-    year: 2021,
-    price: "From $19.99",
-    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
-  },
-  {
-    id: 7,
-    title: "Promising Young Woman",
-    rating: "R",
-    duration: "2h 8m",
-    year: 2021,
-    price: "From $19.99",
-    image: "/placeholder.svg?height=600&width=400&text=The+Little+Things",
-  },
-  {
-    id: 8,
     title: "Promising Young Woman",
     rating: "R",
     duration: "2h 8m",
@@ -285,54 +256,6 @@ export default function Home() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
-  interface Event {
-    _id: string;
-    eventpostingcity: string;
-    eventTitle: string;
-    startDate: string;
-    venueName: string;
-    description: string;
-    images: string[];
-    address: string;
-    state: string;
-  }
-  const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const city = currentCity || "Portland";
-        const response = await axios.get(
-          `https://apiv2.verydesi.com/event/getEventByArea/${city}`
-        );
-        const events: Event[] = response.data;
-
-        const filteredFeaturedEvents = events
-          .filter(
-            (event) =>
-              event.eventpostingcity === city &&
-              new Date(event.startDate) >= new Date()
-          )
-          .sort(
-            (a, b) =>
-              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-          )
-          .slice(0, 10);
-
-        const remainingEvents = events
-          .filter((event) => !filteredFeaturedEvents.includes(event))
-          .sort(
-            (a, b) =>
-              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-          );
-
-        setFeaturedEvents(filteredFeaturedEvents);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    };
-    fetchEvents();
-  }, []);
 
   if (loading) {
     return (
@@ -389,7 +312,8 @@ export default function Home() {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('https://th.bing.com/th/id/R.987b01d079e428e779f18622e3c11302?rik=R1kwpQbf%2b7On6g&riu=http%3a%2f%2fwallpapercave.com%2fwp%2feKouupY.jpg&ehk=AXFugzftEWDWTkEFwM1y42ecFqn7iHnSoJhJGlAqY%2bY%3d&risl=&pid=ImgRaw&r=0')`,
+              backgroundImage:
+                "url('https://th.bing.com/th/id/R.987b01d079e428e779f18622e3c11302?rik=R1kwpQbf%2b7On6g&riu=http%3a%2f%2fwallpapercave.com%2fwp%2feKouupY.jpg&ehk=AXFugzftEWDWTkEFwM1y42ecFqn7iHnSoJhJGlAqY%2bY%3d&risl=&pid=ImgRaw&r=0')",
             }}
           />
           <div className="absolute inset-0 bg-black bg-opacity-50" />
@@ -431,29 +355,13 @@ export default function Home() {
             className=""
           >
             <CarouselContent>
-              {loading
-                ? // Display skeleton cards while loading
-                  [...Array(10)].map((_, index) => (
-                    <CarouselItem
-                      key={index}
-                      className="md:basis-1/2 lg:basis-1/4"
-                    >
-                      <div className="w-full">
-                        <SkeletonFeaturedeventscard key={index} />
-                      </div>
-                    </CarouselItem>
-                  ))
-                : // Display actual featured events after loading completes
-                  featuredEvents.map((event) => (
-                    <CarouselItem
-                      key={event._id}
-                      className="md:basis-1/2 lg:basis-1/4"
-                    >
-                      <div className="w-full">
-                        <Featuredeventscard key={event._id} event={event} />
-                      </div>
-                    </CarouselItem>
-                  ))}
+              {Array.from({ length: 5 }).map((_, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
+                  <div className="w-full ">
+                    <Featuredeventscard key={index} />
+                  </div>
+                </CarouselItem>
+              ))}
             </CarouselContent>
             <CarouselPrevious className="absolute left-[-12] top-1/2 -translate-y-1/2" />
             <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
