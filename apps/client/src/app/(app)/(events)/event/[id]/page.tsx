@@ -48,7 +48,12 @@ import Similareventcard from "@/components/Events/Similareventcard";
 import axios from "axios";
 import useAuthStore from "@/store/useAuthStore";
 import { Event } from "@myrepo/types";
-
+import dynamic from "next/dynamic";
+const LeafletMapRoom = dynamic(() => import("@/components/map/LefletMapRoom"));
+interface Location {
+  lat: number;
+  lng: number;
+}
 function Events() {
   const { id } = useParams();
 
@@ -58,6 +63,9 @@ function Events() {
   const [loading, setLoading] = useState<boolean>(false);
   const { currentCity } = useAuthStore();
   const router = useRouter();
+  const [locationsndString, setLocationsndString] = useState<Location | null>(
+    null
+  );
 
   React.useEffect(() => {
     // Fetch all events
@@ -67,6 +75,8 @@ function Events() {
         const response = await axios.get(
           `https://apiv2.verydesi.com/event/getEventByArea/${city}`
         );
+        console.log(response);
+
         setAllEvents(response.data || []);
       } catch (err) {
         console.error("Error fetching events:", err);
@@ -84,6 +94,11 @@ function Events() {
         const response = await axios.get(
           `https://apiv2.verydesi.com/event/find_event_by_id/${id}`
         );
+        const loc = {
+          lat: response.data.location.coordinates[1],
+          lng: response.data.location.coordinates[0],
+        };
+        setLocationsndString(loc);
         setEvent(response?.data);
       } catch (err) {
         setError("Failed to load event details.");
@@ -371,14 +386,17 @@ function Events() {
               </div>
             </div>
           </div>
-          <div className="mt-5">
-            <img
-              className="w-full rounded-md"
-              src={
-                "https://th.bing.com/th/id/OIP.dptj3_-KYpJQTYPL9ab7awHaEz?rs=1&pid=ImgDetMain"
-              }
-              alt="logo"
-            />
+          <div className="">
+            <Card>
+              <CardHeader className="p-3"></CardHeader>
+              <CardContent className="">
+                <div className="aspect-w-16 aspect-h-9">
+                  {locationsndString && (
+                    <LeafletMapRoom onLocationReceived={locationsndString} />
+                  )}{" "}
+                </div>
+              </CardContent>
+            </Card>
             <Card className="w-full max-w-md mt-4 rounded-none">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">
