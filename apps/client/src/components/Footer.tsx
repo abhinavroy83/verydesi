@@ -14,7 +14,19 @@ export default function Footer() {
           src="https://www.dpbolvw.net/placeholder-55689450?target=_blank&mouseover=N"
           strategy="lazyOnload"
         />
-        <div
+        <Link
+          className="flex flex-col justify-center items-center mb-2 cursor-pointer"
+          href="https://www.dpbolvw.net/click-101275448-15612866"
+          target="_top"
+        >
+          <img
+            src="https://www.ftjcfx.com/image-101275448-15612866"
+            width="728"
+            height="90"
+            alt=""
+          />
+        </Link>
+        {/* <div
           onClick={() => {
             window.open("https://redletterweb.com/", "_blank");
           }}
@@ -27,12 +39,11 @@ export default function Footer() {
               className="object-cover"
             />
           </div>
-        </div>
+        </div> */}
 
         <div className=" mx-auto mt-8">
           <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
             <p>hi</p>
-          
           </div>
           <div className=" w-full bg-[#131A22] border-t-7 border-[#232f3e]">
             <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto bg-[#131A22] ">
