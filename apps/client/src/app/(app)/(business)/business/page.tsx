@@ -35,11 +35,11 @@ import {
   Tv,
   ChevronUp,
 } from "lucide-react";
-import { FeaturedBusinessCard } from "@/components/Business";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { FeaturedBusinessCard } from "@/components/Business/featuerdcard";
 
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
 export default function Component() {

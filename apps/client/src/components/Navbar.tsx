@@ -325,6 +325,16 @@ export default function Navbar() {
 
               <Button
                 onClick={() => {
+                  router.push("/business");
+                }}
+                variant="ghost"
+                className="text-white hover:bg-white transition duration-300 ease-in-out group"
+              >
+                <Calendar className="mr-2 h-4 w-4 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                BUSINESS
+              </Button>
+              <Button
+                onClick={() => {
                   router.push("/events");
                 }}
                 variant="ghost"
