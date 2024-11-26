@@ -319,7 +319,7 @@ export default function Navbar() {
                 variant="ghost"
                 className="text-white hover:bg-white transition duration-300 ease-in-out group"
               >
-                <Users className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
+                <DoorOpen className="mr-2 h-5 w-5 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
                 ROOMMATES
               </Button>
 
