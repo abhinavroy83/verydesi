@@ -4,6 +4,7 @@ import React from "react";
 import { MdOutlineDateRange } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { Heart } from "lucide-react";
+import Link from "next/link";
 
 interface Event {
   _id: string;
@@ -11,19 +12,22 @@ interface Event {
   startDate: string;
   venueName: string;
   description: string;
-  eventpostingcity:string;
+  eventpostingcity: string;
   images: string[];
-  address:string;
-  state:string;
+  address: string;
+  state: string;
   // Add other fields as necessary
 }
 
 interface EventNonfeaturedCardProps {
   event: Event;
-} 
+}
 function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
   return (
-    <article className="font-sans flex flex-col sm:flex-row w-full sm:h-[80px] hover:cursor-pointer justify-start border shadow-md rounded-xl hover:shadow-lg relative">
+    <Link
+      href={`/event/${event._id}`}
+      className="font-sans flex flex-col sm:flex-row w-full sm:h-[80px] hover:cursor-pointer justify-start border shadow-md rounded-xl hover:shadow-lg relative"
+    >
       <div className="w-full sm:w-auto">
         <img
           src={
@@ -38,7 +42,7 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
       <div className="p-3 sm:p-2 flex flex-col justify-between flex-grow">
         <div>
           <h2 className="text-[21px] font-bold line-clamp-1">
-          {event.eventTitle}
+            {event.eventTitle}
           </h2>
           <div className="flex flex-col sm:flex-row gap-1 text-sm sm:text-[17px] text-gray-600 mt-1">
             <p className="flex items-center gap-1">
@@ -56,7 +60,9 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
               />
               <span className="flex flex-wrap gap-1">
                 <span>{event.address}</span>
-                <span className="text-gray-600">- {event.eventpostingcity}, {event.state}</span>
+                <span className="text-gray-600">
+                  - {event.eventpostingcity}, {event.state}
+                </span>
               </span>
             </p>
           </div>
@@ -70,7 +76,7 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
           </div>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
