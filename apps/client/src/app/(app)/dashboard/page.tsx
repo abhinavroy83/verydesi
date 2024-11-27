@@ -21,9 +21,8 @@ const page = () => {
   const { firstname } = useAuthStore();
   if (status === "loading") return <div>Loading...</div>;
   if (!session) {
-    // To avoid rendering the component before the redirect completes
     router.replace("/sign-in");
-    return null; // Prevents any component rendering while redirecting
+    return null;
   }
   return (
     <DashboardLayout>
