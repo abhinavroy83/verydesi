@@ -17,7 +17,7 @@ export default function Footer() {
         <Link
           className="flex flex-col justify-center items-center mb-2 cursor-pointer"
           href="https://www.dpbolvw.net/click-101275448-15612866"
-          target="_top"
+          target="_blank"
         >
           <img
             src="https://www.ftjcfx.com/image-101275448-15612866"
