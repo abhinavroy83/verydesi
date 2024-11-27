@@ -31,7 +31,7 @@ import { BusinessModule } from './business/business.module';
     AdminauthModule,
     BusinessModule,
   ],
-  controllers: [AppController, BusinessController],
-  providers: [AppService, BusinessService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
