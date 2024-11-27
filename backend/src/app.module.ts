@@ -11,6 +11,9 @@ import { FavoriteModule } from './favorite/favorite.module';
 import { UploadModule } from './s3/s3.module';
 import { EventModule } from './event/event.module';
 import { AdminauthModule } from './adminauth/adminauth.module';
+import { BusinessService } from './business/service/business.service';
+import { BusinessController } from './business/controller/business.controller';
+import { BusinessModule } from './business/business.module';
 
 @Module({
   imports: [
@@ -26,8 +29,9 @@ import { AdminauthModule } from './adminauth/adminauth.module';
     UploadModule,
     EventModule,
     AdminauthModule,
+    BusinessModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, BusinessController],
+  providers: [AppService, BusinessService],
 })
 export class AppModule {}
