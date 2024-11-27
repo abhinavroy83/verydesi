@@ -7,10 +7,12 @@ export function DashboardCard({
   title,
   icon,
   url,
+  children,
 }: {
   title: string;
   icon: React.ReactNode;
   url: string;
+  children?: React.ReactNode;
 }) {
   return (
     <Link href={url}>
@@ -25,6 +27,7 @@ export function DashboardCard({
           <Button variant="link" size="sm" className="lg:mt-2 text-center">
             View Details <ChevronRight className="ml-1 h-4 w-4" />
           </Button>
+          {children && <div>{children}</div>}
         </CardContent>
       </Card>
     </Link>

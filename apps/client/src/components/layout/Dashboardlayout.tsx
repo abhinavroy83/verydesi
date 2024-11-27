@@ -18,6 +18,7 @@ import {
   Briefcase,
   LogOut,
   Loader2,
+  Factory,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -29,6 +30,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
 import { AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+
+
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");

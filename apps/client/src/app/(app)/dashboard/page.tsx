@@ -1,8 +1,16 @@
 "use client";
 import { DashboardLayout } from "@/components/layout";
 import { DashboardCard } from "@/components/layout/Dashboard";
+import { Badge } from "@/components/ui/badge";
 import useAuthStore from "@/store/useAuthStore";
-import { Heart, HelpCircle, Home, HomeIcon, Settings } from "lucide-react";
+import {
+  Factory,
+  Heart,
+  HelpCircle,
+  Home,
+  HomeIcon,
+  Settings,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -42,6 +50,15 @@ const page = () => {
             title="Help"
             icon={<HelpCircle className="h-6 w-6" />}
           />
+          <DashboardCard
+            url="/dashboard/my-business"
+            title="Business"
+            icon={<Factory className="h-6 w-6" />}
+          >
+            <Badge className=" bg-yellow-300 text-black">
+              claim or Verify Business
+            </Badge>
+          </DashboardCard>
         </div>
       </div>
     </DashboardLayout>
