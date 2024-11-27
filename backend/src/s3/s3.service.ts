@@ -76,6 +76,40 @@ export class S3Service {
     }
   }
 
+  async uploadpdftos3(file: Express.Multer.File): Promise<string> {
+    const folder = 'pdf-uploads';
+    const fileName = `${folder}/${Date.now()}_${file.originalname}`;
+    const bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
+    const cloudFrontUrl = this.configService.get<string>('CLOUDFRONT_URL');
+
+    if (!file.buffer) {
+      throw new Error('File buffer is empty');
+    }
+
+    if (file.mimetype !== 'application/pdf') {
+      throw new Error('Only PDF files are allowed.');
+    }
+
+    try {
+      const parallelUpload = new Upload({
+        client: this.s3,
+        params: {
+          Bucket: bucketName,
+          Key: fileName,
+          Body: file.buffer,
+          ContentType: 'application/pdf',
+        },
+      });
+
+      await parallelUpload.done();
+
+      return `${cloudFrontUrl}/${fileName}`;
+    } catch (error) {
+      this.logger.error(`Error uploading file to S3: ${JSON.stringify(error)}`);
+      throw new Error('Failed to upload the file to S3.');
+    }
+  }
+
   //delete function
 
   async deletesingleimagefroms3(fileUrl: string): Promise<void> {

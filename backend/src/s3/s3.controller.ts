@@ -81,6 +81,33 @@ export class UploadController {
     }
   }
 
+  @Post('uploadpdf')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadpdf(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }), 
+          new FileTypeValidator({ fileType: 'application/pdf' }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    if (!file) {
+      throw new BadRequestException('No file uploaded');
+    }
+
+    try {
+      const url = await this.s3Service.uploadpdftos3(file);
+      return url;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `File upload failed: ${error.message}`,
+      );
+    }
+  }
+
   @Delete('delete')
   async deleteFile(@Body('fileUrl') fileUrl: string) {
     if (!fileUrl) {
