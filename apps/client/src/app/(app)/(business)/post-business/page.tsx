@@ -138,17 +138,6 @@ export default function BusinessForm() {
     }
   }, [addressComponents, form]);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-
-    const businessdata = {
-      ...data,
-      schedule,
-    };
-    console.log(businessdata);
-    // Here you would typically send the data to your backend
-  };
-
   const scrollToSection = (sectionId: string) => {
     const section = sectionRefs.current[sectionId];
     if (section) {
@@ -350,6 +339,17 @@ export default function BusinessForm() {
     } catch (error) {
       console.error("Error uploading image:", error);
     }
+  };
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+
+    const businessdata = {
+      ...data,
+      schedule,
+    };
+    console.log(businessdata);
+    // Here you would typically send the data to your backend
   };
 
   return (
