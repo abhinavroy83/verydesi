@@ -21,11 +21,11 @@ import {
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DashboardLayout } from "@/components/layout";
-import { Event } from "@myrepo/types";
+import { BusinessForm } from "@myrepo/types";
 import { Button } from "@/components/ui/button";
 
 export default function MyEventsPage() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [data, setdata] = useState<BusinessForm[]>([]);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
   const token = session?.accessToken;
@@ -37,7 +37,7 @@ export default function MyEventsPage() {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchMyEvents = async () => {
+    const fetchMyBusiness = async () => {
       if (!token) {
         console.error("Token not found, please sign in!");
         return;
@@ -52,11 +52,17 @@ export default function MyEventsPage() {
             },
           }
         );
-        console.log(response);
-      } catch (error) {}
+        console.log(response.data);
+        if (isMounted) {
+          setdata(response.data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log("error while getting business", error);
+      }
     };
 
-    if (token) fetchMyEvents();
+    if (token) fetchMyBusiness();
 
     return () => {
       isMounted = false;
@@ -64,8 +70,8 @@ export default function MyEventsPage() {
   }, [token]);
 
   // Pagination logic
-  const totalPages = Math.ceil(events.length / itemsPerPage);
-  const paginatedEvents = events.slice(
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const paginatedEvents = data.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -113,15 +119,12 @@ export default function MyEventsPage() {
               Array.from({ length: itemsPerPage }).map((_, index) => (
                 <SkeletonRow key={index} />
               ))
-            ) : events.length > 0 ? (
-              paginatedEvents.map((event) => (
-                <TableRow key={event._id}>
-                  <TableCell>{event.eventTitle}</TableCell>
-                  <TableCell>{event.city}</TableCell>
-                  <TableCell>{event.hostedBy}</TableCell>
-                  <TableCell>
-                    {new Date(event.startDate).toLocaleDateString()}
-                  </TableCell>
+            ) : data.length > 0 ? (
+              paginatedEvents.map((item) => (
+                <TableRow key={item._id}>
+                  <TableCell>{item.businessName}</TableCell>
+                  <TableCell>{item.address}</TableCell>
+                  <TableCell>{item.categories[0]}</TableCell>
                 </TableRow>
               ))
             ) : (
