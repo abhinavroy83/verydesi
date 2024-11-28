@@ -247,14 +247,14 @@ export default function BusinessForm() {
         ...(field === "is24Hours" &&
           value === true && {
             isClosed: false,
-            startTime: "",
-            endTime: "",
+            startTime: "NA",
+            endTime: "NA",
           }),
         ...(field === "isClosed" &&
           value === true && {
             is24Hours: false,
-            startTime: "",
-            endTime: "",
+            startTime: "NA",
+            endTime: "NA",
           }),
       },
     }));
