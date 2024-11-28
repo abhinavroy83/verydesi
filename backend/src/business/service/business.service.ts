@@ -1,4 +1,10 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Business } from '../schemas/business-schema';
 import { Model } from 'mongoose';
 import { BusinessDto } from '../dto/post-business.dto';
@@ -22,6 +28,21 @@ export class BusinessService {
       return cratedbusiness.save();
     } catch (error) {
       throw new BadRequestException(error.message);
+    }
+  }
+
+  async getbusinessbyuser(userId: string) {
+    try {
+      const bussiness = await this.businessmodel.find({ UserId: userId });
+      if (bussiness) {
+        throw new NotFoundException('no busines found by user');
+      }
+
+      return bussiness;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Something went wrong while fetching busines',
+      );
     }
   }
 }

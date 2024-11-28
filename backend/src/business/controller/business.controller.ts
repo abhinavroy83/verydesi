@@ -22,4 +22,7 @@ export class BusinessController {
     const userId = req.user.userId;
     return this.businessservice.createBusiness(businessDto, userId);
   }
+
+  
+
 }
