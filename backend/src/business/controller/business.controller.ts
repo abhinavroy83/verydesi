@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Inject,
   Post,
   Request,
@@ -23,6 +24,10 @@ export class BusinessController {
     return this.businessservice.createBusiness(businessDto, userId);
   }
 
-  
-
+  @UseGuards(JwtGuard)
+  @Get('list-my-business')
+  getalleventpostedbyuser(@Request() req) {
+    const userId = req.user.userId;
+    return this.businessservice.getbusinessbyuser(userId);
+  }
 }
