@@ -57,8 +57,27 @@ export class Business {
   @Prop({ type: String, length: 9, required: false })
   einNumber?: string;
 
-  @Prop({ type: String, required: true })
-  openHours: string[];
+  @Prop({
+    type: {
+      monday: { type: String, required: true },
+      tuesday: { type: String, required: true },
+      wednesday: { type: String, required: true },
+      thursday: { type: String, required: true },
+      friday: { type: String, required: true },
+      saturday: { type: String, required: true },
+      sunday: { type: String, required: true },
+    },
+    required: true,
+  })
+  openHours: {
+    monday: string;
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    sunday: string;
+  };
 
   @Prop({ type: String, required: true })
   description: string;
