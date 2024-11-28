@@ -224,8 +224,6 @@ export default function EventForm() {
   const { data: session } = useSession();
 
   const onSubmit = async (data: z.infer<typeof EventformSchema>) => {
-    console.log("first");
-    console.log(data);
     setIsSubmitting(true);
     try {
       const token = session?.accessToken;
@@ -1046,6 +1044,7 @@ export default function EventForm() {
                             Add your photos (up to 5)
                           </p>
                           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+
                             <input
                               type="file"
                               accept="image/*"

@@ -40,6 +40,7 @@ import {
   ChevronRight,
   Clock,
   Home,
+  Loader2,
   Upload,
   X,
 } from "lucide-react";
@@ -51,6 +52,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
+import axios from "axios";
 
 const formSchema = z.object({
   userName: z.string().min(1, "Name is required"),
@@ -70,7 +72,6 @@ const formSchema = z.object({
     "other",
   ]),
   einNumber: z.string().length(9, "EIN must be 9 digits").optional(),
-  openHours: z.string().min(1, "Open hours are required"),
   description: z.string().min(1, "Description is required"),
   languages: z.array(z.string()).min(1, "Select at least one language"),
   sales: z.object({
@@ -80,6 +81,7 @@ const formSchema = z.object({
     couponCodes: z.string().optional(),
   }),
 });
+
 interface DaySchedule {
   startTime: string;
   endTime: string;
@@ -108,6 +110,7 @@ const sections = [
 
 export default function BusinessForm() {
   const [images, setImages] = useState<File[]>([]);
+  const [imageurl, setimageurls] = useState<string[]>([]);
   const [salesPosters, setSalesPosters] = useState<File[]>([]);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const { addressComponents, location } = useGoogleAutocomplete();
@@ -137,26 +140,13 @@ export default function BusinessForm() {
 
   const onSubmit = (data: FormData) => {
     console.log(data);
+
+    const businessdata = {
+      ...data,
+      schedule,
+    };
+    console.log(businessdata);
     // Here you would typically send the data to your backend
-  };
-
-  const handleImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setter: React.Dispatch<React.SetStateAction<File[]>>
-  ) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length > 5) {
-      alert("You can only upload up to 5 images");
-      return;
-    }
-    setter(files);
-  };
-
-  const removeImage = (
-    index: number,
-    setter: React.Dispatch<React.SetStateAction<File[]>>
-  ) => {
-    setter((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -262,11 +252,111 @@ export default function BusinessForm() {
       [day]: {
         ...prev[day],
         [field]: value,
-        ...(field === "is24Hours" && value === true && { isClosed: false }),
-        ...(field === "isClosed" && value === true && { is24Hours: false }),
+        ...(field === "is24Hours" &&
+          value === true && {
+            isClosed: false,
+            startTime: "",
+            endTime: "",
+          }),
+        ...(field === "isClosed" &&
+          value === true && {
+            is24Hours: false,
+            startTime: "",
+            endTime: "",
+          }),
       },
     }));
   };
+
+  //upload images to s3
+
+  const [isimageUploading, setimageIsUploading] = useState(false);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (images.length + files.length > 5) {
+      alert("You can only upload up to 5 images");
+      return;
+    }
+    setImages((prevImages) => {
+      const updatefiles = [...prevImages, ...files];
+      return updatefiles;
+    });
+  };
+
+  const removeImage = (index: number) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setimageurls((prevUrls) => prevUrls.filter((_, i) => i !== index));
+  };
+
+  const uploadtos3 = async (updatefiles: File[]) => {
+    setimageIsUploading(true);
+    try {
+      const data = new FormData();
+      updatefiles.forEach((file) => {
+        data.append("my_files", file);
+      });
+      const res = await axios.post(
+        "https://apiv2.verydesi.com/img/upload",
+        data
+      );
+      console.log(res.data.urls);
+      setimageurls(res.data.urls);
+    } catch (error) {
+      console.error("Upload failed", error);
+    } finally {
+      setimageIsUploading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (images.length > 0) {
+      uploadtos3(images);
+    }
+  }, [images]);
+
+  //upload pdf
+
+  const [ispdfUploading, setIspdfUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // setSelectedFile(file);
+      await handlepdfUpload(file);
+    }
+  };
+
+  const handleEditClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handlepdfUpload = async (file: File) => {
+    setIspdfUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log(formData);
+    try {
+      const response = await fetch(
+        "https://apiv2.verydesi.com/img/uploadSingleImage",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+      const data = await response.json();
+      console.log(data.url);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
   return (
     <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-6 mt-[8rem] font-sans">
       <div className="py-1 mb-3">
@@ -528,7 +618,7 @@ export default function BusinessForm() {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter business website"
+                          placeholder="Enter business url eg.. https://verydesi.com"
                           {...field}
                         />
                       </FormControl>
@@ -625,11 +715,14 @@ export default function BusinessForm() {
                   <Label htmlFor="verificationDocument">
                     Upload Verification Document
                   </Label>
-                  <Input
-                    id="verificationDocument"
+                  <input
                     type="file"
                     accept=".pdf"
-                    className="text-md font-medium"
+                    onChange={handleFileChange}
+                    ref={fileInputRef}
+                    className="sr-only"
+                    id="pdf-upload"
+                    aria-label="Upload pdf"
                   />
                 </div>
               </div>
@@ -641,21 +734,7 @@ export default function BusinessForm() {
                 className="bg-white lg:p-[2rem] p- rounded-xl shadow-md border border-gray-200 space-y-6"
               >
                 <h2 className="text-2xl font-bold mb-4">Business Details</h2>
-                <FormField
-                  control={form.control}
-                  name="openHours"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Open Hours/Days
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter open hours" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <div className="w-full max-w-[740px] bg-white rounded-lg space-y-6">
                   <div className="flex items-center gap-2 mb-6">
                     <Clock className="w-5 h-5 text-gray-500" />
@@ -825,17 +904,27 @@ export default function BusinessForm() {
                 <h2 className="text-2xl font-bold mb-4">Photos</h2>
                 <div className="space-y-4">
                   <Label htmlFor="photos">Add Photos (up to 5)</Label>
-                  <div className="flex items-center space-x-4">
-                    <Input
-                      id="photos"
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <input
                       type="file"
                       accept="image/*"
                       multiple
-                      onChange={(e) => handleImageUpload(e, setImages)}
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      id="image-upload"
                     />
-                    <p className="text-sm text-gray-500">
-                      {images.length} / 5 images selected
-                    </p>
+                    <label htmlFor="image-upload" className="cursor-pointer">
+                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                      <p className="mt-2 text-sm text-gray-500">
+                        Click to upload or drag and drop
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        PNG, JPG, GIF up to 10MB
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {images.length} / 5 images selected
+                      </p>
+                    </label>
                   </div>
                   <div className="grid grid-cols-5 gap-4">
                     {images.map((image, index) => (
@@ -847,7 +936,7 @@ export default function BusinessForm() {
                         />
                         <button
                           type="button"
-                          onClick={() => removeImage(index, setImages)}
+                          onClick={() => removeImage(index)}
                           className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
                         >
                           <X className="h-4 w-4" />
@@ -855,6 +944,12 @@ export default function BusinessForm() {
                       </div>
                     ))}
                   </div>
+                  {isimageUploading && (
+                    <div className="flex items-center justify-center mt-4">
+                      <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                      <span>Uploading images...</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -958,7 +1053,7 @@ export default function BusinessForm() {
                     )}
                   />
                 </div>
-                <div className="space-y-2 mt-4">
+                {/* <div className="space-y-2 mt-4">
                   <Label className="text-[16px]" htmlFor="salesPosters">
                     Posters of Sales/Discounts
                   </Label>
@@ -969,11 +1064,8 @@ export default function BusinessForm() {
                       type="file"
                       accept="image/*"
                       multiple
-                      onChange={(e) => handleImageUpload(e, setSalesPosters)}
                     />
-                    {/* <p className="text-sm text-gray-500">
-                      {salesPosters.length} / 5 images selected
-                    </p> */}
+                  
                   </div>
                   <div className="grid grid-cols-5 gap-4">
                     {salesPosters.map((poster, index) => (
@@ -985,7 +1077,6 @@ export default function BusinessForm() {
                         />
                         <button
                           type="button"
-                          onClick={() => removeImage(index, setSalesPosters)}
                           className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
                         >
                           <X className="h-4 w-4" />
@@ -994,6 +1085,9 @@ export default function BusinessForm() {
                     ))}
                   </div>
                 </div>
+
+                 */}
+
                 <FormField
                   control={form.control}
                   name="sales.couponCodes"

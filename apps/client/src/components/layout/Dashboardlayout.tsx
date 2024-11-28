@@ -235,6 +235,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             </p>
             <div className="flex justify-center space-x-2">
               <input
+              
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
