@@ -6,7 +6,7 @@ export type BusinessDocument = Business & Document;
 @Schema({ timestamps: true })
 export class Business {
   @Prop({ type: MongooseSchema.Types.ObjectId, required: true, ref: 'User' })
-  userId: MongooseSchema.Types.ObjectId;
+  UserId: MongooseSchema.Types.ObjectId;
 
   @Prop({ type: Date, required: true, default: Date.now() })
   createdAt: Date;
