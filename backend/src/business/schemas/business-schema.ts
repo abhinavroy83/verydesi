@@ -60,32 +60,32 @@ export class Business {
   @Prop({
     type: {
       monday: {
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
+        startTime: { type: String },
+        endTime: { type: String },
         is24Hours: { type: Boolean, required: true },
         isClosed: { type: Boolean, required: true },
       },
       tuesday: {
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
+        startTime: { type: String },
+        endTime: { type: String },
         is24Hours: { type: Boolean, required: true },
         isClosed: { type: Boolean, required: true },
       },
       wednesday: {
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
+        startTime: { type: String },
+        endTime: { type: String },
         is24Hours: { type: Boolean, required: true },
         isClosed: { type: Boolean, required: true },
       },
       thursday: {
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
+        startTime: { type: String },
+        endTime: { type: String },
         is24Hours: { type: Boolean, required: true },
         isClosed: { type: Boolean, required: true },
       },
       friday: {
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
+        startTime: { type: String },
+        endTime: { type: String },
         is24Hours: { type: Boolean, required: true },
         isClosed: { type: Boolean, required: true },
       }
