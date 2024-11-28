@@ -357,13 +357,14 @@ export default function BusinessForm() {
     try {
       const businessdata = {
         ...data,
-        schedule,
+        openHours: schedule,
         pdfurl: pdfurl,
         Imageurl: imageurl,
       };
+      console.log(businessdata);
 
       const res = await axios.post(
-        "https://apiv2.verydesi.com/bussiness/postbusiness",
+        "https://apiv2.verydesi.com/business/postbusiness",
         businessdata,
         {
           headers: {
@@ -371,6 +372,7 @@ export default function BusinessForm() {
           },
         }
       );
+      console.log(res);
       if (!res.data) {
         console.log("error while posting business");
       }
