@@ -88,19 +88,8 @@ export class Business {
         endTime: { type: String, required: true },
         is24Hours: { type: Boolean, required: true },
         isClosed: { type: Boolean, required: true },
-      },
-      saturday: {
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
-        is24Hours: { type: Boolean, required: true },
-        isClosed: { type: Boolean, required: true },
-      },
-      sunday: {
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
-        is24Hours: { type: Boolean, required: true },
-        isClosed: { type: Boolean, required: true },
-      },
+      }
+    
     },
     required: true,
   })
