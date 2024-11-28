@@ -1,4 +1,15 @@
-import { IsArray, IsEnum, IsNotEmpty, IsOptional, IsString, IsUrl, Length, ValidateNested, IsDate } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+  Length,
+  ValidateNested,
+  IsDate,
+  isString,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class SalesDto {
@@ -38,8 +49,8 @@ export class BusinessDto {
   @IsString()
   legalName: string;
 
-  @IsEnum(["business", "service"])
-  businessType: "business" | "service";
+  @IsEnum(['business', 'service'])
+  businessType: 'business' | 'service';
 
   @IsArray()
   @IsString({ each: true })
@@ -58,17 +69,27 @@ export class BusinessDto {
   @IsString()
   phone: string;
 
-  @IsEnum(["ein", "license", "bill", "registration", "other"])
-  verificationMethod: "ein" | "license" | "bill" | "registration" | "other";
+  @IsEnum(['ein', 'license', 'bill', 'registration', 'other'])
+  verificationMethod: 'ein' | 'license' | 'bill' | 'registration' | 'other';
 
   @IsOptional()
   @IsString()
-  @Length(9, 9, { message: "EIN must be 9 digits" })
+  @Length(9, 9, { message: 'EIN must be 9 digits' })
   einNumber?: string;
+
+  @IsArray()
+  @IsNotEmpty()
+  @IsString()
+  openHours: string[];
 
   @IsNotEmpty()
   @IsString()
-  openHours: string;
+  pdfurl: string;
+
+  @IsArray()
+  @IsNotEmpty()
+  @IsString()
+  Imageurl: string[];
 
   @IsNotEmpty()
   @IsString()

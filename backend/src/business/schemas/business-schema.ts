@@ -11,8 +11,14 @@ export class Business {
   @Prop({ type: Date, required: true, default: Date.now() })
   createdAt: Date;
 
+  @Prop({ type: Date, required: true, default: Date.now() })
+  updatedAt: Date;
+
   @Prop({ type: Boolean, required: true, default: false })
   isVerified: Boolean;
+
+  @Prop({ type: String, enum: ['Approved', 'Pending'], default: 'Pending' })
+  status: String;
 
   @Prop({ type: String, required: true })
   userName: string;
@@ -52,13 +58,19 @@ export class Business {
   einNumber?: string;
 
   @Prop({ type: String, required: true })
-  openHours: string;
+  openHours: string[];
 
   @Prop({ type: String, required: true })
   description: string;
 
   @Prop({ type: [String], required: true })
   languages: string[];
+
+  @Prop({ type: String, required: true })
+  pdfurl: string;
+
+  @Prop({ type: [String], required: true })
+  Imageurl: string[];
 
   @Prop({
     type: {
