@@ -53,6 +53,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 import axios from "axios";
+import Link from "next/link";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   userName: z.string().min(1, "Name is required"),
@@ -310,6 +312,7 @@ export default function BusinessForm() {
   const [pdfurl, setpdfurls] = useState<string[]>([]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -326,30 +329,44 @@ export default function BusinessForm() {
     formData.append("file", file);
     console.log(formData);
     try {
-      const response = await fetch("https://apiv2.verydesi.com/img/uploadpdf", {
-        method: "POST",
-        body: formData,
-      });
-      if (!response.ok) {
+      const response = await axios.post(
+        "https://apiv2.verydesi.com/img/uploadpdf",
+        formData
+      );
+      if (!response) {
         throw new Error("Upload failed");
       }
-      const data = await response.json();
-      console.log(data.url);
-      setpdfurls(data.url);
+
+      setpdfurls(response.data);
     } catch (error) {
       console.error("Error uploading image:", error);
+    } finally {
+      setIspdfUploading(false);
     }
   };
-
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log(data);
 
-    const businessdata = {
-      ...data,
-      schedule,
-    };
-    console.log(businessdata);
-    // Here you would typically send the data to your backend
+    try {
+      const businessdata = {
+        ...data,
+        schedule,
+        pdfurl: pdfurl,
+        Imageurl: imageurl,
+      };
+
+      const res = await axios.post(
+        "https://apiv2.verydesi.com/bussiness/postbusiness",
+        businessdata
+      );
+      if (!res.data) {
+        console.log("error while posting business");
+      }
+
+      toast.success("bussiness added succesfully");
+    } catch (error) {
+      console.log('error while posting')
+    }
   };
 
   return (
@@ -717,12 +734,21 @@ export default function BusinessForm() {
                     className="sr-only"
                     id="pdf-upload"
                     aria-label="Upload pdf"
+                    disabled={ispdfUploading}
                   />
                 </div>
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="btn-primary"
+                  disabled={ispdfUploading}
+                >
+                  {ispdfUploading ? "Uploading..." : "Choose File"}
+                </button>
                 {ispdfUploading && (
                   <div className="flex items-center justify-center mt-4">
                     <Loader2 className="h-6 w-6 animate-spin mr-2" />
-                    <span>Uploading pdf...</span>
+                    <span>Uploading PDF...</span>
                   </div>
                 )}
               </div>
