@@ -318,8 +318,9 @@ export default function BusinessForm() {
   //upload pdf
 
   const [ispdfUploading, setIspdfUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [pdfurl, setpdfurls] = useState<string[]>([]);
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -330,28 +331,22 @@ export default function BusinessForm() {
     }
   };
 
-  const handleEditClick = () => {
-    fileInputRef.current?.click();
-  };
-
   const handlepdfUpload = async (file: File) => {
     setIspdfUploading(true);
     const formData = new FormData();
     formData.append("file", file);
     console.log(formData);
     try {
-      const response = await fetch(
-        "https://apiv2.verydesi.com/img/uploadSingleImage",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("https://apiv2.verydesi.com/img/uploadpdf", {
+        method: "POST",
+        body: formData,
+      });
       if (!response.ok) {
         throw new Error("Upload failed");
       }
       const data = await response.json();
       console.log(data.url);
+      setpdfurls(data.url);
     } catch (error) {
       console.error("Error uploading image:", error);
     }
@@ -419,7 +414,6 @@ export default function BusinessForm() {
                 }}
                 className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200 space-y-6"
               >
-                {" "}
                 <h2 className="text-2xl font-bold mb-4">Basic Information</h2>
                 <FormField
                   control={form.control}
@@ -725,6 +719,12 @@ export default function BusinessForm() {
                     aria-label="Upload pdf"
                   />
                 </div>
+                {ispdfUploading && (
+                  <div className="flex items-center justify-center mt-4">
+                    <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                    <span>Uploading pdf...</span>
+                  </div>
+                )}
               </div>
 
               <div
