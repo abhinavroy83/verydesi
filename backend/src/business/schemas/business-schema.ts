@@ -135,18 +135,6 @@ export class Business {
       is24Hours: boolean;
       isClosed: boolean;
     };
-    saturday: {
-      startTime: string;
-      endTime: string;
-      is24Hours: boolean;
-      isClosed: boolean;
-    };
-    sunday: {
-      startTime: string;
-      endTime: string;
-      is24Hours: boolean;
-      isClosed: boolean;
-    };
   };
 
   @Prop({ type: String, required: true })
