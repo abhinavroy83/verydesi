@@ -36,7 +36,7 @@ export default function Footer() {
           <div className=" w-full bg-[#131A22] border-t-7 border-[#232f3e]">
             <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto bg-[#131A22] ">
               <div className="max-w-[1600px] w-full m-auto flex flex-col items-center pb-3 lg:flex-row py-2 justify-center"></div>
-              <div className="lg:flex gap-10">
+              <div className="lg:flex gap-10 justify-center">
                 <div className="flex text-white items-center gap-5 px-3 lg:px-0">
                   <div className="flex items-center mt-3 gap-2">
                     <Link href={"/"}>

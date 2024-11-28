@@ -125,6 +125,7 @@ export default function MyEventsPage() {
                   <TableCell>{item.businessName}</TableCell>
                   <TableCell>{item.address}</TableCell>
                   <TableCell>{item.categories[0]}</TableCell>
+                  <TableCell>{item.status}</TableCell>
                 </TableRow>
               ))
             ) : (

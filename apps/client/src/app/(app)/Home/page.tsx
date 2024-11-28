@@ -62,6 +62,7 @@ import {
 import Waethercard from "@/components/Whether/waether";
 import axios from "axios";
 import SkeletonFeaturedeventscard from "@/components/skeleton/FeaturedEventsSkeletonCard";
+import Link from "next/link";
 
 const leftColumnServices = [
   "Home Services",
@@ -236,12 +237,12 @@ const newsItems = [
 const categories = {
   "Business & Services": [
     "Home Services",
-    "Health & Medical",
-    "Food & Restaurants",
+    "Beauty",
     "Auto Care",
     "Insurance",
-    "Beauty",
+    "Health & Medical",
     "Legal",
+    "Food & Restaurants",
     "Travel",
     "Clothing",
     "Groceries",
@@ -385,7 +386,7 @@ export default function Home() {
           </motion.h1>
         </section> */}
 
-        <section className="relative h-[170px] mt-3 rounded-lg overflow-hidden">
+        <section className="relative h-[100px] mt-3 rounded-lg overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
@@ -396,35 +397,17 @@ export default function Home() {
           <div className="absolute inset-0 bg-black bg-opacity-50" />
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-white p-2">
             <h1 className="text-[43px] font-bold">Welcome To Portland</h1>
-            {/* <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold"
-              variants={containerVariants}
-              initial="hidden"
-              animate={isVisible ? "visible" : "hidden"}
-            >
-              {["Welcome", "To", "Portland"].map((word, index) => (
-                <motion.span
-                  key={index}
-                  className="inline-block mx-1"
-                  variants={childVariants}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </motion.h1> */}
-            <motion.div
-              className="mt-4 h-1 bg-white rounded-full w-48"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: isVisible ? 1 : 0 }}
-              transition={{ duration: 3, ease: "linear" }}
-            />
           </div>
         </section>
 
-        <h2 className="text-[25px] font-sans font-bold text-gray-800 mt-3">
-          Events{" "}
-        </h2>
-        <div className="w-full max-w-[79rem] mt-3 mx-auto">
+        <div className=" flex justify-between items-center">
+          <h2 className="text-[25px] font-sans font-bold text-gray-800 ">
+            Events
+          </h2>
+          <Link href={"/events"}>View all Events</Link>
+        </div>
+
+        <div className="w-full max-w-[79rem]  mx-auto">
           <Carousel
             opts={{
               align: "start",
@@ -433,8 +416,7 @@ export default function Home() {
           >
             <CarouselContent>
               {loading
-                ? // Display skeleton cards while loading
-                  [...Array(10)].map((_, index) => (
+                ? [...Array(10)].map((_, index) => (
                     <CarouselItem
                       key={index}
                       className="md:basis-1/2 lg:basis-1/4"
@@ -444,8 +426,7 @@ export default function Home() {
                       </div>
                     </CarouselItem>
                   ))
-                : // Display actual featured events after loading completes
-                  featuredEvents.map((event) => (
+                : featuredEvents.map((event) => (
                     <CarouselItem
                       key={event._id}
                       className="md:basis-1/2 lg:basis-1/4"
@@ -460,11 +441,13 @@ export default function Home() {
             <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
           </Carousel>
         </div>
-        <div>Featured Rooms</div>
-        <h2 className="text-[25px] font-sans font-bold text-gray-800">
-          Rooms & Roommates{" "}
-        </h2>
-        <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
+        <div className=" flex w-full justify-between items-center">
+          <h2 className="text-[25px] font-sans font-bold text-gray-800">
+            Rooms & Roommates{" "}
+          </h2>
+          <Link href={"/"}>View all Room</Link>
+        </div>
+        <div className="  grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-2 xl:gap-2">
           {Array.from({ length: 5 }).map((_, index) => (
             <FeaturedCard2 key={index} />
           ))}
@@ -472,65 +455,102 @@ export default function Home() {
         </div>
         <div className="w-full">
           <div className="container mx-auto">
-            <h2 className="text-2xl font-bold text-black my-4">Movies</h2>
-            <div className="flex space-x-4 overflow-x-auto pb-4">
-              {movies.map((movie) => (
-                <div
-                  key={movie.id}
-                  className="flex-shrink-0 w-[150px] transition-all duration-300 ease-in-out hover:w-[400px]"
-                >
-                  <Card className="h-[300px] border-0 bg-transparent relative group overflow-hidden">
-                    <div className="absolute inset-0">
-                      <img
-                        src={
-                          "https://th.bing.com/th/id/OIP.CD_KlLIkxB1zZCcn7Yh3QAHaJa?rs=1&pid=ImgDetMain"
-                        }
-                        alt={movie.title}
-                        className="object-cover w-full h-full rounded-lg"
-                      />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="absolute top-2 right-2 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                        aria-label={`Bookmark ${movie.title}`}
-                      >
-                        <Bookmark className="h-6 w-6" />
-                      </Button>
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="space-y-2 text-white">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs border px-1 rounded">
-                              {movie.rating}
-                            </span>
-                            <span className="text-xs">{movie.duration}</span>
-                            <span className="text-xs">• {movie.year}</span>
-                          </div>
-                          <h3 className="font-bold text-sm">{movie.title}</h3>
-                          <p className="text-xs text-gray-200">{movie.price}</p>
-                          <div className="flex gap-2 pt-2">
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              className="text-xs bg-white/10 hover:bg-white/20 text-white"
-                            >
-                              Trailer
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              className="text-xs bg-white/10 hover:bg-white/20 text-white"
-                            >
-                              Watch options
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                </div>
-              ))}
+            <div className=" flex w-full justify-between items-center">
+              <h2 className="text-[25px] font-sans font-bold text-gray-800">
+                Movies{" "}
+              </h2>
+              <Link href={"/business"}>View all Business</Link>
             </div>
+
+            <div className="w-full space-x-4 max-w-[79rem]  mx-auto">
+              <Carousel
+                opts={{
+                  align: "start",
+                }}
+                className=""
+              >
+                <CarouselContent>
+                  {loading
+                    ? [...Array(10)].map((_, index) => (
+                        <CarouselItem
+                          key={index}
+                          className="md:basis-1/2 lg:basis-1/4"
+                        >
+                          <div className="w-full">
+                            <SkeletonFeaturedeventscard key={index} />
+                          </div>
+                        </CarouselItem>
+                      ))
+                    : movies.map((movie) => (
+                        <div
+                          key={movie.id}
+                          className="flex-shrink-0 mx-2 w-[150px] transition-all duration-500 ease-in-out hover:w-[400px]"
+                        >
+                          <Card className="h-[300px] border-0 bg-transparent relative group overflow-hidden">
+                            <div className="absolute inset-0">
+                              <img
+                                src={
+                                  "https://th.bing.com/th/id/OIP.CD_KlLIkxB1zZCcn7Yh3QAHaJa?rs=1&pid=ImgDetMain"
+                                }
+                                alt={movie.title}
+                                className="object-cover w-full h-full rounded-lg"
+                              />
+                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="absolute top-2 right-2 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                                aria-label={`Bookmark ${movie.title}`}
+                              >
+                                <Bookmark className="h-6 w-6" />
+                              </Button>
+                              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="space-y-2 text-white">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs border px-1 rounded">
+                                      {movie.rating}
+                                    </span>
+                                    <span className="text-xs">
+                                      {movie.duration}
+                                    </span>
+                                    <span className="text-xs">
+                                      • {movie.year}
+                                    </span>
+                                  </div>
+                                  <h3 className="font-bold text-sm">
+                                    {movie.title}
+                                  </h3>
+                                  <p className="text-xs text-gray-200">
+                                    {movie.price}
+                                  </p>
+                                  <div className="flex gap-2 pt-2">
+                                    <Button
+                                      size="sm"
+                                      variant="secondary"
+                                      className="text-xs bg-white/10 hover:bg-white/20 text-white"
+                                    >
+                                      Trailer
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="secondary"
+                                      className="text-xs bg-white/10 hover:bg-white/20 text-white"
+                                    >
+                                      Watch options
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </Card>
+                        </div>
+                      ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-[-12] top-1/2 -translate-y-1/2" />
+                <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
+              </Carousel>
+            </div>
+            <div className="flex  overflow-x-auto pb-4"></div>
           </div>
         </div>
         <div className="pb-3">
@@ -580,14 +600,14 @@ export default function Home() {
       <div className="w-full mt-3 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
         <div className="max-w-md mx-auto">
           {/* <Waethercard /> */}
-          <Card className="w-full max-w-md bg-gradient-to-r from-cyan-700 to-blue-700 text-white">
-            <CardHeader>
-              <CardTitle className="text-xl font-medium text-center">
+          <div className=" rounded-xl px-2 border bg-card text-card-foreground shadow w-full p-2 max-w-md bg-gradient-to-r from-cyan-700 to-blue-700 text-white">
+            <div className="font-semibold leading-none tracking-tight">
+              <h1 className="text-xl p-2 font-medium text-center">
                 About Portland
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              </h1>
+            </div>
+            <div className="space-y-4 p-6 pt-0">
+              <div className="grid grid-cols-2 gap-2">
                 <div className="flex items-center gap-2">
                   <Users className="h-5 w-5" />
                   <div>
@@ -617,7 +637,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="pt-2">
+              <div className="">
                 <p className="text-sm leading-relaxed">
                   Portland is known for its parks, bridges and bicycle paths, as
                   well as for its eco-friendliness and microbreweries. Sitting
@@ -625,8 +645,8 @@ export default function Home() {
                   environmentally conscious cities in the world.
                 </p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           <Card className="mt-5">
             <CardContent className="p-0">

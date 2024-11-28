@@ -1,6 +1,6 @@
 export interface BusinessForm {
   _id: string;
-  
+
   userName: string;
   userPhone: string;
   businessName: string;
@@ -14,6 +14,7 @@ export interface BusinessForm {
   einNumber?: string;
   description: string;
   languages: string[];
+  status: string;
   sales?: {
     description?: string;
     startDate?: Date;

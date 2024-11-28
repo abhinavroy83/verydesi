@@ -39,7 +39,7 @@ export default function Eventcard({ event }: EventcardProps) {
         </CardHeader>
         <CardContent className="p-4">
           <h2 className="text-xl sm:text-[21px] font-bold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 mb-2">
-            {event.eventTitle}
+            {event.eventTitle} event event evnt
           </h2>
           <div className="text-sm sm:text-[17px] text-gray-600 space-y-1">
             <p className="flex items-center gap-2">
@@ -55,10 +55,7 @@ export default function Eventcard({ event }: EventcardProps) {
             {event.description}
           </p>
         </CardContent>
-        <CardFooter className="flex justify-between items-center border-t p-4 text-sm sm:text-base text-gray-900">
-          <p className="hover:underline">Other</p>
-          <span>12 interested</span> {/* Placeholder */}
-        </CardFooter>
+      
       </Card>
     </Link>
   );
