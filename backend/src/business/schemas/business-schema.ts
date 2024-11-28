@@ -59,24 +59,94 @@ export class Business {
 
   @Prop({
     type: {
-      monday: { type: String, required: true },
-      tuesday: { type: String, required: true },
-      wednesday: { type: String, required: true },
-      thursday: { type: String, required: true },
-      friday: { type: String, required: true },
-      saturday: { type: String, required: true },
-      sunday: { type: String, required: true },
+      monday: {
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
+        is24Hours: { type: Boolean, required: true },
+        isClosed: { type: Boolean, required: true },
+      },
+      tuesday: {
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
+        is24Hours: { type: Boolean, required: true },
+        isClosed: { type: Boolean, required: true },
+      },
+      wednesday: {
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
+        is24Hours: { type: Boolean, required: true },
+        isClosed: { type: Boolean, required: true },
+      },
+      thursday: {
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
+        is24Hours: { type: Boolean, required: true },
+        isClosed: { type: Boolean, required: true },
+      },
+      friday: {
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
+        is24Hours: { type: Boolean, required: true },
+        isClosed: { type: Boolean, required: true },
+      },
+      saturday: {
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
+        is24Hours: { type: Boolean, required: true },
+        isClosed: { type: Boolean, required: true },
+      },
+      sunday: {
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
+        is24Hours: { type: Boolean, required: true },
+        isClosed: { type: Boolean, required: true },
+      },
     },
     required: true,
   })
   openHours: {
-    monday: string;
-    tuesday: string;
-    wednesday: string;
-    thursday: string;
-    friday: string;
-    saturday: string;
-    sunday: string;
+    monday: {
+      startTime: string;
+      endTime: string;
+      is24Hours: boolean;
+      isClosed: boolean;
+    };
+    tuesday: {
+      startTime: string;
+      endTime: string;
+      is24Hours: boolean;
+      isClosed: boolean;
+    };
+    wednesday: {
+      startTime: string;
+      endTime: string;
+      is24Hours: boolean;
+      isClosed: boolean;
+    };
+    thursday: {
+      startTime: string;
+      endTime: string;
+      is24Hours: boolean;
+      isClosed: boolean;
+    };
+    friday: {
+      startTime: string;
+      endTime: string;
+      is24Hours: boolean;
+      isClosed: boolean;
+    };
+    saturday: {
+      startTime: string;
+      endTime: string;
+      is24Hours: boolean;
+      isClosed: boolean;
+    };
+    sunday: {
+      startTime: string;
+      endTime: string;
+      is24Hours: boolean;
+      isClosed: boolean;
+    };
   };
 
   @Prop({ type: String, required: true })
