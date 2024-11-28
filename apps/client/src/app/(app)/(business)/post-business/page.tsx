@@ -55,6 +55,7 @@ import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   userName: z.string().min(1, "Name is required"),
@@ -344,9 +345,15 @@ export default function BusinessForm() {
       setIspdfUploading(false);
     }
   };
+
+  const { data: session } = useSession();
+
   const onSubmit = async (data: FormData) => {
     console.log(data);
-
+    const token = session?.accessToken;
+    if (!token) {
+      throw new Error("token not found");
+    }
     try {
       const businessdata = {
         ...data,
@@ -357,7 +364,12 @@ export default function BusinessForm() {
 
       const res = await axios.post(
         "https://apiv2.verydesi.com/bussiness/postbusiness",
-        businessdata
+        businessdata,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.data) {
         console.log("error while posting business");
@@ -365,7 +377,7 @@ export default function BusinessForm() {
 
       toast.success("bussiness added succesfully");
     } catch (error) {
-      console.log('error while posting')
+      console.log("error while posting");
     }
   };
 

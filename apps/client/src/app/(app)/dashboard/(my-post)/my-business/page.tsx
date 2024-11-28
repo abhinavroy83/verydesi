@@ -38,7 +38,22 @@ export default function MyEventsPage() {
     let isMounted = true;
 
     const fetchMyEvents = async () => {
+      if (!token) {
+        console.error("Token not found, please sign in!");
+        return;
+      }
       setLoading(true);
+      try {
+        const response = await axios.get(
+          `https://apiv2.verydesi.com/business/list-my-business`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+      } catch (error) {}
     };
 
     if (token) fetchMyEvents();
