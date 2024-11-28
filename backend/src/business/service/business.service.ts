@@ -33,8 +33,10 @@ export class BusinessService {
 
   async getbusinessbyuser(userId: string) {
     try {
+      console.log(userId);
+
       const bussiness = await this.businessmodel.find({ UserId: userId });
-      if (bussiness) {
+      if (!bussiness) {
         throw new NotFoundException('no busines found by user');
       }
 

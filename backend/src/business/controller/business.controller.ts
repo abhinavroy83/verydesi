@@ -28,6 +28,7 @@ export class BusinessController {
   @Get('list-my-business')
   getalleventpostedbyuser(@Request() req) {
     const userId = req.user.userId;
+    console.log(userId)
     return this.businessservice.getbusinessbyuser(userId);
   }
 }
