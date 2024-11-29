@@ -198,7 +198,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                 ) : (
                   <>
                     <IoIosTransgender className="h-5 w-5 mr-1 text-purple-500" />
-                    <span className="text-[18px]">Any</span>
+                    <span className="text-[18px]">Any Gender</span>
                   </>
                 )}
               </div>

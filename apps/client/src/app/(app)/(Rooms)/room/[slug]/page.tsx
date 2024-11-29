@@ -119,7 +119,7 @@ export default function RoomDetails({
   // Handle form submission
   const onsubmit = async (data: FormData) => {
     try {
-      const roomId = roomData?._id || ""; // Provide a default empty string if undefined
+      const roomId = roomData?._id || "";
       const roomTitle = encodeURIComponent(roomData?.Title || "");
       setLoading(true);
       const response = await axios.post(
@@ -804,9 +804,10 @@ export default function RoomDetails({
                       </div>
                       <button
                         type="submit"
+                        disabled={loading}
                         className="w-full mx-auto px-9 py-2 bg-green-800 rounded-md text-white "
                       >
-                        Send Message
+                        {loading ? "Sending..." : "Send Message"}
                       </button>
                     </form>
                   ) : (
