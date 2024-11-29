@@ -4,9 +4,5 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 };
-module.exports = {
-  serverRuntimeConfig: {
-    port: 3001,
-  },
-};
+
 export default nextConfig;
