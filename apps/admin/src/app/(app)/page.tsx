@@ -17,9 +17,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { date } from "zod";
+import { RoomInterface } from "@myrepo/types";
 
 export default function Dashboard() {
-  const [duplicateroomdata, setduplicateroomdata] = useState([]);
+  const [duplicateroomdata, setduplicateroomdata] = useState<RoomInterface[]>(
+    []
+  );
   const { data: session } = useSession();
   console.log(session);
   const fetchduplicateroom = async () => {

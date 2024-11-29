@@ -1,4 +1,5 @@
 export interface RoomInterface {
+  count:number;
   _id: string;
   postedon: Date;
   Title: string;
