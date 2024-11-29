@@ -146,7 +146,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               height={300}
               className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
             />
-            <div className="text-[21px] absolute px-2 rounded-md top-2 left-2 bg-white/80 text-green-700">
+            <div className="text-[21px] font-bold absolute px-2 rounded-md top-2 left-2 bg-white/80 text-green-700">
               ${room.Expected_Rooms}
             </div>
           </div>
@@ -187,17 +187,26 @@ export default function Component({ room }: FeaturedCard2Props) {
               <div className="flex items-center">
                 {room.Preferred_gender === "Male only" ? (
                   <>
-                    <IoIosMale className="h-5 w-5 mr-1 text-blue-600" />
+                    <IoIosMale
+                      className="h-5 w-5 mr-1 text-blue-600"
+                      strokeWidth={15}
+                    />
                     <span className="text-[18px]">Male</span>
                   </>
                 ) : room.Preferred_gender === "Female only" ? (
                   <>
-                    <IoIosFemale className="h-5 w-5 mr-1 text-pink-500" />
+                    <IoIosFemale
+                      className="h-5 w-5 mr-1  text-pink-500"
+                      strokeWidth={15}
+                    />
                     <span className="text-[18px]">Female</span>
                   </>
                 ) : (
                   <>
-                    <IoIosTransgender className="h-5 w-5 mr-1 text-purple-500" />
+                    <IoIosTransgender
+                      className="h-5 w-5 mr-1  text-purple-500"
+                      strokeWidth={15}
+                    />
                     <span className="text-[18px]">Any Gender</span>
                   </>
                 )}
