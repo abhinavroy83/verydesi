@@ -37,7 +37,7 @@ export default function Eventcard({ event }: EventcardProps) {
               alt={`${event.eventTitle} banner`}
               className="w-full h-44 object-cover rounded-t-lg transition-transform duration-300 ease-in-out hover:opacity-80"
             />
-            <div className="absolute top-2 right-1 bg-black/80 text-white p-2 rounded-md">
+            <div className="absolute top-2 left-2 bg-black/80 text-white p-2 rounded-md">
               <div className="text-center">
                 <div className="text-sm font-medium">DEC</div>
                 <div className="text-lg font-bold">29</div>
