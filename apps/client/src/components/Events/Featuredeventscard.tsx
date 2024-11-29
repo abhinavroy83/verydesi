@@ -18,7 +18,7 @@ interface Event {
   venueName: string;
   description: string;
   images: string[];
-  address:string;
+  address: string;
   // Add other fields as necessary
 }
 
@@ -31,11 +31,20 @@ export default function Eventcard({ event }: EventcardProps) {
     <Link href={`/event/${event._id}`}>
       <Card className="h-full transition-shadow hover:shadow-md w-full sm:w-[100%] max-w-sm mx-auto font-sans">
         <CardHeader className="p-0">
-          <img
-            src={event.images[0] || "https://via.placeholder.com/150"} // Fallback if no image is available
-            alt={`${event.eventTitle} banner`}
-            className="w-full h-44 object-cover rounded-t-lg transition duration-300 ease-in-out hover:opacity-80"
-          />
+          <div className="relative">
+            <img
+              src={event.images[0] || "https://via.placeholder.com/150"} // Fallback if no image is available
+              alt={`${event.eventTitle} banner`}
+              className="w-full h-44 object-cover rounded-t-lg transition-transform duration-300 ease-in-out hover:opacity-80"
+            />
+            <div className="absolute top-2 right-1 bg-black/80 text-white p-2 rounded-md">
+              <div className="text-center">
+                <div className="text-sm font-medium">DEC</div>
+                <div className="text-lg font-bold">29</div>
+                <div className="text-sm font-medium">2024</div>
+              </div>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-4">
           <h2 className="text-xl sm:text-[21px] font-bold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 mb-2">
@@ -55,7 +64,6 @@ export default function Eventcard({ event }: EventcardProps) {
             {event.description}
           </p>
         </CardContent>
-      
       </Card>
     </Link>
   );

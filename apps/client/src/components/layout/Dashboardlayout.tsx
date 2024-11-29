@@ -31,7 +31,6 @@ import { useSession } from "next-auth/react";
 import { AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -235,7 +234,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             </p>
             <div className="flex justify-center space-x-2">
               <input
-              
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
@@ -312,7 +310,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   </Button>
                   <Button
                     onClick={() => {
-                      router.push("/dashboard/my-rooms");
+                      router.push("/dashboard/my-events");
+                    }}
+                    variant="ghost"
+                    className="w-full justify-start text-[15px] font-sans p-1"
+                  >
+                    <Briefcase className="mr-2 h-5 w-5" />
+                    My Events
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      router.push("/dashboard/my-business");
                     }}
                     variant="ghost"
                     className="w-full justify-start text-[15px] font-sans p-1"
