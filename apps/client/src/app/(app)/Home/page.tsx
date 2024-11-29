@@ -353,7 +353,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[3rem] mb-[32rem]">
+    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[1rem] mb-[10rem]">
       <div className="w-full lg:w-4/5 mr-4">
         {/* <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
           <motion.h1
@@ -553,8 +553,11 @@ export default function Home() {
             <div className="flex  overflow-x-auto pb-4"></div>
           </div>
         </div>
-        <div className="pb-3">
-          <h2 className="text-2xl font-bold text-black my-4">Jobs</h2>
+        <div className=" flex w-full justify-between items-center">
+          <h2 className="text-[25px] font-sans font-bold text-gray-800">
+            Jobs
+          </h2>
+          <Link href={"/business"}>View all Jobs</Link>
         </div>
         <div className="grid gap-0">
           {newsItems.map((item, index) => (
@@ -648,7 +651,7 @@ export default function Home() {
             </div>
           </div>
 
-          <Card className="mt-5">
+          <Card className="mt-3">
             <CardContent className="p-0">
               {/* <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2> */}
               <div className="bg-yellow-400 rounded-lg p-1">
@@ -734,7 +737,7 @@ export default function Home() {
               </Button>
             </CardFooter>
           </Card> */}
-          <Card className="w-full max-w-3xl mt-6">
+          <Card className="w-full max-w-3xl mt-3">
             <CardHeader className="pb-2">
               <CardTitle className="text-[20px] font-bold">
                 TRENDING IN PORTLAND

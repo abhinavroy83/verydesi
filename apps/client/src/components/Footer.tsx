@@ -9,7 +9,7 @@ import Script from "next/script";
 export default function Footer() {
   return (
     <div>
-      <div className="lg:mt-9 mt-6 w-full font-sans">
+      <div className=" w-full font-sans">
         <Script
           src="https://www.dpbolvw.net/placeholder-55689450?target=_blank&mouseover=N"
           strategy="lazyOnload"
@@ -18,9 +18,9 @@ export default function Footer() {
           onClick={() => {
             window.open("https://redletterweb.com/", "_blank");
           }}
-          className="flex flex-col justify-center items-center mb-2 cursor-pointer"
+          className="flex flex-col justify-center items-center  cursor-pointer"
         >
-          <div className="flex items-center justify-between overflow-hidden px-2 lg:px-0">
+          <div className="flex items-center justify-between overflow-hidden px-1 lg:px-0">
             <img
               src="https://res.cloudinary.com/druohnmyv/image/upload/v1730035746/Screenshot_2024-10-27_185841_argpoc.png"
               alt="Animation Character"
@@ -29,13 +29,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className=" mx-auto mt-8">
-          <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-10 ">
-            <p>hi</p>
+        <div className=" mx-auto mt-4">
+          <div className="bg-[#232f3e] flex text-[#232f3e] justify-center items-center gap-5 ">
+            <p>.</p>
           </div>
           <div className=" w-full bg-[#131A22] border-t-7 border-[#232f3e]">
             <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto bg-[#131A22] ">
-              <div className="max-w-[1600px] w-full m-auto flex flex-col items-center pb-3 lg:flex-row py-2 justify-center"></div>
+              <div className="max-w-[1600px] w-full m-auto flex flex-col items-center pb-1 lg:flex-row py-2 justify-center"></div>
               <div className="lg:flex gap-10 justify-center">
                 <div className="flex text-white items-center gap-5 px-3 lg:px-0">
                   <div className="flex items-center mt-3 gap-2">
@@ -161,7 +161,7 @@ export default function Footer() {
                   </div>
                 </div>
               </div>
-              <div className="border-t border-gray-700 pt-8 text-[15px] text-white">
+              <div className="border-t border-gray-700 pt-4 text-[15px] text-white">
                 <ul className="flex flex-wrap justify-center space-x-9 mb-4">
                   <li>
                     <Link
