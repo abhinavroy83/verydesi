@@ -457,7 +457,7 @@ export default function BusinessForm() {
         openHours: schedule,
         pdfurl: pdfurl,
         Imageurl: imageurl,
-        logourl: newlogoUrl,
+        logoUrl: newlogoUrl,
       };
       console.log(businessdata);
 

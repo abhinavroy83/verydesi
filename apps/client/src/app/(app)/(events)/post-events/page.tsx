@@ -400,7 +400,7 @@ export default function EventForm() {
                                     field.onChange(value);
                                     setEventType(value);
                                   }}
-                                  className="space-y-1"
+                                  className="space-x-6 flex"
                                 >
                                   <div className="flex items-center space-x-2">
                                     <RadioGroupItem
@@ -720,36 +720,6 @@ export default function EventForm() {
                                     {/* <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" /> */}
                                   </div>
                                 </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name="timeZone"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Time zone</FormLabel>
-                                <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select time zone" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    {USA_TIME_ZONES.map((tz) => (
-                                      <SelectItem
-                                        key={tz.value}
-                                        value={tz.value}
-                                      >
-                                        {tz.label}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
                                 <FormMessage />
                               </FormItem>
                             )}
