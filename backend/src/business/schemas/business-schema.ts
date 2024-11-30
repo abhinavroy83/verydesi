@@ -30,16 +30,34 @@ export class Business {
   businessName: string;
 
   @Prop({ type: String, required: true })
+  establishedsince: string;
+
+  @Prop({ type: String, required: true })
   legalName: string;
 
-  @Prop({ type: String, enum: ['business', 'service'], required: true })
-  businessType: 'business' | 'service';
+  @Prop({ type: String, required: true })
+  businessType: string;
 
   @Prop({ type: [String], required: true })
   categories: string[];
 
   @Prop({ type: String, required: true })
   address: string;
+
+  @Prop()
+  city?: string;
+
+  @Prop()
+  state?: string;
+
+  @Prop()
+  zipCode?: string;
+
+  @Prop()
+  country?: string;
+
+  @Prop({ type: String })
+  additionaladress: string;
 
   @Prop({ type: String, required: false })
   website?: string;
@@ -88,8 +106,7 @@ export class Business {
         endTime: { type: String },
         is24Hours: { type: Boolean, required: true },
         isClosed: { type: Boolean, required: true },
-      }
-    
+      },
     },
     required: true,
   })
@@ -134,6 +151,9 @@ export class Business {
 
   @Prop({ type: String, required: true })
   pdfurl: string;
+
+  @Prop({ type: String, required: true })
+  logoUrl: string;
 
   @Prop({ type: [String], required: true })
   Imageurl: string[];

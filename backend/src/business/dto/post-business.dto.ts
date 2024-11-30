@@ -64,10 +64,15 @@ export class BusinessDto {
 
   @IsNotEmpty()
   @IsString()
+  establishedsince: string;
+
+  @IsNotEmpty()
+  @IsString()
   legalName: string;
 
-  @IsEnum(['business', 'service'])
-  businessType: 'business' | 'service';
+  @IsNotEmpty()
+  @IsString()
+  businessType: string;
 
   @IsArray()
   @IsString({ each: true })
@@ -77,6 +82,26 @@ export class BusinessDto {
   @IsNotEmpty()
   @IsString()
   address: string;
+
+  @IsOptional()
+  @IsString()
+  city?: string;
+
+  @IsOptional()
+  @IsString()
+  state?: string;
+
+  @IsOptional()
+  @IsString()
+  zipCode?: string;
+
+  @IsOptional()
+  @IsString()
+  country?: string;
+
+  @IsOptional()
+  @IsString()
+  additionaladress: string;
 
   @IsOptional()
   @IsUrl()
@@ -106,6 +131,11 @@ export class BusinessDto {
   @IsNotEmpty()
   @IsString()
   Imageurl: string[];
+
+  @IsArray()
+  @IsNotEmpty()
+  @IsString()
+  logoUrl: string[];
 
   @IsNotEmpty()
   @IsString()
