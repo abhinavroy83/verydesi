@@ -189,15 +189,15 @@ export default function Component({ room }: FeaturedCard2Props) {
                   <>
                     <IoIosMale
                       className="h-5 w-5 mr-1 text-blue-600"
-                      strokeWidth={15}
+                      strokeWidth={25}
                     />
                     <span className="text-[18px]">Male</span>
                   </>
                 ) : room.Preferred_gender === "Female only" ? (
                   <>
                     <IoIosFemale
-                      className="h-5 w-5 mr-1  text-pink-500"
-                      strokeWidth={15}
+                      className="h-6 w-6 mr-1  text-pink-500"
+                      strokeWidth={25}
                     />
                     <span className="text-[18px]">Female</span>
                   </>
@@ -205,7 +205,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   <>
                     <IoIosTransgender
                       className="h-5 w-5 mr-1  text-purple-500"
-                      strokeWidth={15}
+                      strokeWidth={25}
                     />
                     <span className="text-[18px]">Any Gender</span>
                   </>
