@@ -20,6 +20,9 @@ export class Event {
   @Prop({ required: true })
   eventType: string;
 
+  @Prop({ required: true })
+  eventprice: string;
+
   @Prop({ required: true, type: Date })
   startDate: Date;
 

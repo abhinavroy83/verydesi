@@ -32,6 +32,10 @@ export class EventFormDTO {
   @IsNotEmpty({ message: 'Event type is required.' })
   eventType: string;
 
+  @IsString()
+  @IsNotEmpty({ message: 'Event type is required.' })
+  eventprice: string;
+
   @IsDate({ message: 'Start date must be a valid date.' })
   @Type(() => Date)
   startDate: Date;
