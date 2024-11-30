@@ -61,10 +61,18 @@ const formSchema = z.object({
   userName: z.string().min(1, "Name is required"),
   userPhone: z.string().min(1, "Phone number is required"),
   businessName: z.string().min(1, "Business name is required"),
+  establishedsince: z.number().min(1, "established is required"),
   legalName: z.string().min(1, "Legal name is required"),
-  businessType: z.enum(["business", "service"]),
+  businessType: z.string().min(1, {
+    message: "Business type is required.",
+  }),
   categories: z.array(z.string()).min(1, "Select at least one category"),
   address: z.string().min(1, "Address is required"),
+  city: z.string().min(1, "city is required"),
+  state: z.string().min(1, "state is required"),
+  zipCode: z.string().min(1, "zipCode is required"),
+  country: z.string().min(1, "Country is required"),
+  additionaladress: z.string().optional(),
   website: z.string().url().optional().or(z.literal("")),
   phone: z.string().min(1, "Phone number is required"),
   verificationMethod: z.enum([
@@ -110,6 +118,19 @@ const sections = [
   { id: "photos", title: "Photos" },
   { id: "sales", title: "Sales and Discounts" },
 ];
+const languages = [
+  { name: "Hindi", code: "hi" },
+  { name: "Telugu", code: "te" },
+  { name: "Tamil", code: "ta" },
+  { name: "Malayalam", code: "ml" },
+  { name: "Bengali", code: "bn" },
+  { name: "Gujarati", code: "gu" },
+  { name: "English", code: "en" },
+  { name: "Marathi", code: "mr" },
+  { name: "Punjabi", code: "pa" },
+  { name: "Kannada", code: "kn" },
+  { name: "Urdu", code: "ur" },
+];
 
 export default function BusinessForm() {
   const [images, setImages] = useState<File[]>([]);
@@ -121,7 +142,6 @@ export default function BusinessForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      businessType: "business",
       categories: [],
       languages: [],
       sales: {
@@ -138,8 +158,22 @@ export default function BusinessForm() {
         "address",
         `${addressComponents.street_number} ${addressComponents.street}`
       );
+      form.setValue("city", addressComponents.city);
+      form.setValue("state", addressComponents.state);
+      form.setValue("zipCode", addressComponents.zipCode);
+      form.setValue("country", addressComponents.country);
     }
   }, [addressComponents, form]);
+
+  const [sameAsBusinessName, setSameAsBusinessName] = useState(false);
+
+  const watchBusinessName = form.watch("businessName");
+  const handleCheckboxChange = (checked: boolean) => {
+    setSameAsBusinessName(checked);
+    if (checked) {
+      form.setValue("legalName", watchBusinessName);
+    }
+  };
 
   const scrollToSection = (sectionId: string) => {
     const section = sectionRefs.current[sectionId];
@@ -259,6 +293,24 @@ export default function BusinessForm() {
       },
     }));
   };
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+
+  const toggleLanguage = (code: string) => {
+    setSelectedLanguages((prev) =>
+      prev.includes(code)
+        ? prev.filter((lang) => lang !== code)
+        : [...prev, code]
+    );
+    const currentLanguages = form.getValues("languages");
+    if (currentLanguages.includes(code)) {
+      form.setValue(
+        "languages",
+        currentLanguages.filter((lang) => lang !== code)
+      );
+    } else {
+      form.setValue("languages", [...currentLanguages, code]);
+    }
+  };
 
   //upload images to s3
 
@@ -346,6 +398,51 @@ export default function BusinessForm() {
     }
   };
 
+  //upload single image
+  const [issingleimageUploading, setIssingleimageUploading] = useState(false);
+  const [newlogoUrl, setNewlogoUrl] = useState<string | null>(null);
+  const filelogoInputRef = useRef<HTMLInputElement>(null);
+
+  const handleimageFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      await handleUpload(file);
+    }
+  };
+
+  const handleEditClick = () => {
+    filelogoInputRef.current?.click();
+  };
+
+  const handleUpload = async (file: File) => {
+    setIssingleimageUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("oldImageUrl", "");
+    // console.log(formData);
+    try {
+      const response = await fetch(
+        "https://apiv2.verydesi.com/img/uploadSingleImage",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+      const data = await response.json();
+      console.log(data.url);
+      setNewlogoUrl(data.url);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setIssingleimageUploading(false);
+    }
+  };
+
   const { data: session } = useSession();
 
   const onSubmit = async (data: FormData) => {
@@ -360,6 +457,7 @@ export default function BusinessForm() {
         openHours: schedule,
         pdfurl: pdfurl,
         Imageurl: imageurl,
+        logourl: newlogoUrl,
       };
       console.log(businessdata);
 
@@ -496,18 +594,49 @@ export default function BusinessForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="legalName"
+                  name="establishedsince"
                   render={({ field }) => (
                     <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
                       <FormLabel className="md:w-1/4 text-md font-medium">
-                        Registered Legal Name of Business
+                        Established Since
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Enter legal business name"
-                          {...field}
-                        />
+                        <Input placeholder="eg.. 1947" {...field} />
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="legalName"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/5 text-md font-medium">
+                        Registered Legal Name of Business
+                      </FormLabel>
+                      <div className="flex-grow flex items-center space-x-2">
+                        <FormControl>
+                          <Input
+                            placeholder="Enter legal business name"
+                            {...field}
+                            disabled={sameAsBusinessName}
+                          />
+                        </FormControl>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="same-as-dba"
+                            checked={sameAsBusinessName}
+                            onCheckedChange={handleCheckboxChange}
+                          />
+                          <label
+                            htmlFor="same-as-dba"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Same as DBA
+                          </label>
+                        </div>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -524,23 +653,27 @@ export default function BusinessForm() {
                         <RadioGroup
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          className="flex flex-col space-y-1"
+                          className="flex  space-y-1"
                         >
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
-                              <RadioGroupItem value="business" />
+                              <RadioGroupItem value="Business Center / Local Retailer / Showroom" />
                             </FormControl>
                             <FormLabel className="font-normal">
-                              Business
+                              Business Center / Local Retailer / Showroom
                             </FormLabel>
                           </FormItem>
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
-                              <RadioGroupItem value="service" />
+                              <RadioGroupItem value="Brand" />
                             </FormControl>
-                            <FormLabel className="font-normal">
-                              Service
-                            </FormLabel>
+                            <FormLabel className="font-normal">Brand</FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="Agent" />
+                            </FormControl>
+                            <FormLabel className="font-normal">Agent</FormLabel>
                           </FormItem>
                         </RadioGroup>
                       </FormControl>
@@ -567,14 +700,53 @@ export default function BusinessForm() {
                             <SelectValue placeholder="Select categories" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="category1">
-                              Category 1
+                            <SelectItem value="food-catering">
+                              Food & Catering
                             </SelectItem>
-                            <SelectItem value="category2">
-                              Category 2
+                            <SelectItem value="health-wellness">
+                              Health & Wellness
                             </SelectItem>
-                            <SelectItem value="category3">
-                              Category 3
+                            <SelectItem value="automobiles">
+                              Automobiles
+                            </SelectItem>
+                            <SelectItem value="home-business-needs">
+                              Home & Business Needs
+                            </SelectItem>
+                            <SelectItem value="retail-stores">
+                              Retail Stores
+                            </SelectItem>
+                            <SelectItem value="memorial-service">
+                              Memorial service
+                            </SelectItem>
+                            <SelectItem value="educational-institutes">
+                              Educational institutes
+                            </SelectItem>
+                            <SelectItem value="electronics-repair">
+                              Electronics & Repair
+                            </SelectItem>
+                            <SelectItem value="financial-legal">
+                              Financial & Legal Services
+                            </SelectItem>
+                            <SelectItem value="wedding-events">
+                              Wedding & Events
+                            </SelectItem>
+                            <SelectItem value="real-estate">
+                              Real Estate Services
+                            </SelectItem>
+                            <SelectItem value="religious-community">
+                              Religious & Community Services
+                            </SelectItem>
+                            <SelectItem value="internet-services">
+                              Internet Based Services
+                            </SelectItem>
+                            <SelectItem value="travel-accommodation">
+                              Travel & Accommodation
+                            </SelectItem>
+                            <SelectItem value="technical-support">
+                              Technical Support Services
+                            </SelectItem>
+                            <SelectItem value="lessons-tuitions">
+                              Lessons/Tuitions
                             </SelectItem>
                           </SelectContent>
                         </Select>
@@ -633,6 +805,21 @@ export default function BusinessForm() {
                     />
                   ))}
                 </div>
+                <FormField
+                  control={form.control}
+                  name="additionaladress"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
+                      <FormLabel className="md:w-1/4 text-md font-medium">
+                        Additional Address
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea placeholder="Additional address" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="website"
@@ -736,10 +923,7 @@ export default function BusinessForm() {
                     )}
                   />
                 )}
-                <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                  <Label htmlFor="verificationDocument">
-                    Upload Verification Document
-                  </Label>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center space-y-4">
                   <input
                     type="file"
                     accept=".pdf"
@@ -750,15 +934,24 @@ export default function BusinessForm() {
                     aria-label="Upload pdf"
                     disabled={ispdfUploading}
                   />
+                  <label htmlFor="image-upload" className="cursor-pointer">
+                    <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                    <p className="mt-2 text-sm text-gray-500">
+                      Click to upload or drag and drop
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      PNG, JPG, GIF up to 10MB
+                    </p>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="btn-primary w-full"
+                    disabled={ispdfUploading}
+                  >
+                    {ispdfUploading ? "Uploading..." : "Choose File"}
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="btn-primary"
-                  disabled={ispdfUploading}
-                >
-                  {ispdfUploading ? "Uploading..." : "Choose File"}
-                </button>
                 {ispdfUploading && (
                   <div className="flex items-center justify-center mt-4">
                     <Loader2 className="h-6 w-6 animate-spin mr-2" />
@@ -889,50 +1082,71 @@ export default function BusinessForm() {
                         About/Description of Business/Service
                       </FormLabel>
                       <FormControl>
-                        <Textarea
-                          placeholder="Enter description"
-                          className="resize-none"
-                          {...field}
-                        />
+                        <Textarea placeholder="Enter description" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="languages"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 md:items-center">
-                      <FormLabel className="md:w-1/4 text-md font-medium">
-                        Languages spoken
-                      </FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={(value) =>
-                            field.onChange([...field.value, value])
-                          }
-                          value={field.value[field.value.length - 1]}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select languages" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="english">English</SelectItem>
-                            <SelectItem value="spanish">Spanish</SelectItem>
-                            <SelectItem value="french">French</SelectItem>
-                            <SelectItem value="german">German</SelectItem>
-                            <SelectItem value="chinese">Chinese</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      {/* <FormDescription>
-                        Selected languages: {field.value.join(", ")}
-                      </FormDescription> */}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="languages"
+                    render={() => (
+                      <FormItem>
+                        <FormLabel>Language</FormLabel>
+                        <FormControl>
+                          <div className="space-y-2">
+                            <div className="flex flex-wrap gap-2">
+                              {languages.map((lang) => (
+                                <Button
+                                  type="button"
+                                  key={lang.code}
+                                  variant={
+                                    selectedLanguages.includes(lang.code)
+                                      ? "default"
+                                      : "outline"
+                                  }
+                                  onClick={() => toggleLanguage(lang.code)}
+                                  className="text-sm"
+                                >
+                                  {lang.name}
+                                </Button>
+                              ))}
+                            </div>
+                            <div className="mt-2">
+                              {selectedLanguages.length > 0 && (
+                                <Label>Selected Languages:</Label>
+                              )}
+                              <div className="flex flex-wrap gap-2 mt-1">
+                                {selectedLanguages.map((code) => (
+                                  <div
+                                    key={code}
+                                    className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-sm flex items-center"
+                                  >
+                                    {
+                                      languages.find(
+                                        (lang) => lang.code === code
+                                      )?.name
+                                    }
+                                    <button
+                                      type="button"
+                                      onClick={() => toggleLanguage(code)}
+                                      className="ml-2 focus:outline-none"
+                                    >
+                                      <X className="h-4 w-4" />
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
 
               <div
@@ -942,54 +1156,110 @@ export default function BusinessForm() {
                 className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
               >
                 <h2 className="text-2xl font-bold mb-4">Photos</h2>
-                <div className="space-y-4">
-                  <Label htmlFor="photos">Add Photos (up to 5)</Label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      onChange={handleImageUpload}
-                      className="hidden"
-                      id="image-upload"
-                    />
-                    <label htmlFor="image-upload" className="cursor-pointer">
-                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                      <p className="mt-2 text-sm text-gray-500">
-                        Click to upload or drag and drop
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        PNG, JPG, GIF up to 10MB
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {images.length} / 5 images selected
-                      </p>
-                    </label>
-                  </div>
-                  <div className="grid grid-cols-5 gap-4">
-                    {images.map((image, index) => (
-                      <div key={index} className="relative">
-                        <img
-                          src={URL.createObjectURL(image)}
-                          alt={`Uploaded image ${index + 1}`}
-                          className="w-full h-24 object-cover rounded"
-                        />
-                        <button
+                <div className=" flex w-full justify-around">
+                  <div className="space-y-4">
+                    <Label htmlFor="photos">Add logo</Label>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleimageFileChange}
+                        ref={filelogoInputRef}
+                        className="sr-only"
+                        id="image-upload"
+                        aria-label="Upload image"
+                      />
+                      <label htmlFor="image-upload" className="cursor-pointer">
+                        <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                        <p className="mt-2 text-sm text-gray-500">
+                          Click to upload or drag and drop
+                        </p>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="rounded-full"
                           type="button"
-                          onClick={() => removeImage(index)}
-                          className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                          onClick={handleEditClick}
+                          disabled={issingleimageUploading}
                         >
-                          <X className="h-4 w-4" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                  {isimageUploading && (
-                    <div className="flex items-center justify-center mt-4">
-                      <Loader2 className="h-6 w-6 animate-spin mr-2" />
-                      <span>Uploading images...</span>
+                          {issingleimageUploading
+                            ? "Uploading..."
+                            : "Choose File"}
+                        </Button>
+                        <p className="text-xs text-gray-500">
+                          PNG, JPG, GIF up to 10MB
+                        </p>
+                        {issingleimageUploading && (
+                          <div className="flex items-center justify-center mt-4">
+                            <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                            <span>Uploading Logo...</span>
+                          </div>
+                        )}
+                        {newlogoUrl && (
+                          <Link
+                            href={newlogoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src={newlogoUrl}
+                              alt={`Uploaded logo`}
+                              className=" w-24 h-24 object-cover rounded"
+                            />
+                          </Link>
+                        )}
+                      </label>
                     </div>
-                  )}
+                  </div>
+                  <div className="space-y-4">
+                    <Label htmlFor="photos">Add Photos (up to 5)</Label>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleImageUpload}
+                        className="hidden"
+                        id="image-upload"
+                      />
+                      <label htmlFor="image-upload" className="cursor-pointer">
+                        <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                        <p className="mt-2 text-sm text-gray-500">
+                          Click to upload or drag and drop
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          PNG, JPG, GIF up to 10MB
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {images.length} / 5 images selected
+                        </p>
+                      </label>
+                    </div>
+                    <div className="grid grid-cols-5 gap-4">
+                      {images.map((image, index) => (
+                        <div key={index} className="relative">
+                          <img
+                            src={URL.createObjectURL(image)}
+                            alt={`Uploaded image ${index + 1}`}
+                            className="w-full h-24 object-cover rounded"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeImage(index)}
+                            className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    {isimageUploading && (
+                      <div className="flex items-center justify-center mt-4">
+                        <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                        <span>Uploading images...</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 

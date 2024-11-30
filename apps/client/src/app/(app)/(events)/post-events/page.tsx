@@ -113,6 +113,7 @@ export default function EventForm() {
       endDate: new Date(),
       endTime: "03:00",
       languages: [],
+      entryoption: "",
     },
   });
   const {
@@ -125,7 +126,10 @@ export default function EventForm() {
   });
 
   const { cities, isLoading, error } = useCityData();
+  const { register, watch } = form;
 
+  const entryoption = watch("entryoption");
+  console.log(entryoption);
   useEffect(() => {
     if (Object.keys(addressComponents).length > 0) {
       form.setValue(
@@ -411,6 +415,10 @@ export default function EventForm() {
                                       id="virtual"
                                     />
                                     <Label htmlFor="virtual">Virtual</Label>
+                                  </div>
+                                  <div className="flex items-center space-x-2">
+                                    <RadioGroupItem value="Both" id="Both" />
+                                    <Label htmlFor="virtual">Both</Label>
                                   </div>
                                 </RadioGroup>
                               </FormControl>
@@ -1001,6 +1009,22 @@ export default function EventForm() {
                             </FormItem>
                           )}
                         />
+
+                        {entryoption === "paid" && (
+                          <FormField
+                            control={form.control}
+                            name="eventprice"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Event price </FormLabel>
+                                <FormControl>
+                                  <Input placeholder="$32" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        )}
                       </CardContent>
                     </Card>
 
@@ -1011,22 +1035,24 @@ export default function EventForm() {
                     >
                       <h2 className="text-2xl font-bold my-3">Description </h2>
                       <Card>
-                        <FormField
-                          control={form.control}
-                          name="description"
-                          render={({ field }) => (
-                            <FormItem>
-                              {/* <FormLabel>Event Title *</FormLabel> */}
-                              <FormControl>
-                                <Textarea
-                                  placeholder="Enter description"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        <CardContent className="pt-6">
+                          <FormField
+                            control={form.control}
+                            name="description"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Description</FormLabel>
+                                <FormControl>
+                                  <Textarea
+                                    placeholder="Enter description"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </CardContent>
                       </Card>
                     </div>
                     <div
@@ -1044,7 +1070,6 @@ export default function EventForm() {
                             Add your photos (up to 5)
                           </p>
                           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-
                             <input
                               type="file"
                               accept="image/*"

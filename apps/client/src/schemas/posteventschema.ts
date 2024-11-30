@@ -8,7 +8,6 @@ export const EventformSchema = z.object({
   eventType: z.string().min(1, {
     message: "Event type is required.",
   }),
-
   startDate: z.date({
     required_error: "Start date is required.",
     invalid_type_error: "Start date must be a valid date.",
@@ -49,6 +48,7 @@ export const EventformSchema = z.object({
   city: z.string().optional(),
   state: z.string().optional(),
   zipCode: z.string().optional(),
+  eventprice: z.string().optional(),
   country: z.string().optional(),
   languages: z.array(z.string()).min(1, {
     message: "At least one language must be selected.",
