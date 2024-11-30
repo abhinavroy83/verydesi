@@ -8,17 +8,21 @@ export const EventformSchema = z.object({
   eventType: z.string().min(1, {
     message: "Event type is required.",
   }),
-  startDate: z.date({
-    required_error: "Start date is required.",
-    invalid_type_error: "Start date must be a valid date.",
-  }),
+  startDate: z
+    .date({
+      required_error: "Start date is required.",
+      invalid_type_error: "Start date must be a valid date.",
+    })
+    .nullable(),
   startTime: z.string().min(1, {
     message: "Start time is required.",
   }),
-  endDate: z.date({
-    required_error: "End date is required.",
-    invalid_type_error: "End date must be a valid date.",
-  }),
+  endDate: z
+    .date({
+      required_error: "End date is required.",
+      invalid_type_error: "End date must be a valid date.",
+    })
+    .nullable(),
   endTime: z.string().min(1, {
     message: "End time is required.",
   }),

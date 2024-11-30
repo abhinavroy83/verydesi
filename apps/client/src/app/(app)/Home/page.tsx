@@ -395,7 +395,7 @@ export default function Home() {
             }}
           />
           <div className="absolute inset-0 bg-black bg-opacity-50" />
-          <div className="relative z-10 flex flex-col items-center justify-center h-full text-white p-2">
+          <div className="relative flex flex-col items-center justify-center h-full text-white p-2">
             <h1 className="text-[43px] font-bold">Welcome To Portland</h1>
           </div>
         </section>
