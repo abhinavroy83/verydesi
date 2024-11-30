@@ -30,6 +30,7 @@ export class EventController {
 
   @Get('find_event_by_id/:_id')
   geteventbyid(@Param('_id') _id: string) {
+    console.log(_id);
     if (!_id) {
       throw new NotFoundException('Id is not available');
     }

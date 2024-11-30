@@ -3,6 +3,8 @@ import {
   Controller,
   Get,
   Inject,
+  NotFoundException,
+  Param,
   Post,
   Request,
   UseGuards,
@@ -28,7 +30,15 @@ export class BusinessController {
   @Get('list-my-business')
   getalleventpostedbyuser(@Request() req) {
     const userId = req.user.userId;
-    console.log(userId)
+    console.log(userId);
     return this.businessservice.getbusinessbyuser(userId);
+  }
+
+  @Get('get-single-business/:_id')
+  getbusinessbyid(@Param('_id') _id: string) {
+    if (!_id) {
+      throw new NotFoundException('Id is not available');
+    }
+    return this.businessservice.getbusiness(_id);
   }
 }

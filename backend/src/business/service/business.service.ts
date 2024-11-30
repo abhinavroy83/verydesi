@@ -31,10 +31,25 @@ export class BusinessService {
     }
   }
 
+  async getbusiness(_id: string) {
+    try {
+      console.log(_id);
+
+      const business = await this.businessmodel.findById(_id);
+      if (!business) {
+        throw new NotFoundException(' there is no business by this id');
+      }
+
+      return business;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Something went wrong while fetching busines',
+      );
+    }
+  }
+
   async getbusinessbyuser(userId: string) {
     try {
-      console.log(userId);
-
       const bussiness = await this.businessmodel.find({ UserId: userId });
       if (!bussiness) {
         throw new NotFoundException('no busines found by user');
