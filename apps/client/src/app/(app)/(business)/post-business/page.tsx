@@ -418,7 +418,7 @@ export default function BusinessForm() {
   //upload pdf
 
   const [ispdfUploading, setIspdfUploading] = useState(false);
-  const [pdfurl, setpdfurls] = useState<string[]>([]);
+  const [pdfurl, setpdfurls] = useState<string | undefined>(undefined);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -972,6 +972,11 @@ export default function BusinessForm() {
                     <Loader2 className="h-6 w-6 animate-spin mr-2" />
                     <span>Uploading PDF...</span>
                   </div>
+                )}
+                {pdfurl && (
+                  <Link href={pdfurl} target="_blank" rel="noopener noreferrer">
+                    View PDF
+                  </Link>
                 )}
               </div>
 
