@@ -61,7 +61,18 @@ const formSchema = z.object({
   userName: z.string().min(1, "Name is required"),
   userPhone: z.string().min(1, "Phone number is required"),
   businessName: z.string().min(1, "Business name is required"),
-  establishedsince: z.number().min(1, "established is required"),
+  establishedsince: z
+    .string()
+    .regex(/^\d{4}$/, "Year must be a 4-digit number")
+    .refine(
+      (value) => {
+        const year = parseInt(value, 10);
+        return year >= 1900 && year <= new Date().getFullYear();
+      },
+      {
+        message: `Year must be between 1900 and ${new Date().getFullYear()}`,
+      }
+    ),
   legalName: z.string().min(1, "Legal name is required"),
   businessType: z.string().min(1, {
     message: "Business type is required.",
@@ -312,6 +323,51 @@ export default function BusinessForm() {
     }
   };
 
+  //upload single image
+  const [issingleimageUploading, setIssingleimageUploading] = useState(false);
+  const [newlogoUrl, setNewlogoUrl] = useState<string | null>(null);
+  const filelogoInputRef = useRef<HTMLInputElement>(null);
+
+  const handleimageFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      await handleUpload(file);
+    }
+  };
+
+  const handleEditClick = () => {
+    filelogoInputRef.current?.click();
+  };
+
+  const handleUpload = async (file: File) => {
+    setIssingleimageUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("oldImageUrl", "");
+    // console.log(formData);
+    try {
+      const response = await fetch(
+        "https://apiv2.verydesi.com/img/uploadSingleImage",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+      const data = await response.json();
+      console.log(data.url);
+      setNewlogoUrl(data.url);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setIssingleimageUploading(false);
+    }
+  };
+
   //upload images to s3
 
   const [isimageUploading, setimageIsUploading] = useState(false);
@@ -395,51 +451,6 @@ export default function BusinessForm() {
       console.error("Error uploading image:", error);
     } finally {
       setIspdfUploading(false);
-    }
-  };
-
-  //upload single image
-  const [issingleimageUploading, setIssingleimageUploading] = useState(false);
-  const [newlogoUrl, setNewlogoUrl] = useState<string | null>(null);
-  const filelogoInputRef = useRef<HTMLInputElement>(null);
-
-  const handleimageFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      await handleUpload(file);
-    }
-  };
-
-  const handleEditClick = () => {
-    filelogoInputRef.current?.click();
-  };
-
-  const handleUpload = async (file: File) => {
-    setIssingleimageUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("oldImageUrl", "");
-    // console.log(formData);
-    try {
-      const response = await fetch(
-        "https://apiv2.verydesi.com/img/uploadSingleImage",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Upload failed");
-      }
-      const data = await response.json();
-      console.log(data.url);
-      setNewlogoUrl(data.url);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    } finally {
-      setIssingleimageUploading(false);
     }
   };
 
@@ -601,7 +612,11 @@ export default function BusinessForm() {
                         Established Since
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="eg.. 1947" {...field} />
+                        <Input
+                          type="text"
+                          placeholder="e.g., 1947"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -1156,7 +1171,7 @@ export default function BusinessForm() {
                 className="bg-white lg:p-[2rem] p-6 rounded-xl shadow-md border border-gray-200"
               >
                 <h2 className="text-2xl font-bold mb-4">Photos</h2>
-                <div className=" flex w-full justify-around">
+                <div className="flex  w-full justify-around">
                   <div className="space-y-4">
                     <Label htmlFor="photos">Add logo</Label>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
@@ -1166,10 +1181,10 @@ export default function BusinessForm() {
                         onChange={handleimageFileChange}
                         ref={filelogoInputRef}
                         className="sr-only"
-                        id="image-upload"
-                        aria-label="Upload image"
+                        id="image-logo"
+                        aria-label="Upload logo"
                       />
-                      <label htmlFor="image-upload" className="cursor-pointer">
+                      <label htmlFor="logo-upload" className="cursor-pointer">
                         <Upload className="mx-auto h-12 w-12 text-gray-400" />
                         <p className="mt-2 text-sm text-gray-500">
                           Click to upload or drag and drop
