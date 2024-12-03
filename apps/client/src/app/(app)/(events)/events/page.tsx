@@ -78,11 +78,11 @@ export default function Component() {
                 .filter(event => event.eventpostingcity === city && new Date(event.startDate) >= new Date())
                 .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
                 .slice(0, 10);
-
+console.log(filteredFeaturedEvents)
             const remainingEvents = events
                 .filter(event => !filteredFeaturedEvents.includes(event))
                 .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
-
+console.log(remainingEvents)
             setFeaturedEvents(filteredFeaturedEvents);
             setNonFeaturedEvents(remainingEvents);
         } catch (error) {
@@ -172,7 +172,6 @@ export default function Component() {
   >
     <CarouselContent>
       {loading ? (
-        // Display skeleton cards while loading
         [...Array(10)].map((_, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
             <div className="w-full">
