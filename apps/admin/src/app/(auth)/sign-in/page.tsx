@@ -33,6 +33,7 @@ export default function AdminSignIn() {
       redirect: false,
     });
     if (result?.error) {
+      console.log(result?.error)
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",

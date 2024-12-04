@@ -44,7 +44,7 @@ function page() {
 
   const fetchrooms = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/event/find-all-event");
+      const res = await axios.get("https://apiv2.verydesi.com/event/find-all-event");
       seteventdata(res.data);
       setLoading(false);
     } catch (error) {
@@ -93,7 +93,7 @@ function page() {
       <div className="container mx-auto bg-white text-black rounded-lg min-h-screen">
         <div className="bg-gray-100 text-black p-4 rounded-t-lg flex items-center space-x-2">
           <MdMeetingRoom className="w-6 h-6 text-black" />
-          <h1 className="text-2xl font-bold">All Rooms</h1>
+          <h1 className="text-2xl font-bold">All Event</h1>
         </div>
         <nav
           className="flex justify-between text-sm text-gray-500 px-4 py-2"
@@ -111,8 +111,8 @@ function page() {
             <li>
               <div className="flex items-center">
                 <ChevronRight className="w-4 h-4 mx-1" />
-                <Link href="/All-rooms" className="ml-1 hover:text-gray-700">
-                  All Rooms
+                <Link href="/All-Events" className="ml-1 hover:text-gray-700">
+                  All Events
                 </Link>
               </div>
             </li>
