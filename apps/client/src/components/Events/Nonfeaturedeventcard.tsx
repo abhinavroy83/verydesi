@@ -71,7 +71,7 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
         <div className="flex justify-between items-center mt-2 sm:mt-0 absolute lg:right-11 lg:bottom-6 bottom-2 right-3">
           <div className="flex items-center gap-2">
             <Heart className="hover:fill-red-600 hover:stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
-            <p className="text-lg sm:text-[22px] font-bold text-green-700">
+            <p className="text-lg sm:text-[22px] capitalize font-bold text-green-700">
               {event.entryoption}
             </p>
           </div>
