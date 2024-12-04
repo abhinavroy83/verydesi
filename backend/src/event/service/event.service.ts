@@ -105,4 +105,17 @@ export class EventService {
       );
     }
   }
+
+  async deleteevent(eventId: string) {
+    try {
+      const event = await this.eventmodel.findByIdAndDelete({ _id: eventId });
+
+      if (!event) {
+        throw new NotFoundException('Event not found');
+      }
+      return { success: true, message: 'event deleted successfully' };
+    } catch (error) {
+      throw new Error(`Error while delete room: ${error.message}`);
+    }
+  }
 }

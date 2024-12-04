@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   NotFoundException,
@@ -40,5 +41,15 @@ export class BusinessController {
       throw new NotFoundException('Id is not available');
     }
     return this.businessservice.getbusiness(_id);
+  }
+
+  @Get('find-all-business')
+  getallevent() {
+    return this.businessservice.getallbusiness();
+  }
+
+  @Delete('delete-business/:businessid')
+  async deleteevent(@Param('businessid') businessid: string) {
+    return this.businessservice.deletebusinessevent(businessid);
   }
 }

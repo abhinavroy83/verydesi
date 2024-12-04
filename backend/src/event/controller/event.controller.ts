@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -47,5 +48,10 @@ export class EventController {
   @Get('find-all-event')
   getallevent() {
     return this.eventservice.findallevent();
+  }
+
+  @Delete('delete-event/:eventid')
+  async deleteevent(@Param('eventid') eventid: string) {
+    return this.eventservice.deleteevent(eventid);
   }
 }

@@ -62,4 +62,34 @@ export class BusinessService {
       );
     }
   }
+
+  async getallbusiness() {
+    try {
+      const allbusiness = await this.businessmodel.find();
+
+      if (allbusiness.length <= 0) {
+        throw new NotFoundException('there is no bussiness');
+      }
+
+      return allbusiness;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'error while finding all business ',
+      );
+    }
+  }
+
+
+  async deletebusinessevent(businessId: string) {
+    try {
+      const business = await this.businessmodel.findByIdAndDelete({ _id: businessId });
+
+      if (!business) {
+        throw new NotFoundException('business not found');
+      }
+      return { success: true, message: 'business deleted successfully' };
+    } catch (error) {
+      throw new Error(`Error while delete room: ${error.message}`);
+    }
+  }
 }
