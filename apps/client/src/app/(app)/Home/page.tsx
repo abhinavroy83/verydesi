@@ -664,13 +664,13 @@ export default function Home() {
                         </h3>
                         <div className="flex flex-wrap gap-1">
                           {items.map((category) => (
-                            <Button
+                            <div
                               key={category}
-                              variant="secondary"
-                              className="rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+                              // variant="secondary"
+                              className="bg-white p-1 px-2 rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
                             >
                               {category}
-                            </Button>
+                            </div>
                           ))}
                         </div>
                         <p className="flex w-full justify-end">
