@@ -13,7 +13,7 @@ const LeafletMapRoom: React.FC<LeafletMapRoomProps> = ({
 }) => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const markerRef = useRef<L.Layer | null>(null);
-  
+
   const [currentLocation, setCurrentLocation] = useState({
     lat: 0,
     lng: 0,
@@ -33,7 +33,28 @@ const LeafletMapRoom: React.FC<LeafletMapRoomProps> = ({
     }).addTo(map);
 
     if (markerstyle === "marker") {
-      markerRef.current = L.marker([lat, lng]).addTo(map);
+      markerRef.current = L.marker([lat, lng], {
+        icon: L.divIcon({
+          className: "custom-div-icon",
+          html: `
+            <div style="
+              background-color: white; 
+              border-radius: 50%; 
+              width: 40px; 
+              height: 40px; 
+              display: flex; 
+              align-items: center; 
+              justify-content: center; 
+              box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);">
+              <img src="https://res.cloudinary.com/druohnmyv/image/upload/v1733337909/olziueqwtlrnei2lonrn.png" style="width: 25px; height: 25px;" />
+            </div>
+          `,
+          iconSize: [40, 40],
+          iconAnchor: [20, 40],
+          popupAnchor: [0, -40],
+          tooltipAnchor: [20, -20],
+        }),
+      }).addTo(map);
     } else if (markerstyle === "circle") {
       markerRef.current = L.circle([lat, lng], {
         color: "#f03",
