@@ -8,6 +8,7 @@ import Link from "next/link";
 
 interface Event {
   _id: string;
+  entryoption:string;
   eventTitle: string;
   startDate: string;
   venueName: string;
@@ -71,7 +72,7 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
           <div className="flex items-center gap-2">
             <Heart className="hover:fill-red-600 hover:stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
             <p className="text-lg sm:text-[22px] font-bold text-green-700">
-              Free
+              {event.entryoption}
             </p>
           </div>
         </div>

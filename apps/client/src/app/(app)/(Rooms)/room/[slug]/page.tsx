@@ -621,7 +621,10 @@ export default function RoomDetails({
               <CardContent className="">
                 <div className="aspect-w-16 aspect-h-9">
                   {locationsndString && (
-                    <LeafletMapRoom onLocationReceived={locationsndString} />
+                    <LeafletMapRoom
+                      onLocationReceived={locationsndString}
+                      markerstyle="circle"
+                    />
                   )}{" "}
                 </div>
               </CardContent>

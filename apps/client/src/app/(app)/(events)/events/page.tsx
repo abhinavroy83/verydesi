@@ -21,6 +21,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import axios from "axios";
+import { Event } from "@myrepo/types";
 
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
 export default function Component() {
@@ -38,26 +39,15 @@ export default function Component() {
     "Highest Rated",
     "Most Reviewed",
   ];
-  interface Event {
-    _id: string;
-    eventpostingcity: string;
-    eventTitle: string;
-    startDate: string;
-    venueName: string;
-    description: string;
-    images: string[];
-    address: string;
-    state: string;
-  }
+
   const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
   const [nonFeaturedEvents, setNonFeaturedEvents] = useState<Event[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-
+  
   const handleSelect = (option: SortOption) => {
     setSelectedOption(option);
     setIsOpen(false);
-    // Here you would typically call a function to actually sort the items
     console.log(`Sorting by: ${option}`);
   };
   const itemsPerPage = 7;
@@ -78,11 +68,9 @@ export default function Component() {
                 .filter(event => event.eventpostingcity === city && new Date(event.startDate) >= new Date())
                 .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
                 .slice(0, 10);
-console.log(filteredFeaturedEvents)
             const remainingEvents = events
                 .filter(event => !filteredFeaturedEvents.includes(event))
                 .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
-console.log(remainingEvents)
             setFeaturedEvents(filteredFeaturedEvents);
             setNonFeaturedEvents(remainingEvents);
         } catch (error) {

@@ -4,14 +4,16 @@ import "leaflet/dist/leaflet.css";
 
 interface LeafletMapRoomProps {
   onLocationReceived: { lat: number; lng: number };
+  markerstyle: string;
 }
 
 const LeafletMapRoom: React.FC<LeafletMapRoomProps> = ({
   onLocationReceived,
+  markerstyle,
 }) => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const markerRef = useRef<L.Circle | null>(null);
-
+  const markerRef = useRef<L.Layer | null>(null);
+  
   const [currentLocation, setCurrentLocation] = useState({
     lat: 0,
     lng: 0,
@@ -30,12 +32,16 @@ const LeafletMapRoom: React.FC<LeafletMapRoomProps> = ({
       attribution: "© OpenStreetMap",
     }).addTo(map);
 
-    markerRef.current = L.circle([lat, lng], {
-      color: "",
-      fillColor: "#f03",
-      fillOpacity: 0.3,
-      radius: 1000,
-    }).addTo(map);
+    if (markerstyle === "marker") {
+      markerRef.current = L.marker([lat, lng]).addTo(map);
+    } else if (markerstyle === "circle") {
+      markerRef.current = L.circle([lat, lng], {
+        color: "#f03",
+        fillColor: "#f03",
+        fillOpacity: 0.3,
+        radius: 1000,
+      }).addTo(map);
+    }
 
     // Event handler for updating location
 

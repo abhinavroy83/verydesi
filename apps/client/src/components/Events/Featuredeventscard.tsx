@@ -19,7 +19,6 @@ interface Event {
   description: string;
   images: string[];
   address: string;
-  // Add other fields as necessary
 }
 
 interface EventcardProps {
@@ -27,6 +26,13 @@ interface EventcardProps {
 }
 
 export default function Eventcard({ event }: EventcardProps) {
+  const truncatecharacter = (text: string,length:number) => {
+    if (text.length <= length) {
+      return text;
+    }
+    return text.slice(0, length);
+  };
+
   return (
     <Link href={`/event/${event._id}`}>
       <Card className="h-full transition-shadow hover:shadow-md w-full sm:w-[100%] max-w-sm mx-auto font-sans">
@@ -50,7 +56,7 @@ export default function Eventcard({ event }: EventcardProps) {
         </CardHeader>
         <CardContent className="p-4">
           <h2 className="text-xl sm:text-[21px] font-bold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 mb-2">
-            {event.eventTitle} event event evnt
+            {truncatecharacter(event.eventTitle,25)}
           </h2>
           <div className="text-sm sm:text-[17px] text-gray-600 space-y-1">
             <p className="flex items-center gap-2">
@@ -63,7 +69,7 @@ export default function Eventcard({ event }: EventcardProps) {
             </p>
           </div>
           <p className="mt-2 text-sm sm:text-base text-gray-600">
-            {event.description}
+            {truncatecharacter(event.description,50)}
           </p>
         </CardContent>
       </Card>

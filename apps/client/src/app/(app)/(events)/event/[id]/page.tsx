@@ -75,7 +75,7 @@ function Events() {
         const response = await axios.get(
           `https://apiv2.verydesi.com/event/getEventByArea/${city}`
         );
-        console.log(response);
+        // console.log(response);
 
         setAllEvents(response.data || []);
       } catch (err) {
@@ -145,9 +145,19 @@ function Events() {
                     </BreadcrumbSeparator>
                     <BreadcrumbItem>
                       <BreadcrumbLink
-                        href="/rooms"
+                        href="/events"
                         className="flex items-center text-primary hover:text-primary-dark transition-colors"
                       >
+                        <Calendar className="w-4 h-4 mr-2" />
+                        <span className="font-medium">All Events</span>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator>
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    </BreadcrumbSeparator>
+
+                    <BreadcrumbItem>
+                      <BreadcrumbLink className="flex items-center text-primary hover:text-primary-dark transition-colors">
                         <Calendar className="w-4 h-4 mr-2" />
                         <span className="font-medium">Events</span>
                       </BreadcrumbLink>
@@ -275,7 +285,7 @@ function Events() {
                 </div>
                 <div className="flex gap-2 p-3">
                   <IoTicketOutline size={25} color="gray" />
-                  <p>Free</p>
+                  <p className=" capitalize">{event?.entryoption}</p>
                 </div>
               </div>
             </div>
@@ -392,7 +402,10 @@ function Events() {
               <CardContent className="">
                 <div className="aspect-w-16 aspect-h-9">
                   {locationsndString && (
-                    <LeafletMapRoom onLocationReceived={locationsndString} />
+                    <LeafletMapRoom
+                      onLocationReceived={locationsndString}
+                      markerstyle="marker"
+                    />
                   )}{" "}
                 </div>
               </CardContent>
