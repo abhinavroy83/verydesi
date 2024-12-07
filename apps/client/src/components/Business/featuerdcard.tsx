@@ -1,8 +1,13 @@
 import { Check, Heart, Star, TicketCheck } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { BusinessData } from "@myrepo/types";
 
-export function FeaturedBusinessCard() {
+interface bussinesprops {
+  business: BusinessData;
+}
+
+export function FeaturedBusinessCard({ business }: bussinesprops) {
   return (
     <Link href={`/business/1212`}>
       <Card className="w-full max-w-3xl overflow-hidden shadow-md hover:shadow-lg font-sans">

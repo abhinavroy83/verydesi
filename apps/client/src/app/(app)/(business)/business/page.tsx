@@ -35,13 +35,16 @@ import {
   Tv,
   ChevronUp,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FeaturedBusinessCard } from "@/components/Business/featuerdcard";
+import axios from "axios";
+import { BusinessData } from "@myrepo/types";
 
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
+
 export default function Component() {
   const [showAll, setShowAll] = useState(false);
   const router = useRouter();
@@ -84,11 +87,29 @@ export default function Component() {
   const [selectedOption, setSelectedOption] =
     useState<SortOption>("Recommended");
 
+  const [data, setData] = useState<BusinessData[]>([]);
+
   const options: SortOption[] = [
     "Recommended",
     "Highest Rated",
     "Most Reviewed",
   ];
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const res = await axios.get(
+          `https://apiv2.verydesi.com/business/find-all-business`
+        );
+        console.log(res.data);
+        setData(res.data);
+      } catch (error) {
+        console.log("error while fetching bussines", error);
+      }
+    };
+
+    fetchdata();
+  }, []);
 
   const handleSelect = (option: SortOption) => {
     setSelectedOption(option);
@@ -101,7 +122,7 @@ export default function Component() {
     <HomeLayout>
       <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3 font-sans">
         <h2 className="text-2xl font-bold mb-4">Categories</h2>
-       
+
         <div className="flex flex-wrap gap-2">
           {visibleCategories.map((category) => (
             <Badge
@@ -189,8 +210,8 @@ export default function Component() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4">
-          {[...Array(6)].map((_, index) => (
-            <FeaturedBusinessCard key={index} />
+          {data.map((items,index) => (
+            <FeaturedBusinessCard key={index} business={items} />
           ))}
         </div>
       </div>
