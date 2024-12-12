@@ -101,7 +101,7 @@ export default function Component() {
     <HomeLayout>
       <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 lg:pl-3 font-sans">
         <h2 className="text-2xl font-bold mb-4">Categories</h2>
-       
+
         <div className="flex flex-wrap gap-2">
           {visibleCategories.map((category) => (
             <Badge
@@ -193,6 +193,11 @@ export default function Component() {
             <FeaturedBusinessCard key={index} />
           ))}
         </div>
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4">
+          {[...Array(6)].map((_, index) => (
+            <FeaturedBusinessCard key={index} />
+          ))}
+        </div> */}
       </div>
     </HomeLayout>
   );
