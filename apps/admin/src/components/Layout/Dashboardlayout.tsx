@@ -37,7 +37,7 @@ const menuItems = [
   { name: "Basic Users", icon: Users, to: "/Basic-user" },
   { name: "Admins Users", icon: Users, to: "/Admin-user" },
   { name: "Pending Requests", icon: Mail, to: "/admin/getapproval" },
-  { name: "Area", icon: MapPin, to: "/admin/allarea" },
+  { name: "Area", icon: MapPin, to: "/Allarea" },
   { name: "Customer Message", icon: MessageSquare, to: "/admin/getHelp" },
 ];
 
