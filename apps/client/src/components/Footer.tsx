@@ -18,12 +18,12 @@ export default function Footer() {
           onClick={() => {
             window.open("https://redletterweb.com/", "_blank");
           }}
-          className="flex flex-col justify-center items-center  cursor-pointer"
+          className="flex flex-col justify-center items-center cursor-pointer"
         >
-          <div className="flex items-center justify-between overflow-hidden px-1 lg:px-0">
+          <div className="flex items-center justify-between overflow-hidden px-1 lg:px-0 mt-4 lg:mt-0">
             <img
               src="https://res.cloudinary.com/druohnmyv/image/upload/v1730035746/Screenshot_2024-10-27_185841_argpoc.png"
-              alt="Animation Character"
+              alt="REDLETTER JOB"
               className="object-cover"
             />
           </div>

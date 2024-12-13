@@ -45,9 +45,9 @@ export default function Eventcard({ event }: EventcardProps) {
             />
             <div className="absolute top-3 left-3 bg-black/80 text-white px-2 py-1 rounded-md font-mono shadow-sm shadow-red-700">
               <div className="text-center">
-                <div className="text-sm font-bold leading-none">DEC</div>
-                <div className="text-3xl font-bold leading-none mb-0.5">29</div>
-                <div className="text-sm font-medium leading-none">2024</div>
+                <div className="text-[16px] font-bold leading-none">DEC</div>
+                <div className="text-[33px] font-bold leading-none">29</div>
+                <div className="text-[16px] font-medium leading-none">2024</div>
               </div>
             </div>
           </div>
