@@ -680,22 +680,6 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                {/* <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                  <div>
-                    {leftColumnServices.map((service, index) => (
-                      <div key={index} className="text-sm">
-                        {service}
-                      </div>
-                    ))}
-                  </div>
-                  <div>
-                    {rightColumnServices.map((service, index) => (
-                      <div key={index} className="text-sm">
-                        {service}
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
               </div>
             </CardContent>
           </Card>
