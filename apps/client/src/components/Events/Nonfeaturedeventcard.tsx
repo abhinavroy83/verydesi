@@ -8,7 +8,7 @@ import Link from "next/link";
 
 interface Event {
   _id: string;
-  entryoption:string;
+  entryoption: string;
   eventTitle: string;
   startDate: string;
   venueName: string;
@@ -40,7 +40,7 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
           className="rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none w-full sm:w-[7rem] h-48 sm:h-full object-cover transition duration-300 ease-in-out hover:opacity-80"
         />
       </div>
-      <div className="p-3 sm:p-2 flex flex-col justify-between flex-grow">
+      <div className="p-3 sm:p-2 flex flex-col justify-between flex-grow h-[140px] lg:h-full">
         <div>
           <h2 className="text-[21px] font-bold line-clamp-1">
             {event.eventTitle}
@@ -51,7 +51,9 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
                 className="text-[#054687] flex-shrink-0"
                 size={20}
               />
-              <span>{new Date(event.startDate).toLocaleString()}</span>
+              <p className="flex items-center gap-1">
+                <span>{new Date(event.startDate).toLocaleString()}</span>
+              </p>
             </p>
             <span className="hidden sm:inline">|</span>
             <p className="flex items-center gap-1">
@@ -68,12 +70,12 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center mt-2 sm:mt-0 absolute lg:right-11 lg:bottom-6 bottom-2 right-3">
-          <div className="flex items-center gap-2">
-            <Heart className="hover:fill-red-600 hover:stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
+        <div className="flex justify-between items-center mt-2 sm:mt-0 absolute lg:right-7 lg:bottom-6 bottom-3 right-3">
+          <div className="flex items-center gap-4">
             <p className="text-lg sm:text-[22px] capitalize font-bold text-green-700">
               {event.entryoption}
             </p>
+            <Heart className="hover:fill-red-600 hover:stroke-red-500 cursor-pointer transition-colors duration-200 ease-in-out" />
           </div>
         </div>
       </div>

@@ -173,7 +173,7 @@ export default function Component() {
                   />
                 </Button>
                 {isOpen && (
-                  <div className="origin-top-right absolute right-0 mt-2 w-[10rem] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="origin-top-right absolute right-0 mt-2 w-[10rem] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
                     <div
                       className="py-1"
                       role="listbox"
@@ -214,6 +214,11 @@ export default function Component() {
             <FeaturedBusinessCard key={index} business={items} />
           ))}
         </div>
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4">
+          {[...Array(6)].map((_, index) => (
+            <FeaturedBusinessCard key={index} />
+          ))}
+        </div> */}
       </div>
     </HomeLayout>
   );

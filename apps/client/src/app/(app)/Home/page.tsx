@@ -603,13 +603,13 @@ export default function Home() {
       <div className="w-full mt-3 lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
         <div className="max-w-md mx-auto">
           {/* <Waethercard /> */}
-          <div className=" rounded-xl px-2 border bg-card text-card-foreground shadow w-full p-2 max-w-md bg-gradient-to-r from-cyan-700 to-blue-700 text-white">
+          <div className=" rounded-xl border bg-card text-card-foreground shadow w-full py-2 max-w-md bg-gradient-to-r from-cyan-700 to-blue-700 text-white">
             <div className="font-semibold leading-none tracking-tight">
-              <h1 className="text-xl p-2 font-medium text-center">
+              <h1 className="text-xl py-2 font-medium text-center">
                 About Portland
               </h1>
             </div>
-            <div className="space-y-4 p-6 pt-0">
+            <div className="space-y-4 p-3 pt-0">
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex items-center gap-2">
                   <Users className="h-5 w-5" />
@@ -680,22 +680,6 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-                {/* <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                  <div>
-                    {leftColumnServices.map((service, index) => (
-                      <div key={index} className="text-sm">
-                        {service}
-                      </div>
-                    ))}
-                  </div>
-                  <div>
-                    {rightColumnServices.map((service, index) => (
-                      <div key={index} className="text-sm">
-                        {service}
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
               </div>
             </CardContent>
           </Card>
@@ -737,13 +721,13 @@ export default function Home() {
               </Button>
             </CardFooter>
           </Card> */}
-          <Card className="w-full max-w-3xl mt-3">
-            <CardHeader className="pb-2">
+          <div className="w-full max-w-3xl mt-3 border rounded-xl">
+            <div className="p-2">
               <CardTitle className="text-[20px] font-bold">
                 TRENDING IN PORTLAND
               </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-wrap gap-1">
+            </div>
+            <div className="flex flex-wrap gap-1 px-2 pb-3">
               {recommendedSearches.map((search, index) => (
                 <Button
                   key={index}
@@ -753,8 +737,8 @@ export default function Home() {
                   {search}
                 </Button>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>
