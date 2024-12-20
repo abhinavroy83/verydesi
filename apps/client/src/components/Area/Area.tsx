@@ -47,7 +47,7 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-[370px] p-4 bg-white rounded-xl shadow-xl border-none font-sans"
+          className="w-[370px] p-1 bg-white rounded-xl shadow-xl border-none font-sans mt-70"
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <div className="relative">

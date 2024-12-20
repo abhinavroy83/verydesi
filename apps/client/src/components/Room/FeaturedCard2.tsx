@@ -196,7 +196,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                 ) : room.Preferred_gender === "Female only" ? (
                   <>
                     <IoIosFemale
-                      className="h-6 w-6 mr-1  text-pink-500"
+                      className="h-5 w-5 mr-1 text-pink-500"
                       strokeWidth={25}
                     />
                     <span className="text-[18px]">Female</span>
