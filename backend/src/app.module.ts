@@ -14,6 +14,7 @@ import { AdminauthModule } from './adminauth/adminauth.module';
 import { BusinessService } from './business/service/business.service';
 import { BusinessController } from './business/controller/business.controller';
 import { BusinessModule } from './business/business.module';
+import { AreaModule } from './area/area.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { BusinessModule } from './business/business.module';
     EventModule,
     AdminauthModule,
     BusinessModule,
+    AreaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

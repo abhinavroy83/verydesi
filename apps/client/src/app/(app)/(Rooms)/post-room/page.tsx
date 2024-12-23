@@ -42,10 +42,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import { postroomschema } from "@/schemas";
 import type { FormData } from "@/schemas";
-
 import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 import { useCityData } from "@/hooks/use-city-hooks";
 import axios from "axios";
@@ -61,6 +59,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+
 
 const sections = [
   { id: "basic-info", title: "Basic Information" },
@@ -120,6 +119,7 @@ export default function RoomPostingForm() {
       form.setValue("phoneNumber", userData.phone_number || "");
     }
   }, [userData, form]);
+  
   const [images, setImages] = useState<File[]>([]);
   const [imageurl, setimageurls] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);

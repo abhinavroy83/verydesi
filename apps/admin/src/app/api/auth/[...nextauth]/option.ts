@@ -52,6 +52,13 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    async signOut({ callbackUrl }) {
+      const newurl = process.env.NEXTAUTH_URL;
+      if (newurl) {
+        return `${newurl}/sign-in`;
+      }
+      return callbackUrl;
+    },
   },
   pages: {
     signIn: "/sign-in",

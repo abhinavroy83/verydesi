@@ -2,15 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { motion } from "framer-motion";
 import {
   Bell,
@@ -24,7 +15,6 @@ import {
   Mail,
   MapPin,
   MessageSquare,
-  Settings,
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -36,7 +26,7 @@ const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, to: "/" },
   { name: "Basic Users", icon: Users, to: "/Basic-user" },
   { name: "Admins Users", icon: Users, to: "/Admin-user" },
-  { name: "Pending Requests", icon: Mail, to: "/admin/getapproval" },
+  { name: "Pending Requests", icon: Mail, to: "/pending-messages" },
   { name: "Area", icon: MapPin, to: "/Allarea" },
   { name: "Customer Message", icon: MessageSquare, to: "/admin/getHelp" },
 ];
