@@ -109,9 +109,9 @@ function Events() {
         <div className="flex items-center gap-2 text-xl font-bold">
           <p className="text-gray-600">, OR</p>
         </div>
-        <p className="text-[1rem] text-[#0073bb] hover:underline cursor-pointer">
+        {/* <p className="text-[1rem] text-[#0073bb] hover:underline cursor-pointer">
           Other{" "}
-        </p>
+        </p> */}
         <div className="flex mx-auto gap-7">
           <div className="w-full">
             <Card className="">
