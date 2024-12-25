@@ -27,6 +27,22 @@ const openSans = Open_Sans({
   display: "swap",
 });
 
+const helvetica = localFont({
+  src: [
+    {
+      path: "./fonts/helvetica.woff",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/helvetica-bold.woff",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-helvetica",
+});
+
 const FAVICON_URL =
   "https://res.cloudinary.com/druohnmyv/image/upload/v1729843667/lume1vaskd4swknuhexd.png";
 
@@ -58,7 +74,7 @@ export default function RootLayout({
       </Head>
       <AuthProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${openSans.className} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${openSans.className} ${helvetica.variable} antialiased`}
         >
           {children}
           <GoogleAnalytics gaId="G-0TC5ZZ5FMP" />

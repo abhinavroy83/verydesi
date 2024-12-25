@@ -19,7 +19,16 @@
 }
 
 body {
-  font-family: "AS Circular", "Helvetica Neue", Arial, sans-serif;
+  font-family: "AS Circular", "Helvetica Neue", Arial, sans-serif,
+    var(--font-helvetica);
+}
+
+.font-helvetica-regular {
+  font-weight: 400;
+}
+
+.font-helvetica-bold {
+  font-weight: 700;
 }
 
 @layer utilities {
