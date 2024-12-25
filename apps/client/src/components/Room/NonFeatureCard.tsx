@@ -195,9 +195,8 @@ export default function Component({ room }: FeaturedCard2Props) {
             </div>
             <div className="flex-grow space-y-1">
               {room?.Title && <TruncateText text={room?.Title} />}
-
               <div className="flex flex-col sm:flex-row sm:items-center text-[17px] text-gray-600 space-y-1 sm:space-y-0">
-                <div className="flex items-center">
+                <div className="flex items-center text-[18px]">
                   <MapPin className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>
                     {room?.city},{" "}
@@ -211,7 +210,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   orientation="vertical"
                   className="hidden sm:block mx-2 h-4"
                 />
-                <div className="flex items-center">
+                <div className="flex items-center text-[18px]">
                   <Clock className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>{calculateTimeDifference(room?.postedon)}</span>
                 </div>
@@ -219,7 +218,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   orientation="vertical"
                   className="hidden sm:block mx-2 h-4"
                 />
-                <div className="flex items-center">
+                <div className="flex items-center text-[18px]">
                   <User className="h-5 w-5 mr-1 text-[#054687]" />
                   <span>Posted by: {room?.user_name}</span>
                 </div>
@@ -256,11 +255,16 @@ export default function Component({ room }: FeaturedCard2Props) {
             </div>
             <div className="flex">
               <div className="flex w-full sm:w-auto text-left sm:text-right">
-                <div className="flex items-center gap-2 absolute lg:bottom-[1.5rem] bottom-[1rem] right-[2rem] lg:right-[2.5rem]">
+                <div className="flex items-center gap-2 absolute lg:bottom-[1.5rem] bottom-[1rem] right-[2rem] lg:right-[2rem]">
+                  <div className="w-[4rem] flex justify-start">
+                    <p className="justify-start text-[21px] font-bold text-green-700 ">
+                      ${room?.Expected_Rooms}
+                    </p>
+                  </div>
                   {!status && (
                     <div
                       onClick={(e) => {
-                        e.preventDefault();
+                        e.stopPropagation();
                         openLogin();
                       }}
                     >
@@ -272,7 +276,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                       {!wishliststatys ? (
                         <div
                           onClick={(e) => {
-                            e.preventDefault();
+                            e.stopPropagation();
                             makewishlist(room?._id);
                           }}
                         >
@@ -282,7 +286,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                         <div
                           className="cursor-pointer "
                           onClick={(e) => {
-                            e.preventDefault();
+                            e.stopPropagation();
                             unwish(room?._id);
                           }}
                         >
@@ -291,11 +295,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                       )}
                     </div>
                   )}
-                  <div>
-                    <p className="text-[22px] font-bold text-green-700 w-[3rem]">
-                      ${room?.Expected_Rooms}
-                    </p>
-                  </div>
+
                   {/* )} */}
                 </div>
               </div>
