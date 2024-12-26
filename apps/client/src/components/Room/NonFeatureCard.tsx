@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import {
   BedDouble,
   Heart,
@@ -153,6 +154,20 @@ export default function Component({ room }: FeaturedCard2Props) {
       .replace(/(^-|-$)/g, "");
     return `${formattedTitle}-${id}`;
   };
+
+  const genderName = () => {
+    console.log(room?.Preferred_gender === "Male only");
+    if (room?.Preferred_gender === "Male only") {
+      return "Male";
+    }
+
+    if (room?.Preferred_gender === "Female only") {
+      return "Female";
+    }
+
+    return "Any";
+  };
+
   return (
     <div
       className="font-sans cursor-pointer"
@@ -164,7 +179,10 @@ export default function Component({ room }: FeaturedCard2Props) {
       <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[80px]">
         <CardContent className="py-1 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <div className="lg:flex-shrink-0 hidden lg:flex">
+            <div
+              data-tooltip-id={`my-tooltip-${room?._id}`}
+              className="lg:flex-shrink-0 hidden lg:flex z-0"
+            >
               {room?.Preferred_gender === "Male only" ? (
                 <>
                   <img
@@ -302,6 +320,12 @@ export default function Component({ room }: FeaturedCard2Props) {
             </div>
           </div>
         </CardContent>
+        <ReactTooltip
+          style={{ zIndex: 1000 }}
+          id={`my-tooltip-${room?._id}`}
+          place="bottom"
+          content={genderName()}
+        />
       </Card>
     </div>
   );
