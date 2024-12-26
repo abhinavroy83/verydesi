@@ -47,7 +47,7 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-[370px] p-1 bg-white rounded-xl shadow-xl border-none font-sans mt-70"
+          className="w-[230px] p-1 bg-white rounded-xl shadow-xl border-none font-sans mt-70"
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <div className="relative">
@@ -56,7 +56,7 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
                 <div
                   key={city}
                   onClick={() => handleLocation(city)}
-                  className={`w-full text-start px-3 py-2 text-[16px] rounded hover:bg-primary hover:text-primary-foreground focus:outline-none transition duration-150 ease-in-out ${
+                  className={`w-full text-start p-2 text-[16px] cursor-pointer rounded hover:bg-primary hover:text-primary-foreground focus:outline-none transition duration-150 ease-in-out ${
                     selectedCity === city
                       ? "bg-primary text-primary-foreground"
                       : "text-gray-700"
