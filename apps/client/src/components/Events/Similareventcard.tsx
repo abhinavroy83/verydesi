@@ -39,7 +39,7 @@ export default function Similareventcard() {
           Event card
         </p>
         <p className="flex gap-1 text-[14px] text-gray-600 mt-1  items-center">
-          <GrLocation size={20} />
+          <GrLocation />
           Portland, OR
         </p>
         <p className="text-blue-800 capitalize text-[14px] mt-1 flex gap-1 items-center ">

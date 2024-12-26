@@ -288,9 +288,9 @@ function Events() {
             />
             <Card className="w-full max-w-md mt-4 rounded-none">
               <CardHeader>
-                <CardTitle className="text-2xl font-bold">
+                {/* <CardTitle className="text-2xl font-bold">
                   About this Brand{" "}
-                </CardTitle>
+                </CardTitle> */}
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center space-x-4">
@@ -326,18 +326,12 @@ function Events() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Button className="rounded-full w-full bg-blue-600 hover:bg-blue-700 text-white">
-                    Visit store
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                    About this Brand{" "}
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full flex items-center justify-center rounded-full text-blue-600 border-blue-600"
-                  >
-                    Contact
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full flex items-center justify-center rounded-full text-blue-600 border-blue-600"
+                    className="w-full flex items-center justify-center text-blue-600 border-blue-600"
                   >
                     <Heart className="w-4 h-4 mr-2" />
                     Save seller
