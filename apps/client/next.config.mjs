@@ -13,6 +13,7 @@ const nextConfig = {
       "static.toiimg.com",
       "img.budgettravel.com",
       "th.bing.com",
+      "youtu.be/UWdfaNWThnA?si=L3nCQGx1UshjFCZM"
     ],
   },
 };

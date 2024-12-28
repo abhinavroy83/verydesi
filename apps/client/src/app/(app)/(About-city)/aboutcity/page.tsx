@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ArrowRight, Heart, Instagram } from "lucide-react";
+import { ArrowRight, ChevronRight, Heart, Home, Instagram } from "lucide-react";
 import Link from "next/link";
 import { HomeLayout } from "@/components/layout/Home";
 import { motion } from "framer-motion";
@@ -33,6 +33,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import InstaImagegrid from "@/components/About-city/insta-image-grid";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { useRef } from "react";
 
 const neighborhoods = [
   {
@@ -163,30 +171,86 @@ const images = [
 ];
 const sections = [
   {
-    title: "Get around Chicago",
+    title: "Beaverton",
     description:
-      "Learn about city transportation and how to get where you need to.",
+      "Overview: Major hub for Indian families, close to tech companies and excellent schools.",
+    descriptionn:
+      "Community Life: Indian grocery stores, restaurants, community centers, and cultural events.",
     buttonText: "Learn to navigate the city",
     imageSrc:
       "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    imageAlt: "Chicago train station",
+    imageAlt: "Beaverton",
     imageLeft: true,
   },
   {
-    title: "Campuses",
-    description: "We have more than one campus.",
+    title: "Hillsboro",
+    description:
+      "Overview: High concentration of tech companies in 'Silicon Forest', popular with Indian professionals.",
+    descriptionn:
+      "Community Life: Indian groceries, restaurants, Swagat Indian Cuisine chain, and Hindu Temple of Oregon nearby.",
     buttonText: "Explore our campuses",
     imageSrc: "https://static.toiimg.com/photo/84475061.cms",
-    imageAlt: "Modern campus interior",
-    imageLeft: false,
+    imageAlt: "Hillsboro",
+    imageLeft: true,
   },
   {
-    title: "Maps",
-    description: "Find DePaul on the map.",
+    title: "Bethany",
+    description:
+      "Overview: Newer, family-friendly suburb with top-rated schools and strong Indian community.",
+    descriptionn:
+      "Community Life: Easy access to community events and Indian shopping in nearby Beaverton.",
     buttonText: "View our campus maps",
     imageSrc:
       "https://img.budgettravel.com/_galleryImage/golden-gate-bridge-san-francisco-952012-114744_original.jpeg?mtime=20140903194435",
-    imageAlt: "DePaul University entrance sign",
+    imageAlt: "Bethany",
+    imageLeft: true,
+  },
+  {
+    title: "Tigard and Tualatin",
+    description:
+      "Overview: Growing suburbs with mix of Indian professionals and families.",
+    descriptionn:
+      "Community Life: Indian restaurants, grocery options, and good schools.",
+
+    buttonText: "View our campus maps",
+    imageSrc: "https://static.toiimg.com/photo/84475061.cms",
+    imageAlt: "Tigard and Tualatin",
+    imageLeft: true,
+  },
+  {
+    title: "Camas, Vancouver & Washougal",
+    description:
+      "Overview: Growing suburbs in Washington State with Indian professionals and families.",
+    descriptionn:
+      "Community Life: Best schools, safer neighborhoods, and cleaner areas, but fewer Indian-specific amenities.",
+
+    buttonText: "View our campus maps",
+    imageSrc:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Camas, Vancouver & Washougal",
+    imageLeft: true,
+  },
+  {
+    title: "Northeast and Southeast Portland",
+    description:
+      "Overview: Some Indian communities with access to public transit and urban amenities.",
+    descriptionn:
+      "Community Life: Attracts younger professionals, diverse cultural events and restaurants.",
+    buttonText: "View our campus maps",
+    imageSrc:
+      "https://img.budgettravel.com/_galleryImage/golden-gate-bridge-san-francisco-952012-114744_original.jpeg?mtime=20140903194435",
+    imageAlt: "Northeast and Southeast Portland",
+    imageLeft: true,
+  },
+  {
+    title: "Cultural & Community Centers",
+
+    descriptionn:
+      "India Cultural Association (ICA): Organizes major events, including the popular India Festival at Pioneer Courthouse Square, and serves as a community hub.",
+    buttonText: "View our campus maps",
+    imageSrc:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
+    imageAlt: "Cultural & Community Centers",
     imageLeft: true,
   },
 ];
@@ -257,22 +321,8 @@ const image = [
     alt: "Citi Field stadium with flowers",
     className: "col-span-1 row-span-1",
   },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Classical building facade at night",
-    className: "col-span-1 row-span-2",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Historic building corner with night lighting",
-    className: "col-span-1 row-span-1",
-  },
-  {
-    src: "https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg",
-    alt: "Historic building corner with night lighting",
-    className: "col-span-1 row-span-1",
-  },
 ];
+
 const historyCards = [
   {
     type: "Page",
@@ -330,20 +380,101 @@ const historyCards = [
   },
 ];
 export default function PortlandOregonPage() {
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.75; // Slow down the video playback for a more subtle effect
+    }
+  }, []);
+  const videoRef = useRef<HTMLVideoElement>(null);
   return (
     <HomeLayout>
+      <div className="flex gap-0">
+        <Breadcrumb>
+          <BreadcrumbList className="flex items-center space-x-[-7px]">
+            <BreadcrumbItem className="">
+              <BreadcrumbLink
+                href="/"
+                className="flex items-center text-[15px] hover:text-primary-dark transition-colors hover:underline text-[#f97316]"
+              >
+                <Home className="w-4 h-4 mr-2" />
+                <span className="font-bold">Home</span>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+            </BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href="/rooms"
+                className="flex items-center text-[15px] hover:text-primary-dark transition-colors"
+              >
+                {/* <Hotel className="w-4 h-6 mr-2" /> */}
+                <span className="font-bold hover:underline">About City</span>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
       <div className="container mx-auto pb-12 space-y-12 mt-3">
-        <div className="flex min-h-screen flex-col bg-white">
-          {/* Header */}
-          <header className="container mx-auto px-4 py-8 text-center border-t-2 border-b-2 border-blue-600">
-            <h1 className="mb-4 text-4xl font-bold text-blue-600">CHICAGO</h1>
+        {/* <section className="relative h-[500px] mt-3 rounded-lg overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage:
+                "url('https://th.bing.com/th/id/R.987b01d079e428e779f18622e3c11302?rik=R1kwpQbf%2b7On6g&riu=http%3a%2f%2fwallpapercave.com%2fwp%2feKouupY.jpg&ehk=AXFugzftEWDWTkEFwM1y42ecFqn7iHnSoJhJGlAqY%2bY%3d&risl=&pid=ImgRaw&r=0')",
+            }}
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50" />
+          <div className="relative flex flex-col items-center justify-center h-full text-white p-2">
+            <header className="container mx-auto px-4 py-8 text-center">
+              <h1 className="mb-4 text-[43px] font-bold text-white">CHICAGO</h1>
+              <p className="text-xl text-white">
+                Find just about anything around the corner.
+              </p>
+            </header>
+          </div>
+        </section> */}
+        <section className="relative h-[600px] mt-3 rounded-lg overflow-hidden">
+          {/* <iframe style={{ height: "100%", width: "100%" }} src="https://www.youtube.com/embed/UWdfaNWThnA?si=2VjJ1MAi2Jxfr-VU?autoplay=1&mute=1" allow='autoplay' title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
+          <video
+            ref={videoRef}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/Chicago.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {/* <video id="player-obj" src="https://redirector.googlevideo.com/videoplayback?ratebypass=yes&amp;mt=1510077993----SKIPPED----amp;utmg=ytap1,,hd720"><source>Your browser does not support HTML5 video.</source></video> */}
+
+          <div className="absolute inset-0 bg-black bg-opacity-70" />
+          <div className="relative flex flex-col items-center justify-center h-full text-white p-2">
+            <header className="container mx-auto py-8 text-center">
+              <h1 className="mb-4 text-[43px] font-bold text-white">CHICAGO</h1>
+              <p className="text-xl text-white font-bold">
+                Find just about anything around the corner.
+              </p>
+              <p className=" text-white mt-5 font-bold">
+                Spend hours studying at your favorite coffee shop ... Discover
+                where some of the country's best improv comedians, and jazz and
+                blues musicians hang out ... Nom on some famous food from
+                Chicago dogs to Morton's hot chocolate cake ... or learn from
+                the city's best and brightest at a tech startup. You can find
+                just about anything around the corner in Chicago, Illinois.
+              </p>
+            </header>
+          </div>
+        </section>
+        <div className="flex flex-col bg-white">
+          {/* <header className="container mx-auto px-4 py-8 text-center">
+            <h1 className="mb-4 text-3xl font-bold text-blue-600">CHICAGO</h1>
             <p className="text-xl text-gray-600">
               Find just about anything around the corner.
             </p>
-          </header>
-
-          {/* Image Slider */}
-          <div className="container mx-auto px-4 mt-9">
+          </header> */}
+          {/* <div className="container mx-auto px-4 mt-9">
             <Carousel className="relative w-full">
               <CarouselContent>
                 {images.map((image, index) => (
@@ -363,11 +494,11 @@ export default function PortlandOregonPage() {
               <CarouselPrevious className="absolute left-4 top-1/2" />
               <CarouselNext className="absolute right-4 top-1/2" />
             </Carousel>
-          </div>
+          </div> */}
 
-          {/* Description */}
-          <div className="container mx-auto mt-8 px-4 text-center">
-            <p className="mx-auto max-w-3xl text-gray-600">
+          <div className="">
+            <h1 className="text-3xl font-bold mb-2">About</h1>
+            <p className=" text-gray-600">
               Spend hours studying at your favorite coffee shop ... Discover
               where some of the country's best improv comedians, and jazz and
               blues musicians hang out ... Nom on some famous food from Chicago
@@ -378,8 +509,8 @@ export default function PortlandOregonPage() {
           </div>
 
           {/* Stats Grid */}
-          <div className="container mx-auto px-4 py-12">
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="container mt-12">
+            {/* <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {stats.map((stat, index) => (
                 <div
                   key={index}
@@ -404,10 +535,10 @@ export default function PortlandOregonPage() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* Duplicate grid with different styling */}
-            <div className="mt-12 grid gap-8 rounded-xl bg-blue-50 p-8 md:grid-cols-2 lg:grid-cols-4">
+            {/* <div className="mt-12 grid gap-8 rounded-xl bg-blue-50 p-8 md:grid-cols-2 lg:grid-cols-4">
               {stats.map((stat, index) => (
                 <div
                   key={index}
@@ -432,10 +563,10 @@ export default function PortlandOregonPage() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* Box layout version */}
-            <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-1 grid gap-2 md:grid-cols-2 lg:grid-cols-4">
               {stats.map((stat, index) => (
                 <div
                   key={index}
@@ -465,17 +596,16 @@ export default function PortlandOregonPage() {
             </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 pb-12">
+        {/* <div className="container mx-auto px-4 pb-12">
           <section className="text-center mb-5">
-            <h1 className="text-4xl font-bold mb-4">Portland, Oregon</h1>
+            <h1 className="text-3xl font-bold mb-4">Portland, Oregon</h1>
             <p className="text-xl max-w-3xl mx-auto">
               A city known for its beautiful landscape, sustainable planning,
               and vibrant urban culture, Portland offers a unique blend of
               history, nature, and modern living.
             </p>
           </section>
-          <h1 className="mb-8 text-4xl font-bold">History and Geography</h1>
-
+          <h1 className="mb-8 text-3xl font-bold">History and Geography</h1>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {historyCards.map((card, index) => (
               <Card
@@ -510,13 +640,16 @@ export default function PortlandOregonPage() {
               </Card>
             ))}
           </div>
-        </div>
+        </div> */}
+        <h2 className="text-3xl font-bold mb-2 text-center">
+          Indian Diaspora in Portland
+        </h2>
         <div className="w-full space-y-1">
           {sections.map((section, index) => (
             <div key={index} className="flex h-[200px] overflow-hidden">
               {/* Image Section */}
               <div
-                className={`relative w-[65%] ${
+                className={`relative w-[63%] ${
                   section.imageLeft ? "order-first" : "order-last"
                 }`}
               >
@@ -528,34 +661,28 @@ export default function PortlandOregonPage() {
                   priority={index === 0}
                 />
                 {/* Diagonal Overlay */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    clipPath: section.imageLeft
-                      ? "polygon(0 0, 100% 0, 85% 100%, 0 100%)"
-                      : "polygon(15% 0, 100% 0, 100% 100%, 0 100%)",
-                  }}
-                />
+                <div className="absolute inset-0" />
               </div>
 
               {/* Content Section */}
               <div
-                className={`flex w-[35%] items-center bg-blue-50 px-6 ${
+                className={`flex w-[75%] items-center bg-blue-50 px-6 ${
                   section.imageLeft ? "order-last" : "order-first"
                 }`}
               >
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <h2 className="text-2xl font-bold text-blue-600">
                     {section.title}
                   </h2>
-                  <p className="text-sm text-gray-600">{section.description}</p>
-                  <Button
+                  <p className="text-sm text-black">{section.description}</p>
+                  <p className="text-sm text-black">{section.descriptionn}</p>
+                  {/* <Button
                     variant="outline"
                     size="sm"
                     className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                   >
                     {section.buttonText}
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>
@@ -563,38 +690,6 @@ export default function PortlandOregonPage() {
         </div>
 
         {/* //her  */}
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            {image.map((image, index) => (
-              <div
-                key={index}
-                className={`group relative aspect-square overflow-hidden rounded-none bg-black ${image.className || ""}`}
-              >
-                <Image
-                  src={image.src}
-                  alt={"image"}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105 w-[20rem]"
-                />
-                {/* Instagram-style overlay */}
-                <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 group-hover:bg-black/50">
-                  <div className="translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                    <div className="flex items-center gap-2 text-white">
-                      <Instagram className="h-6 w-6" />
-                      {/* <span className="text-sm">@{image.username}</span> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 text-center">
-            <button className="w-full rounded-none bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700">
-              Load More
-            </button>
-          </div>
-        </div>
-        {/* <InstaImagegrid /> */}
 
         {/* <section>
           <h2 className="text-3xl font-bold mb-6">History and Geography</h2>
@@ -684,7 +779,7 @@ export default function PortlandOregonPage() {
           </Card>
         </section> */}
 
-        <section>
+        {/* <section>
           <h2 className="text-3xl font-bold mb-6">
             Indian Diaspora in Portland
           </h2>
@@ -728,10 +823,9 @@ export default function PortlandOregonPage() {
               </ScrollArea>
             </CardContent>
           </Card>
-        </section>
+        </section> */}
 
         <section>
-          <h2 className="text-3xl font-bold mb-6">Moving to Portland</h2>
           <div className="container mx-auto px-4 py-12">
             <div className="mb-12 flex items-center justify-center">
               <div className="h-px flex-1 bg-gray-200" />
@@ -740,12 +834,10 @@ export default function PortlandOregonPage() {
               </div>
               <div className="h-px flex-1 bg-gray-200" />
             </div>
-            <h1 className="mb-1 text-center text-4xl font-bold text-gray-900">
-              More to Love in New York City
+            <h1 className="mb-1 text-center text-3xl font-bold text-gray-900">
+              More to Love in New York
             </h1>
-            <h1 className="mb-1 text-center text-2xl text-gray-900">
-              Essential Information for Newcomers
-            </h1>
+
             <h1 className="mb-12 text-center text-xl text-gray-700">
               Moving to Portland, Oregon can be an exciting choice! Here's a
               snapshot of what to expect if you're making the move:
@@ -754,13 +846,13 @@ export default function PortlandOregonPage() {
               {attractions.map((attraction, index) => (
                 <div
                   key={index}
-                  className="group overflow-hidden border bg-white shadow-sm transition-shadow hover:shadow-md"
+                  className="group overflow-hidden border rounded-xl bg-white shadow-sm transition-shadow hover:shadow-md"
                 >
                   <div className="relative overflow-hidden">
                     <img
                       src={"https://wallpapercave.com/wp/Nb3d7Ur.jpg"}
                       alt={attraction.title}
-                      className="object-cover transition-transform duration-300 group-hover:scale-105 p-2"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-xl"
                     />
                   </div>
                   <div className="px-5 py-2 text-center">
@@ -799,6 +891,32 @@ export default function PortlandOregonPage() {
             </ul>
           </CardContent>
         </Card> */}
+          <div className="container mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 md:grid-cols-3">
+              {image.map((image, index) => (
+                <div
+                  key={index}
+                  className={`group relative aspect-square overflow-hidden rounded-none bg-black ${image.className || ""}`}
+                >
+                  <Image
+                    src={image.src}
+                    alt={"image"}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105 w-[20rem]"
+                  />
+                  {/* Instagram-style overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 group-hover:bg-black/50">
+                    <div className="translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                      <div className="flex items-center gap-2 text-white">
+                        <Instagram className="h-6 w-6" />
+                        {/* <span className="text-sm">@{image.username}</span> */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
       </div>
     </HomeLayout>

@@ -124,11 +124,11 @@ function Events() {
 
   return (
     <>
-      <div className="w-full max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 mx-auto py-4 sm:py-8 mt-16 sm:mt-[6.1rem] font-[helvetica-regular]">
+      <div className="w-full max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 mx-auto py-4 sm:py-8 mt-16 sm:mt-[6.1rem] font-sans">
         <div className=" w-full mx-auto">
           <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0">
             <div className="flex flex-col sm:flex-row lg:mt-0 mt-12 space-x-2 w-full justify-between">
-              <div className=" lg:mb-0 mb-2">
+              <div className="lg:mb-0 mb-2">
                 <Breadcrumb>
                   <BreadcrumbList>
                     <BreadcrumbItem>
@@ -223,10 +223,10 @@ function Events() {
             <div className="flex gap-2 text-xl font-bold text-gray-600">
               <div>
                 <p>
-                  <HiOutlineLocationMarker size={25} color="gray" />
+                  <HiOutlineLocationMarker size={25} color="" />
                 </p>
               </div>
-              <div>
+              <div className="flex">
                 <p> {event?.venueName}</p>
                 <p>{event?.address}</p>
                 <p>
@@ -240,13 +240,13 @@ function Events() {
                   <MdOutlineDateRange size={25} color="gray" />
                 </p>
               </div>
-              <div className="text-xl font-bold text-gray-600">
+              <div className="flex gap-2 mb-1 text-xl font-bold text-gray-600 items-center">
                 <p className="flex gap-2 text-gray-600 text-xl font-bold">
                   <p className="font-bold">From:</p>{" "}
                   {new Date(event?.startDate || "").toLocaleDateString()} at{" "}
                   {event?.startTime || "N/A"}
                 </p>
-                <p className="flex gap-2 mb-4">
+                <p className="flex gap-2">
                   <p className="font-bold">To:</p>{" "}
                   {new Date(event?.endDate || "").toLocaleDateString()} at{" "}
                   {event?.endTime || "N/A"}
@@ -384,7 +384,7 @@ function Events() {
               </div>
               <div>
                 <h1 className="flex text-[#000] text-[20px] font-bold my-2 gap-2">
-                  User Details-{" "}
+                  Host Details-{" "}
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-between border rounded-md p-5">
                   <div className="flex gap-2 items-center">

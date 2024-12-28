@@ -203,7 +203,6 @@ export default function Component() {
       <h1 className="capitalize text-[23px] lg:text-[23px] font-bold mt-0">
         <p>More Featured Events In </p>
       </h1>
-
       <div className="flex flex-col gap-2 mt-2 mb-10">
         {loading
           ? // Render skeleton cards while loading

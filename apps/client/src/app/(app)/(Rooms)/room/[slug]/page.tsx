@@ -408,7 +408,7 @@ export default function RoomDetails({
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-start  flex-col lg:flex-row">
+        <div className="flex justify-between items-start flex-col lg:flex-row">
           <div className="flex w-full lg:justify-between  flex-col lg:flex-row">
             <div className="flex lg:flex-row gap-2 font-bold lg:items-center">
               <h1 className="lg:text-3xl text-2xl font-bold text-gray-900 flex lg:flex-row flex-col gap-2">

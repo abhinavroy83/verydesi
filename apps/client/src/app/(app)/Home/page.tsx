@@ -353,7 +353,7 @@ export default function Home() {
   }
 
   return (
-    <div className="font-[helvetica-bold] flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 lg:mb-[1rem] mb-[10rem]">
+    <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[1rem] mb-[10rem]">
       <div className="w-full lg:w-4/5 mr-4">
         {/* <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
           <motion.h1
@@ -462,7 +462,7 @@ export default function Home() {
               <Link href={"/business"}>View all Business</Link>
             </div>
 
-            <div className="w-full space-x-4 max-w-[79rem]  mx-auto">
+            <div className="w-full space-x-4 max-w-[79rem] mx-auto">
               <Carousel
                 opts={{
                   align: "start",
@@ -484,9 +484,9 @@ export default function Home() {
                     : movies.map((movie) => (
                         <div
                           key={movie.id}
-                          className="flex-shrink-0 mx-2 w-[150px] transition-all duration-500 ease-in-out hover:w-[400px]"
+                          className="flex-shrink-0 mx-1 shadow-sm w-[150px] transition-all duration-500 ease-in-out hover:w-[400px]"
                         >
-                          <Card className="h-[300px] border-0 bg-transparent relative group overflow-hidden">
+                          <Card className="h-[250px] border-0 bg-transparent relative group overflow-hidden">
                             <div className="absolute inset-0">
                               <img
                                 src={
@@ -550,7 +550,6 @@ export default function Home() {
                 <CarouselNext className="absolute right-[-12] top-1/2 -translate-y-1/2" />
               </Carousel>
             </div>
-            <div className="flex  overflow-x-auto pb-4"></div>
           </div>
         </div>
         <div className=" flex w-full justify-between items-center">
