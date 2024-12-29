@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   HelpCircle,
   Send,
@@ -20,9 +20,9 @@ import {
   Mail,
   Phone,
   ChevronRight,
-} from "lucide-react"
-import { DashboardLayout } from "@/components/layout"
-import Link from "next/link"
+} from "lucide-react";
+import { DashboardLayout } from "@/components/layout";
+import Link from "next/link";
 
 export default function Component() {
   const [formData, setFormData] = useState({
@@ -30,23 +30,23 @@ export default function Component() {
     email: "",
     phone: "",
     description: "",
-  })
+  });
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // Here you would typically send the form data to your backend
-    console.log("Form submitted:", formData)
-  }
+    console.log("Form submitted:", formData);
+  };
 
   return (
     <DashboardLayout>
@@ -56,26 +56,26 @@ export default function Component() {
             <HelpCircle className="mr-2 h-5 w-5 md:h-6 md:w-6" /> Help
           </h1>
         </header>
-        <div className="mx-auto px-4 md:px-6 lg:px-8 lg:py-6 py-2">
+        <div className="mx-auto px-4 md:px-6 lg:px-6 lg:py-6 py-2">
           <nav
-            className="flex text-sm text-gray-500 mb-4 items-center"
+            className="flex text-sm text-gray-500 mb-4 items-center text-[15px] font-bold"
             aria-label="Breadcrumb"
           >
-            <ol className="inline-flex items-center space-x-1 md:space-x-2">
+            <ol className="inline-flex items-center space-x-[-1px]">
               <li className="inline-flex items-center">
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center text-sm md:text-base hover:text-gray-700 hover:underline"
+                  className="hover:underline text-[15px] text-[#f97316]"
                 >
                   Dashboard
                 </Link>
               </li>
               <li>
-                <div className="flex items-center">
+                <div className="flex items-center space-x-[-1px]">
                   <ChevronRight className="w-4 h-4 mx-1" />
                   <Link
                     href="/dashboard/help"
-                    className="ml-1 text-sm md:text-base hover:text-gray-700 hover:underline"
+                    className="text-[15px] hover:text-gray-700 hover:underline"
                   >
                     Help
                   </Link>
@@ -86,7 +86,10 @@ export default function Component() {
           <Card className="w-full max-w-2xl">
             <CardHeader>
               <CardTitle className="text-xl md:text-2xl">Need Help?</CardTitle>
-              <CardDescription>Fill out the form below and we'll get back to you as soon as possible.</CardDescription>
+              <CardDescription>
+                Fill out the form below and we'll get back to you as soon as
+                possible.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -137,8 +140,8 @@ export default function Component() {
                     required
                   />
                 </div>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full bg-green-800 hover:bg-green-700 text-white py-2 px-4 rounded-md text-sm md:text-base"
                 >
                   Send response
@@ -147,12 +150,13 @@ export default function Component() {
             </CardContent>
             <CardFooter className="flex justify-center">
               <p className="text-center text-xs md:text-sm text-red-500">
-                Alternatively, you can reach out via email at verydesionline@gmail.com
+                Alternatively, you can reach out via email at
+                verydesionline@gmail.com
               </p>
             </CardFooter>
           </Card>
         </div>
       </main>
     </DashboardLayout>
-  )
+  );
 }

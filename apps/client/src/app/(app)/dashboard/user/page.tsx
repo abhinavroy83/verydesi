@@ -184,24 +184,24 @@ export default function DashboardUserSettings() {
         </div>
         <div className="overflow-y-auto flex-grow pr-4 -mr-4">
           <nav
-            className="flex  mb-4 text-sm text-gray-500 px-4"
+            className="flex  mb-4 text-sm text-gray-500 px-4 font-bold"
             aria-label="Breadcrumb"
           >
             <ol className="inline-flex items-center space-x-[-1px] mt-4">
               <li className="inline-flex items-center">
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center hover:text-gray-700 hover:underline"
+                  className="inline-flex items-center hover:underline text-[15px] text-[#f97316]"
                 >
                   Dashboard
                 </Link>
               </li>
               <li>
-                <div className="flex items-center">
+                <div className="flex items-center space-x-[-1px]">
                   <ChevronRight className="w-4 h-4 mx-1" />
                   <Link
                     href="/dashboard/user"
-                    className="ml-1 hover:text-gray-700 hover:underline"
+                    className="ml-1 hover:text-gray-700 hover:underline text-[15px]"
                   >
                     Settings
                   </Link>

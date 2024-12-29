@@ -180,7 +180,7 @@ export default function Component({ room }: FeaturedCard2Props) {
         <CardContent className="py-1 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <div
-              data-tooltip-id={`my-tooltip-${room?._id}`}
+              // data-tooltip-id={`my-tooltip-${room?._id}`}
               className="lg:flex-shrink-0 hidden lg:flex z-0"
             >
               {room?.Preferred_gender === "Male only" ? (
@@ -189,6 +189,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                     className="h-10 w-10 text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
                     alt="male"
+                    title="male"
                   />
                   {/* <IoIosMale className="h-12 w-12  text-gray-400" /> */}
                 </>
@@ -198,6 +199,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                     className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
                     alt="female"
+                    title="female"
                   />
                   {/* <IoIosFemale className="h-12 w-12  text-gray-400" /> */}
                 </>
@@ -207,6 +209,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                     className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
                     alt="any"
+                    title="any"
                   />
                 </>
               )}{" "}

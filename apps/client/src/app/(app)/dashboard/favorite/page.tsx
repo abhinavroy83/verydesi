@@ -106,18 +106,21 @@ export default function FavoritesPage() {
             </h1>
           </header>
 
-          <nav className="text-sm text-gray-500 p-4" aria-label="Breadcrumb">
+          <nav
+            className="text-sm text-gray-500 p-4 font-bold"
+            aria-label="Breadcrumb"
+          >
             <ol className="list-none p-0 inline-flex flex-wrap">
               <li className="flex items-center">
                 <Link
                   href="/dashboard"
-                  className="hover:text-gray-700 hover:underline"
+                  className="hover:underline text-[15px] text-[#f97316]"
                 >
                   Dashboard
                 </Link>
-                <ChevronRight className="w-4 h-4 mx-1" />
+                <ChevronRight className="w-4 h-4 mx-1 " />
               </li>
-              <li className="flex items-center hover:underline cursor-pointer hover:text-gray-700">
+              <li className="flex items-center hover:underline cursor-pointer hover:text-gray-700 text-[15px] space-x-[-1px]">
                 <span>Favorites</span>
               </li>
             </ol>
