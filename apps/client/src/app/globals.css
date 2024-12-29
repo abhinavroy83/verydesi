@@ -18,9 +18,17 @@
   font-display: swap;
 }
 
+:root {
+  --font-nunito: "Nunito", sans-serif;
+  --font-helvetica: "Helvetica Neue", Arial, sans-serif;
+}
+
 body {
-  font-family: "AS Circular", "Helvetica Neue", Arial, sans-serif,
-    var(--font-helvetica);
+  font-family: "AS Circular", var(--font-helvetica), Arial, sans-serif;
+}
+
+.font-nunito {
+  font-family: var(--font-nunito);
 }
 
 .font-helvetica-regular {
@@ -36,9 +44,11 @@ body {
     text-wrap: balance;
   }
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
+
 @layer base {
   :root {
     --background: 0 0% 100%;

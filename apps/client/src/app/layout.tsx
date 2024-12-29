@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
-import { Open_Sans } from "next/font/google";
+import { Nunito, Open_Sans } from "next/font/google";
 import Head from "next/head";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import CitySelector from "@/components/Area/city-selector";
@@ -43,6 +43,12 @@ const helvetica = localFont({
   variable: "--font-helvetica",
 });
 
+const nunito = Nunito({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-nunito",
+});
+
 const FAVICON_URL =
   "https://res.cloudinary.com/druohnmyv/image/upload/v1729843667/lume1vaskd4swknuhexd.png";
 
@@ -74,7 +80,7 @@ export default function RootLayout({
       </Head>
       <AuthProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${openSans.className} ${helvetica.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${openSans.className} ${helvetica.variable} ${nunito.variable} antialiased`}
         >
           {children}
           <GoogleAnalytics gaId="G-0TC5ZZ5FMP" />
