@@ -17,7 +17,7 @@ export default function TruncateText({ text }: { text: string }) {
   const { width } = useScreenResolution();
 
   const getTruncateOptions = (width: number): TruncateOptions => {
-    if (width <= 640) return { maxLength:32 }; // Phone (Small)
+    if (width <= 640) return { maxLength: 32 }; // Phone (Small)
     if (width <= 768) return { maxLength: 32 }; // Phone (Medium)
     if (width <= 1024) return { maxLength: 54 }; // Tablet
     if (width <= 1281) return { maxLength: 34 }; // Small laptop
@@ -28,7 +28,7 @@ export default function TruncateText({ text }: { text: string }) {
   const truncatedText = truncateCharacters(text, getTruncateOptions(width));
 
   return (
-    <h2 className="text-[21px] font-sans font-bold text-gray-800 transition-colors duration-300">
+    <h2 className="text-[21px] font-nunito font-bold text-gray-800 transition-colors duration-300">
       {truncatedText}
     </h2>
   );
