@@ -484,7 +484,7 @@ export default function Home() {
                     : movies.map((movie) => (
                         <div
                           key={movie.id}
-                          className="flex-shrink-0 mx-1 shadow-sm w-[150px] transition-all duration-500 ease-in-out hover:w-[400px]"
+                          className="flex-shrink-0 mx-1 shadow-sm w-[148px] transition-all duration-500 ease-in-out hover:w-[400px]"
                         >
                           <Card className="h-[250px] border-0 bg-transparent relative group overflow-hidden">
                             <div className="absolute inset-0">
