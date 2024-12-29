@@ -94,7 +94,14 @@ const formSchema = z.object({
     "other",
   ]),
   einNumber: z.string().length(9, "EIN must be 9 digits").optional(),
-  description: z.string().min(1, "Description is required"),
+  description: z
+    .string()
+    .min(10, {
+      message: "Description must be at least 10 characters.",
+    })
+    .refine((desc) => desc.trim().split(/\s+/).length <= 1000, {
+      message: "Description must not exceed 1000 words.",
+    }),
   languages: z.array(z.string()).min(1, "Select at least one language"),
   sales: z.object({
     description: z.string().optional(),
