@@ -62,6 +62,7 @@ import useGoogleAutocomplete from "@/hooks/use-googleAutocomplete";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import { EventTimePicker } from "@/components/ui/clock-picket";
 
 const languages = [
   { name: "Hindi", code: "hi" },
@@ -618,10 +619,11 @@ export default function EventForm() {
                                 <FormLabel>Start time</FormLabel>
                                 <FormControl>
                                   <div className="">
-                                    <Input
-                                      type="time"
-                                      {...field}
-                                      className=" w-full"
+                                    <EventTimePicker
+                                      value={field.value}
+                                      onChange={(newValue) =>
+                                        field.onChange(newValue)
+                                      }
                                     />
                                   </div>
                                 </FormControl>
@@ -716,7 +718,12 @@ export default function EventForm() {
                                 <FormLabel>End time</FormLabel>
                                 <FormControl>
                                   <div className="relative">
-                                    <Input type="time" {...field} />
+                                    <EventTimePicker
+                                      value={field.value}
+                                      onChange={(newValue) =>
+                                        field.onChange(newValue)
+                                      }
+                                    />
                                     {/* <Clock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" /> */}
                                   </div>
                                 </FormControl>
