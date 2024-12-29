@@ -130,14 +130,16 @@ function Events() {
             <div className="flex flex-col sm:flex-row lg:mt-0 mt-12 space-x-2 w-full justify-between">
               <div className="lg:mb-0 mb-2">
                 <Breadcrumb>
-                  <BreadcrumbList>
+                  <BreadcrumbList className="space-x-[-7px]">
                     <BreadcrumbItem>
                       <BreadcrumbLink
                         href="/events"
                         className="flex items-center text-primary hover:text-primary-dark transition-colors"
                       >
                         <Home className="w-4 h-4 mr-2 text-[#f97316]" />
-                        <span className="font-medium text-[#f97316]">Home</span>
+                        <span className="font-medium text-[#f97316] text-[15px] hover:underline">
+                          Home
+                        </span>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator>
@@ -149,7 +151,7 @@ function Events() {
                         className="flex items-center text-primary hover:text-primary-dark transition-colors"
                       >
                         {/* <Calendar className="w-4 h-4 mr-2" /> */}
-                        <span className="font-medium text-[#737373]">
+                        <span className="font-medium text-[#737373] text-[15px] hover:underline hover:cursor-pointer">
                           All Events
                         </span>
                       </BreadcrumbLink>
@@ -161,7 +163,7 @@ function Events() {
                     <BreadcrumbItem>
                       <BreadcrumbLink className="flex items-center text-primary hover:text-primary-dark transition-colors">
                         {/* <Calendar className="w-4 h-4 mr-2" /> */}
-                        <span className="font-medium text-[#737373]">
+                        <span className="font-medium text-[#737373] text-[15px] hover:underline hover:cursor-pointer">
                           Events
                         </span>
                       </BreadcrumbLink>
@@ -226,7 +228,7 @@ function Events() {
                   <HiOutlineLocationMarker size={25} color="" />
                 </p>
               </div>
-              <div className="flex">
+              <div className="flex flex-col lg:flex-row">
                 <p> {event?.venueName}</p>
                 <p>{event?.address}</p>
                 <p>
@@ -234,10 +236,10 @@ function Events() {
                 </p>
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 text-gray-600">
               <div>
                 <p>
-                  <MdOutlineDateRange size={25} color="gray" />
+                  <MdOutlineDateRange size={25} color="" />
                 </p>
               </div>
               <div className="flex gap-2 mb-1 text-xl font-bold text-gray-600 items-center">
@@ -245,8 +247,6 @@ function Events() {
                   <p className="font-bold">From:</p>{" "}
                   {new Date(event?.startDate || "").toLocaleDateString()} at{" "}
                   {event?.startTime || "N/A"}
-                </p>
-                <p className="flex gap-2">
                   <p className="font-bold">To:</p>{" "}
                   {new Date(event?.endDate || "").toLocaleDateString()} at{" "}
                   {event?.endTime || "N/A"}
@@ -446,9 +446,9 @@ function Events() {
             </div>
             <div className="w-full lg:w-1/3">
               <Card className="">
-                <CardHeader className="p-3"></CardHeader>
-                <CardContent className="">
-                  <div className="">
+                <CardHeader className="p-0"></CardHeader>
+                <CardContent className="p-2">
+                  <div className="p-0">
                     {locationsndString && (
                       <LeafletMapRoom
                         onLocationReceived={locationsndString}

@@ -415,7 +415,7 @@ export default function PortlandOregonPage() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="container mx-auto pb-12 space-y-12 mt-3">
+      <div className="container mx-auto pb-7 space-y-12 mt-3">
         {/* <section className="relative h-[500px] mt-3 rounded-lg overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -644,6 +644,50 @@ export default function PortlandOregonPage() {
         <h2 className="text-3xl font-bold mb-2 text-center">
           Indian Diaspora in Portland
         </h2>
+        <div className="w-full space-y-4 sm:space-y-6 md:space-y-8">
+          {sections.map((section, index) => (
+            <div
+              key={index}
+              className="flex flex-col sm:flex-row overflow-hidden rounded-lg shadow-md"
+            >
+              {/* Image Section */}
+              <div
+                className={`relative w-full sm:w-1/2 h-48 sm:h-auto ${
+                  section.imageLeft ? "sm:order-first" : "sm:order-last"
+                }`}
+              >
+                <Image
+                  src={section.imageSrc}
+                  alt={section.imageAlt}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                />
+                {/* Diagonal Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-blue-100 opacity-30" />
+              </div>
+
+              {/* Content Section */}
+              <div
+                className={`flex w-full sm:w-1/2 items-center bg-blue-50 p-4 sm:p-6 ${
+                  section.imageLeft ? "sm:order-last" : "sm:order-first"
+                }`}
+              >
+                <div className="space-y-2 sm:space-y-4">
+                  <h2 className="text-xl sm:text-2xl font-bold text-blue-600">
+                    {section.title}
+                  </h2>
+                  <p className="text-sm sm:text-base text-black">
+                    {section.description}
+                  </p>
+                  <p className="text-sm sm:text-base text-black">
+                    {section.descriptionn}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="w-full space-y-1">
           {sections.map((section, index) => (
             <div key={index} className="flex h-[200px] overflow-hidden">
@@ -826,7 +870,7 @@ export default function PortlandOregonPage() {
         </section> */}
 
         <section>
-          <div className="container mx-auto px-4 py-12">
+          <div className="container mx-auto">
             <div className="mb-12 flex items-center justify-center">
               <div className="h-px flex-1 bg-gray-200" />
               <div className="mx-4">
@@ -891,7 +935,7 @@ export default function PortlandOregonPage() {
             </ul>
           </CardContent>
         </Card> */}
-          <div className="container mx-auto px-4 py-8">
+          <div className="container mx-auto mt-11">
             <div className="grid grid-cols-1 md:grid-cols-3">
               {image.map((image, index) => (
                 <div
