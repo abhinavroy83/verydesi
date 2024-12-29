@@ -33,15 +33,15 @@ export function FeaturedBusinessCard({ business }: bussinesprops) {
                 <h2 className="text-[21px] font-sans font-bold text-gray-800">
                   Modern Downtown Loft
                 </h2>
-                <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
+                {/* <p className="absolute font-bold bg-white/80 top-0 left-0 p-1 px-3 rounded-br-lg text-center">
                   <p className="left-5 top-2 text-[22px] text-green-700 text-right">
                     <div className="flex items-center">
-                      {/* <span className="ml-2 text-sm text-gray-600">
+                      <span className="ml-2 text-sm text-gray-600">
                       4.5 (11 reviews)
-                    </span> */}
+                    </span>
                     </div>
                   </p>
-                </p>
+                </p> */}
                 <div className="flex items-center mt-1 text-[17px] text-gray-600">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
@@ -65,7 +65,7 @@ export function FeaturedBusinessCard({ business }: bussinesprops) {
               <Heart className="w-6 h-6 text-gray-900 hover:fill-red-500 hover:text-red-500 cursor-pointer" />
             </div>
             <div
-              className="flex overflow-x-auto scrollbar-hide gap-2 pb-2"
+              className="flex overflow-x-auto scrollbar-hide gap-2 py-2"
               style={{ maxWidth: "calc(2 * (12rem + 0.5rem))" }}
             >
               {tags.map((tag) => (
