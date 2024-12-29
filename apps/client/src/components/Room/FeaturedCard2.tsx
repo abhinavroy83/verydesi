@@ -130,7 +130,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   return (
     <Card
       onClick={handleCardClick}
-      className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden relative font-helvetica-regular"
+      className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden relative font-nunito"
     >
       <CardContent className="p-0">
         <div className="flex flex-col sm:flex-row">
@@ -174,7 +174,7 @@ export default function Component({ room }: FeaturedCard2Props) {
             </button>
           )}
           <div className="flex-1 px-4 py-2">
-            <div className="mb-2 text-[21px] font-helvetica-regular">
+            <div className="mb-2 text-[21px] font-nunito">
               <TruncateText text={room.Title} />
             </div>
             <div className="flex flex-wrap items-center text-sm text-gray-600 mb-2">

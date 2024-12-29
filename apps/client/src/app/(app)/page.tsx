@@ -197,7 +197,7 @@ const Page = () => {
           Add Room
         </button>
       </div>
-      <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
+      <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2 font-nunito">
         {featuredRooms?.map((room, index) => (
           <FeaturedCard2 key={index} room={room} />
         ))}

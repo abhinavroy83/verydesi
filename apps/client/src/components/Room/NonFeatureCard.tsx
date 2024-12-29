@@ -161,7 +161,7 @@ export default function Component({ room }: FeaturedCard2Props) {
         router.push(`/room/${slug}`);
       }}
     >
-      <Card className="flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[80px]">
+      <Card className="font-nunito flex relative max-w-7xl flex-col justify-between rounded-xl md:flex-row border shadow-md hover:shadow-lg h-auto lg:h-[80px]">
         <CardContent className="py-1 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <div className="lg:flex-shrink-0 hidden lg:flex">
