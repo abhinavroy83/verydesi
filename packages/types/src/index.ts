@@ -4,3 +4,4 @@ export * from "./Room";
 export * from "./UserData";
 export * from './Event'
 export * from './Event'
+export * from './area'
