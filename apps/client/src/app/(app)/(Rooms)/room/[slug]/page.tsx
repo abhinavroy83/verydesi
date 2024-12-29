@@ -480,11 +480,11 @@ export default function RoomDetails({
             <Card>
               <CardContent className="p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-gray-900 text-[16px] font-bold ">
+                  <p className="text-gray-900 text-[20px] font-bold ">
                     About The Property
                   </p>
                 </div>
-                <p className="text-gray-700 text-[14px]">
+                <p className="text-gray-700 text-[16px]">
                   {roomData?.Description}
                 </p>
               </CardContent>
@@ -615,9 +615,9 @@ export default function RoomDetails({
 
           <div className="space-y-2 lg:mt-8">
             <Card>
-              <CardHeader className="p-3"></CardHeader>
-              <CardContent className="">
-                <div className="aspect-w-16 aspect-h-9">
+              <CardHeader className="p-0"></CardHeader>
+              <CardContent className="p-2">
+                <div className="aspect-w-16 h-[434px]">
                   {locationsndString && (
                     <LeafletMapRoom onLocationReceived={locationsndString} />
                   )}{" "}

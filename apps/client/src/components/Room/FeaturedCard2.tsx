@@ -142,6 +142,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                   : "https://res.cloudinary.com/druohnmyv/image/upload/v1729259425/no_image-3-600x745_rk3g07.jpg"
               }
               alt="Room Image"
+              title="Room Image"
               width={600}
               height={300}
               className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
