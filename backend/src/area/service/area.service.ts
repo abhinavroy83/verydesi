@@ -60,9 +60,10 @@ export class AreaService {
     }
   }
 
-  async findArea(area: string): Promise<City[]> {
+  async findArea(area: string): Promise<{ area: City[] }> {
     try {
-      return await this.areamodel.find({ area });
+      const res = await this.areamodel.find({ area });
+      return { area: res }; 
     } catch (error) {
       throw new InternalServerErrorException('Failed to find area');
     }

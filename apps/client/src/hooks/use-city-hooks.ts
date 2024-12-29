@@ -32,7 +32,7 @@ export function useCityData() {
         }
 
         const res = await axios.get<CityResponse>(
-          "https://api.verydesi.com/api/admin/getallcity"
+          "https://apiv2.verydesi.com/area/getallcities"
         );
         const uniqueCities = Array.from(
           new Set(res.data.city.map((item) => item.area))
