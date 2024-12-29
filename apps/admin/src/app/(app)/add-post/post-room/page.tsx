@@ -288,7 +288,7 @@ export default function RoomPostingForm() {
   const scrollToSection = (sectionId: string, offset = 130) => {
     const section = sectionRefs.current[sectionId];
     if (section) {
-      const yOffset = offset; // Custom height to add
+      const yOffset = offset;
       const y =
         section.getBoundingClientRect().top + window.pageYOffset - yOffset;
 
@@ -302,7 +302,7 @@ export default function RoomPostingForm() {
 
   return (
     <DashboardLayout>
-      <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-6 mt-[8rem] font-sans">
+      <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-6  font-sans">
         <div className="py-1 mb-3">
           <Breadcrumb>
             <BreadcrumbList>
@@ -330,9 +330,9 @@ export default function RoomPostingForm() {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
-        <div className=" flex">
+        <div className="flex overflow-hidden">
           <aside className="w-64 bg-[#232f3e] p-4 text-white ">
-            <nav className="hidden  lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
+            <nav className="hidden lg:block max-w-[1370px] lg:max-w-[1600px] mx-auto fixed overflow-y-auto h-[calc(100vh-7rem)]">
               <ul className="space-y-2 ">
                 {sections.map((section) => (
                   <li key={section.id}>
