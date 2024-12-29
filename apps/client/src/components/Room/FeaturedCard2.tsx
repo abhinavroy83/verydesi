@@ -130,11 +130,11 @@ export default function Component({ room }: FeaturedCard2Props) {
   return (
     <Card
       onClick={handleCardClick}
-      className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden relative"
+      className="cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden relative font-helvetica-regular"
     >
       <CardContent className="p-0">
         <div className="flex flex-col sm:flex-row">
-          <div className="relative w-full sm:w-1/3 h-48 sm:h-auto lg:h-44  overflow-hidden">
+          <div className="relative w-full sm:w-1/3 h-48 sm:h-auto lg:h-44 overflow-hidden">
             <Image
               src={
                 room.Imgurl && room.Imgurl.length > 0
@@ -174,7 +174,7 @@ export default function Component({ room }: FeaturedCard2Props) {
             </button>
           )}
           <div className="flex-1 px-4 py-2">
-            <div className="mb-2 text-[21px]">
+            <div className="mb-2 text-[21px] font-helvetica-regular">
               <TruncateText text={room.Title} />
             </div>
             <div className="flex flex-wrap items-center text-sm text-gray-600 mb-2">
