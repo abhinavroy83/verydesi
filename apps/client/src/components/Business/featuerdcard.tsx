@@ -8,6 +8,14 @@ interface bussinesprops {
 }
 
 export function FeaturedBusinessCard({ business }: bussinesprops) {
+  const tags = [
+    "Psychiatrists",
+    "Cardiologists",
+    "Gastroenterologists",
+    "Neurologists",
+    "Dermatologists",
+  ];
+
   return (
     <Link href={`/business/1212`}>
       <Card className="w-full max-w-3xl overflow-hidden shadow-md hover:shadow-lg font-sans">
@@ -56,21 +64,21 @@ export function FeaturedBusinessCard({ business }: bussinesprops) {
               </div>
               <Heart className="w-6 h-6 text-gray-900 hover:fill-red-500 hover:text-red-500 cursor-pointer" />
             </div>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {["Psychiatrists", "Cardiologists", "Gastroenterologists"].map(
-                (tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-1 bg-gray-100 text-pink-500 text-xs font-medium rounded-full"
-                  >
-                    <div className="flex gap-1">
-                      {" "}
-                      <Check size={15} />
-                      {tag}{" "}
-                    </div>
-                  </span>
-                )
-              )}
+            <div
+              className="flex overflow-x-auto scrollbar-hide gap-2 pb-2"
+              style={{ maxWidth: "calc(2 * (12rem + 0.5rem))" }}
+            >
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="flex-shrink-0 px-2 py-1 bg-gray-100 text-pink-500 text-xs font-medium rounded-full whitespace-nowrap"
+                >
+                  <div className="flex items-center gap-1">
+                    <Check size={15} />
+                    {tag}
+                  </div>
+                </span>
+              ))}
             </div>
           </CardContent>
         </div>
