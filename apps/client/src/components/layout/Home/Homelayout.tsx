@@ -1,12 +1,34 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import React, { ReactNode } from "react";
 const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
   ssr: false,
 });
 
 export function HomeLayout({ children }: { children: ReactNode }) {
+  const categories = {
+    "Business & Services": [
+      "Home Services",
+      "Beauty",
+      "Auto Care",
+      "Insurance",
+      "Health & Medical",
+      "Legal",
+      "Food & Restaurants",
+      "Travel",
+      "Clothing",
+      "Groceries",
+      "Entertainment",
+      "Pets",
+      "Food/Catering",
+      "Moving",
+      "Phone & Cable",
+    ],
+  };
+
+  const businesspath= pathname.startsWith ===='business'
   return (
     <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6">
       <div className="w-full lg:w-4/5 mr-4">{children}</div>

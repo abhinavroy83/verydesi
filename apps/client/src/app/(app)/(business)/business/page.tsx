@@ -60,49 +60,30 @@ import {
 
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
 
-type Category = {
-  name: string;
-  icon: React.ReactNode;
-};
-
 export default function BusinessDirectory() {
   const [showAll, setShowAll] = useState(false);
   const router = useRouter();
 
-  const categories: Category[] = [
-    { name: "Landscaping", icon: <Leaf className="h-4 w-4" /> },
-    { name: "Contractors", icon: <Wrench className="h-4 w-4" /> },
-    { name: "Electricians", icon: <Zap className="h-4 w-4" /> },
-    { name: "Locksmiths", icon: <Lock className="h-4 w-4" /> },
-    { name: "Home Cleaners", icon: <SprayCan className="h-4 w-4" /> },
-    { name: "Movers", icon: <Truck className="h-4 w-4" /> },
-    { name: "HVAC", icon: <Wind className="h-4 w-4" /> },
-    { name: "Plumbers", icon: <Droplet className="h-4 w-4" /> },
-    { name: "Auto Repair", icon: <Car className="h-4 w-4" /> },
-    { name: "Hair Stylists", icon: <Scissors className="h-4 w-4" /> },
-    { name: "Restaurants", icon: <Utensils className="h-4 w-4" /> },
-    { name: "Business Services", icon: <Briefcase className="h-4 w-4" /> },
-    { name: "Photographers", icon: <Camera className="h-4 w-4" /> },
-    { name: "Tutors", icon: <Pen className="h-4 w-4" /> },
-    { name: "Bookstores", icon: <Book className="h-4 w-4" /> },
-    { name: "IT Services", icon: <Laptop className="h-4 w-4" /> },
-    { name: "Dry Cleaning", icon: <Shirt className="h-4 w-4" /> },
-    { name: "Pet Care", icon: <Dog className="h-4 w-4" /> },
-    { name: "Music Lessons", icon: <Music className="h-4 w-4" /> },
-    { name: "Art Galleries", icon: <Palette className="h-4 w-4" /> },
-    { name: "Fitness", icon: <Dumbbell className="h-4 w-4" /> },
-    { name: "Healthcare", icon: <Heart className="h-4 w-4" /> },
-    { name: "Travel", icon: <Plane className="h-4 w-4" /> },
-    { name: "Solar Installation", icon: <Sun className="h-4 w-4" /> },
-    { name: "Cafes", icon: <Coffee className="h-4 w-4" /> },
-    { name: "Internet Providers", icon: <Wifi className="h-4 w-4" /> },
-    { name: "Phone Repair", icon: <Phone className="h-4 w-4" /> },
-    { name: "Grocery Delivery", icon: <ShoppingCart className="h-4 w-4" /> },
-    { name: "TV Installation", icon: <Tv className="h-4 w-4" /> },
-    { name: "Home Renovation", icon: <Home className="h-4 w-4" /> },
-  ];
+  const categories = {
+    "Business & Services": [
+      "Home Services",
+      "Beauty",
+      "Auto Care",
+      "Insurance",
+      "Health & Medical",
+      "Legal",
+      "Food & Restaurants",
+      "Travel",
+      "Clothing",
+      "Groceries",
+      "Entertainment",
+      "Pets",
+      "Food/Catering",
+      "Moving",
+      "Phone & Cable",
+    ],
+  };
 
-  const visibleCategories = showAll ? categories : categories.slice(0, 12);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] =
     useState<SortOption>("Recommended");
@@ -302,7 +283,6 @@ export default function BusinessDirectory() {
                             {items.map((category) => (
                               <div
                                 key={category}
-                                // variant="secondary"
                                 className="cursor-pointer bg-white p-1 px-2 rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
                               >
                                 {category}
