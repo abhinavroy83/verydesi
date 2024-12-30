@@ -654,8 +654,8 @@ export default function Home() {
             <CardContent className="p-0">
               {/* <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2> */}
               <div className="bg-yellow-400 rounded-lg p-1">
-                <div className="p-1 space-y-8">
-                  <div className="space-y-8">
+                <div className="p-1 space-y-2">
+                  <div className="space-y-1">
                     {Object.entries(categories).map(([section, items]) => (
                       <div key={section} className="space-y-4">
                         <h3 className="text-xl font-semibold text-muted-foreground">
@@ -666,13 +666,13 @@ export default function Home() {
                             <div
                               key={category}
                               // variant="secondary"
-                              className="bg-white p-1 px-2 rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+                              className="cursor-pointer bg-white p-1 px-2 rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
                             >
                               {category}
                             </div>
                           ))}
                         </div>
-                        <p className="flex w-full justify-end">
+                        <p className="flex w-full justify-end cursor-pointer">
                           View All Category
                         </p>
                       </div>

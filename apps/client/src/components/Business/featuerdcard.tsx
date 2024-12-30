@@ -2,6 +2,7 @@ import { Check, Heart, Star, TicketCheck } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { BusinessData } from "@myrepo/types";
+import Image from "next/image";
 
 interface bussinesprops {
   business: BusinessData;
@@ -18,13 +19,17 @@ export function FeaturedBusinessCard({ business }: bussinesprops) {
 
   return (
     <Link href={`/business/1212`}>
-      <Card className="w-full max-w-3xl overflow-hidden shadow-md hover:shadow-lg font-sans">
-        <div className="relative flex flex-col sm:flex-row">
-          <div className="sm:w-1/3">
-            <img
-              src="https://res.cloudinary.com/druohnmyv/image/upload/v1725364188/duw9dhbpevprltzdyi7d.jpg"
+      <Card className="w-full max-w-3xl overflow-hidden hover:shadow-lg font-sans">
+        <div className=" flex flex-col sm:flex-row">
+          <div className="relative w-full sm:w-1/3 h-48 sm:h-auto">
+            <Image
+              src={
+                "https://res.cloudinary.com/druohnmyv/image/upload/v1725364188/duw9dhbpevprltzdyi7d.jpg"
+              }
               alt="Modern Downtown Loft"
-              className="w-full h-full object-cover"
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-500 ease-in-out hover:scale-110"
             />
           </div>
           <CardContent className="p-3 sm:w-2/3">
@@ -42,7 +47,7 @@ export function FeaturedBusinessCard({ business }: bussinesprops) {
                     </div>
                   </p>
                 </p> */}
-                <div className="flex items-center mt-1 text-[17px] text-gray-600">
+                <div className="flex items-center mt-1 text-[18px] text-gray-600">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <Star
@@ -51,14 +56,14 @@ export function FeaturedBusinessCard({ business }: bussinesprops) {
                       />
                     ))}
                   </div>
-                  <span className="ml-2 text-gray-600 text-[17px]">
+                  <span className="ml-2 text-gray-600 text-[18px]">
                     4.5 (11 reviews)
                   </span>
                 </div>
-                <p className=" text-gray-600 mt-1 text-[17px]">
+                <p className=" text-gray-600 mt-1 text-[18px]">
                   2808 Rt North Brunswick, New Jersey
                 </p>
-                <p className=" font-semibold text-gray-800 mt-1 text-[17px]">
+                <p className=" font-semibold text-gray-800 mt-1 text-[18px]">
                   602-600-0217 (Pin: 76065)
                 </p>
               </div>
@@ -71,7 +76,7 @@ export function FeaturedBusinessCard({ business }: bussinesprops) {
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="flex-shrink-0 px-2 py-1 bg-gray-100 text-pink-500 text-xs font-medium rounded-full whitespace-nowrap"
+                  className="flex-shrink-0 px-2 py-1 bg-gray-100 text-pink-500 text-[13px] font-medium rounded-full whitespace-nowrap"
                 >
                   <div className="flex items-center gap-1">
                     <Check size={15} />
