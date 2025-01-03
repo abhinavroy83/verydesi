@@ -38,7 +38,7 @@ export function HomeLayout({ children }: { children: ReactNode }) {
       >
         <LeafletMap />
         {businesspath && (
-          <Card className="mt-3">
+          <Card className="">
             <CardContent className="p-0">
               {/* <h2 className="text-[25px] font-bold p-4 pb-2">Services &</h2> */}
               <div className="bg-yellow-400 rounded-lg p-1">

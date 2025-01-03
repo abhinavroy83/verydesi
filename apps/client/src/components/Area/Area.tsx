@@ -53,15 +53,15 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-[370px] p-4 bg-white rounded-xl shadow-xl border-none font-sans"
+          className="w-[210px] p-2 bg-white rounded-xl shadow-xl border-none font-sans"
           onCloseAutoFocus={(e) => e.preventDefault()}
         >
-          <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto">
+          <div className="grid grid-cols-2 gap-1 max-h-[300px] overflow-y-auto">
             {cities.map((city) => (
               <div
                 key={city}
                 onClick={() => handleLocation(city)}
-                className={`w-full text-start px-3 py-2 text-[16px] rounded hover:bg-primary hover:text-primary-foreground focus:outline-none transition duration-150 ease-in-out ${
+                className={`w-full text-start p-1 text-[16px] hover:cursor-pointer rounded hover:bg-primary hover:text-primary-foreground focus:outline-none transition duration-150 ease-in-out ${
                   selectedCity === city
                     ? "bg-primary text-primary-foreground"
                     : "text-gray-700"
