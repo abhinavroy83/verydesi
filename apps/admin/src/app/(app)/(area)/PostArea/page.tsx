@@ -17,17 +17,12 @@ export default function AddAreaForm() {
   return (
     <Dashboardlayout>
       <div className="container mx-auto py-6">
-        {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <span>Home</span>
           <ChevronRight className="h-4 w-4" />
           <span>AllArea</span>
           <ChevronRight className="h-4 w-4" />
-          <span
-           
-          >
-            Add Area
-          </span>
+          <span>Add Area</span>
         </div>
 
         <Card>
