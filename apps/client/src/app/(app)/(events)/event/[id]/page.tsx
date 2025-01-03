@@ -386,7 +386,7 @@ function Events() {
                 <h1 className="flex text-[#000] text-[20px] font-bold my-2 gap-2">
                   Host Details-{" "}
                 </h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-between border rounded-md p-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-between border rounded-md p-3">
                   <div className="flex gap-2 items-center">
                     {/* <FaUserAlt size={35} /> */}
                     <img
