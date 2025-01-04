@@ -60,7 +60,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-
 const sections = [
   { id: "basic-info", title: "Basic Information" },
   { id: "pricing", title: "Pricing" },
@@ -119,7 +118,7 @@ export default function RoomPostingForm() {
       form.setValue("phoneNumber", userData.phone_number || "");
     }
   }, [userData, form]);
-  
+
   const [images, setImages] = useState<File[]>([]);
   const [imageurl, setimageurls] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -393,7 +392,7 @@ export default function RoomPostingForm() {
               >
                 <h2 className="text-2xl font-bold mb-4">Basic Information</h2>
                 <div className="space-y-6">
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="postingIn"
                     render={({ field }) => (
@@ -423,7 +422,7 @@ export default function RoomPostingForm() {
                         </div>
                       </FormItem>
                     )}
-                  />
+                  /> */}
                   <FormField
                     control={form.control}
                     name="postingType"

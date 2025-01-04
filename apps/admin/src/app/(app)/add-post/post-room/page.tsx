@@ -398,7 +398,7 @@ export default function RoomPostingForm() {
                 >
                   <h2 className="text-2xl font-bold mb-4">Basic Information</h2>
                   <div className="space-y-6">
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="postingIn"
                       render={({ field }) => (
@@ -428,7 +428,7 @@ export default function RoomPostingForm() {
                           </div>
                         </FormItem>
                       )}
-                    />
+                    /> */}
                     <FormField
                       control={form.control}
                       name="postingType"
