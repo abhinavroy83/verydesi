@@ -189,7 +189,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                     className="h-10 w-10 text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819320/assests/ocyga8lgdentnbpcjkh2.png"
                     alt="male"
-                    title="male"
+                    title="Male"
                   />
                   {/* <IoIosMale className="h-12 w-12  text-gray-400" /> */}
                 </>
@@ -199,7 +199,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                     className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819317/assests/acn46dsajdgzwlmk9j5v.png"
                     alt="female"
-                    title="female"
+                    title="Female"
                   />
                   {/* <IoIosFemale className="h-12 w-12  text-gray-400" /> */}
                 </>
@@ -209,7 +209,7 @@ export default function Component({ room }: FeaturedCard2Props) {
                     className="h-10 w-10  text-gray-400"
                     src="https://res.cloudinary.com/druohnmyv/image/upload/v1723819314/assests/jum9urk9pw7dsladdtuq.png"
                     alt="any"
-                    title="any"
+                    title="Any Gender"
                   />
                 </>
               )}{" "}
