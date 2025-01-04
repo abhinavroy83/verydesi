@@ -415,7 +415,7 @@ export default function PortlandOregonPage() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="container mx-auto pb-7 space-y-12 mt-3">
+      <div className="container mx-auto space-y-8 mt-3">
         {/* <section className="relative h-[500px] mt-3 rounded-lg overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -434,7 +434,7 @@ export default function PortlandOregonPage() {
             </header>
           </div>
         </section> */}
-        <section className="relative h-[600px] mt-3 rounded-lg overflow-hidden">
+        <section className="relative h-[450px] mt-3 rounded-lg overflow-hidden">
           {/* <iframe style={{ height: "100%", width: "100%" }} src="https://www.youtube.com/embed/UWdfaNWThnA?si=2VjJ1MAi2Jxfr-VU?autoplay=1&mute=1" allow='autoplay' title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
           <video
             ref={videoRef}
@@ -451,26 +451,18 @@ export default function PortlandOregonPage() {
 
           <div className="absolute inset-0 bg-black bg-opacity-70" />
           <div className="relative flex flex-col items-center justify-center h-full text-white p-2">
-            <header className="container mx-auto py-8 text-center">
-              <h1 className="mb-4 text-[43px] font-bold text-white">CHICAGO</h1>
-              <p className="text-xl text-white font-bold">
+            <header className="container mx-auto text-center">
+              <h1 className="mb-1 text-[24px] font-bold text-white">CHICAGO</h1>
+              <p className="text-[16px] text-white font-bold">
                 Find just about anything around the corner.
-              </p>
-              <p className=" text-white mt-5 font-bold">
-                Spend hours studying at your favorite coffee shop ... Discover
-                where some of the country's best improv comedians, and jazz and
-                blues musicians hang out ... Nom on some famous food from
-                Chicago dogs to Morton's hot chocolate cake ... or learn from
-                the city's best and brightest at a tech startup. You can find
-                just about anything around the corner in Chicago, Illinois.
               </p>
             </header>
           </div>
         </section>
         <div className="flex flex-col bg-white">
           {/* <header className="container mx-auto px-4 py-8 text-center">
-            <h1 className="mb-4 text-3xl font-bold text-blue-600">CHICAGO</h1>
-            <p className="text-xl text-gray-600">
+            <h1 className="mb-4 text-[24px] font-bold text-blue-600">CHICAGO</h1>
+            <p className="text-xl text-black">
               Find just about anything around the corner.
             </p>
           </header> */}
@@ -497,8 +489,8 @@ export default function PortlandOregonPage() {
           </div> */}
 
           <div className="">
-            <h1 className="text-3xl font-bold mb-2">About</h1>
-            <p className=" text-gray-600">
+            <h1 className="text-[24px] font-bold mb-2">About</h1>
+            <p className="text-[16px] text-black">
               Spend hours studying at your favorite coffee shop ... Discover
               where some of the country's best improv comedians, and jazz and
               blues musicians hang out ... Nom on some famous food from Chicago
@@ -509,7 +501,7 @@ export default function PortlandOregonPage() {
           </div>
 
           {/* Stats Grid */}
-          <div className="container mt-12">
+          <div className="container mt-5">
             {/* <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {stats.map((stat, index) => (
                 <div
@@ -520,10 +512,10 @@ export default function PortlandOregonPage() {
                     <stat.icon className="h-8 w-8 text-blue-600" />
                   </div>
                   <div className="flex flex-col">
-                    <div className="text-3xl font-bold text-blue-600">
+                    <div className="text-[24px] font-bold text-blue-600">
                       {stat.number}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-black">
                       {stat.label}
                       {stat.sublabel && (
                         <>
@@ -548,10 +540,10 @@ export default function PortlandOregonPage() {
                     <stat.icon className="h-8 w-8 text-blue-600" />
                   </div>
                   <div className="flex flex-col">
-                    <div className="text-3xl font-bold text-blue-600">
+                    <div className="text-[24px] font-bold text-blue-600">
                       {stat.number}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-black">
                       {stat.label}
                       {stat.sublabel && (
                         <>
@@ -578,10 +570,10 @@ export default function PortlandOregonPage() {
                     </div>
                   </div>
                   <div className="p-4 text-center">
-                    <div className="text-3xl font-bold text-blue-600">
+                    <div className="text-[24px] font-bold text-blue-600">
                       {stat.number}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm sm:text-base text-black">
                       {stat.label}
                       {stat.sublabel && (
                         <>
@@ -598,14 +590,14 @@ export default function PortlandOregonPage() {
         </div>
         {/* <div className="container mx-auto px-4 pb-12">
           <section className="text-center mb-5">
-            <h1 className="text-3xl font-bold mb-4">Portland, Oregon</h1>
+            <h1 className="text-[24px] font-bold mb-4">Portland, Oregon</h1>
             <p className="text-xl max-w-3xl mx-auto">
               A city known for its beautiful landscape, sustainable planning,
               and vibrant urban culture, Portland offers a unique blend of
               history, nature, and modern living.
             </p>
           </section>
-          <h1 className="mb-8 text-3xl font-bold">History and Geography</h1>
+          <h1 className="mb-8 text-[24px] font-bold">History and Geography</h1>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {historyCards.map((card, index) => (
               <Card
@@ -641,10 +633,10 @@ export default function PortlandOregonPage() {
             ))}
           </div>
         </div> */}
-        <h2 className="text-3xl font-bold mb-2 text-center">
+        <h2 className="text-[24px] font-bold mb-2 text-center">
           Indian Diaspora in Portland
         </h2>
-        <div className="w-full space-y-4 sm:space-y-6 md:space-y-8">
+        <div className="w-full space-y-2 shadow-md">
           {sections.map((section, index) => (
             <div
               key={index}
@@ -652,7 +644,7 @@ export default function PortlandOregonPage() {
             >
               {/* Image Section */}
               <div
-                className={`relative w-full sm:w-1/2 h-48 sm:h-auto ${
+                className={`relative lg:w-[50%] w-full h-48 sm:h-auto ${
                   section.imageLeft ? "sm:order-first" : "sm:order-last"
                 }`}
               >
@@ -669,11 +661,11 @@ export default function PortlandOregonPage() {
 
               {/* Content Section */}
               <div
-                className={`flex w-full sm:w-1/2 items-center bg-blue-50 p-4 sm:p-6 ${
+                className={`flex w-full items-center bg-blue-50 p-4 sm:p-6 ${
                   section.imageLeft ? "sm:order-last" : "sm:order-first"
                 }`}
               >
-                <div className="space-y-2 sm:space-y-4">
+                <div className="space-y-2">
                   <h2 className="text-xl sm:text-2xl font-bold text-blue-600">
                     {section.title}
                   </h2>
@@ -693,7 +685,7 @@ export default function PortlandOregonPage() {
             <div key={index} className="flex h-[200px] overflow-hidden">
               {/* Image Section */}
               <div
-                className={`relative w-[63%] ${
+                className={`relative w-[40%] ${
                   section.imageLeft ? "order-first" : "order-last"
                 }`}
               >
@@ -718,8 +710,12 @@ export default function PortlandOregonPage() {
                   <h2 className="text-2xl font-bold text-blue-600">
                     {section.title}
                   </h2>
-                  <p className="text-sm text-black">{section.description}</p>
-                  <p className="text-sm text-black">{section.descriptionn}</p>
+                  <p className="text-sm sm:text-base text-black">
+                    {section.description}
+                  </p>
+                  <p className="text-sm sm:text-base text-black">
+                    {section.descriptionn}
+                  </p>
                   {/* <Button
                     variant="outline"
                     size="sm"
@@ -736,7 +732,7 @@ export default function PortlandOregonPage() {
         {/* //her  */}
 
         {/* <section>
-          <h2 className="text-3xl font-bold mb-6">History and Geography</h2>
+          <h2 className="text-[24px] font-bold mb-6">History and Geography</h2>
           <Card>
             <CardContent className="p-6 space-y-4">
               <div>
@@ -824,7 +820,7 @@ export default function PortlandOregonPage() {
         </section> */}
 
         {/* <section>
-          <h2 className="text-3xl font-bold mb-6">
+          <h2 className="text-[24px] font-bold mb-6">
             Indian Diaspora in Portland
           </h2>
           <Card>
@@ -878,11 +874,11 @@ export default function PortlandOregonPage() {
               </div>
               <div className="h-px flex-1 bg-gray-200" />
             </div>
-            <h1 className="mb-1 text-center text-3xl font-bold text-gray-900">
+            <h1 className="mb-1 text-center text-[24px] font-bold text-gray-900">
               More to Love in New York
             </h1>
 
-            <h1 className="mb-12 text-center text-xl text-gray-700">
+            <h1 className="mb-12 text-center text-[16px] text-gray-700">
               Moving to Portland, Oregon can be an exciting choice! Here's a
               snapshot of what to expect if you're making the move:
             </h1>
@@ -900,15 +896,12 @@ export default function PortlandOregonPage() {
                     />
                   </div>
                   <div className="px-5 py-2 text-center">
-                    {/* <h2 className="mb-2 text-xl font-semibold text-gray-900">
-                    {attraction.title}
-                  </h2> */}
-                    <p className="mb-1 text-gray-600">
+                    <p className="lg:text-[16px] text-[14px] mb-1 text-black">
                       {attraction.description}
                     </p>
                     <Link
                       href={attraction.link}
-                      className="text-sm font-medium text-red-500 hover:text-red-600"
+                      className="lg:text-[16px] text-[14px] font-medium text-red-500 hover:text-red-600"
                     >
                       more
                     </Link>
@@ -935,7 +928,7 @@ export default function PortlandOregonPage() {
             </ul>
           </CardContent>
         </Card> */}
-          <div className="container mx-auto mt-11">
+          <div className="container mx-auto my-11">
             <div className="grid grid-cols-1 md:grid-cols-3">
               {image.map((image, index) => (
                 <div
