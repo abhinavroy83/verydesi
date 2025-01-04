@@ -131,6 +131,7 @@ export default function RoomPostingForm() {
   const { data: session, status } = useSession();
 
   const { cities, isLoading, error } = useCityData();
+  console.log("cities", cities);
   const router = useRouter();
   useEffect(() => {
     if (Object.keys(addressComponents).length > 0) {
