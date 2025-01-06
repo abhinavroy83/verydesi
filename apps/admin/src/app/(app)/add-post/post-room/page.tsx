@@ -102,9 +102,9 @@ export default function RoomPostingForm() {
       smokingPolicy: undefined,
       petPolicy: undefined,
       openHouseDate: undefined,
-      name: userData?.firstName || "",
-      email: userData?.email || "",
-      phoneNumber: userData?.phone_number || "",
+      name: "",
+      email: "",
+      phoneNumber: "",
       address: "",
       city: "",
       state: "",
@@ -113,13 +113,6 @@ export default function RoomPostingForm() {
     },
   });
 
-  useEffect(() => {
-    if (userData) {
-      form.setValue("name", userData.firstName || "");
-      form.setValue("email", userData.email || "");
-      form.setValue("phoneNumber", userData.phone_number || "");
-    }
-  }, [userData, form]);
   const [images, setImages] = useState<File[]>([]);
   const [imageurl, setimageurls] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -1543,12 +1536,6 @@ export default function RoomPostingForm() {
                                   id={fieldInfo.name}
                                   {...field}
                                   value={field.value as string}
-                                  disabled={fieldInfo.name === "email"}
-                                  className={
-                                    fieldInfo.name === "email"
-                                      ? "bg-gray-100"
-                                      : ""
-                                  }
                                 />
                               </FormControl>
                               <FormMessage />

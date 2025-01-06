@@ -54,7 +54,7 @@ export const postroomschema = z.object({
   petPolicy: z.string(),
   openHouseDate: z.date().optional(),
   name: z.string().min(1, { message: "Name is required" }),
-  email: z.string().email(),
+  email: z.string().email({ message: "Email is required" }),
   phoneNumber: z.string().min(10, { message: "Phone number is required" }),
   address: z.string().min(1, { message: "Address is required" }),
   city: z.string().min(1, { message: "City is required" }),
