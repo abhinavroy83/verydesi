@@ -41,6 +41,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { useRef } from "react";
+import CityBenefitCard from "@/components/About-city/CityBenefitCard";
 
 const neighborhoods = [
   {
@@ -161,7 +162,7 @@ const attractions = [
     title: "Weekend in the Bronx",
     image: "/placeholder.svg?height=400&width=600",
     description: "The Benefits and Challenges of Living in Portland, Oregon",
-    link: "#",
+    link: "/Benefits",
   },
 ];
 const images = [
@@ -884,29 +885,7 @@ export default function PortlandOregonPage() {
             </h1>
             <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-5">
               {attractions.map((attraction, index) => (
-                <div
-                  key={index}
-                  className="group overflow-hidden border rounded-xl bg-white shadow-sm transition-shadow hover:shadow-md"
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={"https://wallpapercave.com/wp/Nb3d7Ur.jpg"}
-                      alt={attraction.title}
-                      className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-xl"
-                    />
-                  </div>
-                  <div className="px-5 py-2 text-center">
-                    <p className="lg:text-[16px] text-[14px] mb-1 text-black">
-                      {attraction.description}
-                    </p>
-                    <Link
-                      href={attraction.link}
-                      className="lg:text-[16px] text-[14px] font-medium text-red-500 hover:text-red-600"
-                    >
-                      more
-                    </Link>
-                  </div>
-                </div>
+                <CityBenefitCard attraction={attraction} key={index} />
               ))}
             </div>
           </div>
