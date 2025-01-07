@@ -37,6 +37,7 @@ const Page = () => {
   const { data: session } = useSession();
   const { openLogin } = useloginstore();
   const { updateCity, setVerified, setname, setUserImgae } = useAuthStore();
+  console.log("currentCity", currentCity);
   // console.log(localStorage.getItem("auth-storage"));
   // const storagecity = localStorage.getItem("auth-storage");
   // if (storagecity) {
@@ -57,18 +58,21 @@ const Page = () => {
           withCredentials: true,
         }
       );
+      console.log("res", res);
       if (res.data.rooms.length === 0) {
         setError(`No rooms found in ${currentCity}`);
         setRooms([]);
       }
       const rooms = res.data.rooms.reverse();
-
+      console.log(res.data.rooms);
+      setRooms(res.data.rooms);
       const areaRes = await axios.get(
         `https://api.verydesi.com/api/admin/area/${currentCity || "Portland"}`,
         {
           withCredentials: true,
         }
       );
+      console.log("areaRes", areaRes);
       const areaData = areaRes.data.area[0];
       const primaryState = areaData.primaryState;
       const states = areaData.state;
@@ -94,7 +98,7 @@ const Page = () => {
       };
 
       rooms.sort((a: any, b: any) => priority(a) - priority(b));
-      setRooms(rooms);
+      // setRooms(rooms);
       setLoading(false);
     } catch (error) {
       console.log(error);
