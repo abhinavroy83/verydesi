@@ -226,6 +226,7 @@ export default function EventForm() {
 
   const onSubmit = async (data: z.infer<typeof EventformSchema>) => {
     setIsSubmitting(true);
+    console.log(data);
     try {
       const token = session?.user.accessToken;
       if (!token) {
@@ -253,6 +254,7 @@ export default function EventForm() {
       console.log(res);
       if (res.data) {
         toast.success("event added successully");
+        form.reset();
       }
       console.log("Payload:", payload);
 

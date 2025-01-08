@@ -64,15 +64,15 @@ const Page = () => {
         setRooms([]);
       }
       const rooms = res.data.rooms.reverse();
-      console.log(res.data.rooms);
-      setRooms(res.data.rooms);
+      // console.log(res.data.rooms);
+      // setRooms(res.data.rooms);
       const areaRes = await axios.get(
-        `https://api.verydesi.com/api/admin/area/${currentCity || "Portland"}`,
+        `https://apiv2.verydesi.com/area/find-city-by-area/${currentCity || "Portland"}`,
         {
           withCredentials: true,
         }
       );
-      console.log("areaRes", areaRes);
+      // console.log("areaRes", areaRes);
       const areaData = areaRes.data.area[0];
       const primaryState = areaData.primaryState;
       const states = areaData.state;
@@ -98,7 +98,7 @@ const Page = () => {
       };
 
       rooms.sort((a: any, b: any) => priority(a) - priority(b));
-      // setRooms(rooms);
+      setRooms(rooms);
       setLoading(false);
     } catch (error) {
       console.log(error);

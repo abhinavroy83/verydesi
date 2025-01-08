@@ -121,10 +121,11 @@ export default function RoomPostingForm() {
   const watchstaylength = form.watch("stayLength");
   const watchpostingtype = form.watch("postingType");
   const watchImmediate = form.watch("immediate");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session, status } = useSession();
 
   const { cities, isLoading, error } = useCityData();
-  console.log("cities", cities);
+  // console.log("cities", cities);
   const router = useRouter();
   useEffect(() => {
     if (Object.keys(addressComponents).length > 0) {
@@ -192,12 +193,16 @@ export default function RoomPostingForm() {
   const fetchAreaData = async (city: string) => {
     // console.log(city);
     const response = await axios(
-      `https://api.verydesi.com/api/admin/area/${city}`
+      `https://apiv2.verydesi.com/area/find-city-by-area/${city}`
     );
+    // console.log(response.data.area[0]);
 
     return response.data.area[0];
   };
   const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
+
+    // console.log(data);
     const city = data.postingIn;
     const areaData = await fetchAreaData(city);
     const enteredStateAbbreviation = data.state;
@@ -241,8 +246,8 @@ export default function RoomPostingForm() {
         Pet_friendly: data.petPolicy,
         Open_house_schedule: data.openHouseDate,
         Imgurl: imageurl,
-        user_name: userData?.firstName,
-        email: userData?.email,
+        user_name: data.name,
+        email: data.email,
         city: data.city,
         state: data.state,
         zip_code: data.zipCode,
@@ -253,7 +258,9 @@ export default function RoomPostingForm() {
 
       try {
         const token = session?.user.accessToken;
+        // console.log(token);
         if (!token) {
+          // console.log("tokn no");
           throw new Error("token not found");
         }
         const res = await axios.post(
@@ -265,7 +272,7 @@ export default function RoomPostingForm() {
             },
           }
         );
-        // console.log(res);
+        console.log(res);
         if (res) {
           toast.success("room added succesfully");
           form.reset();
@@ -1584,10 +1591,18 @@ export default function RoomPostingForm() {
                   className=" w-full mx-auto flex justify-center"
                 >
                   <Button
+                    disabled={isSubmitting}
                     type="submit"
                     className="flex items-center justify-center"
                   >
-                    Add New Room
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      "Add New Room"
+                    )}{" "}
                   </Button>
                 </div>
               </form>

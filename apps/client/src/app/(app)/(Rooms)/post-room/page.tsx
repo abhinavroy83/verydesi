@@ -197,7 +197,7 @@ export default function RoomPostingForm() {
   const fetchAreaData = async (city: string) => {
     // console.log(city);
     const response = await axios(
-      `https://api.verydesi.com/api/admin/area/${city}`
+      `https://apiv2.verydesi.com/area/find-city-by-area/${city}`
     );
 
     return response.data.area[0];
