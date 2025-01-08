@@ -1,4 +1,5 @@
 "use client";
+import { Card, CardContent } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import React, { ReactNode, use } from "react";
