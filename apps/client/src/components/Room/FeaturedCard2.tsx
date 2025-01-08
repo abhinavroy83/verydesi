@@ -32,7 +32,9 @@ interface RoomInterface {
 interface FeaturedCard2Props {
   room: RoomInterface;
 }
-
+export function formatAddress(address: string) {
+  return address.trim().slice(0, 15);
+}
 export default function Component({ room }: FeaturedCard2Props) {
   const [wishlistStatus, setWishlistStatus] = useState(false);
   const { pluscart, minuscart } = useCartStore();
@@ -182,7 +184,8 @@ export default function Component({ room }: FeaturedCard2Props) {
               <div className="flex items-center mr-2 sm:mb-0">
                 <MapPin className="h-5 w-5 mr-1 text-blue-600" />
                 <span className="text-[18px]">
-                  {room.city}, {stateAbbreviations[room.state] || room.state}
+                  {formatAddress(room.city)},{" "}
+                  {stateAbbreviations[room.state] || room.state}
                 </span>
               </div>
               <div className="flex items-center">
