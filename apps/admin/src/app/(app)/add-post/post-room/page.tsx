@@ -272,7 +272,7 @@ export default function RoomPostingForm() {
             },
           }
         );
-        console.log(res);
+        // console.log(res);
         if (res) {
           toast.success("room added succesfully");
           form.reset();
