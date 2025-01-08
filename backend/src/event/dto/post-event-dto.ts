@@ -29,7 +29,7 @@ export class EventFormDTO {
   eventTitle: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Event type is required.' })
+  @IsOptional()
   eventType: string;
 
   @IsString()
@@ -61,7 +61,7 @@ export class EventFormDTO {
   repeatEvent: string;
 
   @IsString()
-  @Length(10, 500, {
+  @Length(10, 10000, {
     message: 'Description must be between 10 and 500 characters.',
   })
   description: string;

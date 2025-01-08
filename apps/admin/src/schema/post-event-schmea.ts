@@ -8,20 +8,23 @@ export const EventformSchema = z.object({
   eventType: z.string().min(1, {
     message: "Event type is required.",
   }),
-
-  startDate: z.date({
-    required_error: "Start date is required.",
-    invalid_type_error: "Start date must be a valid date.",
+  startDate: z
+    .date({
+      required_error: "Start date is required.",
+      invalid_type_error: "Start date must be a valid date.",
+    })
+    .nullable(),
+  startTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
+    message: "Please enter a valid time in HH:MM format",
   }),
-  startTime: z.string().min(1, {
-    message: "Start time is required.",
-  }),
-  endDate: z.date({
-    required_error: "End date is required.",
-    invalid_type_error: "End date must be a valid date.",
-  }),
-  endTime: z.string().min(1, {
-    message: "End time is required.",
+  endDate: z
+    .date({
+      required_error: "End date is required.",
+      invalid_type_error: "End date must be a valid date.",
+    })
+    .nullable(),
+  endTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
+    message: "Please enter a valid time in HH:MM format",
   }),
   timeZone: z.string().min(1, {
     message: "Time zone is required.",
@@ -34,9 +37,10 @@ export const EventformSchema = z.object({
     .min(10, {
       message: "Description must be at least 10 characters.",
     })
-    .max(500, {
-      message: "Description must not be longer than 30 characters.",
+    .refine((desc) => desc.trim().split(/\s+/).length <= 1000, {
+      message: "Description must not exceed 1000 words.",
     }),
+
   venueName: z.string().min(1, {
     message: "Venue name is required.",
   }),
@@ -44,10 +48,11 @@ export const EventformSchema = z.object({
     message: "Event type is required.",
   }),
   virtualurl: z.string().optional(),
-  address: z.string().min(1, "Address is required"),
+  address: z.string().min(1, { message: "Address is required" }),
   city: z.string().optional(),
   state: z.string().optional(),
   zipCode: z.string().optional(),
+  eventprice: z.string().optional(),
   country: z.string().optional(),
   languages: z.array(z.string()).min(1, {
     message: "At least one language must be selected.",
@@ -62,9 +67,6 @@ export const EventformSchema = z.object({
       })
     )
     .min(1, { message: "At least one artist is required" }),
-  images: z.array(z.string()).max(5, "You can upload a maximum of 5 images"),
-  latitude: z.number(),
-  longitude: z.number(),
 });
 
 export type EventformData = z.infer<typeof EventformSchema>;

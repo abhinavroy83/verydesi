@@ -276,7 +276,7 @@ export default function RoomPostingForm() {
         if (res) {
           toast.success("room added succesfully");
           form.reset();
-          router.push("/");
+          // router.push("/");
         }
       } catch (error) {
         console.error("Error while adding room:", error);

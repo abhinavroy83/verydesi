@@ -62,6 +62,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { EventformData, EventformSchema } from "@/schema";
+import { useRouter } from "next/navigation";
 
 const languages = [
   { name: "Hindi", code: "hi" },
@@ -225,10 +226,12 @@ export default function EventForm() {
     }
   }, [images]);
 
+  const router = useRouter();
   const { data: session } = useSession();
 
   const onSubmit = async (data: z.infer<typeof EventformSchema>) => {
     setIsSubmitting(true);
+    // console.log(data)
     try {
       const token = session?.user.accessToken;
       if (!token) {
@@ -256,8 +259,10 @@ export default function EventForm() {
       console.log(res);
       if (res.data) {
         toast.success("event added successully");
+        form.reset();
+        // router.push("/post/event");
       }
-      console.log("Payload:", payload);
+      // console.log("Payload:", payload);
 
       alert("Form submitted successfully!");
     } catch (error) {
