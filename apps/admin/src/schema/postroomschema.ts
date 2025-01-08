@@ -1,66 +1,72 @@
 import { z } from "zod";
 
-export const postroomschema = z.object({
-  postingIn: z.string({ required_error: "PostingIn is required" }),
-  postingType: z.enum(["Rooms", "Rental"], {
-    required_error: "Posting type is required",
+export const EventformSchema = z.object({
+  eventpostingcity: z.string({ required_error: "PostingIn is required" }),
+  eventTitle: z.string().min(2, {
+    message: "Event title must be at least 2 characters.",
   }),
-  Title: z.string().min(1, { message: "Title is required" }),
+  eventType: z.string().min(1, {
+    message: "Event type is required.",
+  }),
+  startDate: z
+    .date({
+      required_error: "Start date is required.",
+      invalid_type_error: "Start date must be a valid date.",
+    })
+    .nullable(),
+  startTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
+    message: "Please enter a valid time in HH:MM format",
+  }),
+  endDate: z
+    .date({
+      required_error: "End date is required.",
+      invalid_type_error: "End date must be a valid date.",
+    })
+    .nullable(),
+  endTime: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
+    message: "Please enter a valid time in HH:MM format",
+  }),
+  timeZone: z.string().min(1, {
+    message: "Time zone is required.",
+  }),
+  repeatEvent: z.string().min(1, {
+    message: "Repeat event option is required.",
+  }),
   description: z
     .string()
-    .min(50, { message: "Description must be at least 50 characters" }),
-  propertyType: z.enum(
-    [
-      "Room",
-      "Shared Room",
-      "Single Room",
-      "Apartment",
-      "Condo",
-      "Town House",
-      "Home",
-      "House",
-      "Basement",
-    ],
-    {
-      required_error: "Property type is required",
-    }
-  ),
-  stayLength: z.enum(["short", "long", "both"], {
-    required_error: "Stay length is required",
+    .min(10, {
+      message: "Description must be at least 10 characters.",
+    })
+    .refine((desc) => desc.trim().split(/\s+/).length <= 1000, {
+      message: "Description must not exceed 1000 words.",
+    }),
+
+  venueName: z.string().min(1, {
+    message: "Venue name is required.",
   }),
-  priceModel: z.enum(["monthly", "weekly", "daily"], {
-    required_error: "Price model is required",
+  entryoption: z.string().min(1, {
+    message: "Event type is required.",
   }),
-  price: z.number().min(1, { message: "Price is required" }),
-  negotiable: z.boolean(),
-  hideRent: z.boolean(),
-  availableFrom: z.date().nullable(),
-  availableTo: z.date().nullable(),
-  immediate: z.boolean(),
-  separateBathroom: z.string(),
-  PreferredGender: z.enum(["Male", "Female", "Any"]),
-  securityDeposit: z.number(),
-  toShare: z.enum([
-    "Furnished",
-    "Unfurnished",
-    "Furnished only with Bed",
-    "Semi Furnished",
-    "Fully Furnished",
-  ]),
-  utilities: z.array(z.string()),
-  amenities: z.array(z.string()),
-  dietaryPreferences: z.string(),
-  smokingPolicy: z.string(),
-  petPolicy: z.string(),
-  openHouseDate: z.date().optional(),
-  name: z.string().min(1, { message: "Name is required" }),
-  email: z.string().email({ message: "Email is required" }),
-  phoneNumber: z.string().min(10, { message: "Phone number is required" }),
+  virtualurl: z.string().optional(),
   address: z.string().min(1, { message: "Address is required" }),
-  city: z.string().min(1, { message: "City is required" }),
-  state: z.string().min(1, { message: "State is required" }),
-  zipCode: z.string().min(5, { message: "Zip code is required" }),
-  country: z.string().min(1, { message: "Country is required" }),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  zipCode: z.string().optional(),
+  eventprice: z.string().optional(),
+  country: z.string().optional(),
+  languages: z.array(z.string()).min(1, {
+    message: "At least one language must be selected.",
+  }),
+  organization: z.string().min(1, { message: "Organization name is required" }),
+  hostedBy: z.string().min(1, { message: "Hosted By is required" }),
+  contactNumber: z.string().optional(),
+  artists: z
+    .array(
+      z.object({
+        name: z.string().min(1, { message: "Artist name is required" }),
+      })
+    )
+    .min(1, { message: "At least one artist is required" }),
 });
 
-export type FormData = z.infer<typeof postroomschema>;
+export type EventformData = z.infer<typeof EventformSchema>;
