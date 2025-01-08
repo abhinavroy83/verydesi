@@ -2,6 +2,6 @@ export * from "./weather";
 export * from "./RoomCardProps";
 export * from "./Room";
 export * from "./UserData";
-export * from './Event'
-export * from './Event'
-export * from './area'
+export * from "./Event";
+export * from "./Business";
+export * from "./Businesscard";

@@ -66,7 +66,7 @@ const useGoogleAutocomplete = () => {
         if (place.geometry && place.geometry.location) {
           const lat = place.geometry.location.lat();
           const lng = place.geometry.location.lng();
-          setLocation({ lat, lng }); 
+          setLocation({ lat, lng });
         }
       }
     });

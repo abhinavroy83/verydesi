@@ -182,7 +182,7 @@ export default function Component({ room }: FeaturedCard2Props) {
               <div className="flex items-center mr-2 sm:mb-0">
                 <MapPin className="h-5 w-5 mr-1 text-blue-600" />
                 <span className="text-[18px]">
-                  {room.city}, {stateAbbreviations[room.state] || room.state}
+                 {room.city}, {stateAbbreviations[room.state] || room.state}
                 </span>
               </div>
               <div className="flex items-center">
