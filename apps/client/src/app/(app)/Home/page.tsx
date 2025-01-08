@@ -355,37 +355,6 @@ export default function Home() {
   return (
     <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6 font-sans lg:mb-[1rem] mb-[10rem]">
       <div className="w-full lg:w-4/5 mr-4">
-        {/* <section className="text-center bg-gradient-to-r from-blue-700 to-green-700 text-white p-8 rounded-lg shadow-lg mt-2 overflow-hidden">
-          <motion.h1
-            className="text-4xl font-bold"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
-          >
-            <motion.span
-              initial={{ display: "inline-block" }}
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
-            >
-              Welcome
-            </motion.span>{" "}
-            <motion.span
-              initial={{ display: "inline-block", opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              To
-            </motion.span>{" "}
-            <motion.span
-              initial={{ display: "inline-block", opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              Portland
-            </motion.span>
-          </motion.h1>
-        </section> */}
-
         <section className="relative h-[100px] mt-3 rounded-lg overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"

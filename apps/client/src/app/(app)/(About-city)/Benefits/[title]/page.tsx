@@ -144,7 +144,7 @@ function PointsGrid({
   points: Array<{ title: string; icon: React.ReactNode; description: string }>;
 }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       {points.map((point, index) => (
         <PointCard key={index} {...point} />
       ))}
@@ -154,28 +154,28 @@ function PointsGrid({
 
 export default function PortlandLiving() {
   return (
-    <div className="min-h-screen mt-[8rem] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen mt-[7rem] py-9 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+        <h1 className="text-4xl font-bold text-center text-gray-800">
           Living in Portland, Oregon
         </h1>
-        <p className="text-xl text-center mb-12 text-gray-600">
+        <p className="text-xl text-center my-4 text-gray-600">
           Explore the benefits and challenges of life in the City of Roses
         </p>
 
         <Tabs defaultValue="benefits" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
+          <TabsList className="grid w-full grid-cols-2 mb-2">
             <TabsTrigger value="benefits">Benefits</TabsTrigger>
             <TabsTrigger value="challenges">Challenges</TabsTrigger>
           </TabsList>
           <TabsContent value="benefits">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+            <h2 className="text-2xl font-semibold mb-2 text-gray-800">
               Benefits of Living in Portland
             </h2>
             <PointsGrid points={benefits} />
           </TabsContent>
           <TabsContent value="challenges">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+            <h2 className="text-2xl font-semibold mb-2 text-gray-800">
               Challenges of Living in Portland
             </h2>
             <PointsGrid points={challenges} />
