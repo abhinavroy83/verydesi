@@ -258,9 +258,9 @@ export default function EventForm() {
           },
         }
       );
-      console.log(res);
+      // console.log(res);
       if (res.data) {
-        toast.success("event added successully");
+        toast.success("Event added successully");
         form.reset();
         // router.push("/post/event");
       }
@@ -268,8 +268,13 @@ export default function EventForm() {
 
       alert("Form submitted successfully!");
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred while submitting the form.");
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.message || "Failed to post the event."
+        );
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     } finally {
       setIsSubmitting(false);
     }
