@@ -8,6 +8,7 @@ import {
   MaxLength,
   ValidateNested,
   ArrayMaxSize,
+  Validate,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -15,6 +16,17 @@ export class ArtistDTO {
   @IsString({ message: 'Artist name is required' })
   @IsNotEmpty({ message: 'Artist name is required' })
   name: string;
+}
+
+class WordCountValidator {
+  validate(value: string): boolean {
+    const wordCount = value.trim().split(/\s+/).length;
+    return wordCount >= 10 && wordCount <= 1000;
+  }
+
+  defaultMessage(): string {
+    return 'Description must be between 10 and 1000 words.';
+  }
 }
 
 export class EventFormDTO {
@@ -34,7 +46,7 @@ export class EventFormDTO {
 
   @IsString()
   @IsNotEmpty({ message: 'Event type is required.' })
-  eventprice: string;
+  eventprice?: string;
 
   @IsDate({ message: 'Start date must be a valid date.' })
   @Type(() => Date)
@@ -61,9 +73,7 @@ export class EventFormDTO {
   repeatEvent: string;
 
   @IsString()
-  @Length(10, 10000, {
-    message: 'Description must be between 10 and 500 characters.',
-  })
+  @Validate(WordCountValidator)
   description: string;
 
   @IsString()
