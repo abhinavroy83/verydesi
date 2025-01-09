@@ -25,7 +25,6 @@ function Avalableloc({ bgcolour, textcolour }: AvailableLocProps) {
   const { status, currentCity, updateCity } = useAuthStore();
   // Fetch city data on component mount
   const { cities, isLoading, error } = useCityData();
-  console.log(currentCity);
   const handleLocation = (city: string) => {
     setSelectedCity(city);
     updateCity(city);
