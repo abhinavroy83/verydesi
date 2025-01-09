@@ -18,17 +18,6 @@ export class ArtistDTO {
   name: string;
 }
 
-class WordCountValidator {
-  validate(value: string): boolean {
-    const wordCount = value.trim().split(/\s+/).length;
-    return wordCount >= 10 && wordCount <= 1000;
-  }
-
-  defaultMessage(): string {
-    return 'Description must be between 10 and 1000 words.';
-  }
-}
-
 export class EventFormDTO {
   @IsString({ message: 'PostingIn is required' })
   @IsNotEmpty({ message: 'PostingIn is required' })
@@ -45,7 +34,7 @@ export class EventFormDTO {
   eventType: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Event type is required.' })
+  @IsOptional()
   eventprice?: string;
 
   @IsDate({ message: 'Start date must be a valid date.' })
@@ -73,7 +62,7 @@ export class EventFormDTO {
   repeatEvent: string;
 
   @IsString()
-  @Validate(WordCountValidator)
+  @IsNotEmpty()
   description: string;
 
   @IsString()
