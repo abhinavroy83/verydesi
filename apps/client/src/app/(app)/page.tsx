@@ -27,10 +27,12 @@ import {
 import Norooms from "@/components/Room/Norooms";
 import LoginSlider from "@/components/login/login";
 import { useloginstore } from "@/store";
-import { useRoomFetching } from "@/hooks/use-all-roomfetcing";
 const Page = () => {
   const router = useRouter();
+  const [Room, setRooms] = useState<RoomInterface[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { currentCity, status } = useAuthStore();
+  const [loading, setLoading] = useState(true);
   const [userData, setuserData] = useState<UserData | null>(null);
   const { data: session } = useSession();
   const { openLogin } = useloginstore();
@@ -113,7 +115,9 @@ const Page = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
+  useEffect(() => {
+    fetchrooms();
+  }, [currentCity]);
   // console.log(session);
   const token = session?.accessToken;
   const fetchuser = async () => {
@@ -199,7 +203,7 @@ const Page = () => {
       </div>
       <div className="lg:mt-8 mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:mt-3 xl:grid-cols-2 xl:gap-2">
         {featuredRooms?.map((room, index) => (
-          <FeaturedCard2 key={index}  />
+          <FeaturedCard2 key={index} room={room} />
         ))}
       </div>
       <h1 className="text-2xl font-bold my-4">
