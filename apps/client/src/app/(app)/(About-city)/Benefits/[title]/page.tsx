@@ -182,7 +182,7 @@ export default function PortlandLiving() {
           </TabsContent>
         </Tabs>
 
-        <div className="mt-12 bg-white rounded-lg shadow-md p-6">
+        <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">
             Looking Forward in Portland
           </h2>
