@@ -285,13 +285,13 @@ export default function EventForm() {
   }
   return (
     <DashboardLayout>
-      <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-[8rem] font-sans">
+      <div className=" max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 font-sans">
         <div className="py-1 mb-3">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  href="/events"
+                  href="/"
                   className="flex items-center text-primary hover:text-primary-dark transition-colors"
                 >
                   <Home className="w-4 h-4 mr-2" />
