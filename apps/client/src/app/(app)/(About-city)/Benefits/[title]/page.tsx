@@ -167,7 +167,7 @@ export default function ModernPortlandLiving() {
           <PointsGrid points={challenges} />
         </section>
 
-        <section className="bg-gray-300 rounded-2xl shadow-2xl p-5 mb-16">
+        <section className="mb-16">
           <h2 className="text-4xl font-semibold mb-4 text-gray-800">
             Looking Forward in Portland
           </h2>
