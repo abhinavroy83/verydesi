@@ -435,7 +435,7 @@ export default function PortlandOregonPage() {
             </header>
           </div>
         </section> */}
-        <section className="relative h-[450px] mt-3 rounded-lg overflow-hidden">
+        <section className="relative h-[370px] mt-3 rounded-lg overflow-hidden">
           {/* <iframe style={{ height: "100%", width: "100%" }} src="https://www.youtube.com/embed/UWdfaNWThnA?si=2VjJ1MAi2Jxfr-VU?autoplay=1&mute=1" allow='autoplay' title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
           <video
             ref={videoRef}
@@ -450,11 +450,11 @@ export default function PortlandOregonPage() {
           </video>
           {/* <video id="player-obj" src="https://redirector.googlevideo.com/videoplayback?ratebypass=yes&amp;mt=1510077993----SKIPPED----amp;utmg=ytap1,,hd720"><source>Your browser does not support HTML5 video.</source></video> */}
 
-          <div className="absolute inset-0 bg-black bg-opacity-70" />
+          <div className="absolute inset-0 bg-black bg-opacity-80" />
           <div className="relative flex flex-col items-center justify-center h-full text-white p-2">
-            <header className="container mx-auto text-center">
-              <h1 className="mb-1 text-[24px] font-bold text-white">CHICAGO</h1>
-              <p className="text-[16px] text-white font-bold">
+            <header className="absolute top-10 container mx-auto text-center">
+              <h1 className="mb-1 text-[33px] font-bold text-white">CHICAGO</h1>
+              <p className="text-[20px] text-white font-bold">
                 Find just about anything around the corner.
               </p>
             </header>
@@ -637,13 +637,12 @@ export default function PortlandOregonPage() {
         <h2 className="text-[24px] font-bold mb-2 text-center">
           Indian Diaspora in Portland
         </h2>
-        <div className="w-full space-y-2 shadow-md">
+        <div className="w-full space-y-2 shadow-md lg:hidden sm:flex">
           {sections.map((section, index) => (
             <div
               key={index}
               className="flex flex-col sm:flex-row overflow-hidden rounded-lg shadow-md"
             >
-              {/* Image Section */}
               <div
                 className={`relative lg:w-[50%] w-full h-48 sm:h-auto ${
                   section.imageLeft ? "sm:order-first" : "sm:order-last"
@@ -656,11 +655,9 @@ export default function PortlandOregonPage() {
                   className="object-cover"
                   priority={index === 0}
                 />
-                {/* Diagonal Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent to-blue-100 opacity-30" />
               </div>
 
-              {/* Content Section */}
               <div
                 className={`flex w-full items-center bg-blue-50 p-4 sm:p-6 ${
                   section.imageLeft ? "sm:order-last" : "sm:order-first"
@@ -681,9 +678,12 @@ export default function PortlandOregonPage() {
             </div>
           ))}
         </div>
-        <div className="w-full space-y-1">
+        <div className="w-full space-y-1 hidden lg:flex lg:flex-col">
           {sections.map((section, index) => (
-            <div key={index} className="flex h-[200px] overflow-hidden">
+            <div
+              key={index}
+              className="flex h-[170px] overflow-hidden rounded-lg shadow-sm"
+            >
               {/* Image Section */}
               <div
                 className={`relative w-[40%] ${
@@ -889,24 +889,7 @@ export default function PortlandOregonPage() {
               ))}
             </div>
           </div>
-          {/* <Card>
-          <CardHeader>
-            <CardTitle>Essential Information for Newcomers</CardTitle>
-            <CardDescription>
-              Moving to Portland, Oregon can be an exciting choice! Here's a
-              snapshot of what to expect if you're making the move:
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-disc pl-6">
-              {movingToPortlandInfo.map((item, index) => (
-                <li key={index} className="text-sm">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card> */}
+
           <div className="container mx-auto my-11">
             <div className="grid grid-cols-1 md:grid-cols-3">
               {image.map((image, index) => (

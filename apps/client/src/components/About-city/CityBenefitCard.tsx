@@ -32,7 +32,7 @@ function CityBenefitCard({ attraction }: CityBenefitCardProps) {
           className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-xl"
         />
       </div>
-      <div className="px-5 py-2 text-center">
+      <div className="px-2 py-2 text-center hover:cursor-pointer">
         <p className="lg:text-[16px] text-[14px] mb-1 text-black">
           {attraction.description}
         </p>
