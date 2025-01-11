@@ -145,7 +145,6 @@ export default function DashboardLayout({
                 className="absolute right-4 top-4"
                 onClick={() => setIsSidebarOpen(false)}
               >
-                <X className="h-6 w-6" />
               </Button>
               <SidebarContent />
             </SheetContent>
