@@ -124,7 +124,7 @@ function Events() {
 
   return (
     <>
-      <div className="w-full max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 lg:px-8 mx-auto py-4 sm:py-8 mt-16 sm:mt-[6.1rem] font-sans">
+      <div className="w-full max-w-[1370px] lg:max-w-[1600px] px-4 sm:px-6 mx-auto py-4 sm:py-8 mt-16 sm:mt-[6.1rem] font-sans">
         <div className=" w-full mx-auto">
           <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0">
             <div className="flex flex-col sm:flex-row lg:mt-0 mt-12 space-x-2 w-full justify-between">
