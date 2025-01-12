@@ -1,10 +1,6 @@
-export interface AreaWithZipCodes {
-  area: string;
-  zipcodes: string[];
-}
 
 export interface AreaData {
-  _id: string;
+  _id?: string;
   country: string;
   state: string[];
   primaryState: string;

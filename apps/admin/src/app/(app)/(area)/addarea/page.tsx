@@ -1,12 +1,11 @@
 import DashboardLayout from "@/components/Layout/Dashboardlayout";
+import { AreaForm } from "@/components/module/Area/form/area-form";
 import React from "react";
 
 function page() {
   return (
     <DashboardLayout>
-      <div className=" flex mx-auto justify-center items-center">
-        coming soon.....
-      </div>
+      <AreaForm />
     </DashboardLayout>
   );
 }
