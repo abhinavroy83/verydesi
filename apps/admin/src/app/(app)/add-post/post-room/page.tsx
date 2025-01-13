@@ -142,6 +142,7 @@ export default function RoomPostingForm() {
   const { cities, isLoading, error } = useCityData();
 
   const [selectAllUtils, setSelectAllUtlis] = useState(false);
+  const [selectAllAmenities, setSelectAllAmenities] = useState(false);
 
   const handleSelectAll = () => {
     const newSelectAll = !selectAllUtils;
@@ -151,6 +152,17 @@ export default function RoomPostingForm() {
       form.setValue("utilities", UTILITIES);
     } else {
       form.setValue("utilities", []);
+    }
+  };
+
+  const handleSelectAllAmenities = () => {
+    const newSelectAllAmenities = !selectAllAmenities;
+    setSelectAllAmenities(newSelectAllAmenities);
+
+    if (newSelectAllAmenities) {
+      form.setValue("amenities", Amenities);
+    } else {
+      form.setValue("amenities", []);
     }
   };
 
@@ -1243,56 +1255,70 @@ export default function RoomPostingForm() {
                               Select the amenities available in the property.
                             </FormDescription>
                           </div>
-                          <div className="flex-grow grid grid-cols-2 md:grid-cols-4 gap-2">
-                            {[
-                              "Gym/Fitness Center",
-                              "Swimming Pool",
-                              "Car Park",
-                              "Visitors Parking",
-                              "Power Backup",
-                              "Garbage Disposal",
-                              "Private Lawn",
-                              "Water Heater Plant",
-                              "Security System",
-                              "Laundry Service",
-                              "Elevator",
-                              "Club House",
-                            ].map((item) => (
-                              <FormField
-                                key={item}
-                                control={form.control}
-                                name="amenities"
-                                render={({ field }) => {
-                                  return (
-                                    <FormItem
-                                      key={item}
-                                      className="flex flex-row items-start space-x-3 space-y-0"
-                                    >
-                                      <FormControl>
-                                        <Checkbox
-                                          checked={field.value?.includes(item)}
-                                          onCheckedChange={(checked) => {
-                                            return checked
-                                              ? field.onChange([
-                                                  ...field.value,
-                                                  item,
-                                                ])
-                                              : field.onChange(
-                                                  field.value?.filter(
-                                                    (value) => value !== item
-                                                  )
-                                                );
-                                          }}
-                                        />
-                                      </FormControl>
-                                      <FormLabel className="font-normal">
-                                        {item}
-                                      </FormLabel>
-                                    </FormItem>
-                                  );
-                                }}
-                              />
-                            ))}
+                          <div className="flex-grow">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={handleSelectAllAmenities}
+                              className="mb-2"
+                            >
+                              {selectAllAmenities
+                                ? "Deselect All"
+                                : "Select All"}
+                            </Button>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                              {[
+                                "Gym/Fitness Center",
+                                "Swimming Pool",
+                                "Car Park",
+                                "Visitors Parking",
+                                "Power Backup",
+                                "Garbage Disposal",
+                                "Private Lawn",
+                                "Water Heater Plant",
+                                "Security System",
+                                "Laundry Service",
+                                "Elevator",
+                                "Club House",
+                              ].map((item) => (
+                                <FormField
+                                  key={item}
+                                  control={form.control}
+                                  name="amenities"
+                                  render={({ field }) => {
+                                    return (
+                                      <FormItem
+                                        key={item}
+                                        className="flex flex-row items-start space-x-3 space-y-0"
+                                      >
+                                        <FormControl>
+                                          <Checkbox
+                                            checked={field.value?.includes(
+                                              item
+                                            )}
+                                            onCheckedChange={(checked) => {
+                                              return checked
+                                                ? field.onChange([
+                                                    ...field.value,
+                                                    item,
+                                                  ])
+                                                : field.onChange(
+                                                    field.value?.filter(
+                                                      (value) => value !== item
+                                                    )
+                                                  );
+                                            }}
+                                          />
+                                        </FormControl>
+                                        <FormLabel className="font-normal">
+                                          {item}
+                                        </FormLabel>
+                                      </FormItem>
+                                    );
+                                  }}
+                                />
+                              ))}
+                            </div>
                           </div>
                           <FormMessage />
                         </FormItem>
