@@ -87,6 +87,20 @@ const UTILITIES = [
   "TV",
   "Heater",
 ];
+const Amenities = [
+  "Gym/Fitness Center",
+  "Swimming Pool",
+  "Car Park",
+  "Visitors Parking",
+  "Power Backup",
+  "Garbage Disposal",
+  "Private Lawn",
+  "Water Heater Plant",
+  "Security System",
+  "Laundry Service",
+  "Elevator",
+  "Club House",
+];
 
 export default function RoomPostingForm() {
   const { userData } = useUserData();
