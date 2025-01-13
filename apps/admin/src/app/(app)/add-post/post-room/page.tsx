@@ -87,7 +87,7 @@ const UTILITIES = [
   "TV",
   "Heater",
 ];
-const Amenities = [
+const AMENITIES = [
   "Gym/Fitness Center",
   "Swimming Pool",
   "Car Park",
@@ -155,29 +155,19 @@ export default function RoomPostingForm() {
 
   const { cities, isLoading, error } = useCityData();
 
-  const [selectAllUtils, setSelectAllUtlis] = useState(false);
+  const [selectAllUtility, setSelectAllUtility] = useState(false);
   const [selectAllAmenities, setSelectAllAmenities] = useState(false);
 
-  const handleSelectAll = () => {
-    const newSelectAll = !selectAllUtils;
-    setSelectAllUtlis(newSelectAll);
+  const handleSelectAll = (
+    type: any,
+    arrayToSet: any[],
+    isSelectAll: boolean,
+    setSelectAll: (value: boolean) => void
+  ) => {
+    const newSelectAll = !isSelectAll;
+    setSelectAll(newSelectAll);
 
-    if (newSelectAll) {
-      form.setValue("utilities", UTILITIES);
-    } else {
-      form.setValue("utilities", []);
-    }
-  };
-
-  const handleSelectAllAmenities = () => {
-    const newSelectAllAmenities = !selectAllAmenities;
-    setSelectAllAmenities(newSelectAllAmenities);
-
-    if (newSelectAllAmenities) {
-      form.setValue("amenities", Amenities);
-    } else {
-      form.setValue("amenities", []);
-    }
+    form.setValue(type, newSelectAll ? arrayToSet : []);
   };
 
   // console.log("cities", cities);
@@ -1202,14 +1192,24 @@ export default function RoomPostingForm() {
                             </FormDescription>
                           </div>
                           <div className="flex-grow">
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={handleSelectAll}
-                              className="mb-2"
-                            >
-                              {selectAllUtils ? "Deselect All" : "Select All"}
-                            </Button>
+                            <label className="flex items-center">
+                              <input
+                                type="checkbox"
+                                checked={selectAllUtility}
+                                onChange={() =>
+                                  handleSelectAll(
+                                    "utilities",
+                                    UTILITIES,
+                                    selectAllUtility,
+                                    setSelectAllUtility
+                                  )
+                                }
+                                className="mr-2"
+                              />
+                              {selectAllUtility
+                                ? "Deselect All Utilities"
+                                : "Select All Utilities"}
+                            </label>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                               {UTILITIES.map((item) => (
                                 <FormField
@@ -1270,31 +1270,26 @@ export default function RoomPostingForm() {
                             </FormDescription>
                           </div>
                           <div className="flex-grow">
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={handleSelectAllAmenities}
-                              className="mb-2"
-                            >
+                            <label className="flex items-center mb-2">
+                              <input
+                                type="checkbox"
+                                checked={selectAllAmenities}
+                                onChange={() =>
+                                  handleSelectAll(
+                                    "amenities",
+                                    AMENITIES,
+                                    selectAllAmenities,
+                                    setSelectAllAmenities
+                                  )
+                                }
+                                className="mr-2"
+                              />
                               {selectAllAmenities
-                                ? "Deselect All"
-                                : "Select All"}
-                            </Button>
+                                ? "Deselect All Amenities"
+                                : "Select All Amenities"}
+                            </label>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                              {[
-                                "Gym/Fitness Center",
-                                "Swimming Pool",
-                                "Car Park",
-                                "Visitors Parking",
-                                "Power Backup",
-                                "Garbage Disposal",
-                                "Private Lawn",
-                                "Water Heater Plant",
-                                "Security System",
-                                "Laundry Service",
-                                "Elevator",
-                                "Club House",
-                              ].map((item) => (
+                              {AMENITIES.map((item) => (
                                 <FormField
                                   key={item}
                                   control={form.control}
