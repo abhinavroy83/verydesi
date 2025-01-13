@@ -18,6 +18,7 @@ import {
   Briefcase,
   LogOut,
   Loader2,
+  Factory,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -29,6 +30,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
 import { AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMyPostExpanded, setIsMyPostExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -148,7 +150,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       .slice(0, 2);
   };
   return (
-    <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 mt-[10rem] font-sans">
+    <div className="max-w-[1370px] lg:max-w-[1600px] mx-auto px-4 sm:px-6 mt-[10rem]  flex flex-col min-h-screen bg-background font-sans">
       {!isverified && (
         <div className="">
           <div
@@ -208,7 +210,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       )}
-      <div className="mt-2 flex h-auto bg-background overflow-x-hidden overflow-y-hidden mx-auto border shadow-xl shadow-gray-300 rounded-2xl mb-5">
+      <div className="flex flex-grow overflow-hidden">
         <aside className="w-64 border-r bg-muted/30 lg:flex flex-col hidden">
           <div className="p-6 flex flex-col items-center">
             <Avatar className="w-24 h-24 mb-4 border-4 border-primary">
@@ -308,7 +310,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   </Button>
                   <Button
                     onClick={() => {
-                      router.push("/dashboard/my-rooms");
+                      router.push("/dashboard/my-events");
+                    }}
+                    variant="ghost"
+                    className="w-full justify-start text-[15px] font-sans p-1"
+                  >
+                    <Briefcase className="mr-2 h-5 w-5" />
+                    My Events
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      router.push("/dashboard/my-business");
                     }}
                     variant="ghost"
                     className="w-full justify-start text-[16px] font-sans p-1"
@@ -323,7 +335,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </aside>
 
         {/* Main content */}
-        <main className="flex-grow overflow-scroll overflow-x-hidden overflow-y-hidden h-auto flex flex-col">
+        <main className="flex-grow overflow-auto">
           <div className="flex-grow p-">{children}</div>
         </main>
       </div>

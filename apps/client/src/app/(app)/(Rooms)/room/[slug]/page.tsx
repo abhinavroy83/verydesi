@@ -80,6 +80,7 @@ export default function RoomDetails({
   const router = useRouter();
   const { slug } = useParams<{ slug: string }>();
   const id = slug.split("-").pop();
+  // console.log("rooms id", id)
   // const id = searchParams.id;
   const [roomData, setroomData] = useState<RoomInterface | null>(null);
   const [locationsndString, setLocationsndString] = useState<Location | null>(
@@ -406,7 +407,7 @@ export default function RoomDetails({
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-start  flex-col lg:flex-row">
+        <div className="flex justify-between items-start flex-col lg:flex-row">
           <div className="flex w-full lg:justify-between  flex-col lg:flex-row">
             <div className="flex lg:flex-row gap-2 font-bold lg:items-center">
               <h1 className="lg:text-3xl text-2xl font-bold text-gray-900 flex lg:flex-row flex-col gap-2">
@@ -619,7 +620,10 @@ export default function RoomDetails({
               <CardContent className="p-2">
                 <div className="aspect-w-16 h-[434px]">
                   {locationsndString && (
-                    <LeafletMapRoom onLocationReceived={locationsndString} />
+                    <LeafletMapRoom
+                      onLocationReceived={locationsndString}
+                      markerstyle="circle"
+                    />
                   )}{" "}
                 </div>
               </CardContent>

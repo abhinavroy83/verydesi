@@ -1,5 +1,6 @@
 export interface Event {
-  _id: string | undefined;
+  _id: string ;
+  entryoption: string;
   eventTitle: string;
   eventType: string;
   startDate: string;
@@ -19,6 +20,5 @@ export interface Event {
   virtualurl: string;
   eventpostingcity: string;
   languages: string[];
-  postedOn: string;
   artists: { name: string }[];
 }

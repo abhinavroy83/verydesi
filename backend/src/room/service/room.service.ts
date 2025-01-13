@@ -21,6 +21,7 @@ export class RoomService {
   ) {
     cron.schedule('0 0 * * *', this.updateRoomVisibility);
     cron.schedule('0 1 * * *', this.deleteExpiredRooms);
+    cron.schedule('0 0 * * *', this.updateroomcreatedat);
   }
   async getAllRoomByArea(area: string) {
     const cacheKey = `area: ${area}`;
@@ -268,6 +269,27 @@ export class RoomService {
       throw new InternalServerErrorException(
         'Something went wrong while counting rooms posted in the last 24 hours',
       );
+    }
+  }
+
+  //update room creatdedate
+
+  async updateroomcreatedat() {
+    const tenDaysAgo = new Date();
+    tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+
+    const today = new Date();
+
+    try {
+      const result = await this.roomModel.updateMany(
+        { postedon: { $lte: tenDaysAgo } }, // Match rooms posted 10 or more days ago
+        { postedon: today }, // Set the postedon date to today
+      );
+      console.log(
+        `Updated ${result.modifiedCount} rooms posted 10 or more days ago to today’s date`,
+      );
+    } catch (error) {
+      console.error('Error updating room postedOn dates:', error);
     }
   }
 
