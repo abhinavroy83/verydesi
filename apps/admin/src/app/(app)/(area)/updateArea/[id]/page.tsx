@@ -6,6 +6,7 @@ import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { AreaData } from "@myrepo/types";
 import { AreaForm } from "@/components/module/Area/form/area-form";
+import DashboardLayout from "@/components/Layout/Dashboardlayout";
 
 export default function UpdateArea() {
   const { id } = useParams();
@@ -29,7 +30,6 @@ export default function UpdateArea() {
     fetchAreaData();
   }, [id]);
 
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -42,5 +42,9 @@ export default function UpdateArea() {
     return <div>Error: Area not found</div>;
   }
 
-  return <AreaForm initialData={areaData} />;
+  return (
+    <DashboardLayout>
+      <AreaForm initialData={areaData} />;
+    </DashboardLayout>
+  );
 }
