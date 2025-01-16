@@ -3,6 +3,7 @@
 import React, { useCallback, useState } from "react";
 
 import { useParams, useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
@@ -30,8 +31,12 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Clock,
+  Globe,
   Heart,
   Home,
+  Link,
+  MapPin,
 } from "lucide-react";
 import {
   Carousel,
@@ -262,7 +267,7 @@ function Events() {
 
           <div className="flex flex-col lg:flex-row mx-auto gap-4 lg:gap-7">
             <div className="w-full lg:w-2/3">
-              <div className="flex border rounded-xl mt-0 ">
+              <div className="flex border rounded-xl mt-0 p-0">
                 <div className="w-full">
                   <Carousel opts={{ align: "start" }} className="relative">
                     <CarouselContent>
@@ -335,14 +340,173 @@ function Events() {
                 </div>
               </div> */}
               </div>
-              <Card className="mt-3">
+              {/* <Card className="mt-3">
                 <CardContent className="p-2">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-gray-900 text-xl font-bold">What/Why:</p>
                   </div>
                   <p className="text-gray-700"> {event?.description}</p>
                 </CardContent>
-              </Card>
+              </Card> */}
+              <div className="mt-3">
+                <div className="p-2">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-gray-900 text-xl font-bold">What/Why:</p>
+                  </div>
+                  <p className="text-gray-700"> {event?.description}</p>
+                </div>
+              </div>
+              <div className="space-y-8 mt-4">
+                {/* Date and Time */}
+                <section>
+                  <h2 className="text-xl font-semibold my-2">Date and time</h2>
+                  <div className="flex items-start gap-2">
+                    <Calendar className="h-5 w-5 mt-0.5 text-blue-600" />
+                    <div>
+                      <p className="font-medium">
+                        Wednesday, January 15 · 6-9pm PST
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Location */}
+                <section>
+                  <h2 className="text-xl font-semibold mb-2">Location</h2>
+                  <div className="flex items-start gap-2">
+                    <MapPin className="h-5 w-5 mt-0.5 text-blue-600" />
+                    <div>
+                      <p className="font-medium">White Owl Social Club</p>
+                      <p className="text-muted-foreground">
+                        1305 Southeast 8th Avenue Portland, OR 97214 United
+                        States
+                      </p>
+                      <Button
+                        variant="link"
+                        className="h-auto p-0 text-blue-600"
+                      >
+                        Show map
+                      </Button>
+                    </div>
+                  </div>
+                </section>
+
+                {/* About */}
+                <section>
+                  <h2 className="text-xl font-semibold mb-2">
+                    About this event
+                  </h2>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Clock className="h-4 w-4 text-blue-600" />
+                    <span className="text-sm">Event lasts 2 hours</span>
+                  </div>
+                  <div className="space-y-4 text-muted-foreground">
+                    <p>
+                      Looking to meet new friends? Searching for new
+                      opportunities? Or simply looking to celebrate Pride Month
+                      in a queer space with other queer humans?
+                    </p>
+                    <p>
+                      Come join Out in Tech PDX at White Owl on Wednesday,
+                      January 15th from 6pm to 9pm.
+                    </p>
+                    <p>
+                      Whether you&apos;re interested in tech, working in tech,
+                      or you&apos;re tech-adjacent (hint: that&apos;s everyone),
+                      come mingle with us, have a beverage of choice, and meet
+                      the fabulous members of your PDX Out in Tech community.
+                    </p>
+                    <p>We are looking forward to seeing everyone there!</p>
+                  </div>
+                </section>
+
+                {/* Tags */}
+                <section>
+                  <h2 className="text-xl font-semibold mb-3">Tags</h2>
+                  <div className="flex flex-wrap gap-2 ">
+                    <Badge variant="secondary">United States Events</Badge>
+                    <Badge variant="secondary">Oregon Events</Badge>
+                    <Badge variant="secondary">
+                      Things to do in Portland, OR
+                    </Badge>
+                    <Badge variant="secondary">Portland Networking</Badge>
+                    <Badge variant="secondary">
+                      Portland Science & Tech Networking
+                    </Badge>
+                  </div>
+                </section>
+
+                {/* Organized By */}
+                <section>
+                  <h2 className="text-xl font-semibold mb-4">Organized by</h2>
+                  <div className="bg-slate-50 rounded-lg p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="h-12 w-12 relative">
+                          <img
+                            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-F3X1HyiwCFJhKwp7SwTXwYZinO3qnI.png"
+                            alt="Out in Tech logo"
+                            width={48}
+                            height={48}
+                            className="rounded"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Out in Tech</h3>
+                          <p className="text-sm text-muted-foreground">
+                            11.1k followers
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Lots of repeat customers
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline">Contact</Button>
+                        <Button>Follow</Button>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Out in Tech unites the LGBTQ+ tech community. We do this
+                      by creating opportunities for our 50,000 members to
+                      advance their careers, grow their networks, and leverage
+                      tech for social change.
+                    </p>
+                    <div className="flex gap-4">
+                      <Link
+                        href="#"
+                        className="text-blue-600 hover:text-blue-700"
+                      >
+                        <Globe className="h-5 w-5" />
+                      </Link>
+                      <Link
+                        href="#"
+                        className="text-blue-600 hover:text-blue-700"
+                      >
+                        <svg
+                          className="h-5 w-5"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                      </Link>
+                      <Link
+                        href="#"
+                        className="text-blue-600 hover:text-blue-700"
+                      >
+                        <svg
+                          className="h-5 w-5"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                        </svg>
+                      </Link>
+                    </div>
+                  </div>
+                </section>
+              </div>
               <div className="mt-[1rem] flex gap-3 flex-col">
                 <div className="justify-between flex items-center">
                   <button
@@ -529,6 +693,7 @@ function Events() {
             </div>
           </div>
         </div>
+
         <section className="">
           <h2 className="text-2xl font-bold my-4">Similar Rooms</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
