@@ -644,7 +644,7 @@ export default function PortlandOregonPage() {
               className="flex flex-col sm:flex-row overflow-hidden rounded-lg shadow-md"
             >
               <div
-                className={`relative lg:w-[50%] w-full h-48 sm:h-auto ${
+                className={`relative lg:w-[50%] w-full h-48 sm:h-auto  ${
                   section.imageLeft ? "sm:order-first" : "sm:order-last"
                 }`}
               >
