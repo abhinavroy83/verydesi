@@ -450,7 +450,7 @@ export default function PortlandOregonPage() {
           </video>
           {/* <video id="player-obj" src="https://redirector.googlevideo.com/videoplayback?ratebypass=yes&amp;mt=1510077993----SKIPPED----amp;utmg=ytap1,,hd720"><source>Your browser does not support HTML5 video.</source></video> */}
 
-          <div className="absolute inset-0 bg-black bg-opacity-80" />
+          <div className="absolute inset-0 bg-black bg-opacity-40" />
           <div className="relative flex flex-col items-center justify-center h-full text-white p-2">
             <header className="absolute top-10 container mx-auto text-center">
               <h1 className="mb-1 text-[33px] font-bold text-white">CHICAGO</h1>
