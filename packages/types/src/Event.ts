@@ -1,5 +1,5 @@
 export interface Event {
-  _id: string ;
+  _id: string;
   entryoption: string;
   eventTitle: string;
   eventType: string;
@@ -21,4 +21,12 @@ export interface Event {
   eventpostingcity: string;
   languages: string[];
   artists: { name: string }[];
+  location: {
+    coordinates: number[];
+  };
+}
+
+export interface Location {
+  lat: number;
+  lng: number;
 }
