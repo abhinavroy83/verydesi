@@ -1,13 +1,24 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import ImageCarousel from "@/components/ui/ImageCarousel";
 import { Event } from "@myrepo/types";
-import { Calendar, ChevronDown, Heart } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  Calendar,
+  ChevronDown,
+  Clock,
+  DollarSign,
+  Globe,
+  Heart,
+  MapPin,
+  User,
+  Users,
+} from "lucide-react";
+import dynamic from "next/dynamic";
+import Link from "next/link";
 import React from "react";
-import { FiFlag } from "react-icons/fi";
-import { HiOutlineLocationMarker } from "react-icons/hi";
-import { IoTicketOutline } from "react-icons/io5";
-import { MdOutlineDateRange, MdOutlineMailOutline } from "react-icons/md";
-import { RiShareBoxLine } from "react-icons/ri";
+const LeafletMapRoom = dynamic(() => import("@/components/map/LefletMapRoom"));
 
 interface EventProps {
   event: Event;
@@ -15,252 +26,349 @@ interface EventProps {
 
 function EventDetail({ event }: EventProps) {
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-gray-900">
-        Lavender U-Pick at Wayward Winds
-      </h1>
-      <div className="flex items-center gap-2 text-xl font-bold">
-        <p className="text-gray-600">, OR</p>
-      </div>
-      <div className="flex mx-auto gap-7">
-        <div className="w-full">
-          <Card className="">
-            <CardContent className="p-2 flex flex-row">
-              <img
-                src={
-                  "https://www.theseedcollection.com.au/assets/full/B2-01.jpg?20201208112734"
-                }
-                alt="not"
-                className="h-[20rem] w-[50rem] rounded-tl-xl rounded-bl-xl object-cover"
-              />
-              <div className="flex gap-2 flex-col text-[1rem] ml-6 mt-4">
-                <div className="flex border-b border-gray-300 p-3 gap-2">
-                  <div>
-                    <p>
-                      <HiOutlineLocationMarker size={25} color="gray" />
-                    </p>
-                  </div>
-                  <div>
-                    <p> Wayward Winds Lavender Farm</p>
-                    <p>17005 Ne Courtney Rd</p>
-                    <p>Newberg, OR 97132</p>
+    <div className="">
+      <div className="flex flex-col lg:flex-row mx-auto gap-4 lg:gap-7">
+        <div className="w-full lg:w-2/3">
+          <div className="flex border rounded-xl mt-0 ">
+            <ImageCarousel images={event?.images || []} />
+          </div>
+          <div className="space-y-5 mt-4">
+            <div className="bg-white">
+              {/* Event Details */}
+              <main className="container mx-auto">
+                <div className="">
+                  <div className="">
+                    <h1 className="lg:text-3xl text-2xl font-bold text-gray-900">
+                      Celebrating 10 Years: UO Sports Product Management Holiday
+                      Party
+                    </h1>
                   </div>
                 </div>
-                <div className="flex border-b border-gray-300 p-3 gap-2">
-                  <div>
-                    <p>
-                      <MdOutlineDateRange size={25} color="gray" />
-                    </p>
-                  </div>
-                  <div>
-                    <p className="flex gap-2">
-                      <p className="font-bold">From:</p> Saturday, Jun 29, 10:00
-                      am
-                    </p>
-                    <p className="flex gap-2">
-                      <p className="font-bold">To:</p> Monday, Jul 29, 5:00 pm
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2 p-3">
-                  <IoTicketOutline size={25} color="gray" />
-                  <p>Free</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="my-3">
-            <CardContent className="p-2">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-gray-900 text-xl">What/Why:</p>
-              </div>
-              <p className="text-gray-700">
-                {" "}
-                Free Admission! Open daily June 29th-August 11th from 10 am-5
-                pm. An abundance of the most fragrant and beautiful lavender in
-                existence, nestled in the hills of Newberg, Oregon. Explore the
-                twists and turns of our Lavender-a-maze. Experience everything
-                lavender you can imagine, and shop award-winning essential oils,
-                plants, and products in our vintage farm store. If it can be
-                made with this magical herb, we do it!
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className=" p-2 my-2 flex gap-3 flex-col">
-              <div className="justify-between flex items-center">
-                <button
-                  className="border flex gap-1 text-gray-500 font-bold p-1 rounded-sm items-center text-center"
-                  type="button"
-                >
-                  <RiShareBoxLine size={20} color="gray" />
-                  Official Website
-                </button>
-                <button
-                  className="border flex gap-1 text-gray-500 hover:text-black p-1 rounded-sm items-center text-center"
-                  type="button"
-                >
-                  <FiFlag size={17} color="gray" />
-                </button>
-              </div>
-              <p className="text-gray-900 text-xl">Discuss This Event</p>
-              <p className="text-[16px] flex gap-1 items-center text-[#0073bb] hover:underline cursor-pointer">
-                <MdOutlineMailOutline size={17} />
-                Email about event
-              </p>
-              <p>No one has commented on this event yet.</p>
-              <button
-                className="bg-green-800 text-white text-[16px] p-1 rounded-sm items-center w-[3rem] text-center"
-                type="button"
+              </main>
+            </div>
+            <div className="">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-6"
               >
-                Post
-              </button>
-              <div className="bg-yellow-100 text-black p-3 rounded-md">
-                <p className="flex gap-1">
-                  To use talk boards you must first confirm your email address.
-                  Click the link in email wee sent. If you would like us to
-                  resend confirmation email, go{" "}
-                  <p className="text-[#0073bb] cursor-pointer">here.</p>
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className=" p-2">
-              <h1 className="flex text-[#000] text-[17px] font-bold mt-5 gap-2">
-                User Details-{" "}
-              </h1>
-              <div className="grid grid-cols-3 justify-between border rounded-md p-5">
-                <div className="flex gap-2 items-center">
-                  {/* <FaUserAlt size={35} /> */}
-                  <img
-                    className="w-[2rem] h-15"
-                    src={
-                      "https://icon-library.com/images/username-icon-png/username-icon-png-0.jpg"
-                    }
-                    alt="logo"
-                  />
-                  <div className="flex">
-                    <p className="text-black text-[15px]">
-                      Name
-                      <p className="text-black flex text-[15px]">
-                        {/* {rooms.user_name} */}
+                {/* Event Type Card */}
+                <div className="">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center">
+                      <Users className="h-6 w-6 text-purple-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-sm text-gray-500 font-medium">
+                        Event Type
+                      </h2>
+                      <p className="text-lg font-semibold text-gray-900">
+                        In Person
                       </p>
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2 items-center">
-                  {/* <FaPhoneVolume size={35} /> */}
-                  <img
-                    className="w-[2rem] h-13"
-                    src={
-                      "https://th.bing.com/th/id/OIP.5_xxdbU1J1GoLaVng_PBRQHaHa?rs=1&pid=ImgDetMain"
-                    }
-                    alt="logo"
-                  />
-                  <div className="flex">
-                    <p className="text-black text-[15px]">
-                      Phone number
-                      <p className="text-black flex text-[18px]">
-                        {/* {rooms.phone_number} */}
-                      </p>
-                    </p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex gap-2 items-center">
-                  {/* <MdOutlineEmail size={35} /> */}
-                  <img
-                    className="w-[2rem] h-13"
-                    src={
-                      "https://th.bing.com/th/id/OIP.XIRvuujS5JE0LJYwXfvxwQHaHa?rs=1&pid=ImgDetMain"
-                    }
-                    alt="logo"
-                  />
-                  <div className="flex">
-                    <p className="text-black text-[15px]">
-                      Email
-                      {/* <p className="text-black flex text-[18px]">{rooms.email}</p> */}
-                    </p>
+                {/* Entry Fee Card */}
+                <div className="">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
+                      <DollarSign className="h-6 w-6 text-green-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-sm text-gray-500 font-medium">
+                        Entry Fee
+                      </h2>
+                      <p className="text-lg font-semibold text-gray-900">
+                        Free Entry
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="mt-5">
-          <img
-            className="w-full rounded-md"
-            src={
-              "https://th.bing.com/th/id/OIP.dptj3_-KYpJQTYPL9ab7awHaEz?rs=1&pid=ImgDetMain"
-            }
-            alt="logo"
-          />
-          <Card className="w-full max-w-md mt-4 rounded-none">
-            <CardHeader>
-              {/* <CardTitle className="text-2xl font-bold">
-                  About this Brand{" "}
-                </CardTitle> */}
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <img
-                  src={
-                    "https://cdn11.bigcommerce.com/s-fg272t4iw0/images/stencil/1280x1280/products/238/491/C-10241__19959.1557813146.jpg?c=2&imbypass=on"
-                  }
-                  alt={`logo`}
-                  className="w-16 h-16 rounded-full"
-                />
+
+                {/* Date and Time Card */}
+                <div className="">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                      <Calendar className="h-6 w-6 text-blue-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-sm text-gray-500 font-medium">
+                        Date and Time
+                      </h2>
+                      <div className="flex items-center gap-2 mt-1">
+                        <p className="text-lg font-semibold text-gray-900">
+                          Wednesday, January 15
+                        </p>
+                        <div className="flex items-center gap-1 text-gray-500">
+                          <Clock className="h-4 w-4" />
+                          <span>6-9pm PST</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Location Card */}
+                <div className="">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
+                      <MapPin className="h-6 w-6 text-red-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-sm text-gray-500 font-medium">
+                        Location
+                      </h2>
+                      <p className="text-lg font-semibold text-gray-900">
+                        White Owl Social Club
+                      </p>
+                      <p className="text-gray-500">
+                        1305 Southeast 8th Avenue Portland, OR 97214 United
+                        States
+                      </p>
+                      <Button
+                        variant="link"
+                        className="text-blue-600 hover:text-blue-700 p-0 h-auto mt-1"
+                      >
+                        Show map
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Artist Card */}
+                <div className="">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center">
+                      <User className="h-6 w-6 text-orange-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-sm text-gray-500 font-medium">
+                        Artist
+                      </h2>
+                      <p className="text-lg font-semibold text-gray-900">
+                        Artist Name
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+              </motion.div>
+            </div>
+            <section>
+              <h2 className="text-xl font-semibold my-2">
+                Is it in person or virtual?
+              </h2>
+              <div className="flex items-start gap-2">
+                <Calendar className="h-5 w-5 mt-0.5 text-blue-600" />
                 <div>
-                  <h2 className="text-xl font-bold">adidas</h2>
-                  <p className="text-sm text-gray-600">
-                    % positive feedback · items sold
+                  <p className="text-black">In Person</p>
+                </div>
+              </div>
+            </section>
+            <section>
+              <h2 className="text-xl font-semibold my-2">Event Entry </h2>
+              <div className="flex items-start gap-2">
+                <DollarSign className="h-5 w-5 mt-0.5 text-blue-600" />
+                <div>
+                  <p className="text-black">Free entry</p>
+                </div>
+              </div>
+            </section>
+            {/* Date and Time */}
+            <section>
+              <h2 className="text-xl font-semibold my-2">Date and time</h2>
+              <div className="flex items-start gap-2">
+                <Clock className="h-5 w-5 mt-0.5 text-blue-600" />
+                <div>
+                  <p className="text-black">
+                    Wednesday, January 15 · 6-9pm PST
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col gap-2 text-sm text-gray-800">
-                <p className="flex gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <p>Joined Sep 2016</p>
-                </p>
-                <p>
-                  "At adidas, our love for sport drives who we are and what we
-                  do. Every day. It is not only about faster shoes and fashion
-                  statements. Just as a shoe is more than padding and foam,
-                  there is more to us ..."
-                </p>
-              </div>
-              <div>
-                <div className="flex items-center gap-2 text-sm text-gray-800 font-bold">
-                  See more <ChevronDown className="w-4 h-4" />
+            </section>
+
+            {/* Location */}
+            <section>
+              <h2 className="text-xl font-semibold mb-2">Location</h2>
+              <div className="flex items-start gap-2">
+                <MapPin className="h-5 w-5 mt-0.5 text-blue-600" />
+                <div>
+                  <p className="font-medium">White Owl Social Club</p>
+                  <p className="text-muted-foreground">
+                    1305 Southeast 8th Avenue Portland, OR 97214 United States
+                  </p>
+                  <Button variant="link" className="h-auto p-0 text-blue-600">
+                    Show map
+                  </Button>
                 </div>
               </div>
-              <div className="space-y-2">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                  About this Brand{" "}
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full flex items-center justify-center text-blue-600 border-blue-600"
-                >
-                  <Heart className="w-4 h-4 mr-2" />
-                  Save seller
-                </Button>
-              </div>
-              <div>
-                <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">
-                    Popular categories from <br></br>this store
-                  </h3>
-                  <a
-                    href="#"
-                    className="text-sm text-blue-600 font-medium underline"
-                  >
-                    See all
-                  </a>
+            </section>
+            <section>
+              <h2 className="text-xl font-semibold my-2">Artist</h2>
+              <div className="flex items-start gap-2">
+                <User className="h-5 w-5 mt-0.5 text-blue-600" />
+                <div>
+                  <p className="text-black">Artist Name</p>
                 </div>
-                {/* Add popular categories here */}
               </div>
+            </section>
+            {/* About */}
+            <section>
+              <h2 className="text-xl font-semibold mb-2">About this event</h2>
+              <div className="flex items-center gap-2 mb-4">
+                <Clock className="h-5 w-5 text-blue-600" />
+                <span className="text-sm">Event lasts 2 hours</span>
+              </div>
+              <div className="space-y-4 text-muted-foreground text-black">
+                <p className="text-black">
+                  Looking to meet new friends? Searching for new opportunities?
+                  Or simply looking to celebrate Pride Month in a queer space
+                  with other queer humans?
+                </p>
+                <p className="text-black">
+                  Come join Out in Tech PDX at White Owl on Wednesday, January
+                  15th from 6pm to 9pm.
+                </p>
+                <p className="text-black">
+                  Whether you&apos;re interested in tech, working in tech, or
+                  you&apos;re tech-adjacent (hint: that&apos;s everyone), come
+                  mingle with us, have a beverage of choice, and meet the
+                  fabulous members of your PDX Out in Tech community.
+                </p>
+                <p className="text-black">
+                  We are looking forward to seeing everyone there!
+                </p>
+              </div>
+            </section>
+            {/* Tags */}
+            <section>
+              <h2 className="text-xl font-semibold mb-3">Languages</h2>
+              <div className="flex flex-wrap gap-2 text-xl">
+                <Badge className="text-[16px]" variant="secondary">
+                  Hindi
+                </Badge>
+                <Badge className="text-[16px]" variant="secondary">
+                  English
+                </Badge>
+                <Badge className="text-[16px]" variant="secondary">
+                  Punjabi
+                </Badge>
+                <Badge className="text-[16px]" variant="secondary">
+                  Tamil
+                </Badge>
+                <Badge className="text-[16px]" variant="secondary">
+                  Hindi
+                </Badge>
+              </div>
+            </section>
+          </div>
+
+          <div className="mt-[1rem] flex gap-3 flex-col">
+            <p>No one has commented on this event yet.</p>
+            <div className="bg-yellow-100 text-black p-3 rounded-md">
+              <p className="flex gap-1">
+                To use talk boards you must first confirm your email address.
+                Click the link in email wee sent. If you would like us to resend
+                confirmation email, go{" "}
+                <p className="text-[#0073bb] cursor-pointer">here.</p>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="w-full lg:w-1/3">
+          <Card className="">
+            <CardHeader className="p-0"></CardHeader>
+            <CardContent className="p-2">
+              <div className="p-0">
+                {/* {locationsndString && (
+                  <LeafletMapRoom
+                    onLocationReceived={locationsndString}
+                    markerstyle="marker"
+                  />
+                )} */}
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="w-full mt-4 rounded-none">
+            <CardContent className="space-y-4 mt-5">
+              <section>
+                <h2 className="text-xl font-semibold mb-4">Organized by</h2>
+                <div className="bg-slate-50 rounded-lg">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="h-12 w-12 relative">
+                        <img
+                          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-F3X1HyiwCFJhKwp7SwTXwYZinO3qnI.png"
+                          alt="Out in Tech logo"
+                          width={48}
+                          height={48}
+                          className="rounded"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold">Out in Tech</h3>
+                        <p className="text-sm text-muted-foreground">
+                          11.1k followers
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Lots of repeat customers
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        className="text-green-800 hover:bg-green-700 hover:text-white"
+                        variant="outline"
+                      >
+                        Contact
+                      </Button>
+                      <Button className="bg-green-800 hover:bg-green-700 text-white">
+                        Follow
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Out in Tech unites the LGBTQ+ tech community. We do this by
+                    creating opportunities for our 50,000 members to advance
+                    their careers, grow their networks, and leverage tech for
+                    social change.
+                  </p>
+                  <div className="flex gap-4">
+                    <Link
+                      href="#"
+                      className="text-blue-600 hover:text-blue-700"
+                    >
+                      <Globe className="h-5 w-5" />
+                    </Link>
+                    <Link
+                      href="#"
+                      className="text-blue-600 hover:text-blue-700"
+                    >
+                      <svg
+                        className="h-5 w-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                      </svg>
+                    </Link>
+                    <Link
+                      href="#"
+                      className="text-blue-600 hover:text-blue-700"
+                    >
+                      <svg
+                        className="h-5 w-5"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              </section>
             </CardContent>
           </Card>
         </div>

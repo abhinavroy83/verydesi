@@ -24,8 +24,6 @@ function EventPage() {
     `https://apiv2.verydesi.com/event/find_event_by_id/${id}`
   );
 
-  console.log("data", event);
-
   const {
     data: allEvents,
     loading: eventsLoading,
