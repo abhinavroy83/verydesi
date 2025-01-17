@@ -31,11 +31,14 @@ import {
   ChevronRight,
   ChevronUp,
   Clock,
+  DollarSign,
   Globe,
   Heart,
   Home,
   Link,
   MapPin,
+  User,
+  Users,
 } from "lucide-react";
 import {
   Carousel,
@@ -56,6 +59,8 @@ import useAuthStore from "@/store/useAuthStore";
 import { Event } from "@myrepo/types";
 import dynamic from "next/dynamic";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+
 const LeafletMapRoom = dynamic(() => import("@/components/map/LefletMapRoom"));
 interface Location {
   lat: number;
@@ -342,78 +347,155 @@ function Events() {
                 </div>
               </div> */}
               </div>
-              <div className="space-y-8 mt-4">
+              <div className="space-y-5 mt-4">
                 <div className="bg-white">
                   {/* Event Details */}
                   <main className="container mx-auto">
-                    <div className="grid md:grid-cols-3 gap-8">
-                      <div className="md:col-span-2 space-y-4">
-                        <div className="flex items-center gap-2 text-[#f05537]">
-                          <span className="inline-flex items-center gap-1">
-                            <span className="h-2 w-2 bg-[#f05537] rounded-full" />
-                            Few tickets left
-                          </span>
-                        </div>
-
-                        <p className="text-gray-600">Thursday, January 16</p>
-
-                        <h1 className="text-3xl md:text-4xl font-bold text-[#1e0a3c]">
+                    <div className="">
+                      <div className="">
+                        <h1 className="lg:text-3xl text-2xl font-bold text-gray-900">
                           Celebrating 10 Years: UO Sports Product Management
                           Holiday Party
                         </h1>
-
-                        <p className="text-sm text-gray-600 font-medium">
-                          ALL AGES
-                        </p>
-                      </div>
-
-                      <div className="bg-white rounded-lg border p-3 space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm text-gray-600">
-                              General Admission
-                            </p>
-                            <p className="font-bold">Free</p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              onClick={() =>
-                                setTicketCount(Math.max(0, ticketCount - 1))
-                              }
-                              disabled={ticketCount <= 0}
-                            >
-                              -
-                            </Button>
-                            <span className="w-8 text-center">
-                              {ticketCount}
-                            </span>
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              onClick={() => setTicketCount(ticketCount + 1)}
-                            >
-                              +
-                            </Button>
-                          </div>
-                        </div>
-
-                        <Button
-                          className="w-full bg-[#d1410c] hover:bg-[#b83709] text-white"
-                          disabled={ticketCount === 0}
-                        >
-                          Reserve a spot
-                        </Button>
                       </div>
                     </div>
                   </main>
                 </div>
+                <div className="">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="space-y-6"
+                  >
+                    {/* Event Type Card */}
+                    <div className="">
+                      <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center">
+                          <Users className="h-6 w-6 text-purple-600" />
+                        </div>
+                        <div>
+                          <h2 className="text-sm text-gray-500 font-medium">
+                            Event Type
+                          </h2>
+                          <p className="text-lg font-semibold text-gray-900">
+                            In Person
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Entry Fee Card */}
+                    <div className="">
+                      <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
+                          <DollarSign className="h-6 w-6 text-green-600" />
+                        </div>
+                        <div>
+                          <h2 className="text-sm text-gray-500 font-medium">
+                            Entry Fee
+                          </h2>
+                          <p className="text-lg font-semibold text-gray-900">
+                            Free Entry
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Date and Time Card */}
+                    <div className="">
+                      <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                          <Calendar className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div className="flex-1">
+                          <h2 className="text-sm text-gray-500 font-medium">
+                            Date and Time
+                          </h2>
+                          <div className="flex items-center gap-2 mt-1">
+                            <p className="text-lg font-semibold text-gray-900">
+                              Wednesday, January 15
+                            </p>
+                            <div className="flex items-center gap-1 text-gray-500">
+                              <Clock className="h-4 w-4" />
+                              <span>6-9pm PST</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Location Card */}
+                    <div className="">
+                      <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
+                          <MapPin className="h-6 w-6 text-red-600" />
+                        </div>
+                        <div className="flex-1">
+                          <h2 className="text-sm text-gray-500 font-medium">
+                            Location
+                          </h2>
+                          <p className="text-lg font-semibold text-gray-900">
+                            White Owl Social Club
+                          </p>
+                          <p className="text-gray-500">
+                            1305 Southeast 8th Avenue Portland, OR 97214 United
+                            States
+                          </p>
+                          <Button
+                            variant="link"
+                            className="text-blue-600 hover:text-blue-700 p-0 h-auto mt-1"
+                          >
+                            Show map
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Artist Card */}
+                    <div className="">
+                      <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center">
+                          <User className="h-6 w-6 text-orange-600" />
+                        </div>
+                        <div>
+                          <h2 className="text-sm text-gray-500 font-medium">
+                            Artist
+                          </h2>
+                          <p className="text-lg font-semibold text-gray-900">
+                            Artist Name
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Button */}
+                  </motion.div>
+                </div>
+                <section>
+                  <h2 className="text-xl font-semibold my-2">
+                    Is it in person or virtual?
+                  </h2>
+                  <div className="flex items-start gap-2">
+                    <Calendar className="h-5 w-5 mt-0.5 text-blue-600" />
+                    <div>
+                      <p className="text-black">In Person</p>
+                    </div>
+                  </div>
+                </section>
+                <section>
+                  <h2 className="text-xl font-semibold my-2">Event Entry </h2>
+                  <div className="flex items-start gap-2">
+                    <DollarSign className="h-5 w-5 mt-0.5 text-blue-600" />
+                    <div>
+                      <p className="text-black">Free entry</p>
+                    </div>
+                  </div>
+                </section>
                 {/* Date and Time */}
                 <section>
                   <h2 className="text-xl font-semibold my-2">Date and time</h2>
                   <div className="flex items-start gap-2">
-                    <Calendar className="h-5 w-5 mt-0.5 text-blue-600" />
+                    <Clock className="h-5 w-5 mt-0.5 text-blue-600" />
                     <div>
                       <p className="text-black">
                         Wednesday, January 15 · 6-9pm PST
@@ -442,14 +524,22 @@ function Events() {
                     </div>
                   </div>
                 </section>
-
+                <section>
+                  <h2 className="text-xl font-semibold my-2">Artist</h2>
+                  <div className="flex items-start gap-2">
+                    <User className="h-5 w-5 mt-0.5 text-blue-600" />
+                    <div>
+                      <p className="text-black">Artist Name</p>
+                    </div>
+                  </div>
+                </section>
                 {/* About */}
                 <section>
                   <h2 className="text-xl font-semibold mb-2">
                     About this event
                   </h2>
                   <div className="flex items-center gap-2 mb-4">
-                    <Clock className="h-4 w-4 text-blue-600" />
+                    <Clock className="h-5 w-5 text-blue-600" />
                     <span className="text-sm">Event lasts 2 hours</span>
                   </div>
                   <div className="space-y-4 text-muted-foreground text-black">
@@ -473,6 +563,39 @@ function Events() {
                     </p>
                   </div>
                 </section>
+                {/* <div className="">
+                  <h2 className="text-xl font-semibold my-2">Artist</h2>
+                  <div className="flex lg:flex-row flex-col items-center gap-6 md:gap-8">
+                    <div className="relative lg:h-[10rem] w-[55rem] rounded-lg">
+                      <Image
+                        src="https://www.pixelstalk.net/wp-content/uploads/2016/05/America-city-wallpaper-hd.jpg"
+                        alt="Vibrant red flower in bloom"
+                        fill
+                        className="object-cover rounded-full"
+                        priority
+                      />
+                    </div>
+
+                    <div className="space-y-4">
+                      <p className={` text-gray-800 leading-relaxed`}>
+                        Valerie Ramsey is a Louisville-based artist whose
+                        genre-spanning work explores contemporary contrasts in
+                        life through minimalism and geometric abstraction. While
+                        her paintings may vary widely in style and even mood,
+                        their unifying bond element is a rich emotional
+                        resonance that finds its fullest expression in her most
+                        representational works in the determined. Valerie Ramsey
+                        is a Louisville-based artist whose genre-spanning work
+                        explores contemporary contrasts in life through
+                        minimalism and geometric abstraction. While her
+                        paintings may vary widely in style and even mood, their
+                        unifying bond element is a rich emotional resonance that
+                        finds its fullest expression in her most
+                        representational works in the determined.
+                      </p>
+                    </div>
+                  </div>
+                </div> */}
 
                 {/* Tags */}
                 <section>
@@ -498,33 +621,7 @@ function Events() {
               </div>
 
               <div className="mt-[1rem] flex gap-3 flex-col">
-                <div className="justify-between flex items-center">
-                  <button
-                    className="border flex gap-1 text-gray-500 font-bold p-1 rounded-sm items-center text-center"
-                    type="button"
-                  >
-                    <RiShareBoxLine size={20} color="gray" />
-                    Official Website
-                  </button>
-                  <button
-                    className="border flex gap-1 text-gray-500 hover:text-black p-1 rounded-sm items-center text-center"
-                    type="button"
-                  >
-                    <FiFlag size={17} color="gray" />
-                  </button>
-                </div>
-
-                <p className="text-[16px] flex gap-1 items-center text-[#0073bb] hover:underline cursor-pointer">
-                  <MdOutlineMailOutline size={17} />
-                  Email about event
-                </p>
                 <p>No one has commented on this event yet.</p>
-                {/* <button
-                className="bg-green-800 text-white text-[16px] p-1 rounded-sm items-center w-[3rem] text-center"
-                type="button"
-              >
-                Post
-              </button> */}
                 <div className="bg-yellow-100 text-black p-3 rounded-md">
                   <p className="flex gap-1">
                     To use talk boards you must first confirm your email
@@ -556,51 +653,6 @@ function Events() {
                 </CardTitle>
               </CardHeader> */}
                 <CardContent className="space-y-4 mt-5">
-                  {/* <div className="flex items-center space-x-4">
-                    <img
-                      src={
-                        "https://cdn11.bigcommerce.com/s-fg272t4iw0/images/stencil/1280x1280/products/238/491/C-10241__19959.1557813146.jpg?c=2&imbypass=on"
-                      }
-                      alt={`logo`}
-                      className="w-16 h-16 rounded-full"
-                    />
-                    <div>
-                      <h2 className="text-xl font-bold">adidas</h2>
-                      <p className="text-sm text-gray-600">
-                        % positive feedback · items sold
-                      </p>
-                    </div>
-                  </div> */}
-                  {/* <div className="flex flex-col gap-2 text-sm text-gray-800">
-                    <p className="flex gap-2">
-                      <Calendar className="w-4 h-4" />
-                      <p>Joined Sep 2016</p>
-                    </p>
-                    <p>
-                    "At adidas, our love for sport drives who we are and what we
-                    do. Every day. It is not only about faster shoes and fashion
-                    statements. Just as a shoe is more than padding and foam,
-                    there is more to us ..."
-                  </p>
-                  </div> */}
-                  {/* <div>
-                    <div className="flex items-center gap-2 text-sm text-gray-800 font-bold">
-                      See more <ChevronDown className="w-4 h-4" />
-                    </div>
-                  </div> */}
-                  {/* <div className="space-y-2">
-                    <Button className="text-[16px] w-full bg-green-800 hover:bg-green-700 text-white">
-                      About this Brand{" "}
-                    </Button>
-
-                    <Button
-                      variant="outline"
-                      className="w-full flex items-center justify-center text-green-800 border-green-800"
-                    >
-                      <Heart className="w-4 h-4 mr-2" />
-                      Save
-                    </Button>
-                  </div> */}
                   <section>
                     <h2 className="text-xl font-semibold mb-4">Organized by</h2>
                     <div className="bg-slate-50 rounded-lg">
@@ -677,20 +729,6 @@ function Events() {
                       </div>
                     </div>
                   </section>
-                  <div>
-                    <div className="flex justify-between items-center">
-                      <h3 className="text-lg font-semibold">
-                        Popular categories
-                      </h3>
-                      <a
-                        href="#"
-                        className="text-sm text-blue-600 font-medium underline"
-                      >
-                        See all
-                      </a>
-                    </div>
-                    {/* Add popular categories here */}
-                  </div>
                 </CardContent>
               </Card>
             </div>
