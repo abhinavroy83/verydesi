@@ -28,9 +28,11 @@ import { useRouter } from "next/navigation";
 import LogoutComponent from "./popups/logout";
 import { useSession, signOut } from "next-auth/react";
 import { Router } from "next/router";
+import { date } from "zod";
 
 function Navbar() {
   const { data: session } = useSession();
+  console.log("session",session);
   const router = useRouter();
   return (
     <nav className="bg-[#232f3e] shadow-2xl font-['udemy-regular'] z-10">
@@ -53,7 +55,10 @@ function Navbar() {
                   className="relative h-8 w-8 rounded-full"
                 >
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="/placeholder-avatar.jpg" alt="Admin" />
+                    <AvatarImage
+                      src="https://api.dicebear.com/7.x/initials/svg?seed=Abhinav"
+                      alt="Admin"
+                    />
                     <AvatarFallback>AD</AvatarFallback>
                   </Avatar>
                 </Button>

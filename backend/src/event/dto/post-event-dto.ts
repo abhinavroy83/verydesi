@@ -8,6 +8,7 @@ import {
   MaxLength,
   ValidateNested,
   ArrayMaxSize,
+  Validate,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -33,8 +34,8 @@ export class EventFormDTO {
   eventType: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Event type is required.' })
-  eventprice: string;
+  @IsOptional()
+  eventprice?: string;
 
   @IsDate({ message: 'Start date must be a valid date.' })
   @Type(() => Date)
@@ -61,9 +62,7 @@ export class EventFormDTO {
   repeatEvent: string;
 
   @IsString()
-  @Length(10, 10000, {
-    message: 'Description must be between 10 and 500 characters.',
-  })
+  @IsNotEmpty()
   description: string;
 
   @IsString()

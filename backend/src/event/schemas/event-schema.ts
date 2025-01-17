@@ -20,8 +20,8 @@ export class Event {
   @Prop({ required: true })
   eventType: string;
 
-  @Prop({ required: true })
-  eventprice: string;
+  @Prop()
+  eventprice?: string;
 
   @Prop({ required: true, type: Date })
   startDate: Date;
@@ -41,7 +41,7 @@ export class Event {
   @Prop({ required: true })
   repeatEvent: string;
 
-  @Prop({ required: true, minlength: 10, maxlength: 500 })
+  @Prop({ required: true, maxlength: 10000 })
   description: string;
 
   @Prop({ required: true })

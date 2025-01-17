@@ -59,7 +59,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import type { FormData } from "@/schema";
 import { postroomschema } from "@/schema";
-import { stateAbbreviations } from "@repo/schemas";
+import { removeExtraSpaces, stateAbbreviations } from "@repo/schemas";
 import DashboardLayout from "@/components/Layout/Dashboardlayout";
 
 const sections = [
@@ -71,6 +71,35 @@ const sections = [
   { id: "photos", title: "Photos" },
   { id: "your-details", title: "Your Details" },
   { id: "submit", title: "Submit" },
+];
+
+const UTILITIES = [
+  "Water",
+  "Wi-Fi",
+  "Electricity",
+  "Air Conditioner",
+  "Refrigerator",
+  "Dishwasher",
+  "Dryer",
+  "Washer",
+  "Kitchen",
+  "Microwave",
+  "TV",
+  "Heater",
+];
+const AMENITIES = [
+  "Gym/Fitness Center",
+  "Swimming Pool",
+  "Car Park",
+  "Visitors Parking",
+  "Power Backup",
+  "Garbage Disposal",
+  "Private Lawn",
+  "Water Heater Plant",
+  "Security System",
+  "Laundry Service",
+  "Elevator",
+  "Club House",
 ];
 
 export default function RoomPostingForm() {
@@ -125,6 +154,22 @@ export default function RoomPostingForm() {
   const { data: session, status } = useSession();
 
   const { cities, isLoading, error } = useCityData();
+
+  const [selectAllUtility, setSelectAllUtility] = useState(false);
+  const [selectAllAmenities, setSelectAllAmenities] = useState(false);
+
+  const handleSelectAll = (
+    type: any,
+    arrayToSet: any[],
+    isSelectAll: boolean,
+    setSelectAll: (value: boolean) => void
+  ) => {
+    const newSelectAll = !isSelectAll;
+    setSelectAll(newSelectAll);
+
+    form.setValue(type, newSelectAll ? arrayToSet : []);
+  };
+
   // console.log("cities", cities);
   const router = useRouter();
   useEffect(() => {
@@ -200,9 +245,9 @@ export default function RoomPostingForm() {
     return response.data.area[0];
   };
   const onSubmit = async (data: FormData) => {
+    // console.log(data);
     setIsSubmitting(true);
 
-    // console.log(data);
     const city = data.postingIn;
     const areaData = await fetchAreaData(city);
     const enteredStateAbbreviation = data.state;
@@ -210,7 +255,7 @@ export default function RoomPostingForm() {
       (key) => stateAbbreviations[key] === enteredStateAbbreviation
     );
     // const enteredState = data.state;
-    const enteredCity = data.city;
+    const enteredCity = removeExtraSpaces(data.city);
     const enteredZip = data.zipCode;
     const isPrimaryState = areaData.primaryState.includes(
       enteredStateFullName || data.state
@@ -255,10 +300,10 @@ export default function RoomPostingForm() {
           coordinates: [location?.lng, location?.lat],
         },
       };
-
+      // console.log("roomdata", roomdata);
       try {
         const token = session?.user.accessToken;
-        // console.log(token);
+        console.log(token);
         if (!token) {
           // console.log("tokn no");
           throw new Error("token not found");
@@ -280,6 +325,9 @@ export default function RoomPostingForm() {
         }
       } catch (error) {
         console.error("Error while adding room:", error);
+        alert("An error occurred while submitting the form.");
+      } finally {
+        setIsSubmitting(false);
       }
     } else {
       toast.error("Enter Address is not available");
@@ -1143,56 +1191,65 @@ export default function RoomPostingForm() {
                               Select the utilities included in the rent.
                             </FormDescription>
                           </div>
-                          <div className="flex-grow grid grid-cols-2 md:grid-cols-4 gap-2">
-                            {[
-                              "Water",
-                              "Wi-Fi",
-                              "Electricity",
-                              "Air Conditioner",
-                              "Refrigerator",
-                              "Dishwasher",
-                              "Dryer",
-                              "Washer",
-                              "Kitchen",
-                              "Microwave",
-                              "TV",
-                              "Heater",
-                            ].map((item) => (
-                              <FormField
-                                key={item}
-                                control={form.control}
-                                name="utilities"
-                                render={({ field }) => {
-                                  return (
-                                    <FormItem
-                                      key={item}
-                                      className="flex flex-row items-start space-x-3 space-y-0"
-                                    >
-                                      <FormControl>
-                                        <Checkbox
-                                          checked={field.value?.includes(item)}
-                                          onCheckedChange={(checked) => {
-                                            return checked
-                                              ? field.onChange([
-                                                  ...field.value,
-                                                  item,
-                                                ])
-                                              : field.onChange(
-                                                  field.value?.filter(
-                                                    (value) => value !== item
-                                                  )
-                                                );
-                                          }}
-                                        />
-                                      </FormControl>
-                                      <FormLabel className="font-normal">
-                                        {item}
-                                      </FormLabel>
-                                    </FormItem>
-                                  );
-                                }}
+                          <div className="flex-grow">
+                            <label className="flex items-center">
+                              <input
+                                type="checkbox"
+                                checked={selectAllUtility}
+                                onChange={() =>
+                                  handleSelectAll(
+                                    "utilities",
+                                    UTILITIES,
+                                    selectAllUtility,
+                                    setSelectAllUtility
+                                  )
+                                }
+                                className="mr-2"
                               />
-                            ))}
+                              {selectAllUtility
+                                ? "Deselect All Utilities"
+                                : "Select All Utilities"}
+                            </label>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                              {UTILITIES.map((item) => (
+                                <FormField
+                                  key={item}
+                                  control={form.control}
+                                  name="utilities"
+                                  render={({ field }) => {
+                                    return (
+                                      <FormItem
+                                        key={item}
+                                        className="flex flex-row items-start space-x-3 space-y-0"
+                                      >
+                                        <FormControl>
+                                          <Checkbox
+                                            checked={field.value?.includes(
+                                              item
+                                            )}
+                                            onCheckedChange={(checked) => {
+                                              return checked
+                                                ? field.onChange([
+                                                    ...field.value,
+                                                    item,
+                                                  ])
+                                                : field.onChange(
+                                                    field.value?.filter(
+                                                      (value) => value !== item
+                                                    )
+                                                  );
+                                            }}
+                                          />
+                                        </FormControl>
+                                        <FormLabel className="font-normal">
+                                          {item}
+                                        </FormLabel>
+                                      </FormItem>
+                                    );
+                                  }}
+                                />
+                              ))}
+                            </div>
                           </div>
                           <FormMessage />
                         </FormItem>
@@ -1212,56 +1269,65 @@ export default function RoomPostingForm() {
                               Select the amenities available in the property.
                             </FormDescription>
                           </div>
-                          <div className="flex-grow grid grid-cols-2 md:grid-cols-4 gap-2">
-                            {[
-                              "Gym/Fitness Center",
-                              "Swimming Pool",
-                              "Car Park",
-                              "Visitors Parking",
-                              "Power Backup",
-                              "Garbage Disposal",
-                              "Private Lawn",
-                              "Water Heater Plant",
-                              "Security System",
-                              "Laundry Service",
-                              "Elevator",
-                              "Club House",
-                            ].map((item) => (
-                              <FormField
-                                key={item}
-                                control={form.control}
-                                name="amenities"
-                                render={({ field }) => {
-                                  return (
-                                    <FormItem
-                                      key={item}
-                                      className="flex flex-row items-start space-x-3 space-y-0"
-                                    >
-                                      <FormControl>
-                                        <Checkbox
-                                          checked={field.value?.includes(item)}
-                                          onCheckedChange={(checked) => {
-                                            return checked
-                                              ? field.onChange([
-                                                  ...field.value,
-                                                  item,
-                                                ])
-                                              : field.onChange(
-                                                  field.value?.filter(
-                                                    (value) => value !== item
-                                                  )
-                                                );
-                                          }}
-                                        />
-                                      </FormControl>
-                                      <FormLabel className="font-normal">
-                                        {item}
-                                      </FormLabel>
-                                    </FormItem>
-                                  );
-                                }}
+                          <div className="flex-grow">
+                            <label className="flex items-center mb-2">
+                              <input
+                                type="checkbox"
+                                checked={selectAllAmenities}
+                                onChange={() =>
+                                  handleSelectAll(
+                                    "amenities",
+                                    AMENITIES,
+                                    selectAllAmenities,
+                                    setSelectAllAmenities
+                                  )
+                                }
+                                className="mr-2"
                               />
-                            ))}
+                              {selectAllAmenities
+                                ? "Deselect All Amenities"
+                                : "Select All Amenities"}
+                            </label>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                              {AMENITIES.map((item) => (
+                                <FormField
+                                  key={item}
+                                  control={form.control}
+                                  name="amenities"
+                                  render={({ field }) => {
+                                    return (
+                                      <FormItem
+                                        key={item}
+                                        className="flex flex-row items-start space-x-3 space-y-0"
+                                      >
+                                        <FormControl>
+                                          <Checkbox
+                                            checked={field.value?.includes(
+                                              item
+                                            )}
+                                            onCheckedChange={(checked) => {
+                                              return checked
+                                                ? field.onChange([
+                                                    ...field.value,
+                                                    item,
+                                                  ])
+                                                : field.onChange(
+                                                    field.value?.filter(
+                                                      (value) => value !== item
+                                                    )
+                                                  );
+                                            }}
+                                          />
+                                        </FormControl>
+                                        <FormLabel className="font-normal">
+                                          {item}
+                                        </FormLabel>
+                                      </FormItem>
+                                    );
+                                  }}
+                                />
+                              ))}
+                            </div>
                           </div>
                           <FormMessage />
                         </FormItem>

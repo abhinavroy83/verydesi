@@ -7,7 +7,6 @@ const CACHE_EXPIRATION = 1 * 60 * 60 * 1000; // 1 hour in milliseconds
 interface CityData {
   _id: string;
   area: string;
-  // Add other fields as needed
 }
 export function useCityData() {
   const [cities, setCities] = useState<string[]>([]);
