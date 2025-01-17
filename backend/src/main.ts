@@ -14,6 +14,7 @@ async function bootstrap() {
       'https://verydesi-client.vercel.app',
       'https://verydesi.com',
       'https://adminv2.verydesi.com',
+      'https://verydesi-client-git-develop-abhinavroy83s-projects.vercel.app',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
