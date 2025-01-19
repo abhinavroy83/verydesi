@@ -33,9 +33,30 @@ export default function Eventcard({ event }: EventcardProps) {
     return text.slice(0, length);
   };
 
+  function getFormattedDateForEvents() {
+    const date = new Date(event?.startDate);
+
+    const options: Intl.DateTimeFormatOptions = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    };
+
+    const parts = new Intl.DateTimeFormat("en-US", options).formatToParts(date);
+
+    return {
+      month:
+        parts.find((part) => part.type === "month")?.value.toUpperCase() || "",
+      date: parts.find((part) => part.type === "day")?.value || "",
+      year: parts.find((part) => part.type === "year")?.value || "",
+    };
+  }
+
+  const formatdate = getFormattedDateForEvents();
+
   return (
     <Link href={`/event/${event._id}`}>
-      <Card className="h-full transition-shadow hover:shadow-md w-full sm:w-[100%] max-w-sm mx-auto font-sans">
+      <Card className="h-full capitalize transition-shadow hover:shadow-md w-full sm:w-[100%] max-w-sm mx-auto font-sans">
         <div className="p-0">
           <div className="relative">
             <img
@@ -45,16 +66,22 @@ export default function Eventcard({ event }: EventcardProps) {
             />
             <div className="absolute top-3 left-3 bg-white/80 text-black px-2 py-1 rounded-md font-mono shadow-sm shadow-red-700">
               <div className="text-center">
-                <div className="text-[16px] font-bold leading-none">DEC</div>
-                <div className="text-[33px] font-bold leading-none">29</div>
-                <div className="text-[16px] font-medium leading-none">2024</div>
+                <div className="text-[16px] font-bold leading-none">
+                  {formatdate.month}
+                </div>
+                <div className="text-[33px] font-bold leading-none">
+                  {formatdate.date}
+                </div>
+                <div className="text-[16px] font-medium leading-none">
+                  {formatdate.year}
+                </div>
               </div>
             </div>
           </div>
         </div>
         <CardContent className="p-4">
           <h2 className="text-xl sm:text-[21px] font-bold text-gray-800 group-hover:text-blue-700 transition-colors duration-300 mb-2">
-            {truncatecharacter(event.eventTitle, 25)}
+            {truncatecharacter(event.eventTitle, 20)}
           </h2>
           <div className="text-sm sm:text-[17px] text-gray-600 space-y-1">
             <p className="flex items-center gap-2">

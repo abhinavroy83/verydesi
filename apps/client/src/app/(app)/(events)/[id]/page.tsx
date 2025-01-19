@@ -117,7 +117,6 @@ function Events() {
     fetchallEvents();
     fetchEvent();
   }, [id]);
-  console.log("first", locationsndString);
   const currentIndex = allEvents.findIndex((event) => event._id === id);
 
   const navigateEvent = (direction: "prev" | "next") => {
@@ -563,7 +562,7 @@ function Events() {
                 </div>
               </div>
             </div>
-            
+
             <div className="w-full lg:w-1/3">
               <Card className="w-full">
                 <CardHeader className="p-0"></CardHeader>
@@ -645,14 +644,14 @@ function Events() {
           </div>
         </div>
 
-        <section className="">
+        {/* <section className="">
           <h2 className="text-2xl font-bold my-4">Similar Rooms</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[...Array(3)].map((_, index) => (
-              <Similareventcard key={index} />
+              // <Similareventcard key={index} event={event} />
             ))}
           </div>
-        </section>
+        </section> */}
       </div>
     </>
   );

@@ -37,7 +37,6 @@ const Page = () => {
   const { data: session } = useSession();
   const { openLogin } = useloginstore();
   const { updateCity, setVerified, setname, setUserImgae } = useAuthStore();
-  console.log("currentCity", currentCity);
   // console.log(localStorage.getItem("auth-storage"));
   // const storagecity = localStorage.getItem("auth-storage");
   // if (storagecity) {
@@ -58,7 +57,7 @@ const Page = () => {
           withCredentials: true,
         }
       );
-      console.log("res", res);
+
       if (res.data.rooms.length === 0) {
         setError(`No rooms found in ${currentCity}`);
         setRooms([]);
@@ -181,7 +180,7 @@ const Page = () => {
   }
 
   return (
-    <HomeLayout>
+    <HomeLayout data={Room} markerType="room">
       <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full justify-between flex items-center font-sans">
         <h1 className="lg:text-[24px] text-[21px] font-sans font-bold my-1">

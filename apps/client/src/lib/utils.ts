@@ -9,6 +9,12 @@ export function formatAddress(address: string) {
   return address.trim().slice(0, 15);
 }
 
+export const truncatecharacter = (text: string, length: number) => {
+  if (text.length <= length) {
+    return text;
+  }
+  return text.slice(0, length);
+};
 export function formatDate(input: string) {
   const date = new Date(input);
   return date.toLocaleDateString("en-GB", {

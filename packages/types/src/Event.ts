@@ -22,6 +22,7 @@ export interface Event {
   virtualurl: string;
   eventpostingcity: string;
   languages: string[];
+  organization:string;
   artists: { name: string }[];
   location: {
     coordinates: number[];
