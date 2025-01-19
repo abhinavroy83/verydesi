@@ -2,7 +2,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import ImageCarousel from "@/components/ui/ImageCarousel";
-import { Event } from "@myrepo/types";
+import { formatUSDate } from "@/lib/utils";
+import { Event, Location } from "@myrepo/types";
 import { motion } from "framer-motion";
 import {
   Calendar,
@@ -11,7 +12,9 @@ import {
   DollarSign,
   Globe,
   Heart,
+  Info,
   MapPin,
+  Music,
   User,
   Users,
 } from "lucide-react";
@@ -25,256 +28,158 @@ interface EventProps {
 }
 
 function EventDetail({ event }: EventProps) {
+  const locationString: Location | null = event
+    ? {
+        lat: event.location.coordinates[1],
+        lng: event.location.coordinates[0],
+      }
+    : null;
   return (
-    <div className="">
+    <div className=" capitalize">
       <div className="flex flex-col lg:flex-row mx-auto gap-4 lg:gap-7">
         <div className="w-full lg:w-2/3">
           <div className="flex border rounded-xl mt-0 ">
             <ImageCarousel images={event?.images || []} />
           </div>
           <div className="space-y-5 mt-4">
-            <div className="bg-white">
-              {/* Event Details */}
-              <main className="container mx-auto">
-                <div className="">
-                  <div className="">
-                    <h1 className="lg:text-3xl text-2xl font-bold text-gray-900">
-                      Celebrating 10 Years: UO Sports Product Management Holiday
-                      Party
-                    </h1>
-                  </div>
-                </div>
-              </main>
-            </div>
             <div className="">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-6"
               >
-                {/* Event Type Card */}
-                <div className="">
+                <div className="flex items-start gap-4 ">
+                  <MapPin className="h-8 w-8 text-red-500 flex-shrink-0 mt-1" />
+                  <div>
+                    <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                      Location
+                    </h2>
+                    <p className="text-lg text-gray-800">{event?.venueName}</p>
+                    <p className="text-gray-600">
+                      {event?.address} ,{event?.city} , {event?.state}{" "}
+                      {event?.zipCode}
+                    </p>
+                    <Button
+                      variant="link"
+                      className="text-blue-600 hover:text-blue-700 p-0 h-auto mt-2"
+                    >
+                      Show map
+                    </Button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Event Type */}
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center">
-                      <Users className="h-6 w-6 text-purple-600" />
-                    </div>
+                    <Users className="h-8 w-8 text-purple-500" />
                     <div>
-                      <h2 className="text-sm text-gray-500 font-medium">
+                      <h2 className="text-lg font-semibold text-gray-900">
                         Event Type
                       </h2>
-                      <p className="text-lg font-semibold text-gray-900">
-                        In Person
-                      </p>
+                      <p className="text-gray-700">{event.eventType}</p>
                     </div>
                   </div>
-                </div>
 
-                {/* Entry Fee Card */}
-                <div className="">
+                  {/* Entry Fee */}
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
-                      <DollarSign className="h-6 w-6 text-green-600" />
-                    </div>
+                    <DollarSign className="h-8 w-8 text-green-500" />
                     <div>
-                      <h2 className="text-sm text-gray-500 font-medium">
+                      <h2 className="text-lg font-semibold text-gray-900">
                         Entry Fee
                       </h2>
-                      <p className="text-lg font-semibold text-gray-900">
-                        Free Entry
+                      <p className="text-gray-700 capitalize">
+                        {" "}
+                        {event?.eventprice
+                          ? event?.eventprice
+                          : event?.entryoption}
                       </p>
                     </div>
                   </div>
-                </div>
 
-                {/* Date and Time Card */}
-                <div className="">
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-                      <Calendar className="h-6 w-6 text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h2 className="text-sm text-gray-500 font-medium">
-                        Date and Time
-                      </h2>
-                      <div className="flex items-center gap-2 mt-1">
-                        <p className="text-lg font-semibold text-gray-900">
-                          Wednesday, January 15
-                        </p>
-                        <div className="flex items-center gap-1 text-gray-500">
-                          <Clock className="h-4 w-4" />
-                          <span>6-9pm PST</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Location Card */}
-                <div className="">
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
-                      <MapPin className="h-6 w-6 text-red-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h2 className="text-sm text-gray-500 font-medium">
-                        Location
-                      </h2>
-                      <p className="text-lg font-semibold text-gray-900">
-                        White Owl Social Club
-                      </p>
-                      <p className="text-gray-500">
-                        1305 Southeast 8th Avenue Portland, OR 97214 United
-                        States
-                      </p>
-                      <Button
-                        variant="link"
-                        className="text-blue-600 hover:text-blue-700 p-0 h-auto mt-1"
-                      >
-                        Show map
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Artist Card */}
-                <div className="">
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-orange-100 flex items-center justify-center">
-                      <User className="h-6 w-6 text-orange-600" />
-                    </div>
+                    <Calendar className="h-8 w-8 text-blue-500" />
                     <div>
-                      <h2 className="text-sm text-gray-500 font-medium">
-                        Artist
+                      <h2 className="text-lg font-semibold text-gray-900">
+                        Date
                       </h2>
-                      <p className="text-lg font-semibold text-gray-900">
-                        Artist Name
+                      <p className="text-gray-700">
+                        {formatUSDate(event?.startDate)}
+                        {event.startDate !== event.endDate &&
+                          ` - ${formatUSDate(event?.endDate)}`}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Time */}
+                  <div className="flex items-center gap-4">
+                    <Clock className="h-8 w-8 text-orange-500" />
+                    <div>
+                      <h2 className="text-lg font-semibold text-gray-900">
+                        Time
+                      </h2>
+                      <p className="text-gray-700 flex gap-2">
+                        <span>
+                          {event?.startTime} - {event?.endTime}
+                        </span>
+                        <span>{event?.timeZone}</span>
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Action Button */}
+                <div className="flex items-center gap-4">
+                  <Music className="h-8 w-8 text-indigo-500" />
+                  <div>
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Artists
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {event.artists.map((artist, index) => (
+                        <div key={index} className="flex items-center gap-3">
+                          <User className="h-6 w-6 text-indigo-400" />
+                          <div>
+                            <p className="font-medium text-gray-800">
+                              {artist.name}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <section className="flex flex-col gap-4">
+                  <div className=" flex gap-4">
+                    <Info className="h-8 w-8 text-yellow-500" />
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      About this event
+                    </h2>
+                  </div>
+                  <div className="">
+                    <p className="text-gray-700 capitalize text-justify  ">
+                      {event?.description}{" "}
+                    </p>
+                  </div>
+                </section>
               </motion.div>
             </div>
             <section>
-              <h2 className="text-xl font-semibold my-2">
-                Is it in person or virtual?
-              </h2>
-              <div className="flex items-start gap-2">
-                <Calendar className="h-5 w-5 mt-0.5 text-blue-600" />
-                <div>
-                  <p className="text-black">In Person</p>
-                </div>
-              </div>
-            </section>
-            <section>
-              <h2 className="text-xl font-semibold my-2">Event Entry </h2>
-              <div className="flex items-start gap-2">
-                <DollarSign className="h-5 w-5 mt-0.5 text-blue-600" />
-                <div>
-                  <p className="text-black">Free entry</p>
-                </div>
-              </div>
-            </section>
-            {/* Date and Time */}
-            <section>
-              <h2 className="text-xl font-semibold my-2">Date and time</h2>
-              <div className="flex items-start gap-2">
-                <Clock className="h-5 w-5 mt-0.5 text-blue-600" />
-                <div>
-                  <p className="text-black">
-                    Wednesday, January 15 · 6-9pm PST
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Location */}
-            <section>
-              <h2 className="text-xl font-semibold mb-2">Location</h2>
-              <div className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 mt-0.5 text-blue-600" />
-                <div>
-                  <p className="font-medium">White Owl Social Club</p>
-                  <p className="text-muted-foreground">
-                    1305 Southeast 8th Avenue Portland, OR 97214 United States
-                  </p>
-                  <Button variant="link" className="h-auto p-0 text-blue-600">
-                    Show map
-                  </Button>
-                </div>
-              </div>
-            </section>
-            <section>
-              <h2 className="text-xl font-semibold my-2">Artist</h2>
-              <div className="flex items-start gap-2">
-                <User className="h-5 w-5 mt-0.5 text-blue-600" />
-                <div>
-                  <p className="text-black">Artist Name</p>
-                </div>
-              </div>
-            </section>
-            {/* About */}
-            <section>
-              <h2 className="text-xl font-semibold mb-2">About this event</h2>
-              <div className="flex items-center gap-2 mb-4">
-                <Clock className="h-5 w-5 text-blue-600" />
-                <span className="text-sm">Event lasts 2 hours</span>
-              </div>
-              <div className="space-y-4 text-muted-foreground text-black">
-                <p className="text-black">
-                  Looking to meet new friends? Searching for new opportunities?
-                  Or simply looking to celebrate Pride Month in a queer space
-                  with other queer humans?
-                </p>
-                <p className="text-black">
-                  Come join Out in Tech PDX at White Owl on Wednesday, January
-                  15th from 6pm to 9pm.
-                </p>
-                <p className="text-black">
-                  Whether you&apos;re interested in tech, working in tech, or
-                  you&apos;re tech-adjacent (hint: that&apos;s everyone), come
-                  mingle with us, have a beverage of choice, and meet the
-                  fabulous members of your PDX Out in Tech community.
-                </p>
-                <p className="text-black">
-                  We are looking forward to seeing everyone there!
-                </p>
-              </div>
-            </section>
-            {/* Tags */}
-            <section>
               <h2 className="text-xl font-semibold mb-3">Languages</h2>
               <div className="flex flex-wrap gap-2 text-xl">
-                <Badge className="text-[16px]" variant="secondary">
-                  Hindi
-                </Badge>
-                <Badge className="text-[16px]" variant="secondary">
-                  English
-                </Badge>
-                <Badge className="text-[16px]" variant="secondary">
-                  Punjabi
-                </Badge>
-                <Badge className="text-[16px]" variant="secondary">
-                  Tamil
-                </Badge>
-                <Badge className="text-[16px]" variant="secondary">
-                  Hindi
-                </Badge>
+                {event?.languages.map((item) => (
+                  <Badge className="text-[16px]" variant="secondary">
+                    {item}
+                  </Badge>
+                ))}
               </div>
             </section>
-          </div>
-
-          <div className="mt-[1rem] flex gap-3 flex-col">
-            <p>No one has commented on this event yet.</p>
-            <div className="bg-yellow-100 text-black p-3 rounded-md">
-              <p className="flex gap-1">
-                To use talk boards you must first confirm your email address.
-                Click the link in email wee sent. If you would like us to resend
-                confirmation email, go{" "}
-                <p className="text-[#0073bb] cursor-pointer">here.</p>
-              </p>
-            </div>
+            {locationString && (
+              <>
+                sds
+                <LeafletMapRoom
+                  onLocationReceived={locationString}
+                  markerstyle="marker"
+                />
+              </>
+            )}
           </div>
         </div>
         <div className="w-full lg:w-1/3">
@@ -282,12 +187,15 @@ function EventDetail({ event }: EventProps) {
             <CardHeader className="p-0"></CardHeader>
             <CardContent className="p-2">
               <div className="p-0">
-                {/* {locationsndString && (
-                  <LeafletMapRoom
-                    onLocationReceived={locationsndString}
-                    markerstyle="marker"
-                  />
-                )} */}
+                {locationString && (
+                  <>
+                    sds
+                    <LeafletMapRoom
+                      onLocationReceived={locationString}
+                      markerstyle="marker"
+                    />
+                  </>
+                )}
               </div>
             </CardContent>
           </Card>

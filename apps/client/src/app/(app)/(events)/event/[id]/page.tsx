@@ -72,27 +72,10 @@ function EventPage() {
         onNavigate={navigateEvent}
         isFirstEvent={currentIndex === 0}
         isLastEvent={currentIndex === (allEvents?.length ?? 0) - 1}
+        event={event}
       />
 
       <EventDetail event={event} />
-
-      <div className="flex flex-col lg:flex-row mx-auto gap-4 lg:gap-7">
-        {/* Main Content Section */}
-
-        {/* Sidebar */}
-        <div className="w-full lg:w-1/3">
-          <Card>
-            <CardContent className="p-2">
-              {/* {locationString && (
-                <LeafletMapRoom
-                  onLocationReceived={locationString}
-                  markerstyle="marker"
-                />
-              )} */}
-            </CardContent>
-          </Card>
-        </div>
-      </div>
 
       <section className="">
         <h2 className="text-2xl font-bold my-4">Similar Rooms</h2>

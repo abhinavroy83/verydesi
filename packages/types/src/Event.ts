@@ -3,6 +3,8 @@ export interface Event {
   entryoption: string;
   eventTitle: string;
   eventType: string;
+  timeZone: string;
+  eventprice: string;
   startDate: string;
   startTime: string;
   endDate: string;

@@ -18,14 +18,18 @@ const LeafletMapRoom: React.FC<LeafletMapRoomProps> = ({
     lat: 0,
     lng: 0,
   });
-
+  console.log("lcocat", onLocationReceived);
   useEffect(() => {
     if (!onLocationReceived || !mapContainerRef.current) return;
 
     const { lat, lng } = onLocationReceived;
     setCurrentLocation({ lat, lng });
+    console.log(lat, lng);
 
-    const map = L.map(mapContainerRef.current).setView([lat, lng], 14);
+    const map = L.map(mapContainerRef.current).setView(
+      [45.5231012, -122.6813283],
+      14
+    );
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 15,
