@@ -93,7 +93,6 @@ const EventHeader = ({
                 onClick={() => onNavigate("next")}
                 disabled={isLastEvent}
                 variant="default"
-                size="sm"
                 className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors"
               >
                 NEXT

@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/useAuthStore";
 import axios from "axios";
 import { Event } from "@myrepo/types";
+import NoData from "@/components/Room/Norooms";
 
 type SortOption = "Recommended" | "Highest Rated" | "Most Reviewed";
 export default function Component() {
@@ -66,7 +67,7 @@ export default function Component() {
         const response = await axios.get(
           `https://apiv2.verydesi.com/event/getEventByArea/${city}`
         );
-        const events: Event[] = response.data;
+        const events: Event[] = response.data.reverse();
 
         const filteredFeaturedEvents = events
           .filter(
@@ -83,7 +84,7 @@ export default function Component() {
           .filter((event) => !filteredFeaturedEvents.includes(event))
           .sort(
             (a, b) =>
-              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+              new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
           );
         setFeaturedEvents(filteredFeaturedEvents);
         setNonFeaturedEvents(remainingEvents);
@@ -95,12 +96,21 @@ export default function Component() {
       }
     };
     fetchEvents();
-  }, []);
+  }, [currentCity]);
 
   const paginatedEvents = nonFeaturedEvents.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  if (!featuredEvents || featuredEvents.length === 0) {
+    return (
+      <div className="">
+        <NoData type="event" />
+      </div>
+    );
+  }
+
   return (
     <HomeLayout>
       <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 font-sans">
@@ -110,7 +120,7 @@ export default function Component() {
               <p>Featured Events In </p>
             </h1>
             <div className="flex gap-3 items-center">
-              <div className="relative inline-block text-left">
+              {/* <div className="relative inline-block text-left">
                 <Button
                   variant="outline"
                   onClick={() => setIsOpen(!isOpen)}
@@ -149,7 +159,7 @@ export default function Component() {
                     </div>
                   </div>
                 )}
-              </div>
+              </div> */}
 
               <button
                 type="submit"

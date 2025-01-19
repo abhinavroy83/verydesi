@@ -27,6 +27,7 @@ import {
 import Norooms from "@/components/Room/Norooms";
 import LoginSlider from "@/components/login/login";
 import { useloginstore } from "@/store";
+import NoData from "@/components/Room/Norooms";
 const Page = () => {
   const router = useRouter();
   const [Room, setRooms] = useState<RoomInterface[] | null>(null);
@@ -174,7 +175,7 @@ const Page = () => {
   if (!Room || Room.length === 0) {
     return (
       <div className="">
-        <Norooms />
+        <NoData type="room" />
       </div>
     );
   }

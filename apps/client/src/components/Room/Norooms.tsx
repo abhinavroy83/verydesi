@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 
-export default function Norooms() {
+export default function NoData({ type }: { type: string }) {
   const { currentCity } = useAuthStore();
   const router = useRouter();
 
@@ -16,18 +16,34 @@ export default function Norooms() {
             <MapPin className="w-10 h-10 text-blue-500" />
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          No Rooms Available in {currentCity}
+        <h2 className="text-2xl capitalize font-bold text-gray-800 mb-4">
+          No {type} Available in {currentCity}
         </h2>
         <p className="text-gray-600 mb-8">
-          We couldn't find any rooms at your location. Would you like to create
-          a new room?
+          We couldn't find any {type} at your location. Would you like to create
+          a new {type}?
         </p>
-        <Button
-        onClick={()=>{router.push('/post-room')}}
-        className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-md transition duration-300 ease-in-out">
-          Post Room
-        </Button>
+
+        {type === "room" && (
+          <Button
+            onClick={() => {
+              router.push("/post-room");
+            }}
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-md transition duration-300 ease-in-out"
+          >
+            Post Room
+          </Button>
+        )}
+        {type === "event" && (
+          <Button
+            onClick={() => {
+              router.push("/post-event");
+            }}
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-md transition duration-300 ease-in-out"
+          >
+            Post Event
+          </Button>
+        )}
       </div>
     </div>
   );
