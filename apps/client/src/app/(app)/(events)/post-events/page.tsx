@@ -131,6 +131,7 @@ export default function EventForm() {
     control: form.control,
     name: "artists",
   });
+  console.log("first", artistFields);
 
   const handleAddArtist = () => {
     if (newArtist.trim()) {
@@ -152,7 +153,7 @@ export default function EventForm() {
   const { register, watch } = form;
 
   const entryoption = watch("entryoption");
-  console.log(entryoption);
+  // console.log(entryoption);
   useEffect(() => {
     if (Object.keys(addressComponents).length > 0) {
       form.setValue(
@@ -928,36 +929,39 @@ export default function EventForm() {
                           <h3 className="text-lg font-semibold mb-4 ">
                             Artist details
                           </h3>
-                          <div className="flex items-center space-x-2">
-                            <Input
-                              value={newArtist}
-                              onChange={(e) => setNewArtist(e.target.value)}
-                              placeholder="Enter artist name"
-                            />
-                            <Button
-                              type="button"
-                              onClick={handleAddArtist}
-                              className="bg-green-800"
-                            >
-                              Add Artist
-                            </Button>
-                          </div>
-                          {artistFields.map((field, index) => (
-                            <Badge
-                              key={field.id}
-                              variant="secondary"
-                              className="px-2 py-1"
-                            >
+                          <div className="flex items-center space-x-2 max-w-4xl">
+                            <div className=" flex gap-1">
+                              <Input
+                                value={newArtist}
+                                onChange={(e) => setNewArtist(e.target.value)}
+                                placeholder="Enter artist name"
+                              />
                               <Button
                                 type="button"
-                                variant="outline"
-                                size="icon"
-                                onClick={() => removeArtist(index)}
+                                onClick={handleAddArtist}
+                                className="bg-green-800"
                               >
-                                <X className="h-4 w-4" />
+                                Add Artist
                               </Button>
-                            </Badge>
-                          ))}
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap gap-2 mt-1">
+                            {artistFields.map((field, index) => (
+                              <div
+                                key={field.id}
+                                className="bg-primary text-primary-foreground rounded-full px-3 py-1 text-sm flex items-center"
+                              >
+                                {field?.name}
+                                <button
+                                  type="button"
+                                  className="ml-2 focus:outline-none"
+                                  onClick={() => removeArtist(index)}
+                                >
+                                  <X className="h-4 w-4" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
                           {artistFields.map((field, index) => (
                             <FormField
                               key={field.id}
