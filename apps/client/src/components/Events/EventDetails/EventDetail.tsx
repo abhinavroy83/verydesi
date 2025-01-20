@@ -13,6 +13,7 @@ import {
   Globe,
   Heart,
   Info,
+  Languages,
   MapPin,
   Music,
   User,
@@ -21,6 +22,7 @@ import {
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import React from "react";
+import { FaAddressBook } from "react-icons/fa6";
 const LeafletMapRoom = dynamic(() => import("@/components/map/LefletMapRoom"));
 
 interface EventProps {
@@ -48,7 +50,7 @@ function EventDetail({ event }: EventProps) {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-6"
               >
-                <div className="flex items-start gap-4 ">
+                {/* <div className="flex items-start gap-4 ">
                   <MapPin className="h-8 w-8 text-red-500 flex-shrink-0 mt-1" />
                   <div>
                     <h2 className="text-xl font-semibold text-gray-900 mb-2">
@@ -66,13 +68,13 @@ function EventDetail({ event }: EventProps) {
                       Show map
                     </Button>
                   </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                </div> */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Event Type */}
                   <div className="flex items-center gap-4">
                     <Users className="h-8 w-8 text-purple-500" />
                     <div>
-                      <h2 className="text-lg font-semibold text-gray-900">
+                      <h2 className="text-[20px] font-semibold text-gray-900">
                         Event Type
                       </h2>
                       <p className="text-gray-700">{event.eventType}</p>
@@ -83,7 +85,7 @@ function EventDetail({ event }: EventProps) {
                   <div className="flex items-center gap-4">
                     <DollarSign className="h-8 w-8 text-green-500" />
                     <div>
-                      <h2 className="text-lg font-semibold text-gray-900">
+                      <h2 className="text-[20px] font-semibold text-gray-900">
                         Entry Fee
                       </h2>
                       <p className="text-gray-700 capitalize">
@@ -98,7 +100,7 @@ function EventDetail({ event }: EventProps) {
                   <div className="flex items-center gap-4">
                     <Calendar className="h-8 w-8 text-blue-500" />
                     <div>
-                      <h2 className="text-lg font-semibold text-gray-900">
+                      <h2 className="text-[20px] font-semibold text-gray-900">
                         Date
                       </h2>
                       <p className="text-gray-700">
@@ -113,7 +115,7 @@ function EventDetail({ event }: EventProps) {
                   <div className="flex items-center gap-4">
                     <Clock className="h-8 w-8 text-orange-500" />
                     <div>
-                      <h2 className="text-lg font-semibold text-gray-900">
+                      <h2 className="text-[20px] font-semibold text-gray-900">
                         Time
                       </h2>
                       <p className="text-gray-700 flex gap-2">
@@ -126,7 +128,7 @@ function EventDetail({ event }: EventProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                {/* <div className="flex items-center gap-4">
                   <Music className="h-8 w-8 text-indigo-500" />
                   <div>
                     <h2 className="text-xl font-semibold text-gray-900">
@@ -145,7 +147,25 @@ function EventDetail({ event }: EventProps) {
                       ))}
                     </div>
                   </div>
-                </div>
+                </div> */}
+                <section>
+                  <div className=" flex gap-4 mb-3">
+                    <Languages className="h-8 w-8 text-pink-500" />
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Languages
+                    </h2>
+                  </div>
+                  <div className="flex flex-wrap gap-2 text-xl">
+                    {event?.languages.map((item) => (
+                      <Badge
+                        className="text-[16px] bg-gray-300"
+                        variant="secondary"
+                      >
+                        {item} hindi
+                      </Badge>
+                    ))}
+                  </div>
+                </section>
                 <section className="flex flex-col gap-4">
                   <div className=" flex gap-4">
                     <Info className="h-8 w-8 text-yellow-500" />
@@ -161,16 +181,6 @@ function EventDetail({ event }: EventProps) {
                 </section>
               </motion.div>
             </div>
-            <section>
-              <h2 className="text-xl font-semibold mb-3">Languages</h2>
-              <div className="flex flex-wrap gap-2 text-xl">
-                {event?.languages.map((item) => (
-                  <Badge className="text-[16px]" variant="secondary">
-                    {item}
-                  </Badge>
-                ))}
-              </div>
-            </section>
           </div>
         </div>
         <div className="w-full lg:w-1/3">
@@ -186,12 +196,31 @@ function EventDetail({ event }: EventProps) {
               </div>
             </CardContent>
           </Card>
-          <Card className="w-full mt-4 rounded-none">
-            <CardContent className="space-y-4 mt-5">
+          <div className="flex items-center gap-4 lg:mt-5">
+            <Music className="h-8 w-8 text-indigo-500" />
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900">Artists</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {event.artists.map((artist, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    {/* <User className="h-6 w-6 text-indigo-400" /> */}
+                    <div>
+                      <p className="font-[16px] text-gray-700">{artist.name}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="w-full mt-4 rounded-none">
+            <div className="space-y-4 mt-5">
               <section>
-                <h2 className="text-xl font-semibold mb-4">Organized by</h2>
+                <div className="flex items-center gap-4 lg:mt-5">
+                  <FaAddressBook className="h-7 w-7 text-cyan-600" />
+                  <h2 className="text-xl font-semibold mb-4">Organized by</h2>
+                </div>
                 <div className="bg-slate-50 rounded-lg">
-                  <div className=" p-4">
+                  <div className="">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <div className="h-12 w-12 relative">
@@ -204,19 +233,19 @@ function EventDetail({ event }: EventProps) {
                           />
                         </div>
                         <div>
-                          <h3 className="font-semibold">
+                          <h3 className="font-semibold text-[18px]">
                             {event?.organization}
                           </h3>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-[16px] text-muted-foreground">
                             11.1k followers
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-[16px] text-muted-foreground">
                             Lots of repeat customers
                           </p>
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <Button className="bg-green-800 hover:bg-green-700 text-white">
+                        <Button className="bg-green-800 hover:bg-green-700 text-white text-[16px]">
                           Follow
                         </Button>
                       </div>
@@ -224,13 +253,13 @@ function EventDetail({ event }: EventProps) {
                     <div className="flex gap-4">
                       <Link
                         href="#"
-                        className="text-blue-600 hover:text-blue-700"
+                        className="text-cyan-600 hover:text-blue-700"
                       >
                         <Globe className="h-5 w-5" />
                       </Link>
                       <Link
                         href="#"
-                        className="text-blue-600 hover:text-blue-700"
+                        className="text-cyan-600 hover:text-blue-700"
                       >
                         <svg
                           className="h-5 w-5"
@@ -242,7 +271,7 @@ function EventDetail({ event }: EventProps) {
                       </Link>
                       <Link
                         href="#"
-                        className="text-blue-600 hover:text-blue-700"
+                        className="text-cyan-600 hover:text-blue-700"
                       >
                         <svg
                           className="h-5 w-5"
@@ -256,8 +285,8 @@ function EventDetail({ event }: EventProps) {
                   </div>
                 </div>
               </section>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>

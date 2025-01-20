@@ -105,21 +105,22 @@ const EventHeader = ({
         <div className="flex flex-col justify-between  sm:flex-row items-start sm:items-center sm:gap-0">
           <h1 className="lg:text-3xl text-2xl capitalize font-bold text-gray-900">
             <span className="capitalize">{event.eventTitle}</span>{" "}
-            <span className=" text-2xl text-gray-600 font-semibold italic ">
+            {/* <span className=" text-2xl text-gray-600 font-semibold ">
               at {event.venueName}
-            </span>
+            </span> */}
           </h1>
         </div>
         <div className="flex flex-col gap-2 text-[1rem] lg:mt-1">
           <div className="flex flex-col gap-1 text-xl capitalize font-normal  text-gray-500 items-center lg:flex-row">
-            <MapPin size={20} />
+            <MapPin className="text-red-600" size={20} />
             <div className=" flex gap-1 items-center">
+              <p>{event.venueName}</p>
               <p>{event?.address}</p>
               <p>
                 {event?.city} , {event?.state} {event?.zipCode}
               </p>
               <span className=" text-black font-semibold">|</span>
-              <DollarSign size={20} />
+              <DollarSign className="text-green-600" size={20} />
               <p className=" ">
                 {event?.eventprice ? event?.eventprice : event?.entryoption}
               </p>

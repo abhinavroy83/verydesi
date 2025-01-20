@@ -113,7 +113,7 @@ export default function Component() {
 
   return (
     <HomeLayout>
-      <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto mb-9 font-sans">
+      <div className="w-full max-w-[1370px] lg:max-w-[1600px] mx-auto font-sans">
         <div>
           <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-1">
             <h1 className="capitalize text-[23px] lg:text-[23px] font-bold">

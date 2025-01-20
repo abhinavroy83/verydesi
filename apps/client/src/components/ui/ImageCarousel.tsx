@@ -49,7 +49,7 @@ const ImageCarousel = ({
         <img
           src={images[0]}
           alt="Event"
-          className="w-full h-48 sm:h-64 md:h-80 lg:h-[28rem] object-cover rounded-lg"
+          className="w-full h-48 sm:h-64 md:h-80 lg:h-[25.1rem] object-cover rounded-lg"
         />
       </div>
     );
@@ -64,7 +64,7 @@ const ImageCarousel = ({
               <img
                 src={imageUrl}
                 alt={`Event Image ${index + 1}`}
-                className="w-full h-48 sm:h-64 md:h-80 lg:h-[28rem] object-cover rounded-lg"
+                className="w-full h-48 sm:h-64 md:h-80 lg:h-[25.1rem] object-cover rounded-lg"
               />
             </CarouselItem>
           ))}

@@ -218,7 +218,7 @@ function Events() {
         <div className="">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-0">
             <h1 className="lg:text-3xl text-2xl font-bold text-gray-900">
-              {event?.eventTitle}|
+              {event?.eventTitle} |
             </h1>
             <div className="flex gap-2 lg:mb-0 mb-2">
               <IoTicketOutline size={33} className="text-green-600 lg:mt-1" />
@@ -284,7 +284,7 @@ function Events() {
                             <img
                               src={imageUrl}
                               alt={`Event Image ${index + 1}`}
-                              className="w-full h-48 sm:h-64 md:h-80 lg:h-[28rem] object-cover rounded-lg"
+                              className="w-full h-48 sm:h-64 md:h-80 lg:h-[26rem] object-cover rounded-lg"
                             />
                           </CarouselItem>
                         ))
