@@ -76,7 +76,7 @@ const LeafletMapRoom: React.FC<LeafletMapRoomProps> = ({
     <div
       ref={mapContainerRef}
       style={{
-        height: "100%",
+        height: "400px",
         width: "100%",
         position: "relative",
         zIndex: 0,

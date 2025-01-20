@@ -304,7 +304,7 @@ export default function Navbar() {
             <div className="flex items-center">
               <Button
                 onClick={() => {
-                  router.push("/Home");
+                  router.push("/");
                 }}
                 variant="ghost"
                 className="text-white hover:bg-white group text-[16px] transition duration-300 ease-in-out"
@@ -325,20 +325,10 @@ export default function Navbar() {
 
               <Button
                 onClick={() => {
-                  router.push("/business");
-                }}
-                variant="ghost"
-                className="text-white hover:bg-white transition duration-300 ease-in-out group"
-              >
-                <Calendar className="mr-2 h-4 w-4 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
-                BUSINESS
-              </Button>
-              <Button
-                onClick={() => {
                   router.push("/events");
                 }}
                 variant="ghost"
-                className="text-white hover:bg-white transition duration-300 ease-in-out group"
+                className="text-white hover:bg-white group text-[16px] transition duration-300 ease-in-out"
               >
                 <Calendar className="mr-2 h-4 w-4 group-hover:rotate-[360deg] transition-transform duration-300 " />{" "}
                 EVENTS

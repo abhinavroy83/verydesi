@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Plus, Edit2, ChevronDown, AlertCircle, Loader2 } from "lucide-react";
-import { AreaData, AreaWithZipCodes, SelectedData } from "@myrepo/types";
+import { AreaData, SelectedData } from "@myrepo/types";
 import DashboardLayout from "@/components/Layout/Dashboardlayout";
 import { stateAbbreviations } from "@repo/schemas";
 import { any } from "zod";
@@ -108,7 +108,7 @@ export default function AllArea(): JSX.Element {
   };
 
   const handleEditArea = (area: string) => {
-    router.push(`/admin/area/update/${area}`);
+    router.push(`/updateArea/${area}`);
   };
 
   if (isLoading) {

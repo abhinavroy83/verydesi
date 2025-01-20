@@ -1,8 +1,10 @@
 export interface Event {
-  _id: string ;
+  _id: string;
   entryoption: string;
   eventTitle: string;
   eventType: string;
+  timeZone: string;
+  eventprice: string;
   startDate: string;
   startTime: string;
   endDate: string;
@@ -20,5 +22,14 @@ export interface Event {
   virtualurl: string;
   eventpostingcity: string;
   languages: string[];
+  organization:string;
   artists: { name: string }[];
+  location: {
+    coordinates: number[];
+  };
+}
+
+export interface Location {
+  lat: number;
+  lng: number;
 }

@@ -27,7 +27,7 @@ function EventNonfeaturedCard({ event }: EventNonfeaturedCardProps) {
   return (
     <Link
       href={`/event/${event._id}`}
-      className="font-sans flex flex-col sm:flex-row w-full sm:h-[80px] hover:cursor-pointer justify-start border shadow-md rounded-xl hover:shadow-lg relative"
+      className="font-sans capitalize flex flex-col sm:flex-row w-full sm:h-[80px] hover:cursor-pointer justify-start border shadow-md rounded-xl hover:shadow-lg relative"
     >
       <div className="w-full sm:w-auto">
         <img

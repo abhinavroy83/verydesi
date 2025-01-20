@@ -1,239 +1,238 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster";
 import axios from "axios";
-import markerIcon from "@/assests/map-marker2.png";
-import { renderToString } from "react-dom/server";
 import MapPopup from "./Mappopup";
-import useAuthStore from "@/store/useAuthStore";
+import { renderToString } from 'react-dom/server';
 
-// Define types for locdata
-interface RoomData {
-  id: string;
-  coordinates: [number, number];
+// Types
+interface Coordinates {
+  lat: number;
+  lng: number;
 }
 
-interface LocationMap {
-  coordinates: [number, number];
-  count: number;
-  roomIds: string[];
+interface LocationData {
+  _id: string;
+  location: {
+    coordinates: [number, number];
+  };
+  type: "room" | "event";
+  title?: string;
+  description?: string;
+  price?: number;
+  startDate?: string;
+  endDate?: string;
 }
 
-// Define props for the component
+interface MarkerConfig {
+  iconUrl: string;
+  popupComponent: (data: any) => string;
+  detailsEndpoint: string;
+}
+
 interface LeafletMapProps {
   style?: React.CSSProperties;
+  data?: LocationData[];
+  defaultCity?: string;
+  markerType?:string;
+  onMarkerClick?: (item: LocationData) => void;
+  customMarkerConfig?: MarkerConfig;
 }
 
-const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<L.Map | null>(null);
-  const markerClusterRef = useRef<L.MarkerClusterGroup | null>(null);
-  const [locdata, setLocData] = useState<RoomData[]>([]);
-  const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
-  const { status, currentCity, updateCity } = useAuthStore();
-  const isMapInitialized = useRef(false);
-  // Function to fetch coordinates based on the city name
-  const fetchCoordinatesByCity = async (cityName: string) => {
+// Constants
+const DEFAULT_ZOOM = 10;
+const GEOCODING_API_KEY = "2c4e1822d22e4f4ca5f6ca577b523dfe";
+const TILE_LAYER_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+
+const MARKER_CONFIGS: Record<string, MarkerConfig> = {
+  room: {
+    iconUrl:
+      "https://res.cloudinary.com/druohnmyv/image/upload/v1731074132/t9bwal2ivbhxijoafnsb.png",
+    popupComponent: (roomDetails: any) =>
+      renderToString(<MapPopup roomDetails={roomDetails} />),
+    detailsEndpoint: "https://apiv2.verydesi.com/room/findsingleRoom",
+  },
+  event: {
+    iconUrl:
+      "https://res.cloudinary.com/druohnmyv/image/upload/v1731074132/t9bwal2ivbhxijoafnsb.png", // Replace with your event marker icon
+    popupComponent: (eventDetails: any) => `
+      <div class="map-popup">
+        <h3>${eventDetails.title || "Event Details"}</h3>
+        <p>${eventDetails.description || ""}</p>
+        ${
+          eventDetails.startDate
+            ? `
+          <p class="date">
+            ${new Date(eventDetails.startDate).toLocaleDateString()} 
+            ${eventDetails.endDate ? `- ${new Date(eventDetails.endDate).toLocaleDateString()}` : ""}
+          </p>
+        `
+            : ""
+        }
+        ${eventDetails.price ? `<p class="price">$${eventDetails.price}</p>` : ""}
+      </div>
+    `,
+    detailsEndpoint: "https://apiv2.verydesi.com/event/findsingleEvent", // Replace with your event endpoint
+  },
+};
+
+const useMapInitialization = (
+  mapContainer: React.RefObject<HTMLDivElement>,
+  defaultCity: string
+) => {
+  const [currentLocation, setCurrentLocation] = useState<Coordinates>({
+    lat: 0,
+    lng: 0,
+  });
+  const mapInstance = useRef<L.Map | null>(null);
+  const markerCluster = useRef<L.MarkerClusterGroup | null>(null);
+  const isInitialized = useRef(false);
+
+  const fetchCityCoordinates = async (
+    cityName: string
+  ): Promise<Coordinates | null> => {
     try {
-      const res = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?q=${cityName || "Portland"}&key=2c4e1822d22e4f4ca5f6ca577b523dfe`
+      const response = await axios.get(
+        `https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=${GEOCODING_API_KEY}`
       );
-      const { lat, lng } = res.data.results[0].geometry;
+      const { lat, lng } = response.data.results[0].geometry;
       return { lat, lng };
     } catch (error) {
-      console.log("Error fetching city coordinates:", error);
+      console.error("Error fetching city coordinates:", error);
       return null;
-    }
-  };
-
-  const getRooms = async (lat: number, lng: number) => {
-    try {
-      const res = await axios.get(
-        currentCity
-          ? `https://api.verydesi.com/api/getallrooms?city=${currentCity || "Portland"}`
-          : `https://api.verydesi.com/api/getallrooms?lat=${lat}&lng=${lng}`
-      );
-      setLocData(
-        res.data.Allrooms.map((room: any) => ({
-          id: room._id,
-          coordinates: room.location.coordinates,
-        }))
-      );
-    } catch (error) {
-      console.log("Error fetching API:", error);
     }
   };
 
   useEffect(() => {
     const initializeMap = async () => {
-      // Prevent re-initialization
-      if (isMapInitialized.current) {
-        return; // If map is already initialized, do nothing
-      }
+      if (isInitialized.current || !mapContainer.current) return;
 
-      if (currentCity || "Portland") {
-        const cityCoords = await fetchCoordinatesByCity(
-          currentCity || "Portland"
-        );
-        if (cityCoords) {
-          const { lat, lng } = cityCoords;
-          if (mapContainerRef.current) {
-            const map = L.map(mapContainerRef.current).setView([lat, lng], 10);
-            mapRef.current = map;
+      const cityCoords = await fetchCityCoordinates(defaultCity);
+      if (!cityCoords) return;
 
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-              maxZoom: 18,
-              attribution: "© OpenStreetMap contributors",
-            }).addTo(map);
+      const map = L.map(mapContainer.current).setView(
+        [cityCoords.lat, cityCoords.lng],
+        DEFAULT_ZOOM
+      );
 
-            const markerClusterGroup = L.markerClusterGroup({
-              iconCreateFunction: (cluster) => {
-                const count = cluster.getChildCount();
-                return L.divIcon({
-                  html: `<div style="
-                    background-color: blue;
-                    color: white;
-                    font-size: 14px;
-                    font-weight: bold;
-                    text-align: center;
-                    border-radius: 50%;
-                    width: 30px;
-                    height: 30px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  ">${count}</div>`,
-                  className: "custom-cluster-icon",
-                  iconSize: [30, 30],
-                });
-              },
-            });
-            markerClusterRef.current = markerClusterGroup;
-            map.addLayer(markerClusterGroup);
-            setCurrentLocation({ lat, lng });
+      L.tileLayer(TILE_LAYER_URL, {
+        maxZoom: 18,
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
 
-            getRooms(lat, lng);
+      const cluster = L.markerClusterGroup({
+        iconCreateFunction: (cluster) => {
+          return L.divIcon({
+            html: `<div class="cluster-icon">${cluster.getChildCount()}</div>`,
+            className: "custom-cluster-icon",
+            iconSize: L.point(30, 30),
+          });
+        },
+      });
 
-            isMapInitialized.current = true; // Set the map as initialized
-          }
-        } else {
-          console.error("City not found");
-        }
-      }
+      map.addLayer(cluster);
+      mapInstance.current = map;
+      markerCluster.current = cluster;
+      setCurrentLocation(cityCoords);
+      isInitialized.current = true;
     };
 
     initializeMap();
 
     return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-        isMapInitialized.current = false;
+      if (mapInstance.current) {
+        mapInstance.current.remove();
+        mapInstance.current = null;
+        isInitialized.current = false;
       }
     };
-  }, [currentCity]);
+  }, [defaultCity]);
+
+  return { mapInstance, markerCluster, currentLocation };
+};
+
+const LeafletMap: React.FC<LeafletMapProps> = ({
+  style,
+  data = [],
+  defaultCity = "Portland",
+  markerType = "room",
+  onMarkerClick,
+  customMarkerConfig,
+}) => {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const { mapInstance, markerCluster } = useMapInitialization(
+    mapContainer,
+    defaultCity
+  );
+
+  const markerConfig = customMarkerConfig || MARKER_CONFIGS[markerType];
+
+  const createMarkerIcon = (config: MarkerConfig) => {
+    return L.divIcon({
+      className: "custom-div-icon",
+      html: `
+        <div class="marker-container ${markerType}-marker">
+          <img src="${config.iconUrl}" class="marker-icon" alt="marker" />
+        </div>
+      `,
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -40],
+    });
+  };
 
   useEffect(() => {
-    if (mapRef.current && locdata.length > 0) {
-      markerClusterRef.current?.clearLayers();
+    if (!mapInstance.current || !markerCluster.current || !data.length) return;
 
-      const locationMap = locdata.reduce<Record<string, LocationMap>>(
-        (acc, room) => {
-          const { coordinates, id } = room;
+    markerCluster.current.clearLayers();
 
-          if (
-            coordinates.length < 2 ||
-            typeof coordinates[0] !== "number" ||
-            typeof coordinates[1] !== "number"
-          ) {
-            console.error("Invalid coordinates:", coordinates);
-            return acc;
-          }
+    const markers = data.map((item) => {
+      const [lng, lat] = item.location.coordinates;
 
-          const key = `${coordinates[1]},${coordinates[0]}`;
-          if (!acc[key]) {
-            acc[key] = { coordinates, count: 0, roomIds: [] };
-          }
-          acc[key].count += 1;
-          acc[key].roomIds.push(id);
-          return acc;
-        },
-        {}
-      );
+      const marker = L.marker([lat, lng], {
+        icon: createMarkerIcon(markerConfig),
+      });
 
-      Object.values(locationMap).forEach((location) => {
-        const { coordinates, count, roomIds } = location;
-        const [lng, lat] = coordinates;
-
-        if (typeof lat !== "number" || typeof lng !== "number") {
-          console.error("Invalid latitude or longitude:", lat, lng);
-          return;
-        }
-
-        const marker = L.marker([lat, lng], {
-          icon: L.divIcon({
-            className: "custom-div-icon",
-            html: `
-              <div style="
-                background-color: white; 
-                border-radius: 50%; 
-                width: 40px; 
-                height: 40px; 
-                display: flex; 
-                align-items: center; 
-                justify-content: center; 
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);">
-                <img src="https://res.cloudinary.com/druohnmyv/image/upload/v1731074132/t9bwal2ivbhxijoafnsb.png" style="width: 25px; height: 25px;" />
-              </div>
-            `,
-            iconSize: [40, 40],
-            iconAnchor: [20, 40],
-            popupAnchor: [0, -40],
-            tooltipAnchor: [20, -20],
-          }),
-        });
-
-        marker.on("click", async () => {
-          try {
-            const _id = roomIds[0];
-            const roomDetailResponse = await axios.get(
-              `https://api.verydesi.com/api/getspecificroom/${_id}`
+      marker.on("click", async () => {
+        try {
+          if (onMarkerClick) {
+            onMarkerClick(item);
+          } else {
+            const response = await axios.get(
+              `${markerConfig.detailsEndpoint}/${item._id}`
             );
-
-            const roomDetails = roomDetailResponse.data.rooms;
 
             L.popup({
               maxWidth: 150,
-              className: "custom-popup",
+              className: `custom-popup ${markerType}-popup`,
             })
               .setLatLng([lat, lng])
-              .setContent(
-                renderToString(<MapPopup roomDetails={roomDetails} />)
-              )
-              .openOn(mapRef.current!);
-          } catch (error) {
-            console.log("Error fetching room details:", error);
+              .setContent(markerConfig.popupComponent(response.data))
+              .openOn(mapInstance.current!);
           }
-        });
-
-        markerClusterRef.current?.addLayer(marker);
+        } catch (error) {
+          console.error("Error fetching details:", error);
+        }
       });
-    }
-  }, [locdata]);
+
+      return marker;
+    });
+
+    markerCluster.current.addLayers(markers);
+  }, [data, markerType, markerConfig, onMarkerClick]);
 
   return (
     <div
-      ref={mapContainerRef}
+      ref={mapContainer}
       style={{
-        ...style,
         height: "400px",
-
         borderRadius: "8px",
         position: "relative",
         zIndex: 0,
+        ...style,
       }}
     />
   );

@@ -7,7 +7,13 @@ const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
   ssr: false,
 });
 
-export function HomeLayout({ children }: { children: ReactNode }) {
+interface HomeLayoutProps {
+  children: ReactNode;
+  data?: any;
+  markerType?: string;
+}
+
+export function HomeLayout({ children, data, markerType }: HomeLayoutProps) {
   const categories = {
     "Business & Services": [
       "Home Services",
@@ -28,13 +34,13 @@ export function HomeLayout({ children }: { children: ReactNode }) {
     ],
   };
   const pathname = usePathname();
-
+  console.log("markerType", markerType);
   const businesspath = pathname === "/business";
   return (
     <div className="flex lg:flex-row flex-col bg-background max-w-[1370px] lg:max-w-[1600px] mt-[8rem] mx-auto px-4 sm:px-6">
       <div className="w-full lg:w-4/5 mr-4">{children}</div>
       <div className="w-full lg:max-w-[300px] max-w-full lg:ml-0 h-[725px] flex flex-col gap-6">
-        <LeafletMap />
+        <LeafletMap data={data} markerType={markerType} defaultCity="Portland" />
         {businesspath && (
           <Card className="">
             <CardContent className="p-0">

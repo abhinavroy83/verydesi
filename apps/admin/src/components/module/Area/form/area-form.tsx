@@ -24,6 +24,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { AreaData } from "@myrepo/types";
 import { toast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
+import DashboardLayout from "@/components/Layout/Dashboardlayout";
 
 interface AreaFormProps {
   initialData?: AreaData;
@@ -181,7 +182,7 @@ export function AreaForm({ initialData }: AreaFormProps) {
               open={stateDropdownOpen}
               disabled={!watch("country")}
               onOpenChange={setStateDropdownOpen}
-              value={watchedStates.join(",")}
+              value={watchedStates?.join(",")}
               onValueChange={() => {}}
             >
               <SelectTrigger className="w-full">
@@ -201,7 +202,7 @@ export function AreaForm({ initialData }: AreaFormProps) {
                         >
                           <Checkbox
                             id={state}
-                            checked={watchedStates.includes(state)}
+                            checked={watchedStates?.includes(state)}
                             onCheckedChange={(checked) =>
                               handleStateChange(state, checked as boolean)
                             }
@@ -217,7 +218,7 @@ export function AreaForm({ initialData }: AreaFormProps) {
               </SelectContent>
             </Select>
             <div className="flex flex-wrap gap-2">
-              {watchedStates.map((state) => (
+              {watchedStates?.map((state) => (
                 <Badge
                   key={state}
                   variant={
@@ -255,7 +256,7 @@ export function AreaForm({ initialData }: AreaFormProps) {
               </Button>
             </div>
             <div className="flex flex-wrap gap-2">
-              {watch("subarea").map((item, index) => (
+              {watch("subarea")?.map((item, index) => (
                 <Badge
                   key={index}
                   variant="outline"
@@ -293,7 +294,7 @@ export function AreaForm({ initialData }: AreaFormProps) {
               </Button>
             </div>
             <div className="flex flex-wrap gap-2">
-              {watch("zipcode").map((item, index) => (
+              {watch("zipcode")?.map((item, index) => (
                 <Badge
                   key={index}
                   variant="outline"

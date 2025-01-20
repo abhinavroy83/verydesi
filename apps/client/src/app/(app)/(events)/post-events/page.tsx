@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { format } from "date-fns";
+import { addDays, format } from "date-fns";
 import {
   Calendar as CalendarIcon,
   ChevronDown,
@@ -63,6 +63,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { EventTimePicker } from "@/components/ui/clock-picket";
+import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
 
 const languages = [
   { name: "Hindi", code: "hi" },
@@ -104,17 +106,21 @@ export default function EventForm() {
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { addressComponents, location } = useGoogleAutocomplete();
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+  const [newArtist, setNewArtist] = useState("");
 
   const form = useForm<z.infer<typeof EventformSchema>>({
     resolver: zodResolver(EventformSchema),
     defaultValues: {
       eventpostingcity: "Portland",
-      startDate: new Date(),
+      startDate: undefined as Date | undefined,
       startTime: "00:00",
-      endDate: new Date(),
+      endDate: undefined as Date | undefined,
       endTime: "03:00",
       languages: [],
       entryoption: "",
+      artists: [],
     },
   });
   const {
@@ -125,6 +131,22 @@ export default function EventForm() {
     control: form.control,
     name: "artists",
   });
+
+  const handleAddArtist = () => {
+    if (newArtist.trim()) {
+      appendArtist({ name: newArtist.trim() });
+      setNewArtist("");
+    }
+  };
+
+  const onStartDateChange = (date: Date | undefined) => {
+    setStartDate(date);
+    if (date) {
+      const nextDay = addDays(date, 1);
+      setEndDate(nextDay);
+      form.setValue("endDate", nextDay);
+    }
+  };
 
   const { cities, isLoading, error } = useCityData();
   const { register, watch } = form;
@@ -227,7 +249,7 @@ export default function EventForm() {
   }, [images]);
 
   const { data: session } = useSession();
-
+  const router = useRouter();
   const onSubmit = async (data: z.infer<typeof EventformSchema>) => {
     setIsSubmitting(true);
     try {
@@ -254,13 +276,12 @@ export default function EventForm() {
           },
         }
       );
-      console.log(res);
       if (res.data) {
         toast.success("event added successully");
+        form.reset();
+        router.push(`/event/${res.data._id}`);
       }
       console.log("Payload:", payload);
-
-      alert("Form submitted successfully!");
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("An error occurred while submitting the form.");
@@ -568,7 +589,7 @@ export default function EventForm() {
                             control={form.control}
                             name="startDate"
                             render={({ field }) => (
-                              <FormItem className="flex flex-col w-full">
+                              <FormItem className="flex flex-col">
                                 <FormLabel>Start date</FormLabel>
                                 <Popover>
                                   <PopoverTrigger asChild>
@@ -597,11 +618,14 @@ export default function EventForm() {
                                   >
                                     <Calendar
                                       mode="single"
-                                      // selected={field.value}
-                                      onSelect={field.onChange}
+                                      selected={field.value || undefined}
+                                      onSelect={(date) => {
+                                        field.onChange(date);
+                                        onStartDateChange(date);
+                                      }}
                                       disabled={(date) =>
                                         date < new Date() ||
-                                        date < new Date("1900-01-01")
+                                        (endDate ? date > endDate : false)
                                       }
                                       initialFocus
                                     />
@@ -697,10 +721,14 @@ export default function EventForm() {
                                   >
                                     <Calendar
                                       mode="single"
-                                      onSelect={field.onChange}
+                                      selected={field.value || undefined}
+                                      onSelect={(date) => {
+                                        field.onChange(date);
+                                        setEndDate(date);
+                                      }}
                                       disabled={(date) =>
                                         date < new Date() ||
-                                        date < new Date("1900-01-01")
+                                        (startDate ? date <= startDate : false)
                                       }
                                       initialFocus
                                     />
@@ -900,41 +928,51 @@ export default function EventForm() {
                           <h3 className="text-lg font-semibold mb-4 ">
                             Artist details
                           </h3>
+                          <div className="flex items-center space-x-2">
+                            <Input
+                              value={newArtist}
+                              onChange={(e) => setNewArtist(e.target.value)}
+                              placeholder="Enter artist name"
+                            />
+                            <Button
+                              type="button"
+                              onClick={handleAddArtist}
+                              className="bg-green-800"
+                            >
+                              Add Artist
+                            </Button>
+                          </div>
+                          {artistFields.map((field, index) => (
+                            <Badge
+                              key={field.id}
+                              variant="secondary"
+                              className="px-2 py-1"
+                            >
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="icon"
+                                onClick={() => removeArtist(index)}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </Badge>
+                          ))}
                           {artistFields.map((field, index) => (
                             <FormField
                               key={field.id}
                               control={form.control}
                               name={`artists.${index}.name`}
                               render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="hidden">
                                   <FormControl>
-                                    <div className="flex items-center space-x-2 mb-2">
-                                      <Input
-                                        {...field}
-                                        placeholder="Artist name"
-                                      />
-                                      <Button
-                                        type="button"
-                                        variant="outline"
-                                        size="icon"
-                                        onClick={() => removeArtist(index)}
-                                      >
-                                        <X className="h-4 w-4" />
-                                      </Button>
-                                    </div>
+                                    <Input {...field} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
                               )}
                             />
                           ))}
-                          <Button
-                            className="bg-green-800"
-                            type="button"
-                            onClick={() => appendArtist({ name: "" })}
-                          >
-                            Add Artist
-                          </Button>
                         </CardContent>
                       </Card>
                     </div>
