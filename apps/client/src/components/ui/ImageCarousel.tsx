@@ -36,7 +36,7 @@ const ImageCarousel = ({
   if (!images || images.length === 0) {
     return (
       <div className={cn("w-full rounded-xl overflow-hidden", className)}>
-        <div className="w-full h-[20rem] bg-gray-300 flex items-center justify-center rounded-lg">
+        <div className="w-full h-[25.1rem] bg-gray-300 flex items-center justify-center rounded-lg">
           <p className="text-gray-500">No images available</p>
         </div>
       </div>
