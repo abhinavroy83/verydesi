@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
   if (
     !token &&
     (url.pathname.startsWith("/dashboard") ||
-      url.pathname.startsWith("/post-room"))
+      url.pathname.startsWith("/post-room")|| url.pathname.startsWith("/post-events") ) 
   ) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
