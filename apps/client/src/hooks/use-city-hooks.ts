@@ -35,7 +35,7 @@ export function useCityData() {
         const uniqueCities = Array.from(
           new Set(res.data.map((item) => item.area))
         ).sort((a, b) => a.localeCompare(b));
-        console.log(uniqueCities);
+      
         // Update state and cache
         setCities(uniqueCities);
         localStorage.setItem(

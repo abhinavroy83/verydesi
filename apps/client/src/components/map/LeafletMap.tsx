@@ -52,12 +52,10 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
   const getRooms = async (lat: number, lng: number) => {
     try {
       const res = await axios.get(
-        currentCity
-          ? `https://api.verydesi.com/api/getallrooms?city=${currentCity || "Portland"}`
-          : `https://api.verydesi.com/api/getallrooms?lat=${lat}&lng=${lng}`
+        `https://apiv2.verydesi.com/room/ListingAllRoomByArea/${currentCity || "Portland"}`
       );
       setLocData(
-        res.data.Allrooms.map((room: any) => ({
+        res.data.rooms.map((room: any) => ({
           id: room._id,
           coordinates: room.location.coordinates,
         }))
@@ -200,7 +198,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({ style }) => {
           try {
             const _id = roomIds[0];
             const roomDetailResponse = await axios.get(
-              `https://api.verydesi.com/api/getspecificroom/${_id}`
+              `https://apiv2.verydesi.com/room/findsingleRoom/${_id}`
             );
 
             const roomDetails = roomDetailResponse.data.rooms;

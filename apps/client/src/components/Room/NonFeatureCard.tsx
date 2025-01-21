@@ -156,7 +156,7 @@ export default function Component({ room }: FeaturedCard2Props) {
   };
 
   const genderName = () => {
-    console.log(room?.Preferred_gender === "Male only");
+    // console.log(room?.Preferred_gender === "Male only");
     if (room?.Preferred_gender === "Male only") {
       return "Male";
     }
